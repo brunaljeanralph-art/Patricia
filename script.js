@@ -1,124 +1,56 @@
+// script.js
 document.addEventListener("DOMContentLoaded", () => {
+  const body = document.body;
 
-function createHeart() {
+  const rand = (min, max) => Math.random() * (max - min) + min;
 
-const heart = document.createElement("img");
+  function createFloatingElement(className, text, left, duration, size) {
+    const el = document.createElement("div");
+    el.className = className;
+    el.textContent = text;
+    el.style.left = `${left}vw`;
+    el.style.bottom = "-10vh";
+    el.style.fontSize = `${size}px`;
+    el.style.animationDuration = `${duration}s`;
+    body.appendChild(el);
 
-heart.src = "assets/heart.png";
+    setTimeout(() => {
+      el.remove();
+    }, duration * 1000);
+  }
 
-heart.className = "heart";
+  function createHeart() {
+    createFloatingElement("heart", "❤️", rand(0, 100), rand(8, 14), rand(16, 24));
+  }
 
-heart.style.left = Math.random() * 100 + "vw";
+  function createPetal() {
+    createFloatingElement("petal", "🌷", rand(0, 100), rand(10, 16), rand(16, 28));
+  }
 
-heart.style.animationDuration = (8 + Math.random() * 5) + "s";
+  function createConfetti() {
+    const el = document.createElement("div");
+    el.className = "confetti";
+    el.style.left = `${rand(0, 100)}vw`;
+    el.style.top = "-2vh";
+    el.style.animationDuration = `${rand(6, 12)}s`;
+    el.style.transform = `translateX(${rand(-20, 20)}px)`;
+    body.appendChild(el);
 
-heart.style.width = (18 + Math.random() * 18) + "px";
+    setTimeout(() => {
+      el.remove();
+    }, 12000);
+  }
 
-document.body.appendChild(heart);
+  for (let i = 0; i < 6; i++) {
+    setTimeout(createHeart, i * 350);
+    setTimeout(createPetal, i * 500);
+  }
 
-setTimeout(() => {
-heart.remove();
-}, 13000);
+  for (let i = 0; i < 12; i++) {
+    setTimeout(createConfetti, i * 250);
+  }
 
-}
-
-setInterval(createHeart, 1200);
-
-function createPetal() {
-
-const petal = document.createElement("img");
-
-petal.src = "assets/petal.png";
-
-petal.className = "petal";
-
-petal.style.left = Math.random() * 100 + "vw";
-
-petal.style.animationDuration = (10 + Math.random() * 6) + "s";
-
-petal.style.width = (18 + Math.random() * 16) + "px";
-
-document.body.appendChild(petal);
-
-setTimeout(() => {
-petal.remove();
-}, 16000);
-
-}
-
-setInterval(createPetal, 900);function createConfetti() {
-
-const confetti = document.createElement("div");
-
-confetti.className = "confetti";
-
-confetti.style.left = Math.random() * 100 + "vw";
-
-confetti.style.animationDuration = (6 + Math.random() * 5) + "s";
-
-confetti.style.opacity = Math.random();
-
-document.body.appendChild(confetti);
-
-setTimeout(() => {
-confetti.remove();
-}, 12000);
-
-}
-
-setInterval(createConfetti, 700);
-
-const card = document.querySelector(".card");
-
-card.style.opacity = "0";
-card.style.transform = "translateY(40px)";
-
-setTimeout(() => {
-card.style.transition = "all 1.2s ease";
-card.style.opacity = "1";
-card.style.transform = "translateY(0)";
-}, 300);
-
-const button = document.querySelector(".btn");
-
-button.addEventListener("mouseenter", () => {
-
-button.style.transform = "scale(1.05)";
-
-});
-
-button.addEventListener("mouseleave", () => {
-
-button.style.transform = "scale(1)";
-
-});window.addEventListener("load", () => {
-
-const title = document.querySelector("h1");
-
-title.animate(
-[
-{ opacity: 0, transform: "translateY(-20px)" },
-{ opacity: 1, transform: "translateY(0)" }
-],
-{
-duration: 1500,
-easing: "ease-out"
-}
-);
-
-const letter = document.querySelector(".letter");
-
-letter.animate(
-[
-{ opacity: 0, transform: "translateY(30px)" },
-{ opacity: 1, transform: "translateY(0)" }
-],
-{
-duration: 1800,
-easing: "ease-out"
-}
-);
-
-});
-
+  setInterval(createHeart, 1800);
+  setInterval(createPetal, 2400);
+  setInterval(createConfetti, 900);
 });
