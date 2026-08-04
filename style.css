@@ -352,3 +352,19 @@ h3{
     background:#d89edb;
     color:#fff;
 }
+.header{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.header img{
+    width: 100px;
+    height: auto;
+    flex-shrink: 0;
+}
+
+.title h1,
+.title p{
+    margin: 0;
+}
