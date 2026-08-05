@@ -110,9 +110,7 @@ BACKGROUND
 <div id="confetti-container"></div>
     
 
-    <!-- ===============================
-         5. CARTE
-    =============================== -->
+    
 
    <!-- ===============================
 CARTE
@@ -250,7 +248,85 @@ CARTE
     <!-- ===============================
          6. JAVASCRIPT
     =============================== -->
+window.addEventListener("load", () => {
 
+    const intro = document.getElementById("intro-screen");
+    const popup = document.getElementById("welcome-popup");
+    const continueBtn = document.getElementById("continueBtn");
+
+    setTimeout(() => {
+        intro.classList.add("hide");
+    }, 2500);
+
+    setTimeout(() => {
+        popup.classList.add("show");
+    }, 3000);
+
+    continueBtn.addEventListener("click", () => {
+        popup.classList.remove("show");
+    });
+
+});
+
+
+const musicBtn = document.getElementById("music-btn");
+const bgMusic = document.getElementById("bgMusic");
+const dingSound = document.getElementById("dingSound");
+
+musicBtn.addEventListener("click", async () => {
+
+    try {
+
+        await bgMusic.play();
+
+        if (dingSound) {
+            dingSound.play();
+        }
+
+        musicBtn.textContent = "🎵 Musique activée";
+
+    } catch (e) {
+
+        console.log(e);
+
+    }
+
+});
+
+
+const heartsContainer = document.getElementById("hearts-container");
+
+function createHeart() {
+
+    const heart = document.createElement("div");
+
+    heart.innerHTML = "❤️";
+
+    heart.style.position = "fixed";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.bottom = "-40px";
+    heart.style.fontSize = (15 + Math.random() * 20) + "px";
+    heart.style.pointerEvents = "none";
+    heart.style.transition = "transform 8s linear, opacity 8s linear";
+
+    heartsContainer.appendChild(heart);
+
+    requestAnimationFrame(() => {
+
+        heart.style.transform = "translateY(-110vh)";
+        heart.style.opacity = "0";
+
+    });
+
+    setTimeout(() => {
+
+        heart.remove();
+
+    }, 8000);
+
+}
+
+setInterval(createHeart, 900);
 
     
     <script src="script.js"></script>
