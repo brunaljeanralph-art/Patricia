@@ -58,7 +58,7 @@ body{
   position:absolute;
   width:230px;
   height:230px;
-  background:url("tulip.png") no-repeat center/contain;
+  background:url("assets/tulip.png") no-repeat center/contain;
   pointer-events:none;
   opacity:.20;
   z-index:0;
