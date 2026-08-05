@@ -1,4 +1,18 @@
 /* style.css */
+.background{
+    position: fixed;
+    inset: 0;
+    background: url("assets/background.png") center center / cover no-repeat;
+    z-index: -10;
+}
+.background{
+    position: fixed;
+    inset: 0;
+    background:
+        linear-gradient(rgba(255,255,255,.25), rgba(255,255,255,.25)),
+        url("assets/background.png") center center / cover no-repeat;
+    z-index: -10;
+}
 /* ===========================
    STYLE.CSS
    =========================== */
