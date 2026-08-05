@@ -151,3 +151,19 @@ document.addEventListener("DOMContentLoaded", () => {
     setInterval(createConfetti,900);
 
 });
+
+const dingSound = document.getElementById("dingSound");
+
+function playDing() {
+    dingSound.currentTime = 0;
+    dingSound.play().catch(err => {
+        console.log(err);
+    });
+}
+const continueBtn = document.getElementById("continueBtn");
+
+continueBtn.addEventListener("click", () => {
+    playDing();
+
+    // lòt kòd ou yo...
+});
