@@ -1,4 +1,4 @@
-:<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="fr">
 
 <head>
@@ -7,101 +7,93 @@
 
     <title>Pour Patricia ❤️</title>
 
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;700&display=swap" rel="stylesheet">
 
+    <!-- CSS -->
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<!-- ===============================
-INTRO LOADER
-=============================== -->
+    <!-- ===============================
+         1. INTRO LOADER
+    =============================== -->
 
-<div id="intro-screen">
+    <div id="intro-screen">
 
-    <div class="intro-overlay"></div>
+        <div class="intro-overlay"></div>
 
-    <div class="intro-content">
+        <div class="intro-content">
 
-        <div class="intro-heart">🤍</div>
+            <div class="intro-heart">🤍</div>
 
-        <h2>
-            Un dernier petit secret
-            <br>
-            t'attend...
-        </h2>
+            <h2>
+                Un dernier petit secret...
+                <br>
+                t'attend ❤️
+            </h2>
 
-        <p>
-            Ferme les yeux un instant...
-        </p>
+            <p>
+                Ferme les yeux un instant...
+            </p>
+
+        </div>
 
     </div>
 
-</div>
-
-<!-- ===============================
+    <!-- ===============================
 POPUP BIENVENUE
 =============================== -->
 
-<div id="welcome-popup">
+<div id="welcome-popup" class="hidden">
 
     <div class="popup-card">
 
-        <h2>Bienvenue Mi Amor ❤️</h2>
+        <div class="popup-heart">🤍</div>
+
+        <h2>
+            Bienvenue, Mi Amor ❤️
+        </h2>
 
         <p>
-
             Cette petite surprise
             a été créée avec tout mon cœur.
-
         </p>
 
         <p>
-
-            J'espère qu'elle
-            te fera sourire.
-
+            J'espère qu'elle te fera sourire.
         </p>
 
         <button id="continueBtn">
-
-            Continuer
-
+            Continuer ❤️
         </button>
 
     </div>
 
 </div>
 
+    
 <!-- ===============================
 MUSIQUE
 =============================== -->
 
-<button id="music-btn">
-
-🎵 Activer la musique
-
+<button id="music-btn" class="music-btn">
+    🎵 Activer la musique
 </button>
 
 <audio id="bgMusic" loop>
-
-<source
-src="assets/music.mp3"
-type="audio/mpeg">
-
+    <source src="assets/music.mp3" type="audio/mpeg">
+    Votre navigateur ne supporte pas l'audio.
 </audio>
 
 <audio id="dingSound">
-
-<source
-src="assets/ding.mp3"
-type="audio/mpeg">
-
+    <source src="assets/ding.mp3" type="audio/mpeg">
 </audio>
+    
 
 <!-- ===============================
 BACKGROUND
@@ -116,231 +108,153 @@ BACKGROUND
 <div id="petals-container"></div>
 
 <div id="confetti-container"></div>
+    
 
-<!-- ===============================
+    <!-- ===============================
+         5. CARTE
+    =============================== -->
+
+   <!-- ===============================
 CARTE
 =============================== -->
 
-<html lang="fr">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Pour Mi Amor ❤️</title>
+<main class="card">
 
-  <link rel="stylesheet" href="style.css" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet" />
-</head>
-<body>
-  <div class="background" aria-hidden="true"></div>
-
-  <main class="card">
     <header class="header">
-     <img class="header-tulip" src="assets/tulip.png" alt="Tulipe" />
-      <div class="title">
-        <h1>Pour toi <span class="miamor">Mi Amor</span> ❤️</h1>
-        <h2>Mon dernier petit secret...</h2>
-      </div>
-      <img class="header-tulip right" src="tulip.png" alt="Tulipe" />
+
+        <img
+            class="header-tulip"
+            src="assets/tulip.png"
+            alt="Tulipe">
+
+        <div class="title">
+
+            <h1>
+                Pour toi
+                <span class="miamor">Mi Amor</span> ❤️
+            </h1>
+
+            <h2>
+                Mon dernier petit secret...
+            </h2>
+
+        </div>
+
+        <img
+            class="header-tulip right"
+            src="assets/tulip.png"
+            alt="Tulipe">
+
     </header>
 
     <section class="letter">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Pour Patricia ❤️</title>
+        <p>Tu es vraiment arrivée jusqu'ici, <span class="miamor-inline">Mi Amor</span>... ❤️</p>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <p>Je savais que ta curiosité finirait par gagner.</p>
 
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;700&display=swap" rel="stylesheet">
+        <p>Si tu lis ces mots, c'est que tu as découvert le tout dernier petit secret que je gardais pour toi.</p>
 
-    <link rel="stylesheet" href="style.css">
-</head>
+        <p>Tu n'as pas seulement lu ma lettre.</p>
 
-<body>
+        <p>Tu as aussi accepté d'ouvrir cette dernière petite porte que j'avais laissée entrouverte... rien que pour toi.</p>
 
-<!-- ===============================
-INTRO LOADER
-=============================== -->
+        <p>Il y a parfois des choses que les plus longues lettres ne savent pas dire.</p>
 
-<div id="intro-screen">
+        <p>Alors laisse-moi simplement te confier celle-ci...</p>
 
-    <div class="intro-overlay"></div>
-
-    <div class="intro-content">
-
-        <div class="intro-heart">🤍</div>
-
-        <h2>
-            Un dernier petit secret
-            <br>
-            t'attend...
-        </h2>
-
-        <p>
-            Ferme les yeux un instant...
+        <p class="highlight">
+            Le plus beau souvenir de cette surprise ne sera jamais cette page.
         </p>
 
-    </div>
-
-</div>
-
-<!-- ===============================
-POPUP BIENVENUE
-=============================== -->
-
-<div id="welcome-popup">
-
-    <div class="popup-card">
-
-        <h2>Bienvenue Mi Amor ❤️</h2>
-
-        <p>
-
-            Cette petite surprise
-            a été créée avec tout mon cœur.
-
+        <p class="highlight">
+            Ce sera le fait de savoir que c'est toi qui es en train de la lire, en ce moment même.
         </p>
 
-        <p>
+        <p>Je n'attends rien en retour.</p>
 
-            J'espère qu'elle
-            te fera sourire.
+        <p>Je voulais seulement te laisser un endroit où tu pourrais revenir chaque fois que tu aurais envie de retrouver un petit morceau de mon cœur.</p>
 
+        <p>Et si un jour le temps passe un peu trop vite, si la vie nous met à l'épreuve ou si les souvenirs deviennent moins précis...</p>
+
+        <p class="important">Reviens ici.</p>
+
+        <p class="highlight">
+            Pas seulement pour relire mes mots, mais pour te rappeler avec quelle sincérité ils ont été écrits.
         </p>
 
-        <button id="continueBtn">
+        <p>Referme cette page avec le sourire.</p>
 
-            Continuer
+        <p>Parce que c'est exactement comme ça que j'espérais te laisser.</p>
 
-        </button>
+        <p>Et si, dans plusieurs années, tu retombes par hasard sur cette page...</p>
 
-    </div>
+        <p>
+            J'espère qu'elle réussira encore à faire naître le même sourire que celui que tu portes en ce moment. ❤️
+        </p>
 
-</div>
+        <div class="signature">
 
-<!-- ===============================
-MUSIQUE
-=============================== -->
+            <p>Avec toute la sincérité de mon cœur,</p>
 
-<button id="music-btn">
+            <p class="prince">Ton Prince Charmant ❤️</p>
 
-🎵 Activer la musique
+            <h3>Ralph</h3>
 
-</button>
+        </div>
 
-<audio id="bgMusic" loop>
+        <hr>
 
-<source
-src="assets/music.mp3"
-type="audio/mpeg">
+        <div class="ps">
 
-</audio>
+            <h4>🤍 Une toute dernière question...</h4>
 
-<audio id="dingSound">
+            <p>As-tu souri en arrivant jusqu'ici ?</p>
 
-<source
-src="assets/ding.mp3"
-type="audio/mpeg">
+            <p>Si la réponse est oui...</p>
 
-</audio>
+            <p>Alors mon petit secret a parfaitement rempli sa mission.</p>
 
-<!-- ===============================
-BACKGROUND
-=============================== -->
+            <p>Je ne voulais pas seulement t'offrir une lettre.</p>
 
-<div class="background"></div>
+            <p>Je voulais te laisser un souvenir.</p>
 
-<div id="stars"></div>
+            <p>Un endroit où tu pourras toujours revenir...</p>
 
-<div id="hearts-container"></div>
+            <p>Même quand moi, je ne serai pas à côté de toi.</p>
 
-<div id="petals-container"></div>
+            <p>Parce que certaines surprises se terminent...</p>
 
-<div id="confetti-container"></div>
+            <p>Mais les sentiments qui les ont créées, eux, restent. ❤️</p>
 
-<!-- ===============================
-CARTE
-=============================== -->
+        </div>
 
-<html lang="fr">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Pour Mi Amor ❤️</title>
+        <div class="button-box">
 
-  <link rel="stylesheet" href="style.css" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet" />
-</head>
-<body>
-  <div class="background" aria-hidden="true"></div>
+            <a
+                class="btn"
+                href="lettre.pdf"
+                target="_blank"
+                rel="noopener noreferrer">
 
-  <main class="card">
-    <header class="header">
-     <img class="header-tulip" src="assets/tulip.png" alt="Tulipe" />
-      <div class="title">
-        <h1>Pour toi <span class="miamor">Mi Amor</span> ❤️</h1>
-        <h2>Mon dernier petit secret...</h2>
-      </div>
-      <img class="header-tulip right" src="tulip.png" alt="Tulipe" />
-    </header>
+                💌 Relire ma lettre
 
-    <section class="letter">
-      <p>Tu es vraiment arrivée jusqu'ici, <span class="miamor-inline">Mi Amor</span>... ❤️</p>
-      <p>Je savais que ta curiosité finirait par gagner.</p>
-      <p>Si tu lis ces mots, c'est que tu as découvert le tout dernier petit secret que je gardais pour toi.</p>
-      <p>Tu n'as pas seulement lu ma lettre.</p>
-      <p>Tu as aussi accepté d'ouvrir cette dernière petite porte que j'avais laissée entrouverte... rien que pour toi.</p>
-      <p>Il y a parfois des choses que les plus longues lettres ne savent pas dire.</p>
-      <p>Alors laisse-moi simplement te confier celle-ci...</p>
+            </a>
 
-      <p class="highlight">Le plus beau souvenir de cette surprise ne sera jamais cette page.</p>
-      <p class="highlight">Ce sera le fait de savoir que c'est toi qui es en train de la lire, en ce moment même.</p>
+        </div>
 
-      <p>Je n'attends rien en retour.</p>
-      <p>Je voulais seulement te laisser un endroit où tu pourrais revenir chaque fois que tu aurais envie de retrouver un petit morceau de mon cœur.</p>
-      <p>Et si un jour le temps passe un peu trop vite, si la vie nous met à l'épreuve ou si les souvenirs deviennent moins précis...</p>
-
-      <p class="important">Reviens ici.</p>
-      <p class="highlight">Pas seulement pour relire mes mots, mais pour te rappeler avec quelle sincérité ils ont été écrits.</p>
-
-      <p>Referme cette page avec le sourire.</p>
-      <p>Parce que c'est exactement comme ça que j'espérais te laisser.</p>
-      <p>Et si, dans plusieurs années, tu retombes par hasard sur cette page...</p>
-      <p>J'espère qu'elle réussira encore à faire naître le même sourire que celui que tu portes en ce moment. ❤️</p>
-
-      <div class="signature">
-        <p>Avec toute la sincérité de mon cœur,</p>
-        <p class="prince">Ton Prince Charmant ❤️</p>
-        <h3>Ralph</h3>
-      </div>
-
-      <hr />
-
-      <div class="ps">
-        <h4>🤍 Une toute dernière question...</h4>
-        <p>As-tu souri en arrivant jusqu'ici ?</p>
-        <p>Si la réponse est oui...</p>
-        <p>Alors mon petit secret a parfaitement rempli sa mission.</p>
-        <p>Je ne voulais pas seulement t'offrir une lettre.</p>
-        <p>Je voulais te laisser un souvenir.</p>
-        <p>Un endroit où tu pourras toujours revenir...</p>
-        <p>Même quand moi, je ne serai pas à côté de toi.</p>
-        <p>Parce que certaines surprises se terminent...</p>
-        <p>Mais les sentiments qui les ont créées, eux, restent. ❤️</p>
-      </div>
-
-      <div class="button-box">
-        <a class="btn" href="lettre.pdf" target="_blank" rel="noopener noreferrer">💌 Relire ma lettre</a>
-      </div>
     </section>
-  </main>
 
-  <script src="script.js"></script>
+</main> 
+
+    <!-- ===============================
+         6. JAVASCRIPT
+    =============================== -->
+
+
+    
+    <script src="script.js"></script>
+
 </body>
+
 </html>
