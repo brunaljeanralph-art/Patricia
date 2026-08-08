@@ -10,55 +10,98 @@ document.addEventListener("DOMContentLoaded", () => {
     const bgMusic = document.getElementById("bgMusic");
     const dingSound = document.getElementById("dingSound");
 
-    const rand = (min, max) => Math.random() * (max - min) + min;
+    const rand = (min, max) =>
+        Math.random() * (max - min) + min;
 
-    // INTRO
+
+    /* =========================
+       INTRO
+    ========================= */
+
     setTimeout(() => {
-        if (intro) {
-            intro.style.opacity = "0";
 
-            setTimeout(() => {
-                intro.style.display = "none";
+        if (!intro) return;
 
-                if (popup) {
-                    popup.classList.remove("hidden");
-                }
+        intro.style.opacity = "0";
 
-            }, 1000);
-        }
+        setTimeout(() => {
+
+            intro.style.display = "none";
+
+            if (popup) {
+                popup.classList.remove("hidden");
+            }
+
+        }, 1000);
+
     }, 3000);
 
-    // POPUP
+
+    /* =========================
+       POPUP + DING
+    ========================= */
+
     if (continueBtn) {
 
         continueBtn.addEventListener("click", () => {
 
             if (dingSound) {
-                dingSound.play();
+
+                dingSound.currentTime = 0;
+
+                dingSound.play().catch(() => {});
+
             }
 
-            popup.style.display = "none";
+            if (popup) {
+                popup.style.display = "none";
+            }
 
         });
 
     }
 
-    // MUSIC
-    if (musicBtn) {
+
+    /* =========================
+       MUSIC
+    ========================= */
+
+    if (musicBtn && bgMusic) {
 
         musicBtn.addEventListener("click", () => {
 
-            bgMusic.play();
+            bgMusic.play()
+                .then(() => {
 
-            musicBtn.innerHTML = "🎵 Musique activée";
+                    musicBtn.innerHTML =
+                        "🎵 Musique activée";
 
-            musicBtn.disabled = true;
+                    musicBtn.disabled = true;
+
+                })
+                .catch(() => {
+
+                    musicBtn.innerHTML =
+                        "🎵 Appuie pour activer";
+
+                });
 
         });
 
     }
 
-    function createFloatingElement(className, emoji, left, duration, size) {
+
+    /* =========================
+       FLOATING ELEMENTS
+    ========================= */
+
+    function createFloatingElement(
+        className,
+        emoji,
+        left,
+        duration,
+        size
+    ) {
 
         const el = document.createElement("div");
 
@@ -72,7 +115,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
         el.style.fontSize = size + "px";
 
-        el.style.animationDuration = duration + "s";
+        el.style.animationDuration =
+            duration + "s";
 
         body.appendChild(el);
 
@@ -80,45 +124,66 @@ document.addEventListener("DOMContentLoaded", () => {
 
             el.remove();
 
-        }, duration * 1000);
+        }, duration * 1000 + 500);
 
     }
+
+
+    /* =========================
+       HEARTS
+    ========================= */
 
     function createHeart() {
 
         createFloatingElement(
             "heart",
             "❤️",
-            rand(0,100),
-            rand(8,14),
-            rand(16,24)
+            rand(0, 100),
+            rand(8, 14),
+            rand(16, 24)
         );
 
     }
+
+
+    /* =========================
+       PETALS
+    ========================= */
 
     function createPetal() {
 
         createFloatingElement(
             "petal",
             "🌷",
-            rand(0,100),
-            rand(10,16),
-            rand(16,28)
+            rand(0, 100),
+            rand(10, 16),
+            rand(16, 28)
         );
 
     }
 
+
+    /* =========================
+       CONFETTI
+    ========================= */
+
     function createConfetti() {
 
-        const el = document.createElement("div");
+        const el =
+            document.createElement("div");
 
         el.className = "confetti";
 
-        el.style.left = rand(0,100) + "vw";
+        el.style.left =
+            rand(0, 100) + "vw";
 
         el.style.top = "-2vh";
 
-        el.style.animationDuration = rand(6,12) + "s";
+        const duration =
+            rand(6, 12);
+
+        el.style.animationDuration =
+            duration + "s";
 
         body.appendChild(el);
 
@@ -126,44 +191,57 @@ document.addEventListener("DOMContentLoaded", () => {
 
             el.remove();
 
-        },12000);
+        }, duration * 1000 + 500);
 
     }
 
-    for(let i=0;i<6;i++){
 
-        setTimeout(createHeart,i*350);
+    /* =========================
+       INITIAL ANIMATIONS
+    ========================= */
 
-        setTimeout(createPetal,i*500);
+    for (let i = 0; i < 6; i++) {
+
+        setTimeout(
+            createHeart,
+            i * 350
+        );
+
+        setTimeout(
+            createPetal,
+            i * 500
+        );
 
     }
 
-    for(let i=0;i<12;i++){
 
-        setTimeout(createConfetti,i*250);
+    for (let i = 0; i < 12; i++) {
+
+        setTimeout(
+            createConfetti,
+            i * 250
+        );
 
     }
 
-    setInterval(createHeart,1800);
 
-    setInterval(createPetal,2400);
+    /* =========================
+       CONTINUOUS ANIMATIONS
+    ========================= */
 
-    setInterval(createConfetti,900);
+    setInterval(
+        createHeart,
+        1800
+    );
 
-});
+    setInterval(
+        createPetal,
+        2400
+    );
 
-const dingSound = document.getElementById("dingSound");
+    setInterval(
+        createConfetti,
+        900
+    );
 
-function playDing() {
-    dingSound.currentTime = 0;
-    dingSound.play().catch(err => {
-        console.log(err);
-    });
-}
-const continueBtn = document.getElementById("continueBtn");
-
-continueBtn.addEventListener("click", () => {
-    playDing();
-
-    // lòt kòd ou yo...
 });
