@@ -1,4 +1,47 @@
 /* =========================================================
+   BOUTON OUVERTURE DE LA SURPRISE
+   ========================================================= */
+
+#openSurpriseBtn{
+    margin-top:28px;
+    padding:14px 30px;
+
+    border:none;
+    border-radius:999px;
+
+    background:linear-gradient(
+        135deg,
+        #ff6b93,
+        #b84fd6
+    );
+
+    color:white;
+
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:15px;
+    font-weight:700;
+
+    cursor:pointer;
+
+    box-shadow:
+        0 8px 22px rgba(184,79,214,.28);
+
+    transition:
+        transform .25s ease,
+        box-shadow .25s ease;
+}
+
+#openSurpriseBtn:hover{
+    transform:translateY(-3px) scale(1.03);
+
+    box-shadow:
+        0 12px 28px rgba(184,79,214,.38);
+}
+
+#openSurpriseBtn:active{
+    transform:scale(.96);
+}
+/* =========================================================
    PATRICIA ❤️ — PREMIUM LETTER STYLE
    ========================================================= */
 
