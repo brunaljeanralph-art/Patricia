@@ -1,1625 +1,1681 @@
 /* =========================================================
-   PATRICIA ❤️
-   PREMIUM ROMANTIC LETTER
-   ========================================================= */
-
+PATRICIA ❤️
+PREMIUM ROMANTIC LETTER
+========================================================= */
 
 /* =========================================================
-   RESET
-   ========================================================= */
+RESET
+========================================================= */
 
 *{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
+margin:0;
+padding:0;
+box-sizing:border-box;
 }
 
 html{
-    scroll-behavior:smooth;
-    min-height:100%;
+scroll-behavior:smooth;
+min-height:100%;
 }
 
 html,
 body{
-    min-height:100%;
+min-height:100%;
 }
 
 body{
-    position:relative;
+position:relative;
 
-    min-height:100vh;
+min-height:100vh;
 
-    overflow-x:hidden;
+overflow-x:hidden;
 
-    font-family:
-        "Times New Roman",
-        Times,
-        serif;
+font-family:
+    "Times New Roman",
+    Times,
+    serif;
 
-    color:#34283a;
+color:#34283a;
 
-    background:#eee3f6;
+background:#eee3f6;
 
-    -webkit-font-smoothing:antialiased;
-    text-rendering:optimizeLegibility;
+-webkit-font-smoothing:antialiased;
+text-rendering:optimizeLegibility;
+
 }
-
 
 /* =========================================================
-   BACKGROUND
-   IMPORTANT:
-   background.png = 1024 × 1536
-   ========================================================= */
-
-.background{
-    position:fixed;
-
-    inset:0;
-
-    width:100%;
-    height:100%;
-
-    z-index:0;
-
-    pointer-events:none;
-
-    background-color:#eee3f6;
-
-    /*
-     * Nou kite foto a nan pwopòsyon orijinal li.
-     * Sa anpeche background.png lonje oswa twò zoomé.
-     */
-    background-image:
-        linear-gradient(
-            rgba(255,255,255,.04),
-            rgba(255,255,255,.04)
-        ),
-        url("assets/background.png");
-
-    background-size:
-        100% auto,
-        contain;
-
-    background-position:
-        center top,
-        center top;
-
-    background-repeat:
-        no-repeat,
-        no-repeat;
-}
-
-
-/* =========================================================
-   SOFT READING AREA
-   ========================================================= */
-
-.card{
-    position:relative;
-
-    z-index:5;
-
-    width:min(96%,1100px);
-
-    margin:0 auto;
-
-    padding:
-        55px
-        55px
-        100px;
-
-    background:transparent;
-
-    border:none;
-
-    box-shadow:none;
-
-    overflow:visible;
-}
-
+BACKGROUND
+IMPORTANT:
+background.png = 1024 × 1536
+========================================================= */
 
 /*
- * Tout kontni an rete devan background
+
+* Nou pa itilize "cover" paske li ta fè foto a twò zoum.
+* 
+* 100% auto:
+* - foto a pran tout lajè ekran an;
+* - wotè a respekte pwopòsyon orijinal li;
+* - foto a pa lonje;
+* - foto a pa defòme.
+* 
+* repeat-y:
+* - si paj la pi long pase foto a,
+* background lan kontinye desann;
+* - sa evite espas blan.
+    */
+
+.background{
+position:fixed;
+
+top:0;
+left:0;
+
+width:100%;
+height:100%;
+
+z-index:0;
+
+pointer-events:none;
+
+background-color:#eee3f6;
+
+background-image:
+    linear-gradient(
+        rgba(255,255,255,.04),
+        rgba(255,255,255,.04)
+    ),
+    url("assets/background.png");
+
+background-size:
+    100% auto,
+    100% auto;
+
+background-position:
+    center top,
+    center top;
+
+background-repeat:
+    repeat-y,
+    repeat-y;
+
+/*
+ * Evite foto a parèt twò klere
+ * oswa pèdi koulè natirèl li.
  */
 
-.card > *{
-    position:relative;
-    z-index:6;
 }
 
+/* =========================================================
+SOFT READING AREA
+========================================================= */
+
+.card{
+position:relative;
+
+z-index:5;
+
+width:min(96%,1100px);
+
+margin:0 auto;
+
+padding:
+    55px
+    55px
+    100px;
+
+background:transparent;
+
+border:none;
+
+box-shadow:none;
+
+overflow:visible;
+
+}
+
+/*
+
+* Tout kontni an rete devan background
+  */
+
+.card > *{
+position:relative;
+z-index:6;
+}
 
 /* =========================================================
-   HEADER
-   ========================================================= */
+HEADER
+========================================================= */
 
 .header{
-    position:relative;
+position:relative;
 
-    z-index:10;
+z-index:10;
 
-    display:flex;
+display:flex;
 
-    justify-content:center;
+justify-content:center;
 
-    align-items:center;
+align-items:center;
 
-    gap:24px;
+gap:24px;
 
-    width:100%;
+width:100%;
 
-    margin-bottom:30px;
+margin-bottom:30px;
 
-    text-align:center;
+text-align:center;
+
 }
 
 .header-tulip{
-    display:block;
+display:block;
 
-    width:125px;
+width:125px;
 
-    max-width:20%;
+max-width:20%;
 
-    height:auto;
+height:auto;
 
-    flex-shrink:0;
+flex-shrink:0;
 
-    position:relative;
+position:relative;
 
-    z-index:5;
+z-index:5;
 
-    pointer-events:none;
+pointer-events:none;
 
-    user-select:none;
+user-select:none;
 
-    mix-blend-mode:multiply;
+mix-blend-mode:multiply;
 
-    filter:
-        drop-shadow(
-            0 8px 15px
-            rgba(80,35,90,.18)
-        );
+filter:
+    drop-shadow(
+        0 8px 15px
+        rgba(80,35,90,.18)
+    );
+
 }
 
 .header-tulip.right{
-    transform:scaleX(-1);
+transform:scaleX(-1);
 }
 
 .title{
-    position:relative;
+position:relative;
 
-    z-index:8;
+z-index:8;
 
-    flex:1;
+flex:1;
 
-    min-width:0;
+min-width:0;
 
-    text-align:center;
+text-align:center;
+
 }
 
-
 /* =========================================================
-   MAIN TITLES
-   ========================================================= */
+MAIN TITLES
+========================================================= */
 
 h1{
-    margin-bottom:12px;
+margin-bottom:12px;
 
-    font-family:
-        "Dancing Script",
-        cursive;
+font-family:
+    "Dancing Script",
+    cursive;
 
-    text-align:center;
+text-align:center;
 
-    color:#a23378;
+color:#a23378;
 
-    font-size:3.3rem;
+font-size:3.3rem;
 
-    line-height:1.1;
+line-height:1.1;
 
-    text-shadow:
-        0 1px 2px
-        rgba(255,255,255,.9),
+text-shadow:
+    0 1px 2px
+    rgba(255,255,255,.9),
 
-        0 4px 15px
-        rgba(122,63,163,.12);
+    0 4px 15px
+    rgba(122,63,163,.12);
 
-    animation:
-        fadeUp 1s ease both;
+animation:
+    fadeUp 1s ease both;
+
 }
 
 h2{
-    margin-bottom:0;
+margin-bottom:0;
 
-    color:#8a5aa7;
+color:#8a5aa7;
 
-    font-size:1.8rem;
+font-size:1.8rem;
 
-    line-height:1.3;
+line-height:1.3;
 
-    text-align:center;
+text-align:center;
 
-    font-style:italic;
+font-style:italic;
 
-    letter-spacing:1px;
+letter-spacing:1px;
 
-    text-shadow:
-        0 1px 2px
-        rgba(255,255,255,.85);
+text-shadow:
+    0 1px 2px
+    rgba(255,255,255,.85);
+
 }
 
-
 /* =========================================================
-   LOVE TEXT
-   ========================================================= */
+LOVE TEXT
+========================================================= */
 
 .miamor,
 .miamor-inline{
-    font-family:
-        "Dancing Script",
-        cursive;
+font-family:
+"Dancing Script",
+cursive;
 
-    color:#b3317a;
+color:#b3317a;
 
-    text-shadow:
-        0 0 10px
-        rgba(179,49,122,.18);
+text-shadow:
+    0 0 10px
+    rgba(179,49,122,.18);
+
 }
 
 .miamor{
-    font-size:1.4em;
+font-size:1.4em;
 }
 
 .miamor-inline{
-    font-size:1.15em;
+font-size:1.15em;
 }
-
 
 /* =========================================================
-   SECRET LETTER
-   ========================================================= */
+SECRET LETTER
+========================================================= */
 
 .secret-letter{
-    position:relative;
+position:relative;
 
-    z-index:8;
+z-index:8;
 
-    width:100%;
+width:100%;
 
-    max-width:760px;
+max-width:760px;
 
-    margin:0 auto;
-
-    /*
-     * Ti espas andedan an ede tèks la respire
-     * san li pa kache background lan.
-     */
-    padding:
-        18px
-        24px;
-
-    font-family:
-        Georgia,
-        "Times New Roman",
-        Times,
-        serif;
-
-    font-size:18px;
-
-    line-height:1.78;
-
-    color:#34283a;
-
-    text-align:center;
-}
-
+margin:0 auto;
 
 /*
- * Ti voile transparan dèyè tèks la.
- *
- * Li pa yon gwo bwat blan.
- * Li sèlman fè tèks la pi fasil pou li
- * pandan background lan toujou vizib.
+ * Ti espas andedan an ede tèks la respire
+ * san li pa kache background lan.
  */
+padding:
+    18px
+    24px;
+
+font-family:
+    Georgia,
+    "Times New Roman",
+    Times,
+    serif;
+
+font-size:18px;
+
+line-height:1.78;
+
+color:#34283a;
+
+text-align:center;
+
+}
+
+/*
+
+* Ti voile transparan dèyè tèks la.
+* 
+* Li pa yon gwo bwat blan.
+* Li sèlman fè tèks la pi fasil pou li
+* pandan background lan toujou vizib.
+  */
 
 .secret-letter::before{
-    content:"";
+content:"";
 
-    position:absolute;
+position:absolute;
 
-    inset:0;
+inset:0;
 
-    z-index:-1;
+z-index:-1;
 
-    background:
-        rgba(255,255,255,.13);
+background:
+    rgba(255,255,255,.13);
 
-    border-radius:28px;
+border-radius:28px;
 
-    backdrop-filter:
-        blur(1px);
+backdrop-filter:
+    blur(1px);
 
-    -webkit-backdrop-filter:
-        blur(1px);
+-webkit-backdrop-filter:
+    blur(1px);
 
-    pointer-events:none;
+pointer-events:none;
+
 }
 
 .secret-letter > p{
-    width:100%;
+width:100%;
 
-    max-width:760px;
+max-width:760px;
 
-    margin:
-        0
-        auto
-        20px;
+margin:
+    0
+    auto
+    20px;
 
-    text-align:center;
+text-align:center;
 
-    letter-spacing:.01em;
+letter-spacing:.01em;
 
-    text-shadow:
-        0 1px 1px
-        rgba(255,255,255,.72);
+text-shadow:
+    0 1px 1px
+    rgba(255,255,255,.72);
+
 }
 
-
 /* =========================================================
-   SECRET INTRO
-   ========================================================= */
+SECRET INTRO
+========================================================= */
 
 .secret-intro{
-    text-align:center;
+text-align:center;
 
-    margin-bottom:22px;
+margin-bottom:22px;
+
 }
 
 .secret-intro p{
-    margin:
-        0
-        0
-        12px;
+margin:
+0
+0
+12px;
 }
 
 .secret-intro p:first-child{
-    font-size:21px;
+font-size:21px;
 
-    font-style:italic;
+font-style:italic;
+
 }
 
 .miamor-line{
-    font-family:
-        "Dancing Script",
-        cursive;
+font-family:
+"Dancing Script",
+cursive;
 
-    font-size:29px !important;
+font-size:29px !important;
 
-    font-weight:700;
+font-weight:700;
 
-    color:#7A3FA3;
+color:#7A3FA3;
+
 }
 
-
 /* =========================================================
-   DIVIDERS
-   ========================================================= */
+DIVIDERS
+========================================================= */
 
 .letter-divider{
-    display:flex;
+display:flex;
 
-    align-items:center;
+align-items:center;
 
-    justify-content:center;
+justify-content:center;
 
-    gap:12px;
+gap:12px;
 
-    width:82%;
+width:82%;
 
-    margin:
-        32px
-        auto;
+margin:
+    32px
+    auto;
 
-    color:#8d4c9f;
+color:#8d4c9f;
+
 }
 
 .letter-divider::before,
 .letter-divider::after{
-    content:"";
+content:"";
 
-    flex:1;
+flex:1;
 
-    height:1px;
+height:1px;
 
-    background:
-        linear-gradient(
-            to right,
-            transparent,
-            rgba(122,63,163,.42),
-            transparent
-        );
+background:
+    linear-gradient(
+        to right,
+        transparent,
+        rgba(122,63,163,.42),
+        transparent
+    );
+
 }
 
 .letter-divider span{
-    font-size:17px;
+font-size:17px;
 
-    line-height:1;
+line-height:1;
+
 }
 
-
 /* =========================================================
-   QUOTES
-   ========================================================= */
+QUOTES
+========================================================= */
 
 .letter-quote{
-    width:auto;
+width:auto;
 
-    max-width:650px;
+max-width:650px;
 
-    margin:
-        26px
-        auto
-        28px !important;
+margin:
+    26px
+    auto
+    28px !important;
 
-    padding:
-        10px
-        22px;
+padding:
+    10px
+    22px;
 
-    text-align:center !important;
+text-align:center !important;
 
-    font-style:italic;
+font-style:italic;
 
-    color:#623a76;
+color:#623a76;
 
-    background:
-        rgba(255,255,255,.18);
+background:
+    rgba(255,255,255,.18);
 
-    border-left:
-        1px solid
-        rgba(122,63,163,.35);
+border-left:
+    1px solid
+    rgba(122,63,163,.35);
 
-    border-right:
-        1px solid
-        rgba(122,63,163,.35);
+border-right:
+    1px solid
+    rgba(122,63,163,.35);
 
-    border-radius:8px;
+border-radius:8px;
 
-    box-shadow:
-        0 3px 12px
-        rgba(122,63,163,.04);
+box-shadow:
+    0 3px 12px
+    rgba(122,63,163,.04);
+
 }
 
-
 /* =========================================================
-   IMPORTANT WORDS
-   ========================================================= */
+IMPORTANT WORDS
+========================================================= */
 
 .secret-letter strong{
-    color:#5E2B84;
+color:#5E2B84;
 
-    font-weight:700;
+font-weight:700;
+
 }
 
 .love-words{
-    font-weight:700;
+font-weight:700;
 
-    color:#7A3FA3;
+color:#7A3FA3;
 
-    white-space:normal;
+white-space:normal;
+
 }
 
-
 /* =========================================================
-   SIGNATURE
-   ========================================================= */
+SIGNATURE
+========================================================= */
 
 .signature{
-    position:relative;
+position:relative;
 
-    z-index:8;
+z-index:8;
 
-    margin:
-        44px
-        auto
-        20px;
+margin:
+    44px
+    auto
+    20px;
 
-    padding-top:5px;
+padding-top:5px;
 
-    text-align:center;
+text-align:center;
+
 }
 
 .signature p{
-    margin:
-        0
-        0
-        10px;
+margin:
+0
+0
+10px;
 }
 
 .signature p:nth-child(2){
-    font-family:
-        "Dancing Script",
-        cursive;
+font-family:
+"Dancing Script",
+cursive;
 
-    font-size:29px;
+font-size:29px;
 
-    font-weight:700;
+font-weight:700;
 
-    color:#7A3FA3;
+color:#7A3FA3;
+
 }
 
 .signature p:last-child{
-    font-family:
-        "Dancing Script",
-        cursive;
+font-family:
+"Dancing Script",
+cursive;
 
-    font-size:26px;
+font-size:26px;
 
-    font-weight:700;
+font-weight:700;
 
-    color:#5E2B84;
+color:#5E2B84;
+
 }
 
-
 /* =========================================================
-   FINAL QUESTION
-   ========================================================= */
+FINAL QUESTION
+========================================================= */
 
 .final-question{
-    position:relative;
+position:relative;
 
-    z-index:8;
+z-index:8;
 
-    margin-top:40px;
+margin-top:40px;
 
-    padding:
-        8px
-        0
-        28px;
+padding:
+    8px
+    0
+    28px;
 
-    text-align:center;
+text-align:center;
+
 }
 
 .final-question h2{
-    margin:
-        10px
-        0
-        28px;
+margin:
+10px
+0
+28px;
 
-    font-family:
-        "Dancing Script",
-        cursive;
+font-family:
+    "Dancing Script",
+    cursive;
 
-    font-size:32px;
+font-size:32px;
 
-    font-weight:700;
+font-weight:700;
 
-    color:#7A3FA3;
+color:#7A3FA3;
+
 }
 
 .final-question p{
-    margin-bottom:23px;
+margin-bottom:23px;
 }
 
 .final-question-text{
-    font-size:21px;
+font-size:21px;
 
-    font-weight:700;
+font-weight:700;
 
-    color:#5E2B84;
+color:#5E2B84;
+
 }
 
-
 /* =========================================================
-   RELIRE BUTTON
-   ========================================================= */
+RELIRE BUTTON
+========================================================= */
 
 .relire-letter{
-    display:inline-flex;
+display:inline-flex;
 
-    align-items:center;
+align-items:center;
 
-    justify-content:center;
+justify-content:center;
 
-    margin-top:12px;
+margin-top:12px;
 
-    padding:
-        13px
-        25px;
+padding:
+    13px
+    25px;
 
-    border-radius:999px;
+border-radius:999px;
 
-    text-decoration:none;
+text-decoration:none;
 
-    background:#7A3FA3;
+background:#7A3FA3;
 
-    color:#fff;
+color:#fff;
 
-    font-family:
-        Arial,
-        Helvetica,
-        sans-serif;
+font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
 
-    font-size:15px;
+font-size:15px;
 
-    font-weight:700;
+font-weight:700;
 
-    box-shadow:
-        0 7px 20px
-        rgba(122,63,163,.22);
+box-shadow:
+    0 7px 20px
+    rgba(122,63,163,.22);
 
-    transition:
-        transform .2s ease,
-        background .2s ease,
-        box-shadow .2s ease;
+transition:
+    transform .2s ease,
+    background .2s ease,
+    box-shadow .2s ease;
+
 }
 
 .relire-letter:hover{
-    background:#5E2B84;
+background:#5E2B84;
 
-    transform:translateY(-2px);
+transform:translateY(-2px);
 
-    box-shadow:
-        0 10px 25px
-        rgba(122,63,163,.28);
+box-shadow:
+    0 10px 25px
+    rgba(122,63,163,.28);
+
 }
 
 .relire-letter:active{
-    transform:scale(.97);
+transform:scale(.97);
 }
 
-
 /* =========================================================
-   INTRO SCREEN
-   ========================================================= */
+INTRO SCREEN
+========================================================= */
 
 #intro-screen{
-    position:fixed;
+position:fixed;
 
-    inset:0;
+inset:0;
 
-    display:flex;
+display:flex;
 
-    justify-content:center;
+justify-content:center;
 
-    align-items:center;
+align-items:center;
 
-    z-index:9999;
+z-index:9999;
 
-    padding:24px;
+padding:24px;
 
-    background:
-        linear-gradient(
-            135deg,
-            #fbe7f5,
-            #edd9ff
-        );
+background:
+    linear-gradient(
+        135deg,
+        #fbe7f5,
+        #edd9ff
+    );
 
-    opacity:1;
+opacity:1;
 
-    visibility:visible;
+visibility:visible;
 
-    pointer-events:auto;
+pointer-events:auto;
 
-    transition:
-        opacity .65s ease,
-        visibility .65s ease;
+transition:
+    opacity .65s ease,
+    visibility .65s ease;
+
 }
 
 #intro-screen.hide-intro{
-    opacity:0;
+opacity:0;
 
-    visibility:hidden;
+visibility:hidden;
 
-    pointer-events:none;
+pointer-events:none;
+
 }
 
 .intro-overlay{
-    position:absolute;
+position:absolute;
 
-    inset:0;
+inset:0;
 
-    background:
-        rgba(255,255,255,.25);
+background:
+    rgba(255,255,255,.25);
 
-    backdrop-filter:blur(5px);
+backdrop-filter:blur(5px);
 
-    -webkit-backdrop-filter:blur(5px);
+-webkit-backdrop-filter:blur(5px);
+
 }
 
 .intro-content{
-    position:relative;
+position:relative;
 
-    z-index:2;
+z-index:2;
 
-    width:min(92%,500px);
+width:min(92%,500px);
 
-    text-align:center;
+text-align:center;
 
-    animation:
-        fadeUp 1s ease both;
+animation:
+    fadeUp 1s ease both;
+
 }
 
 .intro-heart{
-    font-size:70px;
+font-size:70px;
 
-    line-height:1;
+line-height:1;
 
-    animation:
-        pulse 2s ease-in-out infinite;
+animation:
+    pulse 2s ease-in-out infinite;
+
 }
 
 .intro-content h2{
-    margin:
-        20px
-        0;
+margin:
+20px
+0;
 
-    font-family:
-        "Dancing Script",
-        cursive;
+font-family:
+    "Dancing Script",
+    cursive;
 
-    font-size:3rem;
+font-size:3rem;
 
-    color:#a23378;
+color:#a23378;
 
-    line-height:1.15;
+line-height:1.15;
+
 }
 
 .intro-content p{
-    color:#7b568c;
+color:#7b568c;
 
-    font-size:1.2rem;
+font-size:1.2rem;
 
-    animation:
-        softPulse 2s ease-in-out infinite;
+animation:
+    softPulse 2s ease-in-out infinite;
+
 }
 
-
 /* =========================================================
-   OPEN SURPRISE BUTTON
-   ========================================================= */
+OPEN SURPRISE BUTTON
+========================================================= */
 
 #openSurpriseBtn{
-    margin-top:28px;
+margin-top:28px;
 
-    padding:
-        14px
-        30px;
+padding:
+    14px
+    30px;
 
-    border:none;
+border:none;
 
-    border-radius:999px;
+border-radius:999px;
 
-    background:
-        linear-gradient(
-            135deg,
-            #ff6b93,
-            #b84fd6
-        );
+background:
+    linear-gradient(
+        135deg,
+        #ff6b93,
+        #b84fd6
+    );
 
-    color:white;
+color:white;
 
-    font-family:
-        Arial,
-        Helvetica,
-        sans-serif;
+font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
 
-    font-size:15px;
+font-size:15px;
 
-    font-weight:700;
+font-weight:700;
 
-    cursor:pointer;
+cursor:pointer;
 
-    box-shadow:
-        0 8px 22px
-        rgba(184,79,214,.28);
+box-shadow:
+    0 8px 22px
+    rgba(184,79,214,.28);
 
-    transition:
-        transform .25s ease,
-        box-shadow .25s ease;
+transition:
+    transform .25s ease,
+    box-shadow .25s ease;
+
 }
 
 #openSurpriseBtn:hover{
-    transform:
-        translateY(-3px)
-        scale(1.03);
+transform:
+translateY(-3px)
+scale(1.03);
 
-    box-shadow:
-        0 12px 28px
-        rgba(184,79,214,.38);
+box-shadow:
+    0 12px 28px
+    rgba(184,79,214,.38);
+
 }
 
 #openSurpriseBtn:active{
-    transform:scale(.96);
+transform:scale(.96);
 }
 
 #openSurpriseBtn:focus-visible,
 #continueBtn:focus-visible,
 .music-btn:focus-visible,
 .relire-letter:focus-visible{
-    outline:
-        3px solid
-        rgba(122,63,163,.35);
+outline:
+3px solid
+rgba(122,63,163,.35);
 
-    outline-offset:4px;
+outline-offset:4px;
+
 }
 
-
 /* =========================================================
-   POPUP
-   ========================================================= */
+POPUP
+========================================================= */
 
 .hidden{
-    display:none !important;
+display:none !important;
 }
 
 #welcome-popup{
-    position:fixed;
+position:fixed;
 
-    inset:0;
+inset:0;
 
-    display:flex;
+display:flex;
 
-    justify-content:center;
+justify-content:center;
 
-    align-items:center;
+align-items:center;
 
-    padding:20px;
+padding:20px;
 
-    background:
-        rgba(35,15,45,.46);
+background:
+    rgba(35,15,45,.46);
 
-    backdrop-filter:blur(4px);
+backdrop-filter:blur(4px);
 
-    -webkit-backdrop-filter:blur(4px);
+-webkit-backdrop-filter:blur(4px);
 
-    z-index:9998;
+z-index:9998;
+
 }
 
 .popup-card{
-    width:min(90%,420px);
+width:min(90%,420px);
 
-    padding:35px;
+padding:35px;
 
-    background:
-        rgba(255,255,255,.97);
+background:
+    rgba(255,255,255,.97);
 
-    border:
-        1px solid
-        rgba(122,63,163,.15);
+border:
+    1px solid
+    rgba(122,63,163,.15);
 
-    border-radius:25px;
+border-radius:25px;
 
-    text-align:center;
+text-align:center;
 
-    box-shadow:
-        0 20px 40px
-        rgba(0,0,0,.25);
+box-shadow:
+    0 20px 40px
+    rgba(0,0,0,.25);
 
-    animation:
-        popupIn .6s ease both;
+animation:
+    popupIn .6s ease both;
+
 }
 
 .popup-heart{
-    font-size:60px;
+font-size:60px;
 
-    line-height:1;
+line-height:1;
 
-    margin-bottom:15px;
+margin-bottom:15px;
+
 }
 
 .popup-card h2{
-    margin-bottom:15px;
+margin-bottom:15px;
 
-    font-family:
-        "Dancing Script",
-        cursive;
+font-family:
+    "Dancing Script",
+    cursive;
 
-    color:#b3317a;
+color:#b3317a;
 
-    font-size:2.3rem;
+font-size:2.3rem;
+
 }
 
 .popup-card p{
-    margin-bottom:12px;
+margin-bottom:12px;
 
-    font-size:1.1rem;
+font-size:1.1rem;
 
-    line-height:1.7;
+line-height:1.7;
+
 }
 
 #continueBtn{
-    margin-top:20px;
+margin-top:20px;
 
-    padding:
-        14px
-        35px;
+padding:
+    14px
+    35px;
 
-    border:none;
+border:none;
 
-    border-radius:50px;
+border-radius:50px;
 
-    background:
-        linear-gradient(
-            135deg,
-            #ff6b93,
-            #b84fd6
-        );
+background:
+    linear-gradient(
+        135deg,
+        #ff6b93,
+        #b84fd6
+    );
 
-    color:white;
+color:white;
 
-    cursor:pointer;
+cursor:pointer;
 
-    font-size:1rem;
+font-size:1rem;
 
-    font-weight:bold;
+font-weight:bold;
 
-    box-shadow:
-        0 8px 20px
-        rgba(184,79,214,.22);
+box-shadow:
+    0 8px 20px
+    rgba(184,79,214,.22);
 
-    transition:
-        transform .25s ease,
-        box-shadow .25s ease;
+transition:
+    transform .25s ease,
+    box-shadow .25s ease;
+
 }
 
 #continueBtn:hover{
-    transform:
-        translateY(-2px)
-        scale(1.04);
+transform:
+translateY(-2px)
+scale(1.04);
 
-    box-shadow:
-        0 12px 25px
-        rgba(184,79,214,.3);
+box-shadow:
+    0 12px 25px
+    rgba(184,79,214,.3);
+
 }
 
 #continueBtn:active{
-    transform:scale(.97);
+transform:scale(.97);
 }
 
-
 /* =========================================================
-   MUSIC BUTTON
-   ========================================================= */
+MUSIC BUTTON
+========================================================= */
 
 .music-btn{
-    position:fixed;
+position:fixed;
 
-    top:20px;
+top:20px;
 
-    right:20px;
+right:20px;
 
-    z-index:999;
+z-index:999;
 
-    padding:
-        12px
-        22px;
+padding:
+    12px
+    22px;
 
-    border:none;
+border:none;
 
-    border-radius:50px;
+border-radius:50px;
 
-    background:
-        linear-gradient(
-            135deg,
-            #ff6b93,
-            #b84fd6
-        );
+background:
+    linear-gradient(
+        135deg,
+        #ff6b93,
+        #b84fd6
+    );
 
-    color:white;
+color:white;
 
-    font-family:
-        Arial,
-        Helvetica,
-        sans-serif;
+font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
 
-    font-weight:bold;
+font-weight:bold;
 
-    cursor:pointer;
+cursor:pointer;
 
-    box-shadow:
-        0 10px 25px
-        rgba(0,0,0,.2);
+box-shadow:
+    0 10px 25px
+    rgba(0,0,0,.2);
 
-    transition:
-        transform .25s ease,
-        box-shadow .25s ease;
+transition:
+    transform .25s ease,
+    box-shadow .25s ease;
+
 }
 
 .music-btn:hover{
-    transform:scale(1.05);
+transform:scale(1.05);
 
-    box-shadow:
-        0 12px 28px
-        rgba(0,0,0,.24);
+box-shadow:
+    0 12px 28px
+    rgba(0,0,0,.24);
+
 }
 
 .music-btn:active{
-    transform:scale(.96);
+transform:scale(.96);
 }
 
-
 /* =========================================================
-   FLOATING HEARTS
-   ========================================================= */
+FLOATING HEARTS
+========================================================= */
 
 .heart{
-    position:fixed;
+position:fixed;
 
-    left:0;
+left:0;
 
-    bottom:-80px;
+bottom:-80px;
 
-    width:22px;
+width:22px;
 
-    pointer-events:none;
+pointer-events:none;
 
-    user-select:none;
+user-select:none;
 
-    z-index:3;
+z-index:3;
 
-    opacity:.72;
+opacity:.72;
 
-    animation:
-        floatHeart linear infinite;
+animation:
+    floatHeart linear infinite;
 
-    filter:
-        drop-shadow(
-            0 2px 5px
-            rgba(120,40,100,.15)
-        );
+filter:
+    drop-shadow(
+        0 2px 5px
+        rgba(120,40,100,.15)
+    );
 
-    will-change:
-        transform,
-        opacity;
+will-change:
+    transform,
+    opacity;
+
 }
 
-
 /* =========================================================
-   FALLING FLOWERS / PETALS
-   ========================================================= */
+FALLING FLOWERS / PETALS
+========================================================= */
 
 .petal{
-    position:fixed;
+position:fixed;
 
-    top:-80px;
+top:-80px;
 
-    left:0;
+left:0;
 
-    width:auto;
+width:auto;
 
-    pointer-events:none;
+pointer-events:none;
 
-    user-select:none;
+user-select:none;
 
-    z-index:3;
+z-index:3;
 
-    opacity:.58;
+opacity:.58;
 
-    line-height:1;
+line-height:1;
 
-    animation:
-        fallPetal linear infinite;
+animation:
+    fallPetal linear infinite;
 
-    filter:
-        drop-shadow(
-            0 2px 5px
-            rgba(120,40,100,.10)
-        );
+filter:
+    drop-shadow(
+        0 2px 5px
+        rgba(120,40,100,.10)
+    );
 
-    will-change:
-        transform,
-        opacity;
+will-change:
+    transform,
+    opacity;
+
 }
 
-
 /* =========================================================
-   GOLD CONFETTI
-   ========================================================= */
+GOLD CONFETTI
+========================================================= */
 
 .confetti{
-    position:fixed;
+position:fixed;
 
-    top:-20px;
+top:-20px;
 
-    left:0;
+left:0;
 
-    width:7px;
+width:7px;
 
-    height:7px;
+height:7px;
 
-    border-radius:50%;
+border-radius:50%;
 
-    background:#d4af37;
+background:#d4af37;
 
-    opacity:.52;
+opacity:.52;
 
-    pointer-events:none;
+pointer-events:none;
 
-    user-select:none;
+user-select:none;
 
-    z-index:3;
+z-index:3;
 
-    animation:
-        confettiFall linear infinite;
+animation:
+    confettiFall linear infinite;
 
-    will-change:
-        transform,
-        opacity;
+will-change:
+    transform,
+    opacity;
+
 }
 
-
 /* =========================================================
-   ANIMATIONS
-   ========================================================= */
+ANIMATIONS
+========================================================= */
 
 @keyframes fadeUp{
 
-    from{
-        opacity:0;
+from{
+    opacity:0;
 
-        transform:
-            translateY(35px);
-    }
-
-    to{
-        opacity:1;
-
-        transform:
-            translateY(0);
-    }
+    transform:
+        translateY(35px);
 }
 
+to{
+    opacity:1;
+
+    transform:
+        translateY(0);
+}
+
+}
 
 @keyframes popupIn{
 
-    from{
-        opacity:0;
+from{
+    opacity:0;
 
-        transform:
-            translateY(20px)
-            scale(.96);
-    }
-
-    to{
-        opacity:1;
-
-        transform:
-            translateY(0)
-            scale(1);
-    }
+    transform:
+        translateY(20px)
+        scale(.96);
 }
 
+to{
+    opacity:1;
+
+    transform:
+        translateY(0)
+        scale(1);
+}
+
+}
 
 @keyframes pulse{
 
-    0%{
-        transform:scale(1);
-    }
-
-    50%{
-        transform:scale(1.13);
-    }
-
-    100%{
-        transform:scale(1);
-    }
+0%{
+    transform:scale(1);
 }
 
+50%{
+    transform:scale(1.13);
+}
+
+100%{
+    transform:scale(1);
+}
+
+}
 
 @keyframes softPulse{
 
-    0%,
-    100%{
-        opacity:.65;
-    }
-
-    50%{
-        opacity:1;
-    }
+0%,
+100%{
+    opacity:.65;
 }
 
+50%{
+    opacity:1;
+}
+
+}
 
 @keyframes floatHeart{
 
-    0%{
-        transform:
-            translate3d(
-                0,
-                110vh,
-                0
-            )
-            rotate(0deg);
+0%{
+    transform:
+        translate3d(
+            0,
+            110vh,
+            0
+        )
+        rotate(0deg);
 
-        opacity:0;
-    }
-
-    15%{
-        opacity:.72;
-    }
-
-    50%{
-        transform:
-            translate3d(
-                35px,
-                50vh,
-                0
-            )
-            rotate(180deg);
-    }
-
-    100%{
-        transform:
-            translate3d(
-                -25px,
-                -120px,
-                0
-            )
-            rotate(360deg);
-
-        opacity:0;
-    }
+    opacity:0;
 }
 
+15%{
+    opacity:.72;
+}
+
+50%{
+    transform:
+        translate3d(
+            35px,
+            50vh,
+            0
+        )
+        rotate(180deg);
+}
+
+100%{
+    transform:
+        translate3d(
+            -25px,
+            -120px,
+            0
+        )
+        rotate(360deg);
+
+    opacity:0;
+}
+
+}
 
 @keyframes fallPetal{
 
-    0%{
-        transform:
-            translate3d(
-                0,
-                -100px,
-                0
-            )
-            rotate(0deg);
+0%{
+    transform:
+        translate3d(
+            0,
+            -100px,
+            0
+        )
+        rotate(0deg);
 
-        opacity:0;
-    }
-
-    12%{
-        opacity:.58;
-    }
-
-    35%{
-        transform:
-            translate3d(
-                35px,
-                30vh,
-                0
-            )
-            rotate(120deg);
-    }
-
-    65%{
-        transform:
-            translate3d(
-                -35px,
-                65vh,
-                0
-            )
-            rotate(250deg);
-    }
-
-    100%{
-        transform:
-            translate3d(
-                45px,
-                115vh,
-                0
-            )
-            rotate(380deg);
-
-        opacity:0;
-    }
+    opacity:0;
 }
 
+12%{
+    opacity:.58;
+}
+
+35%{
+    transform:
+        translate3d(
+            35px,
+            30vh,
+            0
+        )
+        rotate(120deg);
+}
+
+65%{
+    transform:
+        translate3d(
+            -35px,
+            65vh,
+            0
+        )
+        rotate(250deg);
+}
+
+100%{
+    transform:
+        translate3d(
+            45px,
+            115vh,
+            0
+        )
+        rotate(380deg);
+
+    opacity:0;
+}
+
+}
 
 @keyframes confettiFall{
 
-    0%{
-        transform:
-            translate3d(
-                0,
-                -30px,
-                0
-            );
+0%{
+    transform:
+        translate3d(
+            0,
+            -30px,
+            0
+        );
 
-        opacity:0;
-    }
-
-    20%{
-        opacity:.52;
-    }
-
-    100%{
-        transform:
-            translate3d(
-                25px,
-                115vh,
-                0
-            );
-
-        opacity:0;
-    }
+    opacity:0;
 }
 
+20%{
+    opacity:.52;
+}
+
+100%{
+    transform:
+        translate3d(
+            25px,
+            115vh,
+            0
+        );
+
+    opacity:0;
+}
+
+}
 
 /* =========================================================
-   SELECTION
-   ========================================================= */
+SELECTION
+========================================================= */
 
 ::selection{
-    background:#d89edb;
+background:#d89edb;
 
-    color:#fff;
+color:#fff;
+
 }
 
-
 /* =========================================================
-   DESKTOP
-   ========================================================= */
+DESKTOP
+========================================================= */
 
 @media (min-width:768px){
 
-    .secret-letter{
-        font-size:18.5px;
+.secret-letter{
+    font-size:18.5px;
 
-        line-height:1.9;
-    }
-
-    .secret-letter > p{
-        margin-bottom:24px;
-    }
-
-    .letter-divider{
-        margin-top:35px;
-
-        margin-bottom:35px;
-    }
+    line-height:1.9;
 }
 
+.secret-letter > p{
+    margin-bottom:24px;
+}
+
+.letter-divider{
+    margin-top:35px;
+
+    margin-bottom:35px;
+}
+
+}
 
 /* =========================================================
-   TABLET
-   ========================================================= */
+TABLET
+========================================================= */
 
 @media (max-width:768px){
 
-    .card{
-        width:100%;
+.card{
+    width:100%;
 
-        padding:
-            45px
-            24px
-            75px;
-    }
-
-    .header{
-        gap:12px;
-
-        margin-bottom:25px;
-    }
-
-    .header-tulip{
-        width:90px;
-
-        max-width:23%;
-    }
-
-    h1{
-        font-size:2.4rem;
-    }
-
-    h2{
-        font-size:1.35rem;
-
-        letter-spacing:.5px;
-    }
-
-    .secret-letter{
-        max-width:100%;
-
-        padding:
-            15px
-            18px;
-
-        font-size:16.5px;
-
-        line-height:1.82;
-    }
-
-    .secret-letter::before{
-        background:
-            rgba(255,255,255,.11);
-
-        border-radius:24px;
-    }
-
-    .secret-letter > p{
-        max-width:100%;
-
-        margin-bottom:20px;
-    }
-
-    .letter-divider{
-        width:85%;
-
-        margin:
-            28px
-            auto;
-    }
-
-    .letter-quote{
-        max-width:92%;
-
-        padding:
-            10px
-            14px;
-    }
-
-    .music-btn{
-        top:12px;
-
-        right:12px;
-
-        padding:
-            10px
-            15px;
-
-        font-size:12px;
-    }
+    padding:
+        45px
+        24px
+        75px;
 }
 
+.header{
+    gap:12px;
+
+    margin-bottom:25px;
+}
+
+.header-tulip{
+    width:90px;
+
+    max-width:23%;
+}
+
+h1{
+    font-size:2.4rem;
+}
+
+h2{
+    font-size:1.35rem;
+
+    letter-spacing:.5px;
+}
+
+.secret-letter{
+    max-width:100%;
+
+    padding:
+        15px
+        18px;
+
+    font-size:16.5px;
+
+    line-height:1.82;
+}
+
+.secret-letter::before{
+    background:
+        rgba(255,255,255,.11);
+
+    border-radius:24px;
+}
+
+.secret-letter > p{
+    max-width:100%;
+
+    margin-bottom:20px;
+}
+
+.letter-divider{
+    width:85%;
+
+    margin:
+        28px
+        auto;
+}
+
+.letter-quote{
+    max-width:92%;
+
+    padding:
+        10px
+        14px;
+}
+
+.music-btn{
+    top:12px;
+
+    right:12px;
+
+    padding:
+        10px
+        15px;
+
+    font-size:12px;
+}
+
+}
 
 /* =========================================================
-   SMALL PHONES
-   ========================================================= */
+SMALL PHONES
+========================================================= */
 
 @media (max-width:480px){
 
-    .card{
-        padding:
-            40px
-            16px
-            65px;
-    }
-
-    /*
-     * Sou telefòn, foto a rete nan pwopòsyon li.
-     * Nou pa kite l lonje pou ranpli ekran an.
-     */
-    .background{
-        background-size:
-            100% auto,
-            contain;
-
-        background-position:
-            center top,
-            center top;
-    }
-
-    .header{
-        gap:6px;
-    }
-
-    .header-tulip{
-        width:72px;
-
-        max-width:23%;
-    }
-
-    h1{
-        font-size:2rem;
-    }
-
-    h2{
-        font-size:1.15rem;
-    }
-
-    .secret-letter{
-        font-size:16px;
-
-        line-height:1.78;
-
-        padding:
-            14px
-            10px;
-    }
-
-    .secret-letter::before{
-        background:
-            rgba(255,255,255,.10);
-
-        border-radius:20px;
-
-        backdrop-filter:
-            blur(.5px);
-
-        -webkit-backdrop-filter:
-            blur(.5px);
-    }
-
-    .secret-letter > p{
-        margin-bottom:19px;
-    }
-
-    .secret-intro p:first-child{
-        font-size:19px;
-    }
-
-    .miamor-line{
-        font-size:27px !important;
-    }
-
-    .letter-divider{
-        width:88%;
-
-        gap:9px;
-
-        margin:
-            25px
-            auto;
-    }
-
-    .letter-quote{
-        max-width:94%;
-
-        padding:
-            9px
-            12px;
-    }
-
-    .music-btn{
-        top:10px;
-
-        right:10px;
-
-        padding:
-            9px
-            14px;
-
-        font-size:12px;
-    }
-
-    .popup-card{
-        padding:
-            28px
-            20px;
-    }
-
-    .popup-card h2{
-        font-size:2rem;
-    }
-
-    .intro-content h2{
-        font-size:2.4rem;
-    }
-
-    .intro-heart{
-        font-size:60px;
-    }
-
-    #openSurpriseBtn{
-        width:100%;
-
-        max-width:300px;
-    }
+.card{
+    padding:
+        40px
+        16px
+        65px;
 }
 
+/*
+ * IMPORTANT:
+ * Nou pa itilize "cover" sou telefòn.
+ * Sa anpeche foto a vin twò zoum.
+ *
+ * Foto a rete nan pwopòsyon li epi li
+ * kontinye repete vètikal si paj la long.
+ */
+.background{
+    background-size:
+        100% auto,
+        100% auto;
+
+    background-position:
+        center top,
+        center top;
+
+    background-repeat:
+        repeat-y,
+        repeat-y;
+}
+
+.header{
+    gap:6px;
+}
+
+.header-tulip{
+    width:72px;
+
+    max-width:23%;
+}
+
+h1{
+    font-size:2rem;
+}
+
+h2{
+    font-size:1.15rem;
+}
+
+.secret-letter{
+    font-size:16px;
+
+    line-height:1.78;
+
+    padding:
+        14px
+        10px;
+}
+
+.secret-letter::before{
+    background:
+        rgba(255,255,255,.10);
+
+    border-radius:20px;
+
+    backdrop-filter:
+        blur(.5px);
+
+    -webkit-backdrop-filter:
+        blur(.5px);
+}
+
+.secret-letter > p{
+    margin-bottom:19px;
+}
+
+.secret-intro p:first-child{
+    font-size:19px;
+}
+
+.miamor-line{
+    font-size:27px !important;
+}
+
+.letter-divider{
+    width:88%;
+
+    gap:9px;
+
+    margin:
+        25px
+        auto;
+}
+
+.letter-quote{
+    max-width:94%;
+
+    padding:
+        9px
+        12px;
+}
+
+.music-btn{
+    top:10px;
+
+    right:10px;
+
+    padding:
+        9px
+        14px;
+
+    font-size:12px;
+}
+
+.popup-card{
+    padding:
+        28px
+        20px;
+}
+
+.popup-card h2{
+    font-size:2rem;
+}
+
+.intro-content h2{
+    font-size:2.4rem;
+}
+
+.intro-heart{
+    font-size:60px;
+}
+
+#openSurpriseBtn{
+    width:100%;
+
+    max-width:300px;
+}
+
+}
 
 /* =========================================================
-   ACCESSIBILITY / PERFORMANCE
-   ========================================================= */
+ACCESSIBILITY / PERFORMANCE
+========================================================= */
 
 @media (prefers-reduced-motion:reduce){
 
-    html{
-        scroll-behavior:auto;
-    }
+html{
+    scroll-behavior:auto;
+}
 
-    *,
-    *::before,
-    *::after{
-        animation-duration:.01ms !important;
-        animation-iteration-count:1 !important;
-        transition-duration:.01ms !important;
-    }
+*,
+*::before,
+*::after{
+    animation-duration:.01ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:.01ms !important;
+}
+
 }
