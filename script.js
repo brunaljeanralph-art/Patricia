@@ -4,8 +4,39 @@
 
 document.addEventListener("DOMContentLoaded", () => {
 
-    /*
+  
     /* =====================================================
+       OUVRIR LA SURPRISE
+       ===================================================== */
+
+    const introScreen =
+        document.getElementById("intro-screen");
+
+    const openSurpriseBtn =
+        document.getElementById("openSurpriseBtn");
+
+    const welcomePopup =
+        document.getElementById("welcome-popup");
+
+    if(openSurpriseBtn){
+
+        openSurpriseBtn.addEventListener("click", () => {
+
+            /* Fè premye ekran an disparèt */
+            introScreen.classList.add("hide-intro");
+
+            /* Louvri popup la apre transition */
+            setTimeout(() => {
+
+                if(welcomePopup){
+                    welcomePopup.classList.remove("hidden");
+                }
+
+            }, 650);
+
+        });
+
+    } =====================================================
        INTRO SCREEN → OUVRI SURPRISE
        ===================================================== */
 
