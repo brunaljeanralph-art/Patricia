@@ -1,47 +1,4 @@
 /* =========================================================
-   BOUTON OUVERTURE DE LA SURPRISE
-   ========================================================= */
-
-#openSurpriseBtn{
-    margin-top:28px;
-    padding:14px 30px;
-
-    border:none;
-    border-radius:999px;
-
-    background:linear-gradient(
-        135deg,
-        #ff6b93,
-        #b84fd6
-    );
-
-    color:white;
-
-    font-family:Arial, Helvetica, sans-serif;
-    font-size:15px;
-    font-weight:700;
-
-    cursor:pointer;
-
-    box-shadow:
-        0 8px 22px rgba(184,79,214,.28);
-
-    transition:
-        transform .25s ease,
-        box-shadow .25s ease;
-}
-
-#openSurpriseBtn:hover{
-    transform:translateY(-3px) scale(1.03);
-
-    box-shadow:
-        0 12px 28px rgba(184,79,214,.38);
-}
-
-#openSurpriseBtn:active{
-    transform:scale(.96);
-}
-/* =========================================================
    PATRICIA ❤️ — PREMIUM LETTER STYLE
    ========================================================= */
 
@@ -77,7 +34,7 @@ body{
     top:0;
     left:0;
     width:100%;
-    height:100%;
+    min-height:100%;
 
     z-index:0;
     pointer-events:none;
@@ -114,8 +71,6 @@ body{
     overflow:visible;
 }
 
-/* Tout bagay nan card rete devan background lan */
-
 .card > *{
     position:relative;
     z-index:4;
@@ -138,30 +93,56 @@ body{
     text-align:center;
 
     position:relative;
-    z-index:5;
+    z-index:10;
 }
 
 .header-tulip{
-    display:block;
+    display:block !important;
 
-    width:105px;
-    max-width:17%;
-
+    width:150px;
     height:auto;
+    max-width:22%;
 
     flex-shrink:0;
+
+    position:relative;
+    z-index:5;
 
     pointer-events:none;
     user-select:none;
 
+    mix-blend-mode:multiply;
+
     filter:
         drop-shadow(
-            0 8px 14px rgba(80,40,90,.18)
+            0 8px 15px rgba(80,35,90,.18)
         );
+
+    transition:
+        transform .5s ease,
+        filter .5s ease;
 }
 
 .header-tulip.right{
     transform:scaleX(-1);
+}
+
+.header-tulip:hover{
+    transform:
+        translateY(-4px)
+        scale(1.02);
+
+    filter:
+        drop-shadow(
+            0 12px 20px rgba(80,35,90,.24)
+        );
+}
+
+.header-tulip.right:hover{
+    transform:
+        scaleX(-1)
+        translateY(-4px)
+        scale(1.02);
 }
 
 .title{
@@ -171,7 +152,7 @@ body{
     text-align:center;
 
     position:relative;
-    z-index:6;
+    z-index:8;
 }
 
 /* =========================================================
@@ -236,59 +217,12 @@ h2{
 }
 
 /* =========================================================
-   NORMAL LETTER
-   ========================================================= */
-
-.letter{
-    position:relative;
-    z-index:4;
-
-    max-width:720px;
-
-    margin:auto;
-
-    font-size:1.35rem;
-
-    line-height:2;
-
-    text-align:center;
-
-    animation:fadeUp 1.2s ease;
-}
-
-.letter p{
-    margin-bottom:22px;
-}
-
-.highlight{
-    font-weight:bold;
-
-    font-size:1.45rem;
-
-    color:#9c296f;
-
-    font-style:italic;
-}
-
-.important{
-    font-size:2rem;
-
-    font-weight:bold;
-
-    color:#c02367;
-
-    text-transform:uppercase;
-
-    letter-spacing:1px;
-}
-
-/* =========================================================
    SECRET LETTER
    ========================================================= */
 
 .secret-letter{
     position:relative;
-    z-index:5;
+    z-index:8;
 
     width:100%;
     max-width:760px;
@@ -446,7 +380,7 @@ h2{
 
 .signature{
     position:relative;
-    z-index:5;
+    z-index:8;
 
     margin:42px auto 20px;
 
@@ -479,64 +413,13 @@ h2{
     color:#5E2B84;
 }
 
-.prince{
-    font-family:"Dancing Script",cursive;
-
-    font-size:2.2rem;
-
-    color:#8b2f7d;
-
-    text-shadow:
-        0 0 10px rgba(139,47,125,.16);
-}
-
-.signature h3{
-    font-family:"Dancing Script",cursive;
-
-    font-size:3.1rem;
-
-    color:#a52d73;
-
-    margin-top:15px;
-}
-
-/* =========================================================
-   HR + PS
-   ========================================================= */
-
-hr{
-    width:70%;
-
-    margin:35px auto;
-
-    border:none;
-
-    border-top:1px solid #d9bddf;
-}
-
-.ps{
-    color:#6b586f;
-
-    font-style:italic;
-
-    margin-top:25px;
-}
-
-.ps h4{
-    font-size:1.45rem;
-
-    margin-bottom:12px;
-
-    color:#8a5aa7;
-}
-
 /* =========================================================
    FINAL QUESTION
    ========================================================= */
 
 .final-question{
     position:relative;
-    z-index:5;
+    z-index:8;
 
     margin-top:38px;
 
@@ -573,26 +456,13 @@ hr{
    BUTTONS
    ========================================================= */
 
-.button-box{
-    margin-top:35px;
+#openSurpriseBtn{
+    margin-top:28px;
 
-    text-align:center;
-}
+    padding:14px 30px;
 
-.btn{
-    display:inline-block;
-
-    padding:16px 38px;
-
-    border-radius:50px;
-
-    text-decoration:none;
-
-    color:#fff;
-
-    font-weight:bold;
-
-    font-size:1.15rem;
+    border:none;
+    border-radius:999px;
 
     background:
         linear-gradient(
@@ -601,25 +471,40 @@ hr{
             #b84fd6
         );
 
-    box-shadow:
-        0 10px 25px rgba(184,79,214,.35);
+    color:#fff;
 
-    transition:.35s ease;
+    font-family:Arial,Helvetica,sans-serif;
+
+    font-size:15px;
+
+    font-weight:700;
+
+    cursor:pointer;
+
+    box-shadow:
+        0 8px 22px rgba(184,79,214,.28);
+
+    transition:
+        transform .25s ease,
+        box-shadow .25s ease;
 }
 
-.btn:hover{
+#openSurpriseBtn:hover{
     transform:
-        translateY(-5px)
-        scale(1.06);
+        translateY(-3px)
+        scale(1.03);
 
     box-shadow:
-        0 16px 35px rgba(184,79,214,.45);
-
-    letter-spacing:.8px;
+        0 12px 28px rgba(184,79,214,.38);
 }
 
-.btn:active{
-    transform:scale(.98);
+#openSurpriseBtn:active{
+    transform:scale(.96);
+}
+
+#openSurpriseBtn:focus-visible{
+    outline:3px solid rgba(122,63,163,.30);
+    outline-offset:4px;
 }
 
 .relire-letter{
@@ -662,7 +547,7 @@ hr{
 }
 
 /* =========================================================
-   HEARTS — PETALS — CONFETTI
+   HEARTS / PETALS / CONFETTI
    ========================================================= */
 
 .heart,
@@ -834,7 +719,21 @@ hr{
 
     z-index:9999;
 
-    transition:1s;
+    opacity:1;
+
+    visibility:visible;
+
+    transition:
+        opacity .65s ease,
+        visibility .65s ease;
+}
+
+#intro-screen.hide-intro{
+    opacity:0;
+
+    visibility:hidden;
+
+    pointer-events:none;
 }
 
 .intro-overlay{
@@ -857,6 +756,16 @@ hr{
 
     animation:
         fadeUp 1s ease;
+
+    transition:
+        opacity .5s ease,
+        transform .5s ease;
+}
+
+#intro-screen.hide-intro .intro-content{
+    opacity:0;
+
+    transform:scale(.96);
 }
 
 .intro-heart{
@@ -880,6 +789,9 @@ hr{
     font-size:1.2rem;
 
     color:#7b568c;
+
+    animation:
+        softPulse 2s ease-in-out infinite;
 }
 
 @keyframes pulse{
@@ -894,6 +806,17 @@ hr{
 
     100%{
         transform:scale(1);
+    }
+}
+
+@keyframes softPulse{
+
+    0%,100%{
+        opacity:.65;
+    }
+
+    50%{
+        opacity:1;
     }
 }
 
@@ -916,10 +839,14 @@ hr{
 
     align-items:center;
 
+    padding:20px;
+
     background:
         rgba(0,0,0,.45);
 
     z-index:9998;
+
+    backdrop-filter:blur(3px);
 }
 
 .popup-card{
@@ -997,6 +924,11 @@ hr{
     transform:scale(1.05);
 }
 
+#continueBtn:focus-visible{
+    outline:3px solid rgba(122,63,163,.30);
+    outline-offset:4px;
+}
+
 /* =========================================================
    MUSIC BUTTON
    ========================================================= */
@@ -1037,6 +969,11 @@ hr{
 
 .music-btn:hover{
     transform:scale(1.05);
+}
+
+.music-btn:focus-visible{
+    outline:3px solid rgba(122,63,163,.30);
+    outline-offset:4px;
 }
 
 /* =========================================================
@@ -1108,28 +1045,6 @@ hr{
         letter-spacing:.5px;
     }
 
-    .letter{
-        font-size:1.08rem;
-
-        line-height:1.9;
-    }
-
-    .highlight{
-        font-size:1.18rem;
-    }
-
-    .important{
-        font-size:1.55rem;
-    }
-
-    .prince{
-        font-size:1.9rem;
-    }
-
-    .signature h3{
-        font-size:2.7rem;
-    }
-
     .secret-letter{
         max-width:100%;
 
@@ -1156,16 +1071,17 @@ hr{
         padding:10px 14px;
     }
 
-    .btn{
-        display:block;
+    #openSurpriseBtn{
+        width:auto;
 
+        max-width:90%;
+
+        padding:13px 24px;
+    }
+
+    .relire-letter{
         width:100%;
-
-        text-align:center;
-
-        padding:15px;
-
-        font-size:1.05rem;
+        max-width:320px;
     }
 }
 
@@ -1242,145 +1158,47 @@ hr{
     .popup-card{
         padding:28px 20px;
     }
+
+    .popup-card h2{
+        font-size:2rem;
+    }
+
+    #openSurpriseBtn{
+        margin-top:24px;
+
+        width:auto;
+
+        font-size:14px;
+    }
+
+    .intro-heart{
+        font-size:60px;
+    }
+
+    .intro-content h2{
+        font-size:2.45rem;
+    }
+
+    .intro-content p{
+        font-size:1rem;
+    }
 }
+
 /* =========================================================
-   🌷 TULIPE PREMIUM — RETOUR À SA PLACE
+   REDUCED MOTION
    ========================================================= */
 
-.header{
-    position:relative;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    gap:25px;
-    flex-wrap:nowrap;
-    width:100%;
-    margin-bottom:30px;
-    z-index:10;
-}
+@media (prefers-reduced-motion:reduce){
 
-/* Tulipe.png retounen vizib */
-.header-tulip{
-    display:block !important;
-    width:150px;
-    height:auto;
-    max-width:22%;
-    flex-shrink:0;
-    position:relative;
-    z-index:5;
-    pointer-events:none;
-    user-select:none;
-
-    /* Evite background blan imaj la kraze prezantasyon an */
-    mix-blend-mode:multiply;
-
-    filter:
-        drop-shadow(0 8px 15px rgba(80,35,90,.18));
-
-    transition:
-        transform .5s ease,
-        filter .5s ease;
-}
-
-/* Si gen tulip sou bò dwat */
-.header-tulip.right{
-    transform:scaleX(-1);
-}
-
-/* Ti mouvman elegant */
-.header-tulip:hover{
-    transform:translateY(-4px) scale(1.02);
-    filter:
-        drop-shadow(0 12px 20px rgba(80,35,90,.24));
-}
-
-.header-tulip.right:hover{
-    transform:scaleX(-1) translateY(-4px) scale(1.02);
-}
-
-/* Tit la rete devan e byen lizib */
-.title{
-    position:relative;
-    z-index:8;
-    flex:1;
-}
-
-/* Pa kite bouquet la kache mesaj la */
-.secret-letter{
-    position:relative;
-    z-index:8;
-}
-
-/* Sou telefòn */
-@media (max-width:768px){
-
-    .header{
-        gap:12px;
-        margin-bottom:25px;
+    html{
+        scroll-behavior:auto;
     }
 
-    .header-tulip{
-        width:105px;
-        max-width:24%;
-    }
-
-    .title{
-        min-width:0;
-    }
-}
-
-@media (max-width:480px){
-
-    .header{
-        gap:6px;
-    }
-
-    .header-tulip{
-        width:72px;
-        max-width:23%;
-    }
-}
-/* =========================================================
-   INTRO CLICKABLE
-   ========================================================= */
-
-.intro-clickable{
-    cursor:pointer;
-}
-
-#intro-screen.hide-intro{
-    opacity:0;
-    visibility:hidden;
-    pointer-events:none;
-}
-
-#intro-screen.hide-intro .intro-content{
-    transform:scale(.96);
-    opacity:0;
-    transition:
-        opacity .6s ease,
-        transform .6s ease;
-}
-
-/* Ti mouvman pou fè premye ekran an santi l vivan */
-.intro-content{
-    cursor:pointer;
-    transition:
-        opacity .6s ease,
-        transform .6s ease;
-}
-
-.intro-content p{
-    animation:
-        softPulse 2s ease-in-out infinite;
-}
-
-@keyframes softPulse{
-    0%,100%{
-        opacity:.65;
-    }
-
-    50%{
-        opacity:1;
+    *,
+    *::before,
+    *::after{
+        animation-duration:.01ms !important;
+        animation-iteration-count:1 !important;
+        transition-duration:.01ms !important;
     }
 }
