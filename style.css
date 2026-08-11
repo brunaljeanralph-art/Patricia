@@ -1297,3 +1297,47 @@ hr{
         max-width:23%;
     }
 }
+/* =========================================================
+   INTRO CLICKABLE
+   ========================================================= */
+
+.intro-clickable{
+    cursor:pointer;
+}
+
+#intro-screen.hide-intro{
+    opacity:0;
+    visibility:hidden;
+    pointer-events:none;
+}
+
+#intro-screen.hide-intro .intro-content{
+    transform:scale(.96);
+    opacity:0;
+    transition:
+        opacity .6s ease,
+        transform .6s ease;
+}
+
+/* Ti mouvman pou fè premye ekran an santi l vivan */
+.intro-content{
+    cursor:pointer;
+    transition:
+        opacity .6s ease,
+        transform .6s ease;
+}
+
+.intro-content p{
+    animation:
+        softPulse 2s ease-in-out infinite;
+}
+
+@keyframes softPulse{
+    0%,100%{
+        opacity:.65;
+    }
+
+    50%{
+        opacity:1;
+    }
+}
