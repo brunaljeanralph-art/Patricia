@@ -4,10 +4,9 @@
 
 document.addEventListener("DOMContentLoaded", () => {
 
-
     /* =====================================================
-       OUVRIR LA SURPRISE
-    ===================================================== */
+       ELEMENTS
+       ===================================================== */
 
     const introScreen =
         document.getElementById("intro-screen");
@@ -18,28 +17,69 @@ document.addEventListener("DOMContentLoaded", () => {
     const welcomePopup =
         document.getElementById("welcome-popup");
 
-    if(openSurpriseBtn && introScreen){
+    const continueBtn =
+        document.getElementById("continueBtn");
+
+    const musicBtn =
+        document.getElementById("music-btn");
+
+    const music =
+        document.getElementById("bgMusic");
+
+    const ding =
+        document.getElementById("dingSound");
+
+
+    /* =====================================================
+       OUVRIR LA SURPRISE
+       ===================================================== */
+
+    let surpriseOpened = false;
+
+    function openSurprise(){
+
+        if(
+            surpriseOpened ||
+            !introScreen
+        ){
+            return;
+        }
+
+        surpriseOpened = true;
+
+        introScreen.classList.add(
+            "hide-intro"
+        );
+
+        introScreen.setAttribute(
+            "aria-hidden",
+            "true"
+        );
+
+        setTimeout(() => {
+
+            if(welcomePopup){
+
+                welcomePopup.classList.remove(
+                    "hidden"
+                );
+
+                welcomePopup.setAttribute(
+                    "aria-hidden",
+                    "false"
+                );
+
+            }
+
+        }, 650);
+    }
+
+
+    if(openSurpriseBtn){
 
         openSurpriseBtn.addEventListener(
             "click",
-            () => {
-
-                /* Fè premye ekran an disparèt */
-                introScreen.classList.add("hide-intro");
-
-                /*
-                 * Louvri popup la apre
-                 * transition la fini
-                 */
-                setTimeout(() => {
-
-                    if(welcomePopup){
-                        welcomePopup.classList.remove("hidden");
-                    }
-
-                }, 650);
-
-            }
+            openSurprise
         );
 
     }
@@ -47,14 +87,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
     /* =====================================================
        FULL PAGE BACKGROUND HEIGHT
-    ===================================================== */
+       ===================================================== */
 
     const background =
         document.querySelector(".background");
 
     function resizeBackground(){
 
-        if(!background) return;
+        if(!background){
+            return;
+        }
 
         const height =
             Math.max(
@@ -82,7 +124,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     /* =====================================================
        FLOATING HEARTS ❤️
-    ===================================================== */
+       ===================================================== */
 
     const heartSymbols = [
         "❤️",
@@ -96,7 +138,8 @@ document.addEventListener("DOMContentLoaded", () => {
         const heart =
             document.createElement("div");
 
-        heart.className = "heart";
+        heart.className =
+            "heart";
 
         heart.textContent =
             heartSymbols[
@@ -126,16 +169,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
     /* =====================================================
        FALLING PETALS 🌸
-    ===================================================== */
+       ===================================================== */
 
     for(let i = 0; i < 10; i++){
 
         const petal =
             document.createElement("div");
 
-        petal.className = "petal";
+        petal.className =
+            "petal";
 
-        petal.textContent = "🌸";
+        petal.textContent =
+            "🌸";
 
         petal.style.left =
             Math.random() * 100 + "vw";
@@ -157,7 +202,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     /* =====================================================
        GOLD CONFETTI ✨
-    ===================================================== */
+       ===================================================== */
 
     for(let i = 0; i < 12; i++){
 
@@ -183,30 +228,26 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       AUDIO
-    ===================================================== */
+       AUDIO SETUP
+       ===================================================== */
 
-    const music =
-        new Audio("assets/music.mp3");
+    if(music){
 
-    const ding =
-        new Audio("assets/ding.mp3");
+        music.loop = true;
+        music.volume = 0.35;
 
-    music.loop = true;
+    }
 
-    music.volume = 0.35;
+    if(ding){
 
-    ding.volume = 0.65;
+        ding.volume = 0.65;
+
+    }
 
 
     /* =====================================================
        CONTINUE BUTTON
-    ===================================================== */
-
-    const continueBtn =
-        document.getElementById(
-            "continueBtn"
-        );
+       ===================================================== */
 
     if(continueBtn){
 
@@ -214,42 +255,52 @@ document.addEventListener("DOMContentLoaded", () => {
             "click",
             () => {
 
-                /*
-                 * Petit son
-                 */
+                if(ding){
 
-                ding.currentTime = 0;
+                    ding.currentTime = 0;
 
-                ding.play().catch(
-                    () => {}
-                );
+                    ding.play().catch(
+                        () => {}
+                    );
 
+                }
 
-                /*
-                 * Musique
-                 */
+                if(music){
 
-                music.play().catch(
-                    () => {}
-                );
+                    music.play().catch(
+                        () => {}
+                    );
+
+                }
+
+                if(welcomePopup){
+
+                    welcomePopup.classList.add(
+                        "hidden"
+                    );
+
+                    welcomePopup.setAttribute(
+                        "aria-hidden",
+                        "true"
+                    );
+
+                }
+
+                resizeBackground();
 
             }
         );
+
     }
 
 
     /* =====================================================
        MUSIC BUTTON
-    ===================================================== */
+       ===================================================== */
 
-    const musicBtn =
-        document.querySelector(
-            ".music-btn"
-        );
+    let playing = false;
 
     if(musicBtn){
-
-        let playing = false;
 
         musicBtn.textContent =
             "🔇 Musique";
@@ -257,6 +308,10 @@ document.addEventListener("DOMContentLoaded", () => {
         musicBtn.addEventListener(
             "click",
             () => {
+
+                if(!music){
+                    return;
+                }
 
                 if(!playing){
 
@@ -269,7 +324,9 @@ document.addEventListener("DOMContentLoaded", () => {
                                 "🔊 Musique";
 
                         })
-                        .catch(() => {});
+                        .catch(
+                            () => {}
+                        );
 
                 }else{
 
@@ -280,39 +337,17 @@ document.addEventListener("DOMContentLoaded", () => {
                     musicBtn.textContent =
                         "🔇 Musique";
                 }
-            }
-        );
-    }
-
-
-    /* =====================================================
-       POPUP
-    ===================================================== */
-
-    const popup =
-        document.getElementById(
-            "welcome-popup"
-        );
-
-    if(continueBtn && popup){
-
-        continueBtn.addEventListener(
-            "click",
-            () => {
-
-                popup.classList.add(
-                    "hidden"
-                );
 
             }
         );
+
     }
 
 
     /* =====================================================
        KEEP BACKGROUND CORRECT AFTER
        DYNAMIC CONTENT CHANGES
-    ===================================================== */
+       ===================================================== */
 
     const observer =
         new MutationObserver(() => {
@@ -324,9 +359,19 @@ document.addEventListener("DOMContentLoaded", () => {
     observer.observe(
         document.body,
         {
-            childList: true,
-            subtree: true
+            childList:true,
+            subtree:true
         }
+    );
+
+
+    /* =====================================================
+       FINAL PAGE READY
+       ===================================================== */
+
+    setTimeout(
+        resizeBackground,
+        100
     );
 
 });
