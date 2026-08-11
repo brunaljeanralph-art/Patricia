@@ -1,247 +1,291 @@
+/* =========================================================
+   PATRICIA ❤️ — PREMIUM INTERACTIONS
+   ========================================================= */
+
 document.addEventListener("DOMContentLoaded", () => {
 
-    const body = document.body;
+    /* =====================================================
+       FULL PAGE BACKGROUND HEIGHT
+       ===================================================== */
 
-    const intro = document.getElementById("intro-screen");
-    const popup = document.getElementById("welcome-popup");
-    const continueBtn = document.getElementById("continueBtn");
+    const background =
+        document.querySelector(".background");
 
-    const musicBtn = document.getElementById("music-btn");
-    const bgMusic = document.getElementById("bgMusic");
-    const dingSound = document.getElementById("dingSound");
+    function resizeBackground(){
 
-    const rand = (min, max) =>
-        Math.random() * (max - min) + min;
+        if(!background) return;
 
+        const height =
+            Math.max(
+                document.body.scrollHeight,
+                document.documentElement.scrollHeight,
+                window.innerHeight
+            );
 
-    /* =========================
-       INTRO
-    ========================= */
-
-    setTimeout(() => {
-
-        if (!intro) return;
-
-        intro.style.opacity = "0";
-
-        setTimeout(() => {
-
-            intro.style.display = "none";
-
-            if (popup) {
-                popup.classList.remove("hidden");
-            }
-
-        }, 1000);
-
-    }, 3000);
-
-
-    /* =========================
-       POPUP + DING
-    ========================= */
-
-    if (continueBtn) {
-
-        continueBtn.addEventListener("click", () => {
-
-            if (dingSound) {
-
-                dingSound.currentTime = 0;
-
-                dingSound.play().catch(() => {});
-
-            }
-
-            if (popup) {
-                popup.style.display = "none";
-            }
-
-        });
-
+        background.style.height =
+            height + "px";
     }
 
+    resizeBackground();
 
-    /* =========================
-       MUSIC
-    ========================= */
+    window.addEventListener(
+        "resize",
+        resizeBackground
+    );
 
-    if (musicBtn && bgMusic) {
-
-        musicBtn.addEventListener("click", () => {
-
-            bgMusic.play()
-                .then(() => {
-
-                    musicBtn.innerHTML =
-                        "🎵 Musique activée";
-
-                    musicBtn.disabled = true;
-
-                })
-                .catch(() => {
-
-                    musicBtn.innerHTML =
-                        "🎵 Appuie pour activer";
-
-                });
-
-        });
-
-    }
+    window.addEventListener(
+        "load",
+        resizeBackground
+    );
 
 
-    /* =========================
-       FLOATING ELEMENTS
-    ========================= */
+    /* =====================================================
+       FLOATING HEARTS ❤️
+       ===================================================== */
 
-    function createFloatingElement(
-        className,
-        emoji,
-        left,
-        duration,
-        size
-    ) {
+    const heartSymbols = [
+        "❤️",
+        "💗",
+        "💜",
+        "💕"
+    ];
 
-        const el = document.createElement("div");
+    for(let i = 0; i < 12; i++){
 
-        el.className = className;
-
-        el.textContent = emoji;
-
-        el.style.left = left + "vw";
-
-        el.style.bottom = "-10vh";
-
-        el.style.fontSize = size + "px";
-
-        el.style.animationDuration =
-            duration + "s";
-
-        body.appendChild(el);
-
-        setTimeout(() => {
-
-            el.remove();
-
-        }, duration * 1000 + 500);
-
-    }
-
-
-    /* =========================
-       HEARTS
-    ========================= */
-
-    function createHeart() {
-
-        createFloatingElement(
-            "heart",
-            "❤️",
-            rand(0, 100),
-            rand(8, 14),
-            rand(16, 24)
-        );
-
-    }
-
-
-    /* =========================
-       PETALS
-    ========================= */
-
-    function createPetal() {
-
-        createFloatingElement(
-            "petal",
-            "🌷",
-            rand(0, 100),
-            rand(10, 16),
-            rand(16, 28)
-        );
-
-    }
-
-
-    /* =========================
-       CONFETTI
-    ========================= */
-
-    function createConfetti() {
-
-        const el =
+        const heart =
             document.createElement("div");
 
-        el.className = "confetti";
+        heart.className = "heart";
 
-        el.style.left =
-            rand(0, 100) + "vw";
+        heart.textContent =
+            heartSymbols[
+                Math.floor(
+                    Math.random() *
+                    heartSymbols.length
+                )
+            ];
 
-        el.style.top = "-2vh";
+        heart.style.left =
+            Math.random() * 100 + "vw";
 
-        const duration =
-            rand(6, 12);
+        heart.style.animationDuration =
+            (10 + Math.random() * 10) + "s";
 
-        el.style.animationDuration =
-            duration + "s";
+        heart.style.animationDelay =
+            (-Math.random() * 15) + "s";
 
-        body.appendChild(el);
+        heart.style.fontSize =
+            (14 + Math.random() * 12) + "px";
 
-        setTimeout(() => {
-
-            el.remove();
-
-        }, duration * 1000 + 500);
-
+        document.body.appendChild(
+            heart
+        );
     }
 
 
-    /* =========================
-       INITIAL ANIMATIONS
-    ========================= */
+    /* =====================================================
+       FALLING PETALS 🌸
+       ===================================================== */
 
-    for (let i = 0; i < 6; i++) {
+    for(let i = 0; i < 10; i++){
 
-        setTimeout(
-            createHeart,
-            i * 350
+        const petal =
+            document.createElement("div");
+
+        petal.className = "petal";
+
+        petal.textContent = "🌸";
+
+        petal.style.left =
+            Math.random() * 100 + "vw";
+
+        petal.style.animationDuration =
+            (9 + Math.random() * 10) + "s";
+
+        petal.style.animationDelay =
+            (-Math.random() * 15) + "s";
+
+        petal.style.fontSize =
+            (14 + Math.random() * 10) + "px";
+
+        document.body.appendChild(
+            petal
         );
-
-        setTimeout(
-            createPetal,
-            i * 500
-        );
-
     }
 
 
-    for (let i = 0; i < 12; i++) {
+    /* =====================================================
+       GOLD CONFETTI ✨
+       ===================================================== */
 
-        setTimeout(
-            createConfetti,
-            i * 250
+    for(let i = 0; i < 12; i++){
+
+        const confetti =
+            document.createElement("div");
+
+        confetti.className =
+            "confetti";
+
+        confetti.style.left =
+            Math.random() * 100 + "vw";
+
+        confetti.style.animationDuration =
+            (7 + Math.random() * 8) + "s";
+
+        confetti.style.animationDelay =
+            (-Math.random() * 10) + "s";
+
+        document.body.appendChild(
+            confetti
         );
-
     }
 
 
-    /* =========================
-       CONTINUOUS ANIMATIONS
-    ========================= */
+    /* =====================================================
+       AUDIO
+       ===================================================== */
 
-    setInterval(
-        createHeart,
-        1800
-    );
+    const music =
+        new Audio("assets/music.mp3");
 
-    setInterval(
-        createPetal,
-        2400
-    );
+    const ding =
+        new Audio("assets/ding.mp3");
 
-    setInterval(
-        createConfetti,
-        900
+    music.loop = true;
+
+    music.volume = 0.35;
+
+    ding.volume = 0.65;
+
+
+    /* =====================================================
+       CONTINUE BUTTON
+       ===================================================== */
+
+    const continueBtn =
+        document.getElementById(
+            "continueBtn"
+        );
+
+    if(continueBtn){
+
+        continueBtn.addEventListener(
+            "click",
+            () => {
+
+                /*
+                 * Petit son
+                 */
+
+                ding.currentTime = 0;
+
+                ding.play().catch(
+                    () => {}
+                );
+
+
+                /*
+                 * Musique
+                 */
+
+                music.play().catch(
+                    () => {}
+                );
+
+            }
+        );
+    }
+
+
+    /* =====================================================
+       MUSIC BUTTON
+       ===================================================== */
+
+    const musicBtn =
+        document.querySelector(
+            ".music-btn"
+        );
+
+    if(musicBtn){
+
+        let playing = false;
+
+        musicBtn.textContent =
+            "🔇 Musique";
+
+        musicBtn.addEventListener(
+            "click",
+            () => {
+
+                if(!playing){
+
+                    music.play()
+                        .then(() => {
+
+                            playing = true;
+
+                            musicBtn.textContent =
+                                "🔊 Musique";
+
+                        })
+                        .catch(() => {});
+
+                }else{
+
+                    music.pause();
+
+                    playing = false;
+
+                    musicBtn.textContent =
+                        "🔇 Musique";
+                }
+            }
+        );
+    }
+
+
+    /* =====================================================
+       POPUP
+       ===================================================== */
+
+    const popup =
+        document.getElementById(
+            "welcome-popup"
+        );
+
+    if(continueBtn && popup){
+
+        continueBtn.addEventListener(
+            "click",
+            () => {
+
+                popup.classList.add(
+                    "hidden"
+                );
+
+            }
+        );
+    }
+
+
+    /* =====================================================
+       KEEP BACKGROUND CORRECT AFTER
+       DYNAMIC CONTENT CHANGES
+       ===================================================== */
+
+    const observer =
+        new MutationObserver(() => {
+
+            resizeBackground();
+
+        });
+
+    observer.observe(
+        document.body,
+        {
+            childList:true,
+            subtree:true
+        }
     );
 
 });
