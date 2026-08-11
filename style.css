@@ -1200,3 +1200,100 @@ hr{
         padding:28px 20px;
     }
 }
+/* =========================================================
+   🌷 TULIPE PREMIUM — RETOUR À SA PLACE
+   ========================================================= */
+
+.header{
+    position:relative;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:25px;
+    flex-wrap:nowrap;
+    width:100%;
+    margin-bottom:30px;
+    z-index:10;
+}
+
+/* Tulipe.png retounen vizib */
+.header-tulip{
+    display:block !important;
+    width:150px;
+    height:auto;
+    max-width:22%;
+    flex-shrink:0;
+    position:relative;
+    z-index:5;
+    pointer-events:none;
+    user-select:none;
+
+    /* Evite background blan imaj la kraze prezantasyon an */
+    mix-blend-mode:multiply;
+
+    filter:
+        drop-shadow(0 8px 15px rgba(80,35,90,.18));
+
+    transition:
+        transform .5s ease,
+        filter .5s ease;
+}
+
+/* Si gen tulip sou bò dwat */
+.header-tulip.right{
+    transform:scaleX(-1);
+}
+
+/* Ti mouvman elegant */
+.header-tulip:hover{
+    transform:translateY(-4px) scale(1.02);
+    filter:
+        drop-shadow(0 12px 20px rgba(80,35,90,.24));
+}
+
+.header-tulip.right:hover{
+    transform:scaleX(-1) translateY(-4px) scale(1.02);
+}
+
+/* Tit la rete devan e byen lizib */
+.title{
+    position:relative;
+    z-index:8;
+    flex:1;
+}
+
+/* Pa kite bouquet la kache mesaj la */
+.secret-letter{
+    position:relative;
+    z-index:8;
+}
+
+/* Sou telefòn */
+@media (max-width:768px){
+
+    .header{
+        gap:12px;
+        margin-bottom:25px;
+    }
+
+    .header-tulip{
+        width:105px;
+        max-width:24%;
+    }
+
+    .title{
+        min-width:0;
+    }
+}
+
+@media (max-width:480px){
+
+    .header{
+        gap:6px;
+    }
+
+    .header-tulip{
+        width:72px;
+        max-width:23%;
+    }
+}
