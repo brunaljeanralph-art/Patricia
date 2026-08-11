@@ -65,20 +65,20 @@ body{
 
     background-color:#eee3f6;
 
+    /*
+     * Nou kite foto a nan pwopòsyon orijinal li.
+     * Sa anpeche background.png lonje oswa twò zoomé.
+     */
     background-image:
         linear-gradient(
-            rgba(255,255,255,.08),
-            rgba(255,255,255,.08)
+            rgba(255,255,255,.04),
+            rgba(255,255,255,.04)
         ),
         url("assets/background.png");
 
-    /*
-     * Nou pa itilize 100% 100%.
-     * Sa anpeche imaj la detire/deforme.
-     */
     background-size:
         100% auto,
-        100% auto;
+        contain;
 
     background-position:
         center top,
@@ -289,6 +289,14 @@ h2{
 
     margin:0 auto;
 
+    /*
+     * Ti espas andedan an ede tèks la respire
+     * san li pa kache background lan.
+     */
+    padding:
+        18px
+        24px;
+
     font-family:
         Georgia,
         "Times New Roman",
@@ -302,6 +310,38 @@ h2{
     color:#34283a;
 
     text-align:center;
+}
+
+
+/*
+ * Ti voile transparan dèyè tèks la.
+ *
+ * Li pa yon gwo bwat blan.
+ * Li sèlman fè tèks la pi fasil pou li
+ * pandan background lan toujou vizib.
+ */
+
+.secret-letter::before{
+    content:"";
+
+    position:absolute;
+
+    inset:0;
+
+    z-index:-1;
+
+    background:
+        rgba(255,255,255,.13);
+
+    border-radius:28px;
+
+    backdrop-filter:
+        blur(1px);
+
+    -webkit-backdrop-filter:
+        blur(1px);
+
+    pointer-events:none;
 }
 
 .secret-letter > p{
@@ -1377,9 +1417,20 @@ h2{
     .secret-letter{
         max-width:100%;
 
+        padding:
+            15px
+            18px;
+
         font-size:16.5px;
 
         line-height:1.82;
+    }
+
+    .secret-letter::before{
+        background:
+            rgba(255,255,255,.11);
+
+        border-radius:24px;
     }
 
     .secret-letter > p{
@@ -1431,6 +1482,20 @@ h2{
             65px;
     }
 
+    /*
+     * Sou telefòn, foto a rete nan pwopòsyon li.
+     * Nou pa kite l lonje pou ranpli ekran an.
+     */
+    .background{
+        background-size:
+            100% auto,
+            contain;
+
+        background-position:
+            center top,
+            center top;
+    }
+
     .header{
         gap:6px;
     }
@@ -1453,6 +1518,23 @@ h2{
         font-size:16px;
 
         line-height:1.78;
+
+        padding:
+            14px
+            10px;
+    }
+
+    .secret-letter::before{
+        background:
+            rgba(255,255,255,.10);
+
+        border-radius:20px;
+
+        backdrop-filter:
+            blur(.5px);
+
+        -webkit-backdrop-filter:
+            blur(.5px);
     }
 
     .secret-letter > p{
