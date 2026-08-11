@@ -4,7 +4,39 @@
 
 document.addEventListener("DOMContentLoaded", () => {
 
+    /*
     /* =====================================================
+       INTRO SCREEN → OUVRI SURPRISE
+       ===================================================== */
+
+    const introScreen =
+        document.getElementById("intro-screen");
+
+    const welcomePopup =
+        document.getElementById("welcome-popup");
+
+    if(introScreen){
+
+        introScreen.addEventListener("click", () => {
+
+            /* Fè intro a disparèt */
+            introScreen.classList.add("hide-intro");
+
+            /*
+             * Apre ti transition nan,
+             * montre popup la
+             */
+            setTimeout(() => {
+
+                if(welcomePopup){
+                    welcomePopup.classList.remove("hidden");
+                }
+
+            }, 650);
+
+        });
+
+    } =====================================================
        FULL PAGE BACKGROUND HEIGHT
        ===================================================== */
 
