@@ -4,10 +4,10 @@
 
 document.addEventListener("DOMContentLoaded", () => {
 
-  
+
     /* =====================================================
        OUVRIR LA SURPRISE
-       ===================================================== */
+    ===================================================== */
 
     const introScreen =
         document.getElementById("intro-screen");
@@ -18,58 +18,36 @@ document.addEventListener("DOMContentLoaded", () => {
     const welcomePopup =
         document.getElementById("welcome-popup");
 
-    if(openSurpriseBtn){
+    if(openSurpriseBtn && introScreen){
 
-        openSurpriseBtn.addEventListener("click", () => {
+        openSurpriseBtn.addEventListener(
+            "click",
+            () => {
 
-            /* Fè premye ekran an disparèt */
-            introScreen.classList.add("hide-intro");
+                /* Fè premye ekran an disparèt */
+                introScreen.classList.add("hide-intro");
 
-            /* Louvri popup la apre transition */
-            setTimeout(() => {
+                /*
+                 * Louvri popup la apre
+                 * transition la fini
+                 */
+                setTimeout(() => {
 
-                if(welcomePopup){
-                    welcomePopup.classList.remove("hidden");
-                }
+                    if(welcomePopup){
+                        welcomePopup.classList.remove("hidden");
+                    }
 
-            }, 650);
+                }, 650);
 
-        });
+            }
+        );
 
-    } =====================================================
-       INTRO SCREEN → OUVRI SURPRISE
-       ===================================================== */
+    }
 
-    const introScreen =
-        document.getElementById("intro-screen");
 
-    const welcomePopup =
-        document.getElementById("welcome-popup");
-
-    if(introScreen){
-
-        introScreen.addEventListener("click", () => {
-
-            /* Fè intro a disparèt */
-            introScreen.classList.add("hide-intro");
-
-            /*
-             * Apre ti transition nan,
-             * montre popup la
-             */
-            setTimeout(() => {
-
-                if(welcomePopup){
-                    welcomePopup.classList.remove("hidden");
-                }
-
-            }, 650);
-
-        });
-
-    } =====================================================
+    /* =====================================================
        FULL PAGE BACKGROUND HEIGHT
-       ===================================================== */
+    ===================================================== */
 
     const background =
         document.querySelector(".background");
@@ -104,7 +82,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     /* =====================================================
        FLOATING HEARTS ❤️
-       ===================================================== */
+    ===================================================== */
 
     const heartSymbols = [
         "❤️",
@@ -148,7 +126,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     /* =====================================================
        FALLING PETALS 🌸
-       ===================================================== */
+    ===================================================== */
 
     for(let i = 0; i < 10; i++){
 
@@ -179,7 +157,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     /* =====================================================
        GOLD CONFETTI ✨
-       ===================================================== */
+    ===================================================== */
 
     for(let i = 0; i < 12; i++){
 
@@ -206,7 +184,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     /* =====================================================
        AUDIO
-       ===================================================== */
+    ===================================================== */
 
     const music =
         new Audio("assets/music.mp3");
@@ -223,7 +201,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     /* =====================================================
        CONTINUE BUTTON
-       ===================================================== */
+    ===================================================== */
 
     const continueBtn =
         document.getElementById(
@@ -262,7 +240,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     /* =====================================================
        MUSIC BUTTON
-       ===================================================== */
+    ===================================================== */
 
     const musicBtn =
         document.querySelector(
@@ -309,7 +287,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     /* =====================================================
        POPUP
-       ===================================================== */
+    ===================================================== */
 
     const popup =
         document.getElementById(
@@ -334,7 +312,7 @@ document.addEventListener("DOMContentLoaded", () => {
     /* =====================================================
        KEEP BACKGROUND CORRECT AFTER
        DYNAMIC CONTENT CHANGES
-       ===================================================== */
+    ===================================================== */
 
     const observer =
         new MutationObserver(() => {
@@ -346,8 +324,8 @@ document.addEventListener("DOMContentLoaded", () => {
     observer.observe(
         document.body,
         {
-            childList:true,
-            subtree:true
+            childList: true,
+            subtree: true
         }
     );
 
