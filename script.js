@@ -4,6 +4,9 @@
 
 document.addEventListener("DOMContentLoaded", () => {
 
+    "use strict";
+
+
     /* =====================================================
        ELEMENTS
        ===================================================== */
@@ -29,44 +32,44 @@ document.addEventListener("DOMContentLoaded", () => {
     const ding =
         document.getElementById("dingSound");
 
+    const background =
+        document.querySelector(".background");
+
+    const heartsContainer =
+        document.getElementById("hearts-container");
+
+    const petalsContainer =
+        document.getElementById("petals-container");
+
+    const confettiContainer =
+        document.getElementById("confetti-container");
+
 
     /* =====================================================
-       OUVRIR LA SURPRISE
+       INTRO → OPEN SURPRISE
        ===================================================== */
-
-    let surpriseOpened = false;
 
     function openSurprise(){
 
-        if(
-            surpriseOpened ||
-            !introScreen
-        ){
+        if(!introScreen){
             return;
         }
-
-        surpriseOpened = true;
 
         introScreen.classList.add(
             "hide-intro"
         );
 
-        introScreen.setAttribute(
-            "aria-hidden",
-            "true"
-        );
+        /*
+         * Apre transition intro a fini,
+         * nou montre popup la.
+         */
 
-        setTimeout(() => {
+        window.setTimeout(() => {
 
             if(welcomePopup){
 
                 welcomePopup.classList.remove(
                     "hidden"
-                );
-
-                welcomePopup.setAttribute(
-                    "aria-hidden",
-                    "false"
                 );
 
             }
@@ -86,168 +89,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       FULL PAGE BACKGROUND HEIGHT
+       POPUP → CONTINUE
        ===================================================== */
 
-    const background =
-        document.querySelector(".background");
+    function closeWelcomePopup(){
 
-    function resizeBackground(){
-
-        if(!background){
+        if(!welcomePopup){
             return;
         }
 
-        const height =
-            Math.max(
-                document.body.scrollHeight,
-                document.documentElement.scrollHeight,
-                window.innerHeight
-            );
-
-        background.style.height =
-            height + "px";
-    }
-
-    resizeBackground();
-
-    window.addEventListener(
-        "resize",
-        resizeBackground
-    );
-
-    window.addEventListener(
-        "load",
-        resizeBackground
-    );
-
-
-    /* =====================================================
-       FLOATING HEARTS ❤️
-       ===================================================== */
-
-    const heartSymbols = [
-        "❤️",
-        "💗",
-        "💜",
-        "💕"
-    ];
-
-    for(let i = 0; i < 12; i++){
-
-        const heart =
-            document.createElement("div");
-
-        heart.className =
-            "heart";
-
-        heart.textContent =
-            heartSymbols[
-                Math.floor(
-                    Math.random() *
-                    heartSymbols.length
-                )
-            ];
-
-        heart.style.left =
-            Math.random() * 100 + "vw";
-
-        heart.style.animationDuration =
-            (10 + Math.random() * 10) + "s";
-
-        heart.style.animationDelay =
-            (-Math.random() * 15) + "s";
-
-        heart.style.fontSize =
-            (14 + Math.random() * 12) + "px";
-
-        document.body.appendChild(
-            heart
+        welcomePopup.classList.add(
+            "hidden"
         );
     }
 
-
-    /* =====================================================
-       FALLING PETALS 🌸
-       ===================================================== */
-
-    for(let i = 0; i < 10; i++){
-
-        const petal =
-            document.createElement("div");
-
-        petal.className =
-            "petal";
-
-        petal.textContent =
-            "🌸";
-
-        petal.style.left =
-            Math.random() * 100 + "vw";
-
-        petal.style.animationDuration =
-            (9 + Math.random() * 10) + "s";
-
-        petal.style.animationDelay =
-            (-Math.random() * 15) + "s";
-
-        petal.style.fontSize =
-            (14 + Math.random() * 10) + "px";
-
-        document.body.appendChild(
-            petal
-        );
-    }
-
-
-    /* =====================================================
-       GOLD CONFETTI ✨
-       ===================================================== */
-
-    for(let i = 0; i < 12; i++){
-
-        const confetti =
-            document.createElement("div");
-
-        confetti.className =
-            "confetti";
-
-        confetti.style.left =
-            Math.random() * 100 + "vw";
-
-        confetti.style.animationDuration =
-            (7 + Math.random() * 8) + "s";
-
-        confetti.style.animationDelay =
-            (-Math.random() * 10) + "s";
-
-        document.body.appendChild(
-            confetti
-        );
-    }
-
-
-    /* =====================================================
-       AUDIO SETUP
-       ===================================================== */
-
-    if(music){
-
-        music.loop = true;
-        music.volume = 0.35;
-
-    }
-
-    if(ding){
-
-        ding.volume = 0.65;
-
-    }
-
-
-    /* =====================================================
-       CONTINUE BUTTON
-       ===================================================== */
 
     if(continueBtn){
 
@@ -255,38 +110,48 @@ document.addEventListener("DOMContentLoaded", () => {
             "click",
             () => {
 
+                /*
+                 * Petit son
+                 */
+
                 if(ding){
 
-                    ding.currentTime = 0;
+                    try{
 
-                    ding.play().catch(
-                        () => {}
-                    );
+                        ding.currentTime = 0;
 
-                }
+                        const dingPromise =
+                            ding.play();
 
-                if(music){
+                        if(
+                            dingPromise &&
+                            typeof dingPromise.catch === "function"
+                        ){
+                            dingPromise.catch(
+                                () => {}
+                            );
+                        }
 
-                    music.play().catch(
-                        () => {}
-                    );
-
-                }
-
-                if(welcomePopup){
-
-                    welcomePopup.classList.add(
-                        "hidden"
-                    );
-
-                    welcomePopup.setAttribute(
-                        "aria-hidden",
-                        "true"
-                    );
+                    }catch(error){
+                        /* Audio optionnel */
+                    }
 
                 }
 
-                resizeBackground();
+
+                /*
+                 * Ferme popup la.
+                 */
+
+                closeWelcomePopup();
+
+
+                /*
+                 * Eseye lanse mizik la apre
+                 * aksyon itilizatè a.
+                 */
+
+                startMusic();
 
             }
         );
@@ -295,47 +160,153 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       MUSIC BUTTON
+       MUSIC
        ===================================================== */
 
-    let playing = false;
+    let musicPlaying = false;
+
+
+    function updateMusicButton(){
+
+        if(!musicBtn){
+            return;
+        }
+
+        if(musicPlaying){
+
+            musicBtn.textContent =
+                "🔊 Musique";
+
+            musicBtn.setAttribute(
+                "aria-pressed",
+                "true"
+            );
+
+        }else{
+
+            musicBtn.textContent =
+                "🔇 Musique";
+
+            musicBtn.setAttribute(
+                "aria-pressed",
+                "false"
+            );
+
+        }
+    }
+
+
+    function startMusic(){
+
+        if(!music){
+            return;
+        }
+
+        try{
+
+            music.volume = 0.35;
+
+            const playPromise =
+                music.play();
+
+            if(
+                playPromise &&
+                typeof playPromise.then === "function"
+            ){
+
+                playPromise
+                    .then(() => {
+
+                        musicPlaying = true;
+
+                        updateMusicButton();
+
+                    })
+                    .catch(() => {
+
+                        musicPlaying = false;
+
+                        updateMusicButton();
+
+                    });
+
+            }
+
+        }catch(error){
+
+            musicPlaying = false;
+
+            updateMusicButton();
+
+        }
+    }
+
+
+    function stopMusic(){
+
+        if(!music){
+            return;
+        }
+
+        try{
+
+            music.pause();
+
+        }catch(error){
+            /* Rien */
+        }
+
+        musicPlaying = false;
+
+        updateMusicButton();
+    }
+
+
+    if(music){
+
+        music.volume = 0.35;
+
+        music.addEventListener(
+            "play",
+            () => {
+
+                musicPlaying = true;
+
+                updateMusicButton();
+
+            }
+        );
+
+        music.addEventListener(
+            "pause",
+            () => {
+
+                musicPlaying = false;
+
+                updateMusicButton();
+
+            }
+        );
+
+    }
+
 
     if(musicBtn){
 
-        musicBtn.textContent =
-            "🔇 Musique";
+        updateMusicButton();
 
         musicBtn.addEventListener(
             "click",
             () => {
 
-                if(!music){
-                    return;
-                }
+                if(musicPlaying){
 
-                if(!playing){
-
-                    music.play()
-                        .then(() => {
-
-                            playing = true;
-
-                            musicBtn.textContent =
-                                "🔊 Musique";
-
-                        })
-                        .catch(
-                            () => {}
-                        );
+                    stopMusic();
 
                 }else{
 
-                    music.pause();
+                    startMusic();
 
-                    playing = false;
-
-                    musicBtn.textContent =
-                        "🔇 Musique";
                 }
 
             }
@@ -345,33 +316,397 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       KEEP BACKGROUND CORRECT AFTER
-       DYNAMIC CONTENT CHANGES
+       POPUP ESCAPE KEY
        ===================================================== */
 
-    const observer =
-        new MutationObserver(() => {
+    document.addEventListener(
+        "keydown",
+        (event) => {
 
-            resizeBackground();
+            if(event.key === "Escape"){
 
-        });
+                if(
+                    welcomePopup &&
+                    !welcomePopup.classList.contains(
+                        "hidden"
+                    )
+                ){
 
-    observer.observe(
-        document.body,
-        {
-            childList:true,
-            subtree:true
+                    closeWelcomePopup();
+
+                }
+
+            }
+
         }
     );
 
 
     /* =====================================================
-       FINAL PAGE READY
+       BACKGROUND HEIGHT
        ===================================================== */
 
-    setTimeout(
+    function resizeBackground(){
+
+        if(!background){
+            return;
+        }
+
+        /*
+         * Background la fixed, kidonk nou pa bezwen
+         * lonje imaj la dapre longè tèks la.
+         *
+         * Sa anpeche background.png defòme.
+         */
+
+        background.style.height =
+            "100%";
+    }
+
+
+    resizeBackground();
+
+    window.addEventListener(
+        "resize",
         resizeBackground,
-        100
+        { passive:true }
     );
+
+
+    window.addEventListener(
+        "load",
+        resizeBackground,
+        { passive:true }
+    );
+
+
+    /* =====================================================
+       FLOATING HEARTS ❤️
+       ===================================================== */
+
+    function createHearts(){
+
+        if(!heartsContainer){
+            return;
+        }
+
+        const heartSymbols = [
+            "❤️",
+            "💗",
+            "💜",
+            "💕"
+        ];
+
+        /*
+         * 12 = ase pou li bèl san li pa lou.
+         */
+
+        const amount = 12;
+
+        const fragment =
+            document.createDocumentFragment();
+
+        for(let i = 0; i < amount; i++){
+
+            const heart =
+                document.createElement("div");
+
+            heart.className =
+                "heart";
+
+            heart.textContent =
+                heartSymbols[
+                    Math.floor(
+                        Math.random() *
+                        heartSymbols.length
+                    )
+                ];
+
+            heart.style.left =
+                Math.random() * 100 + "vw";
+
+            heart.style.animationDuration =
+                (
+                    10 +
+                    Math.random() * 10
+                ) + "s";
+
+            heart.style.animationDelay =
+                (
+                    -Math.random() * 15
+                ) + "s";
+
+            heart.style.fontSize =
+                (
+                    14 +
+                    Math.random() * 12
+                ) + "px";
+
+            fragment.appendChild(
+                heart
+            );
+
+        }
+
+        heartsContainer.appendChild(
+            fragment
+        );
+    }
+
+
+    createHearts();
+
+
+    /* =====================================================
+       FALLING FLOWERS / PETALS 🌸
+       ===================================================== */
+
+    function createFallingFlowers(){
+
+        if(!petalsContainer){
+            return;
+        }
+
+        /*
+         * Plizyè siy diferan pou dekorasyon an
+         * pa sanble ak yon sèl emoji ki repete.
+         */
+
+        const flowerSymbols = [
+            "🌸",
+            "❀",
+            "✿",
+            "🌷",
+            "💮"
+        ];
+
+        /*
+         * 14 eleman sèlman pou mobil pa soufri.
+         */
+
+        const amount = 14;
+
+        const fragment =
+            document.createDocumentFragment();
+
+        for(let i = 0; i < amount; i++){
+
+            const petal =
+                document.createElement("div");
+
+            petal.className =
+                "petal";
+
+            petal.textContent =
+                flowerSymbols[
+                    Math.floor(
+                        Math.random() *
+                        flowerSymbols.length
+                    )
+                ];
+
+            petal.style.left =
+                Math.random() * 100 + "vw";
+
+            petal.style.animationDuration =
+                (
+                    10 +
+                    Math.random() * 12
+                ) + "s";
+
+            petal.style.animationDelay =
+                (
+                    -Math.random() * 18
+                ) + "s";
+
+            petal.style.fontSize =
+                (
+                    13 +
+                    Math.random() * 12
+                ) + "px";
+
+            /*
+             * Chak flè gen ti transparans diferan.
+             */
+
+            petal.style.opacity =
+                (
+                    0.35 +
+                    Math.random() * 0.30
+                ).toFixed(2);
+
+            fragment.appendChild(
+                petal
+            );
+
+        }
+
+        petalsContainer.appendChild(
+            fragment
+        );
+    }
+
+
+    createFallingFlowers();
+
+
+    /* =====================================================
+       GOLD CONFETTI ✨
+       ===================================================== */
+
+    function createConfetti(){
+
+        if(!confettiContainer){
+            return;
+        }
+
+        const amount = 12;
+
+        const fragment =
+            document.createDocumentFragment();
+
+        for(let i = 0; i < amount; i++){
+
+            const confetti =
+                document.createElement("div");
+
+            confetti.className =
+                "confetti";
+
+            confetti.style.left =
+                Math.random() * 100 + "vw";
+
+            confetti.style.animationDuration =
+                (
+                    7 +
+                    Math.random() * 8
+                ) + "s";
+
+            confetti.style.animationDelay =
+                (
+                    -Math.random() * 10
+                ) + "s";
+
+            fragment.appendChild(
+                confetti
+            );
+
+        }
+
+        confettiContainer.appendChild(
+            fragment
+        );
+    }
+
+
+    createConfetti();
+
+
+    /* =====================================================
+       PREVENT AUDIO ERRORS
+       ===================================================== */
+
+    if(music){
+
+        music.addEventListener(
+            "error",
+            () => {
+
+                musicPlaying = false;
+
+                updateMusicButton();
+
+            }
+        );
+
+    }
+
+
+    if(ding){
+
+        ding.addEventListener(
+            "error",
+            () => {
+                /* Son optionnel — pa bloke paj la */
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       IMAGE ERROR PROTECTION
+       ===================================================== */
+
+    const images =
+        document.querySelectorAll(
+            "img"
+        );
+
+    images.forEach(
+        (image) => {
+
+            image.addEventListener(
+                "error",
+                () => {
+
+                    /*
+                     * Si tulip.png pa disponib,
+                     * paj la kontinye mache.
+                     */
+
+                    image.classList.add(
+                        "image-unavailable"
+                    );
+
+                }
+            );
+
+        }
+    );
+
+
+    /* =====================================================
+       MUTATION OBSERVER
+       ===================================================== */
+
+    /*
+     * Nou pa itilize observer la pou tout bagay,
+     * paske sa ta ka kreye anpil recalcul inutil.
+     *
+     * Li rete sèlman pou verifye si popup/dekorasyon
+     * ajoute yon bagay ki chanje layout.
+     */
+
+    if(
+        typeof MutationObserver !== "undefined" &&
+        document.body
+    ){
+
+        const observer =
+            new MutationObserver(
+                () => {
+
+                    resizeBackground();
+
+                }
+            );
+
+        observer.observe(
+            document.body,
+            {
+                childList:true,
+                subtree:true
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       INITIAL STATE
+       ===================================================== */
+
+    updateMusicButton();
 
 });
