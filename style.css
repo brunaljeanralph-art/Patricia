@@ -13,12 +13,25 @@ body{font-family:"Times New Roman",Times,serif;background:#f4eefb;color:#49334d;
     z-index:-10;
     pointer-events:none;
 }
-..card > *{
+.card{
+    position:relative;
+    width:min(92%,900px);
+    margin:50px auto;
+    padding:60px 45px;
+    background:rgba(255,255,255,.72);
+    backdrop-filter:blur(3px);
+    -webkit-backdrop-filter:blur(3px);
+    border-radius:30px;
+    border:1px solid rgba(255,255,255,.6);
+    box-shadow:0 20px 45px rgba(110,80,130,.22);
+    overflow:hidden;
+    transition:.45s ease;
+}
+
+.card > *{
     position:relative;
     z-index:2;
-};width:min(92%,900px);margin:50px auto;padding:60px 45px; background:rgba(255,255,255,.72);
-backdrop-filter:blur(3px);
--webkit-backdrop-filter:blur(3px);border-radius:30px;border:1px solid rgba(255,255,255,.6);box-shadow:0 20px 45px rgba(110,80,130,.22);overflow:hidden;transition:.45s ease}
+}
 .card:hover{box-shadow:0 25px 55px rgba(110,80,130,.28);transform:translateY(-3px)}
 .card::before,.card::after{content:"";position:absolute;width:230px;height:230px;background:url("assets/tulip.png") no-repeat center/contain;pointer-events:none;opacity:.20;z-index:0}
 .card::before{top:-10px;left:-20px}.card::after{right:-20px;bottom:-10px;transform:scaleX(-1)}
