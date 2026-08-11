@@ -98,3 +98,311 @@ hr{width:70%;margin:35px auto;border:none;border-top:1px solid #d9bddf}.ps{color
 @media (max-width:768px){.card{width:95%;padding:35px 20px;margin:20px auto}.card::before,.card::after{width:130px;height:130px}.header{gap:18px;margin-bottom:30px}.header-tulip{width:80px}h1{font-size:2.4rem}h2{font-size:1.35rem}.letter{font-size:1.08rem;line-height:1.9}.highlight{font-size:1.18rem}.important{font-size:1.55rem}.prince{font-size:1.9rem}.signature h3{font-size:2.7rem}.btn{display:block;width:100%;text-align:center;padding:15px;font-size:1.05rem}}
 @media (max-width:600px){.secret-letter{font-size:17px;line-height:1.9}.secret-letter>p{margin-bottom:24px}.letter-divider{margin-top:32px;margin-bottom:32px}.letter-quote{padding:10px 14px;margin-top:27px!important;margin-bottom:29px!important}.final-question h2{font-size:29px}}
 @media (max-width:480px){.card{width:96%;padding:28px 16px;margin:14px auto}.header{gap:8px}.header-tulip{width:62px}h1{font-size:2rem}h2{font-size:1.15rem;letter-spacing:.5px}.secret-letter{font-size:16.5px;line-height:1.82}.secret-intro p:first-child{font-size:19px}.miamor-line{font-size:27px!important}.letter-divider{gap:9px;margin:27px auto}.letter-quote{padding:9px 10px}.music-btn{top:10px;right:10px;padding:9px 14px;font-size:12px}.popup-card{padding:28px 20px}}
+/* =========================================================
+   PREMIUM LETTER LAYOUT
+   Background + letter integration
+   ========================================================= */
+
+body{
+    isolation:isolate;
+}
+
+/* Background principal */
+.background{
+    position:fixed;
+    inset:0;
+    z-index:0;
+    pointer-events:none;
+
+    background:
+        linear-gradient(
+            rgba(255,255,255,.08),
+            rgba(255,255,255,.08)
+        ),
+        url("assets/background.png") center top / 100% auto no-repeat;
+
+    background-color:#eee3f6;
+}
+
+/* Le contenu doit rester au-dessus du background */
+.card{
+    position:relative;
+    z-index:2;
+
+    width:min(96%,1100px);
+    margin:0 auto;
+
+    padding:70px 55px 100px;
+
+    background:transparent;
+    backdrop-filter:none;
+    -webkit-backdrop-filter:none;
+
+    border:none;
+    border-radius:0;
+    box-shadow:none;
+
+    overflow:visible;
+}
+
+/* Le background contient déjà les décorations principales.
+   On évite donc les doublons qui pourraient toucher le texte. */
+.card::before,
+.card::after{
+    display:none;
+}
+
+/* Les décorations et le contenu restent au-dessus */
+.card > *{
+    position:relative;
+    z-index:3;
+}
+
+/* En-tête */
+.header{
+    margin-bottom:25px;
+    position:relative;
+    z-index:4;
+}
+
+/* Le bouquet principal existe déjà dans background.png */
+.header-tulip{
+    display:none;
+}
+
+/* Titre */
+.title{
+    position:relative;
+    z-index:4;
+}
+
+h1{
+    text-shadow:
+        0 1px 2px rgba(255,255,255,.85),
+        0 4px 15px rgba(122,63,163,.12);
+}
+
+h2{
+    text-shadow:
+        0 1px 2px rgba(255,255,255,.8);
+}
+
+/* Lettre */
+.secret-letter{
+    position:relative;
+    z-index:4;
+
+    width:100%;
+    max-width:760px;
+
+    margin:0 auto;
+
+    font-family:Georgia,"Times New Roman",Times,serif;
+    font-size:18px;
+    line-height:1.78;
+
+    color:#34283a;
+
+    text-align:center;
+}
+
+/* Chaque paragraphe est intégré directement
+   dans l'espace clair du papier */
+.secret-letter > p{
+    width:100%;
+    max-width:760px;
+
+    margin:0 auto 20px;
+
+    text-align:center;
+
+    letter-spacing:.01em;
+
+    text-shadow:
+        0 1px 1px rgba(255,255,255,.72);
+}
+
+/* Intro */
+.secret-intro{
+    text-align:center;
+    margin-bottom:22px;
+}
+
+/* Séparateurs plus fins et élégants */
+.letter-divider{
+    width:78%;
+    margin:30px auto;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:12px;
+
+    color:#8d4c9f;
+}
+
+.letter-divider::before,
+.letter-divider::after{
+    content:"";
+
+    height:1px;
+
+    background:
+        linear-gradient(
+            to right,
+            transparent,
+            rgba(122,63,163,.42),
+            transparent
+        );
+
+    flex:1;
+}
+
+/* Citation */
+.letter-quote{
+    max-width:650px;
+
+    margin:26px auto 28px !important;
+
+    padding:10px 22px;
+
+    text-align:center !important;
+
+    font-style:italic;
+
+    color:#623a76;
+
+    background:rgba(255,255,255,.16);
+
+    border-left:1px solid rgba(122,63,163,.35);
+    border-right:1px solid rgba(122,63,163,.35);
+
+    border-radius:8px;
+
+    box-shadow:
+        0 3px 12px rgba(122,63,163,.04);
+}
+
+/* Mots importants */
+.secret-letter strong{
+    color:#5E2B84;
+    font-weight:700;
+}
+
+/* Empêche un mot de sortir de l'écran sur téléphone */
+.love-words{
+    white-space:normal;
+}
+
+/* Signature */
+.signature{
+    position:relative;
+    z-index:4;
+
+    margin:42px auto 20px;
+
+    padding-top:5px;
+
+    text-align:center;
+}
+
+/* Question finale */
+.final-question{
+    position:relative;
+    z-index:4;
+
+    margin-top:38px;
+
+    padding:8px 0 28px;
+
+    text-align:center;
+}
+
+/* Bouton */
+.relire-letter{
+    position:relative;
+    z-index:5;
+}
+
+/* Coeur, pétales et confettis restent visibles
+   sans passer devant les paragraphes */
+.heart,
+.petal,
+.confetti{
+    z-index:1;
+}
+
+/* =========================================================
+   PREMIUM RESPONSIVE
+   ========================================================= */
+
+@media (max-width:768px){
+
+    .background{
+        background-size:auto 100%;
+        background-position:center top;
+        background-repeat:no-repeat;
+        background-color:#eee3f6;
+    }
+
+    .card{
+        width:100%;
+        margin:0 auto;
+        padding:48px 24px 75px;
+    }
+
+    .secret-letter{
+        max-width:100%;
+        font-size:16.5px;
+        line-height:1.82;
+    }
+
+    .secret-letter > p{
+        max-width:100%;
+        margin-bottom:20px;
+    }
+
+    .letter-divider{
+        width:85%;
+        margin:28px auto;
+    }
+
+    .letter-quote{
+        max-width:92%;
+        padding:10px 14px;
+    }
+}
+
+@media (max-width:480px){
+
+    .card{
+        padding:42px 17px 65px;
+    }
+
+    .secret-letter{
+        font-size:16px;
+        line-height:1.78;
+    }
+
+    .secret-letter > p{
+        margin-bottom:19px;
+    }
+
+    .letter-divider{
+        width:88%;
+        margin:25px auto;
+    }
+
+    .letter-quote{
+        max-width:94%;
+        padding:9px 12px;
+    }
+
+    h1{
+        font-size:2rem;
+    }
+
+    h2{
+        font-size:1.15rem;
+    }
+}
