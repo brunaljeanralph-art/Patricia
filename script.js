@@ -32,9 +32,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const ding =
         document.getElementById("dingSound");
 
-    const background =
-        document.querySelector(".background");
-
     const heartsContainer =
         document.getElementById("hearts-container");
 
@@ -58,11 +55,6 @@ document.addEventListener("DOMContentLoaded", () => {
         introScreen.classList.add(
             "hide-intro"
         );
-
-        /*
-         * Apre transition intro a fini,
-         * nou montre popup la.
-         */
 
         window.setTimeout(() => {
 
@@ -110,10 +102,6 @@ document.addEventListener("DOMContentLoaded", () => {
             "click",
             () => {
 
-                /*
-                 * Petit son
-                 */
-
                 if(ding){
 
                     try{
@@ -127,29 +115,23 @@ document.addEventListener("DOMContentLoaded", () => {
                             dingPromise &&
                             typeof dingPromise.catch === "function"
                         ){
+
                             dingPromise.catch(
                                 () => {}
                             );
+
                         }
 
                     }catch(error){
+
                         /* Audio optionnel */
+
                     }
 
                 }
 
 
-                /*
-                 * Ferme popup la.
-                 */
-
                 closeWelcomePopup();
-
-
-                /*
-                 * Eseye lanse mizik la apre
-                 * aksyon itilizatè a.
-                 */
 
                 startMusic();
 
@@ -193,6 +175,7 @@ document.addEventListener("DOMContentLoaded", () => {
             );
 
         }
+
     }
 
 
@@ -239,6 +222,7 @@ document.addEventListener("DOMContentLoaded", () => {
             updateMusicButton();
 
         }
+
     }
 
 
@@ -253,12 +237,15 @@ document.addEventListener("DOMContentLoaded", () => {
             music.pause();
 
         }catch(error){
+
             /* Rien */
+
         }
 
         musicPlaying = false;
 
         updateMusicButton();
+
     }
 
 
@@ -343,44 +330,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       BACKGROUND HEIGHT
-       ===================================================== */
-
-    function resizeBackground(){
-
-        if(!background){
-            return;
-        }
-
-        /*
-         * Background la fixed, kidonk nou pa bezwen
-         * lonje imaj la dapre longè tèks la.
-         *
-         * Sa anpeche background.png defòme.
-         */
-
-        background.style.height =
-            "100%";
-    }
-
-
-    resizeBackground();
-
-    window.addEventListener(
-        "resize",
-        resizeBackground,
-        { passive:true }
-    );
-
-
-    window.addEventListener(
-        "load",
-        resizeBackground,
-        { passive:true }
-    );
-
-
-    /* =====================================================
        FLOATING HEARTS ❤️
        ===================================================== */
 
@@ -394,12 +343,10 @@ document.addEventListener("DOMContentLoaded", () => {
             "❤️",
             "💗",
             "💜",
-            "💕"
+            "💕",
+            "🤗",
+            "🤭"
         ];
-
-        /*
-         * 12 = ase pou li bèl san li pa lou.
-         */
 
         const amount = 12;
 
@@ -467,11 +414,6 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-        /*
-         * Plizyè siy diferan pou dekorasyon an
-         * pa sanble ak yon sèl emoji ki repete.
-         */
-
         const flowerSymbols = [
             "🌸",
             "❀",
@@ -479,10 +421,6 @@ document.addEventListener("DOMContentLoaded", () => {
             "🌷",
             "💮"
         ];
-
-        /*
-         * 14 eleman sèlman pou mobil pa soufri.
-         */
 
         const amount = 14;
 
@@ -524,10 +462,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     13 +
                     Math.random() * 12
                 ) + "px";
-
-            /*
-             * Chak flè gen ti transparans diferan.
-             */
 
             petal.style.opacity =
                 (
@@ -627,7 +561,9 @@ document.addEventListener("DOMContentLoaded", () => {
         ding.addEventListener(
             "error",
             () => {
-                /* Son optionnel — pa bloke paj la */
+
+                /* Son optionnel */
+
             }
         );
 
@@ -650,11 +586,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 "error",
                 () => {
 
-                    /*
-                     * Si tulip.png pa disponib,
-                     * paj la kontinye mache.
-                     */
-
                     image.classList.add(
                         "image-unavailable"
                     );
@@ -664,43 +595,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         }
     );
-
-
-    /* =====================================================
-       MUTATION OBSERVER
-       ===================================================== */
-
-    /*
-     * Nou pa itilize observer la pou tout bagay,
-     * paske sa ta ka kreye anpil recalcul inutil.
-     *
-     * Li rete sèlman pou verifye si popup/dekorasyon
-     * ajoute yon bagay ki chanje layout.
-     */
-
-    if(
-        typeof MutationObserver !== "undefined" &&
-        document.body
-    ){
-
-        const observer =
-            new MutationObserver(
-                () => {
-
-                    resizeBackground();
-
-                }
-            );
-
-        observer.observe(
-            document.body,
-            {
-                childList:true,
-                subtree:true
-            }
-        );
-
-    }
 
 
     /* =====================================================
