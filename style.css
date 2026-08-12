@@ -38,7 +38,11 @@ body{
 
     color:#34283a;
 
-    background:#eee3f6;
+    /*
+     * Papye a rete limyè.
+     * Nou pa sèvi ak yon height ki fòse foto a lonje.
+     */
+    background:#fdfbf7;
 
     -webkit-font-smoothing:antialiased;
     text-rendering:optimizeLegibility;
@@ -46,73 +50,138 @@ body{
 
 
 /* =========================================================
-   BACKGROUND
-   IMPORTANT:
-   background.png = 1024 × 1536
+   EXTENDED PAPER
+   BACKGROUND IMAGE:
+   1024 × 1536
    ========================================================= */
 
 /*
- * IMPORTANT:
+ * Kounye a nou pa repete tout background.png.
  *
- * Nou pa itilize "cover".
+ * Nou pran:
  *
- * "cover" ta fè foto a twò zoomé sou anpil telefòn
- * epi li ka koupe pati ki enpòtan nan foto a.
+ * 1. pati anlè imaj la;
+ * 2. mitan an vin yon papye limyè san limit;
+ * 3. pati anba imaj la retounen nan BOUT paj la.
  *
- * Nou itilize 100% auto pou:
- *
- * - foto a pran lajè ekran an;
- * - wotè li respekte pwopòsyon orijinal li;
- * - foto a pa lonje;
- * - foto a pa koupe;
- * - foto a rete natirèl.
+ * Konsa bouquet anba a + ankadreman anba a
+ * pa repete nan mitan lèt la.
  */
 
-.background{
+
+/* =========================================================
+   TOP OF PAPER
+   ========================================================= */
+
+body::before{
+    content:"";
+
     position:absolute;
 
     top:0;
     left:0;
 
     width:100%;
-    min-height:100%;
+
+    /*
+     * Nou montre sèlman pati anlè background.png.
+     *
+     * calc(100vw * .68) kenbe relasyon ak lajè ekran an.
+     * min/max yo anpeche li vin twò gwo sou desktop.
+     */
+    height:
+        clamp(
+            250px,
+            68vw,
+            700px
+        );
 
     z-index:0;
 
     pointer-events:none;
 
-    background-color:#eee3f6;
-
     background-image:
-        linear-gradient(
-            rgba(255,255,255,.015),
-            rgba(255,255,255,.015)
-        ),
         url("assets/background.png");
 
     /*
-     * Premye valè a se ti voile limyè a.
-     * Dezyèm nan se foto a.
-     *
-     * Foto a pran lajè ekran an
-     * men wotè li rete otomatik.
+     * Foto a adapte sèlman ak LAJÈ.
+     * Wotè a rete otomatik.
      */
     background-size:
-        100% 100%,
         100% auto;
 
     background-position:
-        center top,
         center top;
 
     background-repeat:
-        no-repeat,
         no-repeat;
 }
 
 
 /* =========================================================
-   SOFT READING AREA
+   BOTTOM OF PAPER
+   ========================================================= */
+
+body::after{
+    content:"";
+
+    position:absolute;
+
+    left:0;
+    bottom:0;
+
+    width:100%;
+
+    /*
+     * Sa mete pati anba background.png
+     * nan fen tout paj la.
+     */
+    height:
+        clamp(
+            300px,
+            48vw,
+            650px
+        );
+
+    z-index:0;
+
+    pointer-events:none;
+
+    background-image:
+        url("assets/background.png");
+
+    background-size:
+        100% auto;
+
+    background-position:
+        center bottom;
+
+    background-repeat:
+        no-repeat;
+}
+
+
+/* =========================================================
+   BACKGROUND CONTAINER
+   ========================================================= */
+
+/*
+ * HTML la toujou genyen:
+ *
+ * <div class="background"></div>
+ *
+ * Nou kite l la pou nou pa chanje estrikti HTML la.
+ *
+ * Men li pa responsab papye a ankò.
+ */
+
+.background{
+    display:none;
+}
+
+
+/* =========================================================
+   SOFT PAPER BASE
    ========================================================= */
 
 .card{
@@ -129,22 +198,39 @@ body{
         55px
         100px;
 
-    background:transparent;
+    /*
+     * Mitan paj la toujou gen
+     * yon koulè papye pwòp.
+     */
+    background:
+        rgba(255,255,255,.92);
 
-    border:none;
+    border-left:
+        1px solid
+        rgba(122,63,163,.22);
 
-    box-shadow:none;
+    border-right:
+        1px solid
+        rgba(122,63,163,.22);
+
+    border-top:none;
+    border-bottom:none;
+
+    box-shadow:
+        0 0 30px
+        rgba(122,63,163,.035);
 
     overflow:visible;
 }
 
 
 /*
- * Tout kontni an rete devan background.
+ * Kontni an rete anlè decoration yo.
  */
 
 .card > *{
     position:relative;
+
     z-index:6;
 }
 
@@ -192,12 +278,31 @@ body{
 
     user-select:none;
 
+    /*
+     * Kenbe imaj la nan pwopòsyon li.
+     */
+    object-fit:contain;
+
+    object-position:center;
+
+    /*
+     * Sa ede yon imaj ki gen background blan
+     * melanje pi byen ak papye a.
+     *
+     * Pou pi bon rezilta, tulip.png dwe yon PNG
+     * ki gen transparans.
+     */
     mix-blend-mode:multiply;
 
+    opacity:.90;
+
     filter:
+        saturate(.78)
+        brightness(1.04)
+        contrast(.94)
         drop-shadow(
-            0 8px 15px
-            rgba(80,35,90,.18)
+            0 6px 12px
+            rgba(80,35,90,.12)
         );
 }
 
@@ -310,12 +415,6 @@ h2{
 
     margin:0 auto;
 
-    /*
-     * Ti espas sèlman.
-     *
-     * Pa gen gwo background blan.
-     * Sa pèmèt foto a toujou rete vizib.
-     */
     padding:
         18px
         24px;
@@ -336,18 +435,9 @@ h2{
 }
 
 
-/*
- * VOILE LEJÈ DÈYÈ TÈKS LA
- *
- * Nou bese opacity a anpil.
- *
- * Objektif la se:
- *
- * - ede tèks la li;
- * - pa kache foto a;
- * - pa fè yon "gwo bwat blan";
- * - kite dekorasyon background lan respire.
- */
+/* =========================================================
+   SOFT READING VEIL
+   ========================================================= */
 
 .secret-letter::before{
     content:"";
@@ -363,10 +453,6 @@ h2{
 
     border-radius:22px;
 
-    /*
-     * Ti blur sèlman.
-     * Nou pa vle background lan vin flou anpil.
-     */
     backdrop-filter:
         blur(.35px);
 
@@ -390,10 +476,6 @@ h2{
 
     letter-spacing:.01em;
 
-    /*
-     * Ti lonbraj la ede tèks la soti
-     * san nou pa bezwen mete yon gwo bwat blan.
-     */
     text-shadow:
         0 1px 2px
         rgba(255,255,255,.82),
@@ -509,9 +591,6 @@ h2{
 
     color:#623a76;
 
-    /*
-     * Quote la gen yon ti transparans sèlman.
-     */
     background:
         rgba(255,255,255,.10);
 
@@ -1468,9 +1547,6 @@ h2{
         line-height:1.82;
     }
 
-    /*
-     * Sou tablet, voile la rete prèske envizib.
-     */
     .secret-letter::before{
         background:
             rgba(255,255,255,.045);
@@ -1535,29 +1611,15 @@ h2{
             65px;
     }
 
-
     /*
-     * TELEFÒN:
+     * Pi gwo bagay la:
      *
-     * Foto a pran lajè ekran an.
+     * Pa gen okenn background-size
+     * sou .background ankò.
      *
-     * Li rete nan ratio 1024 × 1536.
-     *
-     * Pa gen "contain".
-     * Pa gen "cover".
-     * Pa gen zoom fòse.
-     * Pa gen distorsion.
+     * Se body::before ak body::after
+     * ki jere background lan.
      */
-    .background{
-        background-size:
-            100% 100%,
-            100% auto;
-
-        background-position:
-            center top,
-            center top;
-    }
-
 
     .header{
         gap:5px;
@@ -1583,11 +1645,6 @@ h2{
         line-height:1.25;
     }
 
-
-    /*
-     * Tèks la rete laj ase pou li li fasil.
-     * Nou pa mete gwo bwat dèyè li.
-     */
     .secret-letter{
         width:100%;
 
@@ -1602,13 +1659,6 @@ h2{
             7px;
     }
 
-
-    /*
-     * Sou ti telefòn yo,
-     * background dèyè tèks la prèske transparan.
-     *
-     * Sa pèmèt bèlte foto a rete prensipal.
-     */
     .secret-letter::before{
         inset:3px;
 
@@ -1624,7 +1674,6 @@ h2{
             blur(.2px);
     }
 
-
     .secret-letter > p{
         width:100%;
 
@@ -1632,10 +1681,6 @@ h2{
 
         margin-bottom:19px;
 
-        /*
-         * Lonbraj la vin yon ti jan pi pwòp
-         * pou tèks la ka rete vizib sou foto a.
-         */
         text-shadow:
             0 1px 2px
             rgba(255,255,255,.88),
@@ -1644,7 +1689,6 @@ h2{
             rgba(255,255,255,.55);
     }
 
-
     .secret-intro p:first-child{
         font-size:19px;
     }
@@ -1652,7 +1696,6 @@ h2{
     .miamor-line{
         font-size:27px !important;
     }
-
 
     .letter-divider{
         width:88%;
@@ -1668,7 +1711,6 @@ h2{
         font-size:15px;
     }
 
-
     .letter-quote{
         max-width:94%;
 
@@ -1680,11 +1722,9 @@ h2{
             rgba(255,255,255,.065);
     }
 
-
     .signature{
         margin-top:38px;
     }
-
 
     .signature p:nth-child(2){
         font-size:27px;
@@ -1693,7 +1733,6 @@ h2{
     .signature p:last-child{
         font-size:24px;
     }
-
 
     .final-question{
         margin-top:32px;
@@ -1711,7 +1750,6 @@ h2{
         font-size:19px;
     }
 
-
     .music-btn{
         top:9px;
 
@@ -1723,7 +1761,6 @@ h2{
 
         font-size:11px;
     }
-
 
     .popup-card{
         padding:
