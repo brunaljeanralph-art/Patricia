@@ -1,641 +1,1866 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-    /* =========================================
+    "use strict";
+
+
+    /* =========================================================
+       ELEMENTS
+       ========================================================= */
+
+    const intro =
+        document.getElementById(
+            "particle-intro"
+        );
+
+    const canvas =
+        document.getElementById(
+            "particleCanvas"
+        );
+
+    const hint =
+        document.getElementById(
+            "particleHint"
+        );
+
+
+    const menu =
+        document.getElementById(
+            "experience-menu"
+        );
+
+
+    const openLetterChoice =
+        document.getElementById(
+            "openLetterChoice"
+        );
+
+
+    const openMemoryChoice =
+        document.getElementById(
+            "openMemoryChoice"
+        );
+
+
+    const returnToMenu =
+        document.getElementById(
+            "returnToExperienceMenu"
+        );
+
+
+    const experienceMusic =
+        document.getElementById(
+            "experienceMusic"
+        );
+
+
+    const bgMusic =
+        document.getElementById(
+            "bgMusic"
+        );
+
+
+    const ding =
+        document.getElementById(
+            "dingSound"
+        );
+
+
+    const letter =
+        document.querySelector(
+            "main.card"
+        );
+
+
+    const memoryBook =
+        document.getElementById(
+            "memory-book"
+        );
+
+
+    const memoryPhoto =
+        document.getElementById(
+            "memoryPhoto"
+        );
+
+
+    const memoryNumber =
+        document.getElementById(
+            "memoryNumber"
+        );
+
+
+    const souvenirPanel =
+        document.getElementById(
+            "souvenirPanel"
+        );
+
+
+    /* =========================================================
+       SMALL HELPERS
+       ========================================================= */
+
+    function playDing() {
+
+        if (!ding) {
+            return;
+        }
+
+
+        try {
+
+            ding.currentTime = 0;
+
+            const promise =
+                ding.play();
+
+
+            if (
+                promise &&
+                typeof promise.catch ===
+                    "function"
+            ) {
+
+                promise.catch(
+                    () => {}
+                );
+            }
+
+        } catch (error) {
+
+            /* Son optionnel */
+        }
+    }
+
+
+    function startMainMusic() {
+
+        if (!bgMusic) {
+            return;
+        }
+
+
+        try {
+
+            bgMusic.volume = .35;
+
+            const promise =
+                bgMusic.play();
+
+
+            if (
+                promise &&
+                typeof promise.catch ===
+                    "function"
+            ) {
+
+                promise.catch(
+                    () => {}
+                );
+            }
+
+        } catch (error) {
+
+            /* Audio optionnel */
+        }
+    }
+
+
+    function startExperienceMusic() {
+
+        if (!experienceMusic) {
+            return;
+        }
+
+
+        try {
+
+            experienceMusic.volume = .28;
+
+            const promise =
+                experienceMusic.play();
+
+
+            if (
+                promise &&
+                typeof promise.catch ===
+                    "function"
+            ) {
+
+                promise.catch(
+                    () => {}
+                );
+            }
+
+        } catch (error) {
+
+            /* Audio optionnel */
+        }
+    }
+
+
+    function fadeOutExperienceMusic() {
+
+        if (!experienceMusic) {
+            return;
+        }
+
+
+        const startVolume =
+            experienceMusic.volume;
+
+
+        const steps = 18;
+
+        let step = 0;
+
+
+        const fadeTimer =
+            window.setInterval(() => {
+
+                step++;
+
+
+                experienceMusic.volume =
+                    Math.max(
+                        0,
+                        startVolume *
+                        (
+                            1 -
+                            step / steps
+                        )
+                    );
+
+
+                if (
+                    step >= steps
+                ) {
+
+                    window.clearInterval(
+                        fadeTimer
+                    );
+
+
+                    try {
+
+                        experienceMusic.pause();
+
+                        experienceMusic.currentTime =
+                            0;
+
+                        experienceMusic.volume =
+                            .28;
+
+                    } catch (error) {
+
+                        /* Rien */
+                    }
+                }
+
+            }, 60);
+    }
+
+
+    /* =========================================================
        PARTICLE EXPERIENCE
-    ========================================= */
+       ========================================================= */
 
-    const intro = document.getElementById("particle-intro")
-    const canvas = document.getElementById("particleCanvas")
-    const hint = document.getElementById("particleHint")
+    if (intro && canvas) {
 
-    if (!intro || !canvas) return
+        const ctx =
+            canvas.getContext("2d");
 
-    const ctx = canvas.getContext("2d")
 
-    let width = 0
-    let height = 0
-    let dpr = 1
+        let width = 0;
 
-    let particles = []
-    let targetParticles = []
+        let height = 0;
 
-    let particleState = "smoke"
-    let clickLocked = false
-    let particleText = ""
+        let dpr = 1;
 
-    const PARTICLE_COUNT = 900
 
-    function resizeCanvas() {
+        let particles = [];
 
-        dpr = Math.min(window.devicePixelRatio || 1, 2)
+        let targetParticles = [];
 
-        width = window.innerWidth
-        height = window.innerHeight
 
-        canvas.width = width * dpr
-        canvas.height = height * dpr
+        let particleState =
+            "smoke";
 
-        canvas.style.width = width + "px"
-        canvas.style.height = height + "px"
 
-        ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
+        let particleText =
+            "";
 
-        if (particleState === "heart") {
-            createHeartTargets()
+
+        let clickLocked =
+            false;
+
+
+        const smallScreen =
+            window.innerWidth <= 480;
+
+
+        const PARTICLE_COUNT =
+            smallScreen
+                ? 520
+                : 760;
+
+
+        function random(
+            min,
+            max
+        ) {
+
+            return (
+                Math.random() *
+                (max - min) +
+                min
+            );
         }
 
-        if (particleState === "text") {
-            createTextTargets(particleText)
-        }
-    }
 
-    window.addEventListener("resize", resizeCanvas)
+        function createParticle() {
 
+            return {
 
-    function random(min, max) {
-        return Math.random() * (max - min) + min
-    }
+                x:
+                    random(
+                        0,
+                        width
+                    ),
 
+                y:
+                    random(
+                        height * .82,
+                        height + 40
+                    ),
 
-    function createParticle() {
+                vx:
+                    random(
+                        -.45,
+                        .45
+                    ),
 
-        return {
-            x: random(0, width),
-            y: random(height * .82, height + 40),
+                vy:
+                    random(
+                        -1.65,
+                        -.35
+                    ),
 
-            vx: random(-.45, .45),
-            vy: random(-1.8, -.35),
+                size:
+                    random(
+                        .7,
+                        2.15
+                    ),
 
-            size: random(.7, 2.2),
-            alpha: random(.25, .85),
+                alpha:
+                    random(
+                        .28,
+                        .82
+                    ),
 
-            drift: random(.0015, .006),
-            phase: random(0, Math.PI * 2),
+                drift:
+                    random(
+                        .0015,
+                        .006
+                    ),
 
-            tx: 0,
-            ty: 0,
+                phase:
+                    random(
+                        0,
+                        Math.PI * 2
+                    ),
 
-            color: Math.random() > .5
-                ? "255,220,238"
-                : "255,255,255"
-        }
-    }
+                tx: 0,
 
+                ty: 0,
 
-    for (let i = 0; i < PARTICLE_COUNT; i++) {
-        particles.push(createParticle())
-    }
-
-
-    function heartPoint(t, scale) {
-
-        const x = 16 * Math.pow(Math.sin(t), 3)
-        const y =
-            13 * Math.cos(t) -
-            5 * Math.cos(2 * t) -
-            2 * Math.cos(3 * t) -
-            Math.cos(4 * t)
-
-        return {
-            x: width / 2 + x * scale,
-            y: height / 2 - y * scale
-        }
-    }
-
-
-    function createHeartTargets() {
-
-        targetParticles = []
-
-        const scale = Math.min(width, height) / 42
-
-        for (let i = 0; i < particles.length; i++) {
-
-            const t = (i / particles.length) * Math.PI * 2
-            const point = heartPoint(t, scale)
-
-            const thickness = random(.75, 1.15)
-
-            targetParticles.push({
-                x: width / 2 + (point.x - width / 2) * thickness,
-                y: height / 2 + (point.y - height / 2) * thickness
-            })
+                color:
+                    Math.random() > .5
+                        ? "255,220,238"
+                        : "255,255,255"
+            };
         }
 
-        particles.forEach((p, i) => {
-            p.tx = targetParticles[i].x
-            p.ty = targetParticles[i].y
-        })
-    }
+
+        function createParticles() {
+
+            particles = [];
 
 
-    function createTextTargets(text) {
+            for (
+                let i = 0;
+                i < PARTICLE_COUNT;
+                i++
+            ) {
 
-        targetParticles = []
-
-        const offscreen = document.createElement("canvas")
-        const offCtx = offscreen.getContext("2d")
-
-        offscreen.width = width
-        offscreen.height = height
-
-        const fontSize = Math.min(
-            width * .18,
-            height * .18,
-            145
-        )
-
-        offCtx.font = `600 ${fontSize}px Georgia`
-        offCtx.textAlign = "center"
-        offCtx.textBaseline = "middle"
-
-        offCtx.fillStyle = "#fff"
-        offCtx.fillText(text, width / 2, height / 2)
-
-        const image = offCtx.getImageData(
-            0,
-            0,
-            width,
-            height
-        )
-
-        const points = []
-
-        const step = Math.max(3, Math.floor(width / 180))
-
-        for (let y = 0; y < height; y += step) {
-
-            for (let x = 0; x < width; x += step) {
-
-                const index = (y * width + x) * 4
-
-                if (image.data[index + 3] > 80) {
-                    points.push({
-                        x,
-                        y
-                    })
-                }
+                particles.push(
+                    createParticle()
+                );
             }
         }
 
-        for (let i = 0; i < particles.length; i++) {
 
-            if (points.length) {
+        /* =====================================================
+           HEART
+           ===================================================== */
 
-                const point = points[i % points.length]
+        function heartPoint(
+            t,
+            scale
+        ) {
 
-                particles[i].tx = point.x + random(-1.5, 1.5)
-                particles[i].ty = point.y + random(-1.5, 1.5)
+            const x =
+                16 *
+                Math.pow(
+                    Math.sin(t),
+                    3
+                );
 
-            }
+
+            const y =
+                13 *
+                    Math.cos(t)
+
+                -
+
+                5 *
+                    Math.cos(
+                        2 * t
+                    )
+
+                -
+
+                2 *
+                    Math.cos(
+                        3 * t
+                    )
+
+                -
+
+                Math.cos(
+                    4 * t
+                );
+
+
+            return {
+
+                x:
+                    width / 2 +
+                    x * scale,
+
+                y:
+                    height / 2 -
+                    y * scale
+            };
         }
-    }
 
 
-    function scatterParticles() {
+        function createHeartTargets() {
 
-        particles.forEach(p => {
-
-            const angle = Math.random() * Math.PI * 2
-            const force = random(3, 10)
-
-            p.vx += Math.cos(angle) * force
-            p.vy += Math.sin(angle) * force
-
-        })
-    }
+            targetParticles = [];
 
 
-    function updateParticles(time) {
+            const scale =
+                Math.min(
+                    width,
+                    height
+                ) / 45;
 
-        particles.forEach((p, i) => {
 
-            if (particleState === "smoke") {
+            for (
+                let i = 0;
+                i < particles.length;
+                i++
+            ) {
 
-                p.x += p.vx + Math.sin(time * p.drift + p.phase) * .45
-                p.y += p.vy
+                const t =
+                    (
+                        i /
+                        particles.length
+                    ) *
+                    Math.PI *
+                    2;
 
-                p.vx *= .998
-                p.vy *= .999
 
-                if (p.y < -30) {
-                    p.x = random(0, width)
-                    p.y = height + random(0, 50)
-                    p.vx = random(-.45, .45)
-                    p.vy = random(-1.8, -.35)
+                const point =
+                    heartPoint(
+                        t,
+                        scale
+                    );
+
+
+                const thickness =
+                    random(
+                        .78,
+                        1.08
+                    );
+
+
+                targetParticles.push({
+
+                    x:
+                        width / 2 +
+                        (
+                            point.x -
+                            width / 2
+                        ) *
+                        thickness,
+
+                    y:
+                        height / 2 +
+                        (
+                            point.y -
+                            height / 2
+                        ) *
+                        thickness
+                });
+            }
+
+
+            particles.forEach(
+                (
+                    particle,
+                    index
+                ) => {
+
+                    particle.tx =
+                        targetParticles[
+                            index
+                        ].x;
+
+                    particle.ty =
+                        targetParticles[
+                            index
+                        ].y;
+
                 }
+            );
+        }
 
-                if (p.x < -30) p.x = width + 20
-                if (p.x > width + 30) p.x = -20
+
+        /* =====================================================
+           TEXT
+           ===================================================== */
+
+        function createTextTargets(
+            text
+        ) {
+
+            targetParticles = [];
+
+
+            const offscreen =
+                document.createElement(
+                    "canvas"
+                );
+
+
+            const offCtx =
+                offscreen.getContext(
+                    "2d"
+                );
+
+
+            const sampleWidth =
+                Math.min(
+                    width,
+                    900
+                );
+
+
+            const sampleScale =
+                sampleWidth /
+                width;
+
+
+            const sampleHeight =
+                Math.max(
+                    1,
+                    Math.round(
+                        height *
+                        sampleScale
+                    )
+                );
+
+
+            offscreen.width =
+                sampleWidth;
+
+
+            offscreen.height =
+                sampleHeight;
+
+
+            let fontSize;
+
+
+            if (
+                text ===
+                "Je t'aime Sauveur Patricia"
+            ) {
+
+                /*
+                 * TEXT REDUIT
+                 * pou fraz final la
+                 */
+
+                fontSize =
+                    Math.min(
+                        sampleWidth * .105,
+                        sampleHeight * .145,
+                        92
+                    );
 
             } else {
 
-                const dx = p.tx - p.x
-                const dy = p.ty - p.y
-
-                p.vx += dx * .012
-                p.vy += dy * .012
-
-                p.vx *= .88
-                p.vy *= .88
-
-                p.x += p.vx
-                p.y += p.vy
+                fontSize =
+                    Math.min(
+                        sampleWidth * .17,
+                        sampleHeight * .18,
+                        125
+                    );
             }
 
-            if (
-                particleState === "scatter" ||
-                Math.abs(p.vx) > 8 ||
-                Math.abs(p.vy) > 8
+
+            offCtx.font =
+                `600 ${fontSize}px Georgia`;
+
+
+            offCtx.textAlign =
+                "center";
+
+
+            offCtx.textBaseline =
+                "middle";
+
+
+            offCtx.fillStyle =
+                "#ffffff";
+
+
+            offCtx.fillText(
+                text,
+                sampleWidth / 2,
+                sampleHeight / 2
+            );
+
+
+            const image =
+                offCtx.getImageData(
+                    0,
+                    0,
+                    sampleWidth,
+                    sampleHeight
+                );
+
+
+            const points = [];
+
+
+            const step =
+                Math.max(
+                    3,
+                    Math.floor(
+                        sampleWidth / 210
+                    )
+                );
+
+
+            for (
+                let y = 0;
+                y < sampleHeight;
+                y += step
             ) {
 
-                p.vx *= .985
-                p.vy *= .985
+                for (
+                    let x = 0;
+                    x < sampleWidth;
+                    x += step
+                ) {
 
-                p.x += p.vx
-                p.y += p.vy
+                    const index =
+                        (
+                            y *
+                            sampleWidth +
+                            x
+                        ) * 4;
+
+
+                    if (
+                        image.data[
+                            index + 3
+                        ] > 80
+                    ) {
+
+                        points.push({
+
+                            x:
+                                x /
+                                sampleScale,
+
+                            y:
+                                y /
+                                sampleScale
+                        });
+                    }
+                }
             }
 
-        })
-    }
+
+            for (
+                let i = 0;
+                i < particles.length;
+                i++
+            ) {
+
+                if (
+                    points.length
+                ) {
+
+                    const point =
+                        points[
+                            i %
+                            points.length
+                        ];
 
 
-    function drawParticles() {
+                    particles[i].tx =
+                        point.x +
+                        random(
+                            -1.2,
+                            1.2
+                        );
 
-        ctx.clearRect(0, 0, width, height)
 
-        particles.forEach(p => {
+                    particles[i].ty =
+                        point.y +
+                        random(
+                            -1.2,
+                            1.2
+                        );
+                }
+            }
+        }
 
-            ctx.beginPath()
 
-            ctx.fillStyle =
-                `rgba(${p.color},${p.alpha})`
+        /* =====================================================
+           SCATTER
+           ===================================================== */
 
-            ctx.arc(
-                p.x,
-                p.y,
-                p.size,
+        function scatterParticles() {
+
+            particles.forEach(
+                particle => {
+
+                    const angle =
+                        Math.random() *
+                        Math.PI *
+                        2;
+
+
+                    const force =
+                        random(
+                            3,
+                            8
+                        );
+
+
+                    particle.vx +=
+                        Math.cos(angle) *
+                        force;
+
+
+                    particle.vy +=
+                        Math.sin(angle) *
+                        force;
+
+                }
+            );
+        }
+
+
+        /* =====================================================
+           RESIZE
+           ===================================================== */
+
+        function resizeCanvas() {
+
+            dpr =
+                Math.min(
+                    window.devicePixelRatio ||
+                    1,
+                    2
+                );
+
+
+            width =
+                window.innerWidth;
+
+
+            height =
+                window.innerHeight;
+
+
+            canvas.width =
+                width * dpr;
+
+
+            canvas.height =
+                height * dpr;
+
+
+            canvas.style.width =
+                width + "px";
+
+
+            canvas.style.height =
+                height + "px";
+
+
+            ctx.setTransform(
+                dpr,
                 0,
-                Math.PI * 2
-            )
-
-            ctx.fill()
-        })
-    }
-
-
-    let startTime = performance.now()
-
-    function animate(time) {
-
-        updateParticles(time)
-
-        drawParticles()
-
-        requestAnimationFrame(animate)
-    }
+                0,
+                dpr,
+                0,
+                0
+            );
 
 
-    function setHeart() {
+            if (
+                particleState ===
+                "heart"
+            ) {
 
-        particleState = "heart"
-
-        createHeartTargets()
-
-        hint.classList.add("show")
-    }
-
-
-    function setText(text) {
-
-        particleState = "text"
-        particleText = text
-
-        createTextTargets(text)
-
-        hint.classList.add("show")
-    }
-
-
-    function revealWebsite() {
-
-        particleState = "scatter"
-
-        scatterParticles()
-
-        hint.classList.remove("show")
-
-        setTimeout(() => {
-
-            intro.classList.add("hidden")
-
-            const existingIntro =
-                document.getElementById("intro-screen")
-
-            if (existingIntro) {
-                existingIntro.style.display = ""
+                createHeartTargets();
             }
 
-        }, 1200)
 
+            if (
+                particleState ===
+                    "text" &&
+                particleText
+            ) {
+
+                createTextTargets(
+                    particleText
+                );
+            }
+        }
+
+
+        /* =====================================================
+           UPDATE
+           ===================================================== */
+
+        function updateParticles(
+            time
+        ) {
+
+            particles.forEach(
+                particle => {
+
+                    if (
+                        particleState ===
+                        "smoke"
+                    ) {
+
+                        particle.x +=
+                            particle.vx +
+                            Math.sin(
+                                time *
+                                particle.drift +
+                                particle.phase
+                            ) *
+                            .45;
+
+
+                        particle.y +=
+                            particle.vy;
+
+
+                        particle.vx *=
+                            .998;
+
+
+                        particle.vy *=
+                            .999;
+
+
+                        if (
+                            particle.y <
+                            -30
+                        ) {
+
+                            particle.x =
+                                random(
+                                    0,
+                                    width
+                                );
+
+
+                            particle.y =
+                                height +
+                                random(
+                                    0,
+                                    50
+                                );
+
+
+                            particle.vx =
+                                random(
+                                    -.45,
+                                    .45
+                                );
+
+
+                            particle.vy =
+                                random(
+                                    -1.65,
+                                    -.35
+                                );
+                        }
+
+
+                        if (
+                            particle.x <
+                            -30
+                        ) {
+
+                            particle.x =
+                                width + 20;
+                        }
+
+
+                        if (
+                            particle.x >
+                            width + 30
+                        ) {
+
+                            particle.x =
+                                -20;
+                        }
+
+                    }
+
+
+                    else if (
+                        particleState ===
+                            "heart" ||
+                        particleState ===
+                            "text"
+                    ) {
+
+                        const dx =
+                            particle.tx -
+                            particle.x;
+
+
+                        const dy =
+                            particle.ty -
+                            particle.y;
+
+
+                        particle.vx +=
+                            dx *
+                            .0105;
+
+
+                        particle.vy +=
+                            dy *
+                            .0105;
+
+
+                        particle.vx *=
+                            .89;
+
+
+                        particle.vy *=
+                            .89;
+
+
+                        particle.x +=
+                            particle.vx;
+
+
+                        particle.y +=
+                            particle.vy;
+
+                    }
+
+
+                    else if (
+                        particleState ===
+                        "scatter"
+                    ) {
+
+                        particle.vx *=
+                            .965;
+
+
+                        particle.vy *=
+                            .965;
+
+
+                        particle.x +=
+                            particle.vx;
+
+
+                        particle.y +=
+                            particle.vy;
+                    }
+
+                }
+            );
+        }
+
+
+        /* =====================================================
+           DRAW
+           ===================================================== */
+
+        function drawParticles() {
+
+            ctx.clearRect(
+                0,
+                0,
+                width,
+                height
+            );
+
+
+            particles.forEach(
+                particle => {
+
+                    ctx.beginPath();
+
+
+                    ctx.fillStyle =
+                        `rgba(${particle.color},${particle.alpha})`;
+
+
+                    ctx.arc(
+                        particle.x,
+                        particle.y,
+                        particle.size,
+                        0,
+                        Math.PI * 2
+                    );
+
+
+                    ctx.fill();
+
+                }
+            );
+        }
+
+
+        /* =====================================================
+           ANIMATION LOOP
+           ===================================================== */
+
+        function animate(
+            time
+        ) {
+
+            updateParticles(
+                time
+            );
+
+
+            drawParticles();
+
+
+            window.requestAnimationFrame(
+                animate
+            );
+        }
+
+
+        /* =====================================================
+           STATES
+           ===================================================== */
+
+        function setHeart() {
+
+            particleState =
+                "heart";
+
+
+            createHeartTargets();
+
+
+            if (hint) {
+
+                hint.classList.add(
+                    "show"
+                );
+            }
+        }
+
+
+        function setText(
+            text
+        ) {
+
+            particleState =
+                "text";
+
+
+            particleText =
+                text;
+
+
+            createTextTargets(
+                text
+            );
+
+
+            if (hint) {
+
+                hint.classList.add(
+                    "show"
+                );
+            }
+        }
+
+
+        /* =====================================================
+           FINISH EXPERIENCE
+           ===================================================== */
+
+        function revealMenu() {
+
+            particleState =
+                "scatter";
+
+
+            scatterParticles();
+
+
+            if (hint) {
+
+                hint.classList.remove(
+                    "show"
+                );
+            }
+
+
+            fadeOutExperienceMusic();
+
+
+            window.setTimeout(
+                () => {
+
+                    intro.classList.add(
+                        "hidden"
+                    );
+
+
+                    if (menu) {
+
+                        menu.classList.add(
+                            "show"
+                        );
+
+                        document.body.classList.add(
+                            "experience-choice-open"
+                        );
+                    }
+
+                },
+                1200
+            );
+        }
+
+
+        /* =====================================================
+           PARTICLE CLICK FLOW
+           ===================================================== */
+
+        intro.addEventListener(
+            "click",
+            () => {
+
+                if (
+                    clickLocked
+                ) {
+
+                    return;
+                }
+
+
+                clickLocked =
+                    true;
+
+
+                /* ---------------------------------------------
+                   SMOKE → HEART
+                   --------------------------------------------- */
+
+                if (
+                    particleState ===
+                    "smoke"
+                ) {
+
+                    startExperienceMusic();
+
+                    setHeart();
+
+
+                    window.setTimeout(
+                        () => {
+
+                            clickLocked =
+                                false;
+
+                        },
+                        1200
+                    );
+
+
+                    return;
+                }
+
+
+                /* ---------------------------------------------
+                   HEART → PATRICIA
+                   --------------------------------------------- */
+
+                if (
+                    particleState ===
+                    "heart"
+                ) {
+
+                    scatterParticles();
+
+
+                    particleState =
+                        "scatter";
+
+
+                    window.setTimeout(
+                        () => {
+
+                            setText(
+                                "Patricia"
+                            );
+
+                        },
+                        520
+                    );
+
+
+                    window.setTimeout(
+                        () => {
+
+                            clickLocked =
+                                false;
+
+                        },
+                        1400
+                    );
+
+
+                    return;
+                }
+
+
+                /* ---------------------------------------------
+                   PATRICIA → FINAL TEXT
+                   --------------------------------------------- */
+
+                if (
+                    particleState ===
+                        "text" &&
+                    particleText ===
+                        "Patricia"
+                ) {
+
+                    scatterParticles();
+
+
+                    particleState =
+                        "scatter";
+
+
+                    window.setTimeout(
+                        () => {
+
+                            setText(
+                                "Je t'aime Sauveur Patricia"
+                            );
+
+                        },
+                        520
+                    );
+
+
+                    window.setTimeout(
+                        () => {
+
+                            clickLocked =
+                                false;
+
+                        },
+                        1500
+                    );
+
+
+                    return;
+                }
+
+
+                /* ---------------------------------------------
+                   FINAL TEXT → MENU
+                   --------------------------------------------- */
+
+                if (
+                    particleState ===
+                        "text" &&
+                    particleText ===
+                        "Je t'aime Sauveur Patricia"
+                ) {
+
+                    revealMenu();
+
+
+                    window.setTimeout(
+                        () => {
+
+                            clickLocked =
+                                false;
+
+                        },
+                        1500
+                    );
+                }
+
+            }
+        );
+
+
+        createParticles();
+
+        resizeCanvas();
+
+
+        window.addEventListener(
+            "resize",
+            resizeCanvas
+        );
+
+
+        window.requestAnimationFrame(
+            animate
+        );
     }
 
 
-    intro.addEventListener("click", () => {
-
-        if (clickLocked) return
-
-        clickLocked = true
-
-        if (particleState === "smoke") {
-
-            setHeart()
-
-            setTimeout(() => {
-                clickLocked = false
-            }, 1200)
-
-            return
-        }
-
-
-        if (particleState === "heart") {
-
-            scatterParticles()
-
-            setTimeout(() => {
-                setText("Patricia")
-            }, 500)
-
-            setTimeout(() => {
-                clickLocked = false
-            }, 1400)
-
-            return
-        }
-
-
-        if (
-            particleState === "text" &&
-            particleText === "Patricia"
-        ) {
-
-            scatterParticles()
-
-            setTimeout(() => {
-                setText("Je t'aime Sauveur Patricia")
-            }, 500)
-
-            setTimeout(() => {
-                clickLocked = false
-            }, 1500)
-
-            return
-        }
-
-
-        if (
-            particleState === "text" &&
-            particleText === "Je t'aime Sauveur Patricia"
-        ) {
-
-            revealWebsite()
-
-            setTimeout(() => {
-                clickLocked = false
-            }, 1500)
-        }
-
-    })
-
-
-    resizeCanvas()
-
-    requestAnimationFrame(animate)
-
-
-    /* =========================================
+    /* =========================================================
        MEMORY BOOK
-    ========================================= */
+       ========================================================= */
 
-    const memoryBook =
-        document.getElementById("memory-book")
-
-    const memoryPhoto =
-        document.getElementById("memoryPhoto")
-
-    const memoryNumber =
-        document.getElementById("memoryNumber")
-
-    const souvenirPanel =
-        document.getElementById("souvenirPanel")
+    const photos = [];
 
 
-    if (!memoryBook || !memoryPhoto || !souvenirPanel) {
-        return
-    }
-
-
-    /*
-       METE FOTO YO NAN DOSYE
-
-       assets/photos/photo01.jpg
-       assets/photos/photo02.jpg
-       ...
-       assets/photos/photo42.jpg
-    */
-
-    const photos = []
-
-    for (let i = 1; i <= 42; i++) {
+    for (
+        let i = 1;
+        i <= 42;
+        i++
+    ) {
 
         const number =
-            String(i).padStart(2, "0")
+            String(i).padStart(
+                2,
+                "0"
+            );
+
 
         photos.push(
             `assets/photos/photo${number}.jpg`
-        )
+        );
     }
 
 
-    let currentPhoto = 0
-    let photoTimer = null
+    let currentPhoto =
+        0;
 
-    let photoStart = 0
-    let remainingTime = 7000
 
-    let photoPaused = false
-    let bookStarted = false
+    let photoTimer =
+        null;
+
+
+    let photoStart =
+        0;
+
+
+    let remainingTime =
+        7000;
+
+
+    let photoPaused =
+        false;
+
+
+    let bookStarted =
+        false;
 
 
     function showBook() {
 
-        if (bookStarted) return
+        if (!memoryBook) {
+            return;
+        }
 
-        bookStarted = true
 
-        memoryBook.classList.add("show")
-
+        memoryBook.classList.add(
+            "show"
+        );
     }
 
 
-    function loadPhoto(index) {
+    function loadPhoto(
+        index
+    ) {
 
-        if (index >= photos.length) {
-            currentPhoto = 0
-            index = 0
+        if (
+            !memoryPhoto ||
+            !memoryNumber
+        ) {
+
+            return;
         }
 
-        currentPhoto = index
 
-        clearTimeout(photoTimer)
+        if (
+            index >=
+            photos.length
+        ) {
+
+            index = 0;
+
+            currentPhoto =
+                0;
+        }
+
+
+        currentPhoto =
+            index;
+
+
+        clearTimeout(
+            photoTimer
+        );
+
 
         memoryPhoto.classList.remove(
             "memory-enter",
             "memory-leave"
-        )
+        );
 
-        memoryPhoto.src = photos[index]
 
-        memoryNumber.textContent = index + 1
+        memoryPhoto.style.display =
+            "block";
 
-        requestAnimationFrame(() => {
 
-            memoryPhoto.classList.add("memory-enter")
+        memoryPhoto.src =
+            photos[index];
 
-            photoStart = performance.now()
-            remainingTime = 7000
 
-            photoPaused = false
+        memoryNumber.textContent =
+            String(
+                index + 1
+            );
 
-            photoTimer = setTimeout(
-                nextPhoto,
-                remainingTime
-            )
-        })
+
+        requestAnimationFrame(
+            () => {
+
+                memoryPhoto.classList.add(
+                    "memory-enter"
+                );
+
+
+                photoStart =
+                    performance.now();
+
+
+                remainingTime =
+                    7000;
+
+
+                photoPaused =
+                    false;
+
+
+                photoTimer =
+                    setTimeout(
+                        nextPhoto,
+                        remainingTime
+                    );
+
+            }
+        );
     }
 
 
     function nextPhoto() {
 
-        if (photoPaused) return
+        if (
+            photoPaused ||
+            !memoryPhoto
+        ) {
+
+            return;
+        }
+
 
         memoryPhoto.classList.remove(
             "memory-enter"
-        )
+        );
+
 
         memoryPhoto.classList.add(
             "memory-leave"
-        )
+        );
 
-        setTimeout(() => {
 
-            currentPhoto++
+        window.setTimeout(
+            () => {
 
-            if (currentPhoto >= photos.length) {
-                currentPhoto = 0
-            }
+                currentPhoto++;
 
-            loadPhoto(currentPhoto)
 
-        }, 1050)
+                if (
+                    currentPhoto >=
+                    photos.length
+                ) {
+
+                    currentPhoto =
+                        0;
+                }
+
+
+                loadPhoto(
+                    currentPhoto
+                );
+
+            },
+            1050
+        );
     }
 
 
     function pausePhoto() {
 
-        if (photoPaused) return
+        if (
+            photoPaused
+        ) {
 
-        photoPaused = true
+            return;
+        }
 
-        clearTimeout(photoTimer)
+
+        photoPaused =
+            true;
+
+
+        clearTimeout(
+            photoTimer
+        );
+
 
         const elapsed =
-            performance.now() - photoStart
+            performance.now() -
+            photoStart;
+
 
         remainingTime =
-            Math.max(0, remainingTime - elapsed)
+            Math.max(
+                500,
+                remainingTime -
+                elapsed
+            );
     }
 
 
     function resumePhoto() {
 
-        if (!photoPaused) return
+        if (
+            !photoPaused
+        ) {
 
-        photoPaused = false
+            return;
+        }
 
-        photoStart = performance.now()
 
-        photoTimer = setTimeout(
-            nextPhoto,
-            remainingTime
-        )
+        photoPaused =
+            false;
+
+
+        photoStart =
+            performance.now();
+
+
+        photoTimer =
+            setTimeout(
+                nextPhoto,
+                remainingTime
+            );
     }
 
 
     function startMemoryExperience() {
 
-        showBook()
+        if (
+            !memoryBook
+        ) {
 
-        if (!memoryPhoto.src || memoryPhoto.src.endsWith("/")) {
-            loadPhoto(0)
+            return;
+        }
+
+
+        showBook();
+
+
+        if (
+            !bookStarted
+        ) {
+
+            bookStarted =
+                true;
+
+
+            loadPhoto(
+                0
+            );
         }
     }
 
 
-    souvenirPanel.addEventListener(
-        "pointerdown",
-        pausePhoto,
-        { passive: true }
-    )
+    if (
+        souvenirPanel
+    ) {
 
-    souvenirPanel.addEventListener(
-        "pointerup",
-        resumePhoto,
-        { passive: true }
-    )
-
-    souvenirPanel.addEventListener(
-        "pointercancel",
-        resumePhoto,
-        { passive: true }
-    )
-
-    souvenirPanel.addEventListener(
-        "pointerleave",
-        resumePhoto,
-        { passive: true }
-    )
-
-
-    const observer =
-        new IntersectionObserver(
-            entries => {
-
-                entries.forEach(entry => {
-
-                    if (entry.isIntersecting) {
-                        startMemoryExperience()
-                    }
-
-                })
-
-            },
+        souvenirPanel.addEventListener(
+            "pointerdown",
+            pausePhoto,
             {
-                threshold: .35
+                passive: true
             }
-        )
-
-    observer.observe(memoryBook)
+        );
 
 
-    memoryPhoto.addEventListener(
-        "error",
-        () => {
+        souvenirPanel.addEventListener(
+            "pointerup",
+            resumePhoto,
+            {
+                passive: true
+            }
+        );
 
-            memoryPhoto.style.display = "none"
 
+        souvenirPanel.addEventListener(
+            "pointercancel",
+            resumePhoto,
+            {
+                passive: true
+            }
+        );
+    }
+
+
+    if (
+        memoryPhoto
+    ) {
+
+        memoryPhoto.addEventListener(
+            "error",
+            () => {
+
+                memoryPhoto.style.display =
+                    "none";
+
+            }
+        );
+    }
+
+
+    /* =========================================================
+       SHOW / HIDE MENU
+       ========================================================= */
+
+    function closeChoiceMenu() {
+
+        if (menu) {
+
+            menu.classList.remove(
+                "show"
+            );
         }
-    )
 
-})
+
+        document.body.classList.remove(
+            "experience-choice-open"
+        );
+    }
+
+
+    function showReturnArrow() {
+
+        if (
+            returnToMenu
+        ) {
+
+            returnToMenu.classList.add(
+                "show"
+            );
+        }
+    }
+
+
+    function hideReturnArrow() {
+
+        if (
+            returnToMenu
+        ) {
+
+            returnToMenu.classList.remove(
+                "show"
+            );
+        }
+    }
+
+
+    function showMenu() {
+
+        if (menu) {
+
+            menu.classList.add(
+                "show"
+            );
+        }
+
+
+        document.body.classList.add(
+            "experience-choice-open"
+        );
+
+
+        hideReturnArrow();
+    }
+
+
+    /* =========================================================
+       OPEN LETTER
+       ========================================================= */
+
+    if (
+        openLetterChoice
+    ) {
+
+        openLetterChoice.addEventListener(
+            "click",
+            () => {
+
+                playDing();
+
+                closeChoiceMenu();
+
+                showReturnArrow();
+
+                startMainMusic();
+
+
+                if (
+                    letter
+                ) {
+
+                    window.setTimeout(
+                        () => {
+
+                            letter.scrollIntoView({
+                                behavior:
+                                    "smooth",
+                                block:
+                                    "start"
+                            });
+
+                        },
+                        80
+                    );
+                }
+
+            }
+        );
+    }
+
+
+    /* =========================================================
+       OPEN SOUVENIRS
+       ========================================================= */
+
+    if (
+        openMemoryChoice
+    ) {
+
+        openMemoryChoice.addEventListener(
+            "click",
+            () => {
+
+                playDing();
+
+                closeChoiceMenu();
+
+                showReturnArrow();
+
+                startMainMusic();
+
+                startMemoryExperience();
+
+
+                if (
+                    memoryBook
+                ) {
+
+                    window.setTimeout(
+                        () => {
+
+                            memoryBook.scrollIntoView({
+                                behavior:
+                                    "smooth",
+                                block:
+                                    "start"
+                            });
+
+                        },
+                        100
+                    );
+                }
+
+            }
+        );
+    }
+
+
+    /* =========================================================
+       RETURN ARROW
+       ========================================================= */
+
+    if (
+        returnToMenu
+    ) {
+
+        returnToMenu.addEventListener(
+            "click",
+            () => {
+
+                playDing();
+
+                showMenu();
+
+            }
+        );
+    }
+
+});
