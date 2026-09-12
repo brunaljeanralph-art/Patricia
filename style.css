@@ -1,14 +1,17 @@
 /*
   LETTER BASE STYLES
-  This file is intentionally conservative. The saved letter typography is
-  kept in index.html so its text and letter-specific rules remain unchanged.
+  Conservateur pour préserver la lettre existante.
+  Les styles du livre et des souvenirs restent dans souvenirs.css.
  */
 
 :root {
   --purple: #7A3FA3;
   --purple-dark: #5E2B84;
+  --purple-soft: #B88ACB;
   --paper: #fffdf9;
   --ink: #3d3342;
+  --rose-soft: rgba(194, 135, 174, .12);
+  --shadow-soft: rgba(74,40,94,.12);
 }
 
 * {
@@ -27,11 +30,28 @@ body {
 }
 
 body {
-  background: #f5eff9;
+  background:
+    radial-gradient(
+      circle at 10% 10%,
+      rgba(255,255,255,.95),
+      transparent 28%
+    ),
+    radial-gradient(
+      circle at 90% 35%,
+      rgba(225,204,238,.28),
+      transparent 24%
+    ),
+    linear-gradient(
+      180deg,
+      #f7f0fa 0%,
+      #f5eff9 48%,
+      #f2eaf7 100%
+    );
   color: var(--ink);
   overflow-x: hidden;
 }
 
+/* Petite texture lumineuse générale */
 body::before {
   content: "";
   position: fixed;
@@ -56,6 +76,7 @@ body::before {
   z-index: -2;
 }
 
+/* Texture très légère, sans alourdir le fond */
 body::after {
   content: "";
   position: fixed;
@@ -78,24 +99,88 @@ body::after {
   z-index: -3;
 }
 
+/* =========================================================
+   LETTER CARD
+   ========================================================= */
+
 .card {
   position: relative;
   width: min(94%, 960px);
   margin: 42px auto 28px;
   padding: 34px clamp(20px, 5vw, 58px) 44px;
-  background: rgba(255,253,249,.96);
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,.985),
+      rgba(255,253,249,.96)
+    );
+
   border: 1px solid rgba(122,63,163,.10);
   border-radius: 24px;
+
   box-shadow:
     0 22px 65px rgba(74,40,94,.12),
     0 2px 8px rgba(74,40,94,.05);
+
   overflow: hidden;
+
+  isolation: isolate;
+}
+
+/* Fine lueur décorative autour de la feuille */
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+
+  background:
+    radial-gradient(
+      circle at 50% 0%,
+      rgba(184,138,203,.11),
+      transparent 28%
+    ),
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(122,63,163,.035),
+      transparent
+    );
+
+  z-index: 0;
+}
+
+/* Petite ligne décorative très discrète */
+.card::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 12px;
+  width: min(180px, 42%);
+  height: 1px;
+  transform: translateX(-50%);
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(122,63,163,.22),
+      transparent
+    );
+
+  pointer-events: none;
+  z-index: 1;
 }
 
 .card > * {
   position: relative;
-  z-index: 1;
+  z-index: 2;
 }
+
+/* =========================================================
+   HEADER
+   ========================================================= */
 
 .header {
   display: flex;
@@ -109,6 +194,8 @@ body::after {
 .header-tulip {
   width: clamp(58px, 9vw, 90px);
   height: auto;
+  flex-shrink: 0;
+  filter: drop-shadow(0 5px 10px rgba(74,40,94,.08));
 }
 
 .header-tulip.right {
@@ -117,6 +204,7 @@ body::after {
 
 .title {
   flex: 1;
+  min-width: 0;
 }
 
 h1,
@@ -139,36 +227,88 @@ h2 {
   color: var(--purple);
 }
 
+/* =========================================================
+   MUSIC BUTTON
+   ========================================================= */
+
 .music-btn {
   position: fixed;
   right: 16px;
   bottom: 16px;
   z-index: 50;
-  border: 0;
+
+  border: 1px solid rgba(255,255,255,.20);
   border-radius: 999px;
+
   padding: 11px 16px;
-  background: rgba(122,63,163,.96);
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(122,63,163,.98),
+      rgba(94,43,132,.98)
+    );
+
   color: #fff;
   font-weight: 700;
-  box-shadow: 0 8px 25px rgba(70,36,87,.23);
+
+  box-shadow:
+    0 8px 25px rgba(70,36,87,.23),
+    0 2px 8px rgba(70,36,87,.10);
+
   cursor: pointer;
+
+  transition:
+    transform .2s ease,
+    box-shadow .2s ease,
+    opacity .2s ease;
+}
+
+.music-btn:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 11px 28px rgba(70,36,87,.27),
+    0 3px 9px rgba(70,36,87,.11);
+}
+
+.music-btn:active {
+  transform: translateY(0);
+}
+
+.music-btn:focus-visible {
+  outline: 2px solid rgba(122,63,163,.45);
+  outline-offset: 3px;
 }
 
 .hidden {
   display: none !important;
 }
 
+/* =========================================================
+   INTRO / POPUP LAYER
+   ========================================================= */
+
 #intro-screen,
 #welcome-popup {
   z-index: 80;
 }
 
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
 @media (max-width: 600px) {
+
   .card {
     width: min(100% - 14px, 960px);
     margin-top: 18px;
     padding: 22px 17px 34px;
     border-radius: 18px;
+  }
+
+  .card::after {
+    top: 8px;
+    width: 120px;
   }
 
   .header {
@@ -178,5 +318,61 @@ h2 {
 
   .header-tulip {
     width: 48px;
+  }
+
+  .music-btn {
+    right: 10px;
+    bottom: 10px;
+    padding: 9px 12px;
+    font-size: 12px;
+  }
+}
+
+/* =========================================================
+   VERY SMALL PHONES
+   ========================================================= */
+
+@media (max-width: 380px) {
+
+  .card {
+    width: calc(100% - 10px);
+    margin-top: 12px;
+    padding-left: 13px;
+    padding-right: 13px;
+    border-radius: 16px;
+  }
+
+  .header {
+    gap: 3px;
+  }
+
+  .header-tulip {
+    width: 40px;
+  }
+
+  .music-btn {
+    max-width: calc(100vw - 20px);
+    padding: 8px 10px;
+    font-size: 11px;
+  }
+}
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
   }
 }
