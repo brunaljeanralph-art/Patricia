@@ -1,17 +1,25 @@
 /* =========================================================
    PATRICIA EXPERIENCE
-   PART 1
-   Particle Heart -> Patricia -> Je t'aime Sauveur Patricia
+   FINAL PART 1
+
+   Particle Heart
+   -> Patricia
+   -> Je t'aime Sauveur Patricia
    -> Existing website
+
+   IMPORTANT
+   - Does NOT create another audio
+   - Does NOT modify the letter
+   - Does NOT modify bgMusic
+   - Works with experience.css
    ========================================================= */
 
 (() => {
   "use strict"
 
-  /* -------------------------------------------------------
-     Protection
-     Prevents this experience from being initialized twice
-     ------------------------------------------------------- */
+  /* =======================================================
+     PROTECTION
+     ======================================================= */
 
   if (window.__patriciaExperienceStarted) {
     return
@@ -20,11 +28,11 @@
   window.__patriciaExperienceStarted = true
 
 
-  /* -------------------------------------------------------
-     Start only after the page is ready
-     ------------------------------------------------------- */
+  /* =======================================================
+     BOOT
+     ======================================================= */
 
-  const boot = () => {
+  function boot() {
     if (document.getElementById("px-experience")) {
       return
     }
@@ -34,27 +42,32 @@
 
 
   if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", boot, {
-      once: true
-    })
+    document.addEventListener(
+      "DOMContentLoaded",
+      boot,
+      { once: true }
+    )
   } else {
     boot()
   }
 
 
   /* =======================================================
-     EXPERIENCE CREATION
+     CREATE EXPERIENCE
      ======================================================= */
 
   function createExperience() {
 
-    /* -----------------------------------------------------
-       Main wrapper
-       ----------------------------------------------------- */
+    const experience =
+      document.createElement("div")
 
-    const experience = document.createElement("div")
+    experience.id =
+      "px-experience"
 
-    experience.id = "px-experience"
+    experience.setAttribute(
+      "aria-label",
+      "Patricia experience"
+    )
 
     experience.innerHTML = `
       <div class="px-top-anchor"></div>
@@ -73,7 +86,10 @@
 
       <div id="px-tulip-drift"></div>
 
-      <canvas id="px-particle-canvas"></canvas>
+      <canvas
+        id="px-particle-canvas"
+        aria-hidden="true"
+      ></canvas>
 
       <div class="px-readable-text">
         <span
@@ -90,7 +106,10 @@
       <div class="px-opening-copy">
         <span class="px-opening-line"></span>
 
-        <p class="px-opening-small" id="px-opening-small">
+        <p
+          class="px-opening-small"
+          id="px-opening-small"
+        >
           une petite trace de moi pour toi
         </p>
 
@@ -100,6 +119,7 @@
       <div
         class="px-question"
         id="px-question"
+        aria-hidden="true"
       ></div>
 
       <button
@@ -111,35 +131,46 @@
       </button>
     `
 
-    document.body.appendChild(experience)
+    document.body.appendChild(
+      experience
+    )
 
 
-    /* -----------------------------------------------------
-       References
-       ----------------------------------------------------- */
+    /* =====================================================
+       REFERENCES
+       ===================================================== */
 
     const canvas =
-      document.getElementById("px-particle-canvas")
+      experience.querySelector(
+        "#px-particle-canvas"
+      )
 
     const ctx =
-      canvas.getContext("2d", {
-        alpha: true
-      })
+      canvas
+        ? canvas.getContext("2d", {
+            alpha: true
+          })
+        : null
 
     const readableName =
-      document.getElementById("px-readable-name")
+      experience.querySelector(
+        "#px-readable-name"
+      )
 
     const readableLove =
-      document.getElementById("px-readable-love")
+      experience.querySelector(
+        "#px-readable-love"
+      )
 
     const openingSmall =
-      document.getElementById("px-opening-small")
+      experience.querySelector(
+        "#px-opening-small"
+      )
 
     const skipButton =
-      document.getElementById("px-skip")
-
-    const tulipDrift =
-      document.getElementById("px-tulip-drift")
+      experience.querySelector(
+        "#px-skip"
+      )
 
 
     if (!canvas || !ctx) {
@@ -152,46 +183,60 @@
        SETTINGS
        ===================================================== */
 
+    const mobileQuery =
+      window.matchMedia(
+        "(max-width: 600px)"
+      )
+
+    const reducedMotionQuery =
+      window.matchMedia(
+        "(prefers-reduced-motion: reduce)"
+      )
+
     const settings = {
+
       mobile:
-        window.matchMedia("(max-width: 600px)").matches,
+        mobileQuery.matches,
 
-      particleCount: 0,
+      reducedMotion:
+        reducedMotionQuery.matches,
 
-      dpr: Math.min(
-        window.devicePixelRatio || 1,
-        2
-      ),
+      dpr:
+        Math.min(
+          window.devicePixelRatio || 1,
+          2
+        ),
+
+      particleCount:
+        mobileQuery.matches
+          ? 520
+          : 900,
 
       particleSize:
-        window.matchMedia("(max-width: 600px)").matches
-          ? 1.35
-          : 1.55,
-
-      backgroundFade: 0.18
+        mobileQuery.matches
+          ? 1.25
+          : 1.50
     }
 
 
-    settings.particleCount =
-      settings.mobile
-        ? 720
-        : 1250
-
-
     /* =====================================================
-       STATE
+       STATES
        ===================================================== */
 
     const STATES = {
       RISING: "rising",
       HEART: "heart",
+      BURST_TO_NAME: "burst-to-name",
       NAME: "name",
+      BURST_TO_LOVE: "burst-to-love",
       LOVE: "love",
       EXIT: "exit",
       FINISHED: "finished"
     }
 
-    let state = STATES.RISING
+
+    let state =
+      STATES.RISING
 
     let width = 0
     let height = 0
@@ -203,14 +248,20 @@
     let stateStartedAt =
       performance.now()
 
-    let transitionLocked = false
+    let transitionLocked =
+      false
 
-    let currentTarget = null
+    let currentTarget =
+      null
 
-    let pointerX = 0
-    let pointerY = 0
+    let pointerActive =
+      false
 
-    let pointerActive = false
+    let burstStartedAt =
+      0
+
+    let burstDuration =
+      720
 
 
     /* =====================================================
@@ -221,7 +272,9 @@
 
 
     function random(min, max) {
-      return Math.random() * (max - min) + min
+      return Math.random() *
+        (max - min) +
+        min
     }
 
 
@@ -234,74 +287,118 @@
 
 
     function easeOutCubic(value) {
-      const x = clamp(value, 0, 1)
 
-      return 1 - Math.pow(1 - x, 3)
-    }
-
-
-    function easeInOut(value) {
-      const x = clamp(value, 0, 1)
-
-      return x < 0.5
-        ? 2 * x * x
-        : 1 - Math.pow(-2 * x + 2, 2) / 2
-    }
-
-
-    function createParticle() {
-      return {
-        x: random(
-          width * 0.25,
-          width * 0.75
-        ),
-
-        y: random(
-          height * 0.92,
-          height * 1.08
-        ),
-
-        vx: random(-0.25, 0.25),
-
-        vy: random(
-          -2.7,
-          -0.7
-        ),
-
-        size: random(
-          settings.particleSize * 0.45,
-          settings.particleSize * 1.45
-        ),
-
-        alpha: random(
-          0.25,
-          0.95
-        ),
-
-        life: random(
+      const x =
+        clamp(
+          value,
           0,
           1
-        ),
+        )
+
+      return 1 -
+        Math.pow(
+          1 - x,
+          3
+        )
+    }
+
+
+    function lerp(a, b, amount) {
+
+      return a +
+        (b - a) *
+        amount
+    }
+
+
+    /* =====================================================
+       PARTICLE CREATION
+       ===================================================== */
+
+    function createParticle() {
+
+      return {
+
+        x:
+          random(
+            width * 0.18,
+            width * 0.82
+          ),
+
+        y:
+          random(
+            height * 0.94,
+            height * 1.08
+          ),
+
+        vx:
+          random(
+            -0.22,
+            0.22
+          ),
+
+        vy:
+          random(
+            -2.45,
+            -0.80
+          ),
+
+        size:
+          random(
+            settings.particleSize * 0.42,
+            settings.particleSize * 1.42
+          ),
+
+        alpha:
+          random(
+            0.28,
+            0.95
+          ),
+
+        life:
+          random(
+            0,
+            1
+          ),
 
         drift:
-          random(-0.45, 0.45),
+          random(
+            -0.60,
+            0.60
+          ),
 
         swirl:
-          random(0.002, 0.009),
+          random(
+            0.0015,
+            0.007
+          ),
 
         phase:
-          random(0, Math.PI * 2),
+          random(
+            0,
+            Math.PI * 2
+          ),
 
         seed:
           Math.random(),
 
         targetX: 0,
-        targetY: 0
+        targetY: 0,
+
+        burstVX: 0,
+        burstVY: 0,
+
+        glow:
+          random(
+            0.6,
+            1.4
+          )
       }
     }
 
 
     function createParticles() {
+
       particles.length = 0
 
       for (
@@ -328,21 +425,44 @@
       height =
         window.innerHeight
 
+      settings.mobile =
+        mobileQuery.matches
+
+      settings.reducedMotion =
+        reducedMotionQuery.matches
+
+      settings.dpr =
+        Math.min(
+          window.devicePixelRatio || 1,
+          2
+        )
+
+
       canvas.width =
-        Math.floor(
-          width * settings.dpr
+        Math.max(
+          1,
+          Math.floor(
+            width *
+            settings.dpr
+          )
         )
 
       canvas.height =
-        Math.floor(
-          height * settings.dpr
+        Math.max(
+          1,
+          Math.floor(
+            height *
+            settings.dpr
+          )
         )
+
 
       canvas.style.width =
         `${width}px`
 
       canvas.style.height =
         `${height}px`
+
 
       ctx.setTransform(
         settings.dpr,
@@ -353,11 +473,23 @@
         0
       )
 
+
       createParticles()
 
+
       if (currentTarget) {
+
+        const oldType =
+          currentTarget.type
+
         currentTarget =
-          buildTarget(currentTarget.type)
+          buildTarget(
+            oldType
+          )
+
+        assignTarget(
+          currentTarget
+        )
       }
     }
 
@@ -372,53 +504,58 @@
 
 
     /* =====================================================
-       TARGET GENERATOR
+       HEART TARGET
        ===================================================== */
 
     function buildHeartTarget() {
 
       const points = []
 
-      const scale =
-        Math.min(
-          width,
-          height
-        ) * (
-          settings.mobile
-            ? 0.0105
-            : 0.0095
-        )
-
       const centerX =
         width / 2
 
       const centerY =
-        height * 0.45
+        height *
+        (
+          settings.mobile
+            ? 0.43
+            : 0.45
+        )
 
 
-      const amount =
-        settings.particleCount
+      const scale =
+        Math.min(
+          width,
+          height
+        ) *
+        (
+          settings.mobile
+            ? 0.0101
+            : 0.0094
+        )
 
 
       for (
         let i = 0;
-        i < amount;
+        i < settings.particleCount;
         i++
       ) {
 
         const t =
-          (i / amount) *
+          Math.random() *
           Math.PI *
           2
 
-        const x =
+
+        const rawX =
           16 *
           Math.pow(
             Math.sin(t),
             3
           )
 
-        const y =
+
+        const rawY =
           -(
             13 *
               Math.cos(t) -
@@ -429,25 +566,47 @@
             Math.cos(4 * t)
           )
 
+
         const fill =
           Math.sqrt(
             Math.random()
           )
 
+
+        const jitter =
+          settings.mobile
+            ? 0.70
+            : 0.85
+
+
         points.push({
+
           x:
             centerX +
-            x *
+            (
+              rawX *
               scale *
-              fill,
+              fill
+            ) +
+            random(
+              -jitter,
+              jitter
+            ),
 
           y:
             centerY +
-            y *
+            (
+              rawY *
               scale *
               fill
+            ) +
+            random(
+              -jitter,
+              jitter
+            )
         })
       }
+
 
       return {
         type: "heart",
@@ -456,57 +615,135 @@
     }
 
 
-    /* -----------------------------------------------------
-       Text target
-       ----------------------------------------------------- */
+    /* =====================================================
+       TEXT TARGET
+       ===================================================== */
+
+    function fitFontSize(
+      offCtx,
+      text,
+      startingSize,
+      maxWidth
+    ) {
+
+      let size =
+        startingSize
+
+
+      while (
+        size > 12
+      ) {
+
+        offCtx.font =
+          `700 ${size}px Arial, Helvetica, sans-serif`
+
+        const measured =
+          offCtx.measureText(
+            text
+          ).width
+
+        if (
+          measured <= maxWidth
+        ) {
+          break
+        }
+
+        size *= 0.93
+      }
+
+
+      return size
+    }
+
 
     function buildTextTarget(text) {
 
       const offscreen =
-        document.createElement("canvas")
+        document.createElement(
+          "canvas"
+        )
 
       const offCtx =
-        offscreen.getContext("2d")
+        offscreen.getContext(
+          "2d"
+        )
+
+
+      if (!offCtx) {
+        return null
+      }
+
 
       const maxWidth =
         Math.min(
-          width * (
+          width *
+          (
             settings.mobile
               ? 0.88
               : 0.82
           ),
-          1050
+          1100
         )
 
 
-      let fontSize =
-        settings.mobile
-          ? 58
-          : 92
+      let startingSize
 
 
-      if (text.length > 18) {
-        fontSize =
+      if (
+        text === "Patricia"
+      ) {
+
+        startingSize =
           settings.mobile
-            ? 31
-            : 58
+            ? 72
+            : 120
+
+      } else {
+
+        startingSize =
+          settings.mobile
+            ? 34
+            : 62
       }
 
 
-      if (text.length > 25) {
-        fontSize =
-          settings.mobile
-            ? 25
-            : 48
-      }
+      const fontSize =
+        fitFontSize(
+          offCtx,
+          text,
+          startingSize,
+          maxWidth
+        )
+
+
+      const actualWidth =
+        Math.ceil(
+          Math.min(
+            maxWidth,
+            offCtx.measureText(
+              text
+            ).width +
+              fontSize * 0.10
+          )
+        )
+
+
+      const actualHeight =
+        Math.ceil(
+          fontSize * 1.60
+        )
 
 
       offscreen.width =
-        Math.ceil(maxWidth)
+        Math.max(
+          1,
+          actualWidth
+        )
 
       offscreen.height =
-        Math.ceil(
-          fontSize * 1.7
+        Math.max(
+          1,
+          actualHeight
         )
 
 
@@ -521,11 +758,13 @@
       offCtx.fillStyle =
         "#ffffff"
 
+
       offCtx.textAlign =
         "center"
 
       offCtx.textBaseline =
         "middle"
+
 
       offCtx.font =
         `700 ${fontSize}px Arial, Helvetica, sans-serif`
@@ -534,8 +773,7 @@
       offCtx.fillText(
         text,
         offscreen.width / 2,
-        offscreen.height / 2,
-        maxWidth
+        offscreen.height / 2
       )
 
 
@@ -571,20 +809,24 @@
           const index =
             (
               y *
-                offscreen.width +
+              offscreen.width +
               x
-            ) *
-            4
+            ) * 4
+
 
           const alpha =
-            imageData.data[index + 3]
+            imageData.data[
+              index + 3
+            ]
 
 
           if (
             alpha > 120 &&
-            Math.random() > 0.18
+            Math.random() > 0.14
           ) {
+
             points.push({
+
               x:
                 x -
                 offscreen.width / 2,
@@ -598,16 +840,12 @@
       }
 
 
-      const centerX =
-        width / 2
-
-      const centerY =
-        height * 0.45
-
-
       return {
+
         type: "text",
+
         text,
+
         points:
           points.length
             ? points
@@ -617,49 +855,74 @@
                   y: 0
                 }
               ],
-        centerX,
-        centerY
+
+        centerX:
+          width / 2,
+
+        centerY:
+          height *
+          (
+            settings.mobile
+              ? 0.44
+              : 0.45
+          )
       }
     }
 
 
     function buildTarget(type) {
 
-      if (type === "heart") {
+      if (
+        type === "heart"
+      ) {
         return buildHeartTarget()
       }
 
-      if (type === "name") {
+
+      if (
+        type === "name"
+      ) {
         return buildTextTarget(
           "Patricia"
         )
       }
 
-      if (type === "love") {
+
+      if (
+        type === "love"
+      ) {
         return buildTextTarget(
           "Je t'aime Sauveur Patricia"
         )
       }
+
 
       return null
     }
 
 
     /* =====================================================
-       ASSIGN TARGETS
+       ASSIGN TARGET
        ===================================================== */
 
-    function assignTarget(target) {
+    function assignTarget(
+      target
+    ) {
 
-      currentTarget =
-        target
-
-      if (!target || !target.points) {
+      if (
+        !target ||
+        !target.points ||
+        !target.points.length
+      ) {
         return
       }
 
 
-      const targetPoints =
+      currentTarget =
+        target
+
+
+      const points =
         target.points
 
 
@@ -673,12 +936,15 @@
           particles[i]
 
         const point =
-          targetPoints[
-            i % targetPoints.length
+          points[
+            i %
+            points.length
           ]
 
 
-        if (target.type === "heart") {
+        if (
+          target.type === "heart"
+        ) {
 
           particle.targetX =
             point.x
@@ -701,24 +967,39 @@
 
 
     /* =====================================================
-       PARTICLE COLORS
+       PARTICLE COLOR
        ===================================================== */
 
     function particleColor(
       particle
     ) {
 
-      const glow =
-        0.48 +
-        particle.alpha *
-          0.52
+      const alpha =
+        clamp(
+          (
+            0.42 +
+            particle.alpha *
+            0.58
+          ) *
+          particle.glow,
+          0.12,
+          1
+        )
 
-      return `rgba(255,255,255,${glow})`
+
+      return `
+        rgba(
+          255,
+          255,
+          255,
+          ${alpha}
+        )
+      `
     }
 
 
     /* =====================================================
-       RISING PARTICLES
+       RISING MODE
        ===================================================== */
 
     function updateRisingParticle(
@@ -726,91 +1007,139 @@
       delta
     ) {
 
-      particle.life +=
-        delta * 0.00045
+      if (
+        settings.reducedMotion
+      ) {
+
+        particle.y -=
+          delta *
+          0.018
+
+      } else {
+
+        particle.life +=
+          delta *
+          0.00040
 
 
-      particle.phase +=
-        particle.swirl *
-        delta
+        particle.phase +=
+          particle.swirl *
+          delta
 
 
-      particle.x +=
-        (
-          particle.vx +
+        const horizontalMotion =
           Math.sin(
             particle.phase
           ) *
-            0.18 +
+          0.20
+
+
+        const drift =
           particle.drift *
-            0.08
-        ) *
-        delta *
-        0.06
+          0.08
 
 
-      particle.y +=
-        particle.vy *
-        delta *
-        0.06
+        particle.x +=
+          (
+            particle.vx +
+            horizontalMotion +
+            drift
+          ) *
+          delta *
+          0.06
 
 
-      particle.vy +=
-        Math.sin(
-          particle.phase * 0.7
-        ) *
-        0.0012 *
-        delta
+        particle.y +=
+          particle.vy *
+          delta *
+          0.06
+
+
+        particle.vy +=
+          Math.sin(
+            particle.phase *
+            0.7
+          ) *
+          0.0011 *
+          delta
+      }
 
 
       if (
         particle.y <
-        height * 0.15
+        height *
+        0.10
       ) {
 
-        particle.y =
-          height *
-          random(
-            0.94,
-            1.08
-          )
-
-        particle.x =
-          random(
-            width * 0.20,
-            width * 0.80
-          )
-
-        particle.vy =
-          random(
-            -2.7,
-            -0.7
-          )
-
-        particle.life = 0
+        respawnRisingParticle(
+          particle
+        )
       }
 
 
       if (
         particle.x <
-        -30
+        -40
       ) {
         particle.x =
-          width + 30
+          width + 40
       }
+
 
       if (
         particle.x >
-        width + 30
+        width + 40
       ) {
         particle.x =
-          -30
+          -40
       }
     }
 
 
+    function respawnRisingParticle(
+      particle
+    ) {
+
+      particle.x =
+        random(
+          width * 0.18,
+          width * 0.82
+        )
+
+      particle.y =
+        height *
+        random(
+          0.96,
+          1.10
+        )
+
+
+      particle.vx =
+        random(
+          -0.22,
+          0.22
+        )
+
+
+      particle.vy =
+        random(
+          -2.45,
+          -0.80
+        )
+
+
+      particle.phase =
+        random(
+          0,
+          Math.PI * 2
+        )
+
+      particle.life = 0
+    }
+
+
     /* =====================================================
-       TARGET MOVEMENT
+       TARGET MODE
        ===================================================== */
 
     function updateTargetParticle(
@@ -834,93 +1163,77 @@
         )
 
 
-      const force =
+      const attraction =
         clamp(
-          distance / 240,
+          distance / 300,
           0.035,
-          0.22
+          0.24
         )
+
+
+      const speed =
+        settings.reducedMotion
+          ? 0.07
+          : 0.075
 
 
       particle.x +=
         dx *
-        force *
+        attraction *
         delta *
-        0.06
+        speed
 
 
       particle.y +=
         dy *
-        force *
+        attraction *
         delta *
-        0.06
+        speed
 
 
-      particle.phase +=
-        0.0025 *
-        delta
+      if (
+        !settings.reducedMotion
+      ) {
+
+        particle.phase +=
+          0.0023 *
+          delta
 
 
-      particle.x +=
-        Math.sin(
-          particle.phase +
-          particle.seed * 10
-        ) *
-        0.07
+        particle.x +=
+          Math.sin(
+            particle.phase +
+            particle.seed * 9
+          ) *
+          0.055
 
-      particle.y +=
-        Math.cos(
-          particle.phase +
-          particle.seed * 7
-        ) *
-        0.07
+
+        particle.y +=
+          Math.cos(
+            particle.phase +
+            particle.seed * 7
+          ) *
+          0.055
+      }
     }
 
 
     /* =====================================================
-       DRAW PARTICLE
+       BURST MODE
        ===================================================== */
 
-    function drawParticle(
-      particle
-    ) {
-
-      const radius =
-        particle.size
-
-
-      ctx.beginPath()
-
-      ctx.arc(
-        particle.x,
-        particle.y,
-        radius,
-        0,
-        Math.PI * 2
-      )
-
-      ctx.fillStyle =
-        particleColor(
-          particle
-        )
-
-      ctx.fill()
-    }
-
-
-    /* =====================================================
-       PARTICLE BURST
-       ===================================================== */
-
-    function scatterParticles(
-      strength = 1
-    ) {
+    function prepareBurst() {
 
       const centerX =
         width / 2
 
       const centerY =
-        height * 0.45
+        height *
+        (
+          settings.mobile
+            ? 0.44
+            : 0.45
+        )
 
 
       for (
@@ -951,49 +1264,188 @@
           dy / distance
 
 
-        particle.vx =
-          nx *
-          random(
-            2.2,
-            6.8
-          ) *
-          strength
+        const tangentX =
+          -ny
 
-        particle.vy =
-          ny *
-          random(
-            2.2,
-            6.8
-          ) *
-          strength
+        const tangentY =
+          nx
 
-        particle.x +=
-          nx *
+
+        const radialStrength =
           random(
-            4,
-            18
+            2.8,
+            7.0
           )
 
-        particle.y +=
-          ny *
+
+        const tangentStrength =
           random(
-            4,
-            18
+            -1.6,
+            1.6
+          )
+
+
+        particle.burstVX =
+          nx *
+          radialStrength +
+          tangentX *
+          tangentStrength
+
+
+        particle.burstVY =
+          ny *
+          radialStrength +
+          tangentY *
+          tangentStrength -
+          random(
+            0.5,
+            2.0
           )
       }
     }
 
 
+    function updateBurstParticle(
+      particle,
+      delta,
+      progress
+    ) {
+
+      const damping =
+        Math.pow(
+          0.92,
+          delta / 16.67
+        )
+
+
+      particle.burstVX *=
+        damping
+
+      particle.burstVY *=
+        damping
+
+
+      particle.burstVY +=
+        0.0015 *
+        delta
+
+
+      const multiplier =
+        0.95 +
+        (
+          1 -
+          progress
+        ) *
+        0.45
+
+
+      particle.x +=
+        particle.burstVX *
+        delta *
+        0.06 *
+        multiplier
+
+
+      particle.y +=
+        particle.burstVY *
+        delta *
+        0.06 *
+        multiplier
+    }
+
+
     /* =====================================================
-       TRANSITION TO TARGET
+       DRAW PARTICLE
        ===================================================== */
 
-    function beginTarget(
-      type
+    function drawParticle(
+      particle
+    ) {
+
+      const radius =
+        particle.size
+
+
+      ctx.beginPath()
+
+
+      ctx.arc(
+        particle.x,
+        particle.y,
+        radius,
+        0,
+        Math.PI * 2
+      )
+
+
+      ctx.fillStyle =
+        particleColor(
+          particle
+        )
+
+
+      ctx.shadowBlur =
+        settings.reducedMotion
+          ? 0
+          : 5
+
+
+      ctx.shadowColor =
+        "rgba(255,255,255,0.45)"
+
+
+      ctx.fill()
+
+
+      ctx.shadowBlur =
+        0
+    }
+
+
+    /* =====================================================
+       TRANSITION
+       ===================================================== */
+
+    function startBurstTo(
+      nextState
+    ) {
+
+      if (
+        transitionLocked
+      ) {
+        return
+      }
+
+
+      transitionLocked =
+        true
+
+
+      prepareBurst()
+
+
+      burstStartedAt =
+        performance.now()
+
+
+      state =
+        nextState
+
+      stateStartedAt =
+        burstStartedAt
+    }
+
+
+    function finishBurst(
+      targetType,
+      finalState
     ) {
 
       const target =
-        buildTarget(type)
+        buildTarget(
+          targetType
+        )
+
 
       if (!target) {
         return
@@ -1005,6 +1457,9 @@
       )
 
 
+      state =
+        finalState
+
       stateStartedAt =
         performance.now()
 
@@ -1014,25 +1469,28 @@
 
 
     /* =====================================================
-       STATE CHANGES
+       STATE DISPLAY
        ===================================================== */
 
-    function setState(
-      nextState
-    ) {
+    function updateCopy() {
 
       if (
-        state === nextState
+        state === STATES.RISING
       ) {
+
+        openingSmall.textContent =
+          "une petite trace de moi pour toi"
+
+        readableName.classList.remove(
+          "is-active"
+        )
+
+        readableLove.classList.remove(
+          "is-active"
+        )
+
         return
       }
-
-
-      state =
-        nextState
-
-      stateStartedAt =
-        performance.now()
 
 
       if (
@@ -1050,16 +1508,13 @@
           "is-active"
         )
 
-        beginTarget(
-          "heart"
-        )
-
         return
       }
 
 
       if (
-        state === STATES.NAME
+        state === STATES.NAME ||
+        state === STATES.BURST_TO_NAME
       ) {
 
         openingSmall.textContent =
@@ -1073,16 +1528,13 @@
           "is-active"
         )
 
-        beginTarget(
-          "name"
-        )
-
         return
       }
 
 
       if (
-        state === STATES.LOVE
+        state === STATES.LOVE ||
+        state === STATES.BURST_TO_LOVE
       ) {
 
         openingSmall.textContent =
@@ -1096,16 +1548,13 @@
           "is-active"
         )
 
-        beginTarget(
-          "love"
-        )
-
         return
       }
 
 
       if (
-        state === STATES.EXIT
+        state === STATES.EXIT ||
+        state === STATES.FINISHED
       ) {
 
         openingSmall.textContent =
@@ -1118,46 +1567,118 @@
         readableLove.classList.remove(
           "is-active"
         )
-
-        scatterParticles(
-          1.25
-        )
-
-        setTimeout(
-          revealExistingWebsite,
-          1150
-        )
-
-        return
       }
     }
 
 
     /* =====================================================
-       CLICK / TOUCH LOGIC
+       STATE CHANGE
+       ===================================================== */
+
+    function goToHeart() {
+
+      transitionLocked =
+        false
+
+      state =
+        STATES.HEART
+
+      stateStartedAt =
+        performance.now()
+
+      currentTarget =
+        buildTarget(
+          "heart"
+        )
+
+      assignTarget(
+        currentTarget
+      )
+
+      updateCopy()
+    }
+
+
+    function goToName() {
+
+      startBurstTo(
+        STATES.BURST_TO_NAME
+      )
+
+      updateCopy()
+    }
+
+
+    function goToLove() {
+
+      startBurstTo(
+        STATES.BURST_TO_LOVE
+      )
+
+      updateCopy()
+    }
+
+
+    function exitExperience() {
+
+      if (
+        transitionLocked
+      ) {
+        return
+      }
+
+
+      transitionLocked =
+        true
+
+
+      prepareBurst()
+
+
+      state =
+        STATES.EXIT
+
+      stateStartedAt =
+        performance.now()
+
+      burstStartedAt =
+        performance.now()
+
+      updateCopy()
+
+
+      setTimeout(
+        revealExistingWebsite,
+        900
+      )
+    }
+
+
+    /* =====================================================
+       POINTER
        ===================================================== */
 
     function handlePointerDown(
       event
     ) {
 
+      if (
+        state === STATES.FINISHED ||
+        transitionLocked
+      ) {
+        return
+      }
+
+
       pointerActive =
         true
-
-      pointerX =
-        event.clientX
-
-      pointerY =
-        event.clientY
 
 
       if (
         state === STATES.RISING
       ) {
 
-        setState(
-          STATES.HEART
-        )
+        goToHeart()
 
         return
       }
@@ -1167,9 +1688,7 @@
         state === STATES.HEART
       ) {
 
-        setState(
-          STATES.NAME
-        )
+        goToName()
 
         return
       }
@@ -1179,9 +1698,7 @@
         state === STATES.NAME
       ) {
 
-        setState(
-          STATES.LOVE
-        )
+        goToLove()
 
         return
       }
@@ -1191,11 +1708,7 @@
         state === STATES.LOVE
       ) {
 
-        setState(
-          STATES.EXIT
-        )
-
-        return
+        exitExperience()
       }
     }
 
@@ -1215,6 +1728,7 @@
       }
     )
 
+
     canvas.addEventListener(
       "pointerup",
       handlePointerUp,
@@ -1222,6 +1736,7 @@
         passive: true
       }
     )
+
 
     canvas.addEventListener(
       "pointercancel",
@@ -1236,11 +1751,15 @@
       "pointermove",
       event => {
 
-        pointerX =
-          event.clientX
+        if (!pointerActive) {
+          return
+        }
 
-        pointerY =
-          event.clientY
+        /*
+         * We intentionally keep this empty.
+         * It prevents unnecessary work
+         * while the finger is moving.
+         */
       },
       {
         passive: true
@@ -1254,18 +1773,20 @@
 
     skipButton.addEventListener(
       "click",
-      () => {
+      event => {
+
+        event.preventDefault()
+        event.stopPropagation()
 
         if (
-          state === STATES.EXIT ||
-          state === STATES.FINISHED
+          state === STATES.FINISHED ||
+          transitionLocked
         ) {
           return
         }
 
-        setState(
-          STATES.EXIT
-        )
+
+        exitExperience()
       }
     )
 
@@ -1275,6 +1796,13 @@
        ===================================================== */
 
     function revealExistingWebsite() {
+
+      if (
+        state === STATES.FINISHED
+      ) {
+        return
+      }
+
 
       state =
         STATES.FINISHED
@@ -1286,30 +1814,36 @@
 
 
       /*
-       * IMPORTANT
-       *
-       * We do not touch the existing letter.
-       * We do not touch bgMusic.
-       * We do not create another audio element.
+       * We do NOT:
+       * - change the letter
+       * - change index.html content
+       * - create another music element
+       * - restart bgMusic
+       * - touch script.js
        */
 
 
       setTimeout(
         () => {
 
-          experience.remove()
+          if (
+            experience &&
+            experience.parentNode
+          ) {
+            experience.remove()
+          }
 
         },
-        1300
+        1200
       )
     }
 
 
     /* =====================================================
-       INITIAL RISING MODE
+       INITIALIZATION
        ===================================================== */
 
-    function initializeRisingMode() {
+    function initialize() {
 
       readableName.textContent =
         "Patricia"
@@ -1331,12 +1865,37 @@
         "une petite trace de moi pour toi"
 
 
+      experience.classList.remove(
+        "px-done"
+      )
+
+
       createParticles()
+
+
+      if (
+        settings.reducedMotion
+      ) {
+
+        state =
+          STATES.HEART
+
+        currentTarget =
+          buildTarget(
+            "heart"
+          )
+
+        assignTarget(
+          currentTarget
+        )
+
+        updateCopy()
+      }
     }
 
 
     /* =====================================================
-       MAIN ANIMATION LOOP
+       ANIMATION
        ===================================================== */
 
     function animate(
@@ -1352,7 +1911,7 @@
       const delta =
         Math.min(
           timestamp -
-            lastTime,
+          lastTime,
           34
         )
 
@@ -1370,7 +1929,7 @@
 
 
       /* ---------------------------------------------------
-         Update particles
+         PARTICLE UPDATE
          --------------------------------------------------- */
 
       for (
@@ -1387,11 +1946,41 @@
             delta
           )
 
-        } else {
+
+        } else if (
+          state === STATES.HEART ||
+          state === STATES.NAME ||
+          state === STATES.LOVE
+        ) {
 
           updateTargetParticle(
             particle,
             delta
+          )
+
+
+        } else if (
+          state === STATES.BURST_TO_NAME ||
+          state === STATES.BURST_TO_LOVE ||
+          state === STATES.EXIT
+        ) {
+
+          const progress =
+            clamp(
+              (
+                timestamp -
+                burstStartedAt
+              ) /
+              burstDuration,
+              0,
+              1
+            )
+
+
+          updateBurstParticle(
+            particle,
+            delta,
+            progress
           )
         }
 
@@ -1403,7 +1992,7 @@
 
 
       /* ---------------------------------------------------
-         Automatic first heart formation
+         AUTOMATIC RISING -> HEART ONLY
          --------------------------------------------------- */
 
       if (
@@ -1415,123 +2004,112 @@
           stateStartedAt
 
 
+        const waitTime =
+          settings.reducedMotion
+            ? 0
+            : 4700
+
+
+        if (
+          elapsed >=
+          waitTime
+        ) {
+
+          goToHeart()
+        }
+      }
+
+
+      /* ---------------------------------------------------
+         BURST -> NAME
+         --------------------------------------------------- */
+
+      if (
+        state ===
+        STATES.BURST_TO_NAME
+      ) {
+
+        const elapsed =
+          timestamp -
+          burstStartedAt
+
+
+        if (
+          elapsed >=
+          burstDuration
+        ) {
+
+          finishBurst(
+            "name",
+            STATES.NAME
+          )
+
+          updateCopy()
+        }
+      }
+
+
+      /* ---------------------------------------------------
+         BURST -> LOVE
+         --------------------------------------------------- */
+
+      if (
+        state ===
+        STATES.BURST_TO_LOVE
+      ) {
+
+        const elapsed =
+          timestamp -
+          burstStartedAt
+
+
+        if (
+          elapsed >=
+          burstDuration
+        ) {
+
+          finishBurst(
+            "love",
+            STATES.LOVE
+          )
+
+          updateCopy()
+        }
+      }
+
+
+      /* ---------------------------------------------------
+         EXIT
+         --------------------------------------------------- */
+
+      if (
+        state === STATES.EXIT
+      ) {
+
         /*
-         * The heart does not appear immediately.
-         * Particles first rise naturally.
+         * The website reveal is already scheduled.
+         * Nothing else is changed here.
          */
-
-        if (
-          elapsed >
-          4700
-        ) {
-
-          setState(
-            STATES.HEART
-          )
-        }
       }
 
 
-      /* ---------------------------------------------------
-         Heart -> Patricia
-         --------------------------------------------------- */
-
-      if (
-        state === STATES.HEART
-      ) {
-
-        const elapsed =
-          timestamp -
-          stateStartedAt
-
-
-        if (
-          elapsed >
-          5200 &&
-          !transitionLocked
-        ) {
-
-          transitionLocked =
-            true
-
-          setTimeout(
-            () => {
-
-              if (
-                state === STATES.HEART
-              ) {
-                setState(
-                  STATES.NAME
-                )
-              }
-
-            },
-            300
-          )
-        }
-      }
-
-
-      /* ---------------------------------------------------
-         Patricia -> Love phrase
-         --------------------------------------------------- */
-
-      if (
-        state === STATES.NAME
-      ) {
-
-        const elapsed =
-          timestamp -
-          stateStartedAt
-
-
-        if (
-          elapsed >
-          4700 &&
-          !transitionLocked
-        ) {
-
-          transitionLocked =
-            true
-
-          setTimeout(
-            () => {
-
-              if (
-                state === STATES.NAME
-              ) {
-                setState(
-                  STATES.LOVE
-                )
-              }
-
-            },
-            300
-          )
-        }
-      }
-
-
-      /* ---------------------------------------------------
-         Love phrase stays until click
-         --------------------------------------------------- */
-
-      requestAnimationFrame(
-        animate
-      )
+      animationFrame =
+        window.requestAnimationFrame(
+          animate
+        )
     }
 
 
     /* =====================================================
-       INITIALIZATION
+       START
        ===================================================== */
 
     resizeCanvas()
 
-    initializeRisingMode()
+    initialize()
 
     animationFrame =
-      requestAnimationFrame(
+      window.requestAnimationFrame(
         animate
       )
 
@@ -1545,12 +2123,17 @@
       () => {
 
         if (
-          animationFrame
+          animationFrame !== null
         ) {
-          cancelAnimationFrame(
+
+          window.cancelAnimationFrame(
             animationFrame
           )
+
+          animationFrame =
+            null
         }
+
       },
       {
         once: true
