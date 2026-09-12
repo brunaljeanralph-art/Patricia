@@ -2,6 +2,7 @@
 <html lang="fr">
 
 <head>
+
     <meta charset="UTF-8">
 
     <meta
@@ -14,109 +15,254 @@
         content="Une petite surprise créée avec tout mon cœur pour Patricia ❤️"
     >
 
-    <meta name="theme-color" content="#eee3f6">
+    <meta
+        name="theme-color"
+        content="#eee3f6"
+    >
 
     <title>Pour Patricia ❤️</title>
 
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <!-- =========================================================
+         GOOGLE FONTS
+         ========================================================= -->
+
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com"
+    >
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
 
     <link
         href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&display=swap"
         rel="stylesheet"
     >
 
-    <link rel="stylesheet" href="style.css">
+
+    <!-- =========================================================
+         STYLES
+         ========================================================= -->
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+    <link
+        rel="stylesheet"
+        href="experience.css"
+    >
+
 </head>
 
 
 <body>
 
-    <!-- =========================================================
-         1. INTRO SCREEN
-         ========================================================= -->
-
-    <div id="intro-screen">
-
-        <div class="intro-overlay"></div>
-
-        <div class="intro-content">
-
-            <div class="intro-heart" aria-hidden="true">
-                🤍
-            </div>
-
-            <h2>
-                Un dernier petit secret...
-                <br>
-                t'attend ❤️
-            </h2>
-
-            <p>
-                Ferme les yeux un instant...
-            </p>
-
-            <button
-                id="openSurpriseBtn"
-                type="button"
-            >
-                Ouvrir ma surprise ❤️
-            </button>
-
-        </div>
-
-    </div>
-
 
     <!-- =========================================================
-         2. POPUP BIENVENUE
+         PARTICLE EXPERIENCE
          ========================================================= -->
 
     <div
-        id="welcome-popup"
-        class="hidden"
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="welcome-title"
+        id="particle-intro"
+        aria-hidden="true"
     >
 
-        <div class="popup-card">
+        <canvas
+            id="particleCanvas"
+        ></canvas>
 
-            <div
-                class="popup-heart"
-                aria-hidden="true"
-            >
-                🤍
-            </div>
-
-            <h2 id="welcome-title">
-                Bienvenue, Mi Amor ❤️
-            </h2>
-
-            <p>
-                Cette petite surprise
-                a été créée avec tout mon cœur.
-            </p>
-
-            <p>
-                J'espère qu'elle te fera sourire.
-            </p>
-
-            <button
-                id="continueBtn"
-                type="button"
-            >
-                Continuer ❤️
-            </button>
-
-        </div>
+        <div
+            id="particleHint"
+        ></div>
 
     </div>
 
 
     <!-- =========================================================
-         3. MUSIQUE
+         AUDIO
+         ========================================================= -->
+
+    <audio
+        id="bgMusic"
+        loop
+        preload="auto"
+    >
+
+        <source
+            src="assets/music.mp3"
+            type="audio/mpeg"
+        >
+
+        Votre navigateur ne supporte pas l'audio.
+
+    </audio>
+
+
+    <audio
+        id="dingSound"
+        preload="auto"
+    >
+
+        <source
+            src="assets/ding.mp3"
+            type="audio/mpeg"
+        >
+
+        Votre navigateur ne supporte pas l'audio.
+
+    </audio>
+
+
+    <!-- =========================================================
+         MUSIQUE SPÉCIALE PARTICLE
+         ========================================================= -->
+
+    <audio
+        id="experienceMusic"
+        loop
+        preload="auto"
+    >
+
+        <source
+            src="assets/experience-music.mp3"
+            type="audio/mpeg"
+        >
+
+        Votre navigateur ne supporte pas l'audio.
+
+    </audio>
+
+
+    <!-- =========================================================
+         MENU PRINCIPAL
+         LETTRE / SOUVENI
+         ========================================================= -->
+
+    <section
+        id="experience-menu"
+        aria-label="Choisir une partie"
+    >
+
+        <div
+            class="experience-menu-inner"
+        >
+
+
+            <!-- =================================================
+                 LETTRE
+                 ================================================= -->
+
+            <button
+                id="openLetterChoice"
+                class="experience-choice"
+                type="button"
+                aria-label="Ouvrir la lettre"
+            >
+
+                <span
+                    class="choice-art choice-envelope"
+                    aria-hidden="true"
+                >
+
+                    <span
+                        class="envelope-body"
+                    ></span>
+
+                    <span
+                        class="envelope-flap"
+                    ></span>
+
+                    <span
+                        class="envelope-heart"
+                    >
+                        ♥
+                    </span>
+
+                </span>
+
+
+                <span
+                    class="choice-name"
+                >
+                    Let
+                </span>
+
+            </button>
+
+
+            <!-- =================================================
+                 SOUVENI
+                 ================================================= -->
+
+            <button
+                id="openMemoryChoice"
+                class="experience-choice"
+                type="button"
+                aria-label="Ouvrir les souvenirs"
+            >
+
+                <span
+                    class="choice-art choice-memories"
+                    aria-hidden="true"
+                >
+
+                    <span
+                        class="memory-frame frame-one"
+                    ></span>
+
+                    <span
+                        class="memory-frame frame-two"
+                    ></span>
+
+                    <span
+                        class="memory-frame frame-three"
+                    ></span>
+
+                    <span
+                        class="memory-mini-heart"
+                    >
+                        ♥
+                    </span>
+
+                </span>
+
+
+                <span
+                    class="choice-name"
+                >
+                    Souveni
+                </span>
+
+            </button>
+
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================================================
+         BOUTON RETOUR
+         ========================================================= -->
+
+    <button
+        id="returnToExperienceMenu"
+        class="return-experience"
+        type="button"
+        aria-label="Retour au menu"
+    >
+        ←
+    </button>
+
+
+    <!-- =========================================================
+         MUSIC BUTTON
          ========================================================= -->
 
     <button
@@ -129,32 +275,9 @@
         🔇 Musique
     </button>
 
-    <audio
-        id="bgMusic"
-        loop
-        preload="auto"
-    >
-        <source
-            src="assets/music.mp3"
-            type="audio/mpeg"
-        >
-        Votre navigateur ne supporte pas l'audio.
-    </audio>
-
-    <audio
-        id="dingSound"
-        preload="auto"
-    >
-        <source
-            src="assets/ding.mp3"
-            type="audio/mpeg"
-        >
-        Votre navigateur ne supporte pas l'audio.
-    </audio>
-
 
     <!-- =========================================================
-         4. BACKGROUND
+         BACKGROUND
          ========================================================= -->
 
     <div
@@ -164,7 +287,7 @@
 
 
     <!-- =========================================================
-         5. DECORATIONS
+         DECORATIONS
          ========================================================= -->
 
     <div
@@ -189,10 +312,11 @@
 
 
     <!-- =========================================================
-         6. CARTE PRINCIPALE
+         CARTE PRINCIPALE
          ========================================================= -->
 
     <main class="card">
+
 
         <!-- =====================================================
              HEADER
@@ -208,18 +332,24 @@
                 loading="eager"
             >
 
+
             <div class="title">
 
                 <h1>
                     Pour toi
-                    <span class="miamor">Mi Amor</span> ❤️
+                    <span class="miamor">
+                        Mi Amor
+                    </span>
+                    ❤️
                 </h1>
+
 
                 <h2>
                     Mon dernier petit secret🫣
                 </h2>
 
             </div>
+
 
             <img
                 class="header-tulip right"
@@ -233,10 +363,11 @@
 
 
         <!-- =====================================================
-             7. DERNIER PETIT SECRET
+             DERNIER PETIT SECRET
              ===================================================== -->
 
         <section class="secret-letter">
+
 
             <div class="secret-intro">
 
@@ -474,7 +605,7 @@
 
 
             <!-- =================================================
-                 8. QUESTION FINALE
+                 QUESTION FINALE
                  ================================================= -->
 
             <div class="final-question">
@@ -540,45 +671,92 @@
 
 
     <!-- =========================================================
-         9. JAVASCRIPT
+         MEMORY BOOK
          ========================================================= -->
-<link rel="stylesheet" href="experience.css">
 
-<div id="particle-intro">
-    <canvas id="particleCanvas"></canvas>
-    <div id="particleHint"></div>
-</div>
+    <section
+        id="memory-book"
+        aria-label="Nos souvenirs"
+    >
 
-<section id="memory-book">
-    <div class="book-page book-letter">
-        <div class="book-page-inner">
-            <div class="book-small-title">Pou ou, Mi Amor ❤️</div>
-            <div class="book-letter-line"></div>
-            <p>Gen yon ti bagay ankò mwen te vle kite pou ou...</p>
-            <p>Yon ti kote pou kèk souvni nou pa bezwen pèdi.</p>
-            <div class="book-heart">♡</div>
+        <div class="book-page book-letter">
+
+            <div class="book-page-inner">
+
+                <div class="book-small-title">
+                    Pou ou, Mi Amor ❤️
+                </div>
+
+                <div class="book-letter-line"></div>
+
+                <p>
+                    Gen yon ti bagay ankò mwen te vle kite pou ou...
+                </p>
+
+                <p>
+                    Yon ti kote pou kèk souvni nou pa bezwen pèdi.
+                </p>
+
+                <div class="book-heart">
+                    ♡
+                </div>
+
+            </div>
+
         </div>
-    </div>
 
-    <div class="book-page book-memories" id="souvenirPanel">
-        <div class="memory-label">Nos souvenirs ❤️</div>
 
-        <div id="memoryStage">
-            <img id="memoryPhoto" src="" alt="Souvenir de Patricia">
+        <div
+            class="book-page book-memories"
+            id="souvenirPanel"
+        >
+
+            <div class="memory-label">
+                Nos souvenirs ❤️
+            </div>
+
+            <div id="memoryStage">
+
+                <img
+                    id="memoryPhoto"
+                    src=""
+                    alt="Souvenir de Patricia"
+                >
+
+            </div>
+
+            <div class="memory-progress">
+
+                <span id="memoryNumber">
+                    1
+                </span>
+
+                / 42
+
+            </div>
+
+            <div class="memory-touch-hint">
+                Gade dousman... 🥹
+            </div>
+
         </div>
 
-        <div class="memory-progress">
-            <span id="memoryNumber">1</span> / 42
-        </div>
+    </section>
 
-        <div class="memory-touch-hint">
-            Gade dousman... 🥹
-        </div>
-    </div>
-</section>
 
-<script src="experience.js"></script>
-   
+    <!-- =========================================================
+         JAVASCRIPT
+         ========================================================= -->
+
+    <script
+        src="script.js"
+    ></script>
+
+    <script
+        src="experience.js"
+    ></script>
+
+
 </body>
 
 </html>
