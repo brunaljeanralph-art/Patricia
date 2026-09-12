@@ -1,444 +1,685 @@
-/* =========================================================
-   PATRICIA — OPENING PARTICLE EXPERIENCE
-   The letter content is never rewritten by this file.
-   ========================================================= */
-
 (() => {
-  const experience = document.getElementById("px-experience");
-  const canvas = document.getElementById("px-particle-canvas");
-  const question = document.getElementById("px-question");
-  const yes = document.getElementById("px-yes");
-  const no = document.getElementById("px-no");
-  const readableText = document.querySelector(".px-readable-text");
-  const afterYes = document.getElementById("px-after-yes");
-  const continueBtn = document.getElementById("px-continue");
-  const lastSecret = document.getElementById("px-last-secret");
-  const openLetter = document.getElementById("px-open-letter");
-  const dingSound = document.getElementById("dingSound");
+  "𝑢𝑠𝑒 𝑠𝑡𝑟𝑖𝑐𝑡";
 
-  if (!experience || !canvas) return;
+  𝑐𝑜𝑛𝑠𝑡 𝑒𝑥𝑝𝑒𝑟𝑖𝑒𝑛𝑐𝑒 = 𝑑𝑜𝑐𝑢𝑚𝑒𝑛𝑡.𝑔𝑒𝑡𝐸𝑙𝑒𝑚𝑒𝑛𝑡𝐵𝑦𝐼𝑑("𝑝𝑥-𝑒𝑥𝑝𝑒𝑟𝑖𝑒𝑛𝑐𝑒");
+  𝑐𝑜𝑛𝑠𝑡 𝑐𝑎𝑛𝑣𝑎𝑠 = 𝑑𝑜𝑐𝑢𝑚𝑒𝑛𝑡.𝑔𝑒𝑡𝐸𝑙𝑒𝑚𝑒𝑛𝑡𝐵𝑦𝐼𝑑("𝑝𝑥-𝑝𝑎𝑟𝑡𝑖𝑐𝑙𝑒-𝑐𝑎𝑛𝑣𝑎𝑠");
+  𝑐𝑜𝑛𝑠𝑡 𝑞𝑢𝑒𝑠𝑡𝑖𝑜𝑛 = 𝑑𝑜𝑐𝑢𝑚𝑒𝑛𝑡.𝑔𝑒𝑡𝐸𝑙𝑒𝑚𝑒𝑛𝑡𝐵𝑦𝐼𝑑("𝑝𝑥-𝑞𝑢𝑒𝑠𝑡𝑖𝑜𝑛");
+  𝑐𝑜𝑛𝑠𝑡 𝑦𝑒𝑠𝐵𝑢𝑡𝑡𝑜𝑛 = 𝑑𝑜𝑐𝑢𝑚𝑒𝑛𝑡.𝑔𝑒𝑡𝐸𝑙𝑒𝑚𝑒𝑛𝑡𝐵𝑦𝐼𝑑("𝑝𝑥-𝑦𝑒𝑠");
+  𝑐𝑜𝑛𝑠𝑡 𝑛𝑜𝐵𝑢𝑡𝑡𝑜𝑛 = 𝑑𝑜𝑐𝑢𝑚𝑒𝑛𝑡.𝑔𝑒𝑡𝐸𝑙𝑒𝑚𝑒𝑛𝑡𝐵𝑦𝐼𝑑("𝑝𝑥-𝑛𝑜");
+  𝑐𝑜𝑛𝑠𝑡 𝑎𝑓𝑡𝑒𝑟𝑌𝑒𝑠 = 𝑑𝑜𝑐𝑢𝑚𝑒𝑛𝑡.𝑔𝑒𝑡𝐸𝑙𝑒𝑚𝑒𝑛𝑡𝐵𝑦𝐼𝑑("𝑝𝑥-𝑎𝑓𝑡𝑒𝑟-𝑦𝑒𝑠");
+  𝑐𝑜𝑛𝑠𝑡 𝑙𝑎𝑠𝑡𝑆𝑒𝑐𝑟𝑒𝑡 = 𝑑𝑜𝑐𝑢𝑚𝑒𝑛𝑡.𝑔𝑒𝑡𝐸𝑙𝑒𝑚𝑒𝑛𝑡𝐵𝑦𝐼𝑑("𝑝𝑥-𝑙𝑎𝑠𝑡-𝑠𝑒𝑐𝑟𝑒𝑡");
+  𝑐𝑜𝑛𝑠𝑡 𝑛𝑜𝑆𝑐𝑟𝑒𝑒𝑛 = 𝑑𝑜𝑐𝑢𝑚𝑒𝑛𝑡.𝑔𝑒𝑡𝐸𝑙𝑒𝑚𝑒𝑛𝑡𝐵𝑦𝐼𝑑("𝑝𝑥-𝑛𝑜-𝑠𝑐𝑟𝑒𝑒𝑛");
 
-  window.PatriciaExperienceActive = true;
+  𝑖𝑓 (!𝑒𝑥𝑝𝑒𝑟𝑖𝑒𝑛𝑐𝑒 || !𝑐𝑎𝑛𝑣𝑎𝑠) 𝑟𝑒𝑡𝑢𝑟𝑛;
 
-  const ctx = canvas.getContext("2d", { alpha: true });
-  const reduced = window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false;
-  const DPR = Math.min(window.devicePixelRatio || 1, 2);
+  𝑤𝑖𝑛𝑑𝑜𝑤.𝑃𝑎𝑡𝑟𝑖𝑐𝑖𝑎𝐸𝑥𝑝𝑒𝑟𝑖𝑒𝑛𝑐𝑒𝐴𝑐𝑡𝑖𝑣𝑒 = 𝑡𝑟𝑢𝑒;
 
-  let raf = 0;
-  let stopped = false;
-  let lastFrame = performance.now();
-  let ambientBurst = 0;
-  let resizeTimer = 0;
+  𝑑𝑜𝑐𝑢𝑚𝑒𝑛𝑡.𝑏𝑜𝑑𝑦.𝑐𝑙𝑎𝑠𝑠𝐿𝑖𝑠𝑡.𝑎𝑑𝑑("𝑝𝑥-𝑒𝑥𝑝𝑒𝑟𝑖𝑒𝑛𝑐𝑒-𝑎𝑐𝑡𝑖𝑣𝑒");
 
-  const state = {
-    w: 0,
-    h: 0,
-    particles: [],
-    ambient: [],
-    phase: "gather",
-    startedAt: performance.now()
+  𝑐𝑜𝑛𝑠𝑡 𝑐𝑡𝑥 = 𝑐𝑎𝑛𝑣𝑎𝑠.𝑔𝑒𝑡𝐶𝑜𝑛𝑡𝑒𝑥𝑡("2𝑑", {
+    𝑎𝑙𝑝ℎ𝑎: 𝑡𝑟𝑢𝑒
+  });
+
+  𝑐𝑜𝑛𝑠𝑡 𝑟𝑒𝑑𝑢𝑐𝑒𝑑𝑀𝑜𝑡𝑖𝑜𝑛 = 𝑤𝑖𝑛𝑑𝑜𝑤.𝑚𝑎𝑡𝑐ℎ𝑀𝑒𝑑𝑖𝑎(
+    "(𝑝𝑟𝑒𝑓𝑒𝑟𝑠-𝑟𝑒𝑑𝑢𝑐𝑒𝑑-𝑚𝑜𝑡𝑖𝑜𝑛: 𝑟𝑒𝑑𝑢𝑐𝑒)"
+  ).𝑚𝑎𝑡𝑐ℎ𝑒𝑠;
+
+  𝑐𝑜𝑛𝑠𝑡 𝑠𝑡𝑎𝑡𝑒 = {
+    𝑝ℎ𝑎𝑠𝑒: "𝑔𝑎𝑡ℎ𝑒𝑟",
+    𝑠𝑡𝑎𝑟𝑡𝑒𝑑: 𝑝𝑒𝑟𝑓𝑜𝑟𝑚𝑎𝑛𝑐𝑒.𝑛𝑜𝑤(),
+    𝑞𝑢𝑒𝑠𝑡𝑖𝑜𝑛𝑆ℎ𝑜𝑤𝑛: 𝑓𝑎𝑙𝑠𝑒,
+    𝑐ℎ𝑜𝑖𝑐𝑒𝑀𝑎𝑑𝑒: 𝑓𝑎𝑙𝑠𝑒,
+    𝑓𝑖𝑛𝑖𝑠ℎ𝑒𝑑: 𝑓𝑎𝑙𝑠𝑒,
+    𝑠𝑐𝑎𝑡𝑡𝑒𝑟𝑆𝑡𝑎𝑟𝑡𝑒𝑑: 0
   };
 
-  const textCanvas = document.createElement("canvas");
-  const tctx = textCanvas.getContext("2d", { willReadFrequently: true });
+  𝑙𝑒𝑡 𝑤𝑖𝑑𝑡ℎ = 0;
+  𝑙𝑒𝑡 ℎ𝑒𝑖𝑔ℎ𝑡 = 0;
+  𝑙𝑒𝑡 𝑑𝑝𝑟 = 𝑀𝑎𝑡ℎ.𝑚𝑖𝑛(𝑤𝑖𝑛𝑑𝑜𝑤.𝑑𝑒𝑣𝑖𝑐𝑒𝑃𝑖𝑥𝑒𝑙𝑅𝑎𝑡𝑖𝑜 || 1, 2);
 
-  const clamp = (n, min, max) => Math.max(min, Math.min(max, n));
+  𝑙𝑒𝑡 𝑝𝑎𝑟𝑡𝑖𝑐𝑙𝑒𝑠 = [];
+  𝑙𝑒𝑡 𝑡𝑎𝑟𝑔𝑒𝑡𝑠 = [];
+  𝑙𝑒𝑡 𝑐𝑢𝑟𝑟𝑒𝑛𝑡𝑇𝑎𝑟𝑔𝑒𝑡𝑇𝑒𝑥𝑡 = "𝐽𝑒 𝑡'𝑎𝑖𝑚𝑒";
 
-  function resize() {
-    state.w = window.innerWidth;
-    state.h = window.innerHeight;
+  𝑐𝑜𝑛𝑠𝑡 𝑐𝑜𝑙𝑜𝑟𝑠 = [
+    "𝑟𝑔𝑏𝑎(255,255,255,0.98)",
+    "𝑟𝑔𝑏𝑎(202,235,255,0.95)",
+    "𝑟𝑔𝑏𝑎(122,218,255,0.92)",
+    "𝑟𝑔𝑏𝑎(184,143,255,0.9)",
+    "𝑟𝑔𝑏𝑎(244,204,255,0.9)"
+  ];
 
-    canvas.width = Math.floor(state.w * DPR);
-    canvas.height = Math.floor(state.h * DPR);
-    canvas.style.width = `${state.w}px`;
-    canvas.style.height = `${state.h}px`;
-    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+  𝑓𝑢𝑛𝑐𝑡𝑖𝑜𝑛 𝑟𝑒𝑠𝑖𝑧𝑒𝐶𝑎𝑛𝑣𝑎𝑠() {
+    𝑤𝑖𝑑𝑡ℎ = 𝑤𝑖𝑛𝑑𝑜𝑤.𝑖𝑛𝑛𝑒𝑟𝑊𝑖𝑑𝑡ℎ;
+    ℎ𝑒𝑖𝑔ℎ𝑡 = 𝑤𝑖𝑛𝑑𝑜𝑤.𝑖𝑛𝑛𝑒𝑟𝐻𝑒𝑖𝑔ℎ𝑡;
+
+    𝑑𝑝𝑟 = 𝑀𝑎𝑡ℎ.𝑚𝑖𝑛(𝑤𝑖𝑛𝑑𝑜𝑤.𝑑𝑒𝑣𝑖𝑐𝑒𝑃𝑖𝑥𝑒𝑙𝑅𝑎𝑡𝑖𝑜 || 1, 2);
+
+    𝑐𝑎𝑛𝑣𝑎𝑠.𝑤𝑖𝑑𝑡ℎ = 𝑀𝑎𝑡ℎ.𝑟𝑜𝑢𝑛𝑑(𝑤𝑖𝑑𝑡ℎ * 𝑑𝑝𝑟);
+    𝑐𝑎𝑛𝑣𝑎𝑠.ℎ𝑒𝑖𝑔ℎ𝑡 = 𝑀𝑎𝑡ℎ.𝑟𝑜𝑢𝑛𝑑(ℎ𝑒𝑖𝑔ℎ𝑡 * 𝑑𝑝𝑟);
+
+    𝑐𝑎𝑛𝑣𝑎𝑠.𝑠𝑡𝑦𝑙𝑒.𝑤𝑖𝑑𝑡ℎ = 𝑤𝑖𝑑𝑡ℎ + "𝑝𝑥";
+    𝑐𝑎𝑛𝑣𝑎𝑠.𝑠𝑡𝑦𝑙𝑒.ℎ𝑒𝑖𝑔ℎ𝑡 = ℎ𝑒𝑖𝑔ℎ𝑡 + "𝑝𝑥";
+
+    𝑐𝑡𝑥.𝑠𝑒𝑡𝑇𝑟𝑎𝑛𝑠𝑓𝑜𝑟𝑚(𝑑𝑝𝑟, 0, 0, 𝑑𝑝𝑟, 0, 0);
+
+    𝑏𝑢𝑖𝑙𝑑𝑇𝑎𝑟𝑔𝑒𝑡𝑠();
   }
 
-  function getTextSize() {
-    const width = state.w;
-    const mobile = width < 600;
-    const base = clamp(width * (mobile ? 0.105 : 0.105), mobile ? 48 : 54, mobile ? 82 : 112);
-    return base;
-  }
+  𝑓𝑢𝑛𝑐𝑡𝑖𝑜𝑛 𝑐𝑟𝑒𝑎𝑡𝑒𝑇𝑒𝑥𝑡𝑇𝑎𝑟𝑔𝑒𝑡𝑠(𝑡𝑒𝑥𝑡) {
+    𝑐𝑜𝑛𝑠𝑡 𝑜𝑓𝑓𝑠𝑐𝑟𝑒𝑒𝑛 = 𝑑𝑜𝑐𝑢𝑚𝑒𝑛𝑡.𝑐𝑟𝑒𝑎𝑡𝑒𝐸𝑙𝑒𝑚𝑒𝑛𝑡("𝑐𝑎𝑛𝑣𝑎𝑠");
+    𝑐𝑜𝑛𝑠𝑡 𝑜𝑐𝑡𝑥 = 𝑜𝑓𝑓𝑠𝑐𝑟𝑒𝑒𝑛.𝑔𝑒𝑡𝐶𝑜𝑛𝑡𝑒𝑥𝑡("2𝑑");
 
-  function targetPoints(text, fontSize) {
-    const maxW = Math.min(state.w * 0.92, 1100);
-    textCanvas.width = Math.ceil(maxW);
-    textCanvas.height = Math.ceil(fontSize * 2.9);
+    𝑐𝑜𝑛𝑠𝑡 𝑓𝑜𝑛𝑡𝑆𝑖𝑧𝑒 = 𝑀𝑎𝑡ℎ.𝑚𝑖𝑛(
+      𝑤𝑖𝑑𝑡ℎ * (𝑡𝑒𝑥𝑡 === "𝑆𝑎𝑢𝑣𝑒𝑢𝑟 𝑃𝑎𝑡𝑟𝑖𝑐𝑖𝑎" ? 0.13 : 0.16),
+      𝑡𝑒𝑥𝑡 === "𝑆𝑎𝑢𝑣𝑒𝑢𝑟 𝑃𝑎𝑡𝑟𝑖𝑐𝑖𝑎" ? 112 : 132
+    );
 
-    tctx.clearRect(0, 0, textCanvas.width, textCanvas.height);
-    tctx.fillStyle = "white";
-    tctx.textAlign = "center";
-    tctx.textBaseline = "middle";
-    tctx.font = `700 ${fontSize}px Arial, Helvetica, sans-serif`;
+    𝑜𝑓𝑓𝑠𝑐𝑟𝑒𝑒𝑛.𝑤𝑖𝑑𝑡ℎ = 𝑀𝑎𝑡ℎ.𝑐𝑒𝑖𝑙(𝑤𝑖𝑑𝑡ℎ);
+    𝑜𝑓𝑓𝑠𝑐𝑟𝑒𝑒𝑛.ℎ𝑒𝑖𝑔ℎ𝑡 = 𝑀𝑎𝑡ℎ.𝑐𝑒𝑖𝑙(ℎ𝑒𝑖𝑔ℎ𝑡);
 
-    let scale = 1;
-    const measured = tctx.measureText(text).width;
-    if (measured > maxW) scale = maxW / measured;
+    𝑜𝑐𝑡𝑥.𝑐𝑙𝑒𝑎𝑟𝑅𝑒𝑐𝑡(0, 0, 𝑜𝑓𝑓𝑠𝑐𝑟𝑒𝑒𝑛.𝑤𝑖𝑑𝑡ℎ, 𝑜𝑓𝑓𝑠𝑐𝑟𝑒𝑒𝑛.ℎ𝑒𝑖𝑔ℎ𝑡);
 
-    tctx.save();
-    tctx.translate(textCanvas.width / 2, textCanvas.height / 2);
-    tctx.scale(scale, scale);
-    tctx.fillText(text, 0, 0);
-    tctx.restore();
+    𝑜𝑐𝑡𝑥.𝑡𝑒𝑥𝑡𝐴𝑙𝑖𝑔𝑛 = "𝑐𝑒𝑛𝑡𝑒𝑟";
+    𝑜𝑐𝑡𝑥.𝑡𝑒𝑥𝑡𝐵𝑎𝑠𝑒𝑙𝑖𝑛𝑒 = "𝑚𝑖𝑑𝑑𝑙𝑒";
+    𝑜𝑐𝑡𝑥.𝑓𝑜𝑛𝑡 =
+      `600 ${𝑀𝑎𝑡ℎ.𝑚𝑎𝑥(44, 𝑓𝑜𝑛𝑡𝑆𝑖𝑧𝑒)}𝑝𝑥 ` +
+      `"𝑇𝑖𝑚𝑒𝑠 𝑁𝑒𝑤 𝑅𝑜𝑚𝑎𝑛", 𝐺𝑒𝑜𝑟𝑔𝑖𝑎, 𝑠𝑒𝑟𝑖𝑓`;
 
-    const data = tctx.getImageData(0, 0, textCanvas.width, textCanvas.height).data;
-    const points = [];
-    const step = Math.max(2, Math.round(fontSize / (state.w < 600 ? 12 : 13)));
+    𝑜𝑐𝑡𝑥.𝑓𝑖𝑙𝑙𝑆𝑡𝑦𝑙𝑒 = "#𝑓𝑓𝑓𝑓𝑓𝑓";
 
-    for (let y = 0; y < textCanvas.height; y += step) {
-      for (let x = 0; x < textCanvas.width; x += step) {
-        const alpha = data[(y * textCanvas.width + x) * 4 + 3];
-        if (alpha > 150) {
-          points.push({
-            x: x - textCanvas.width / 2 + state.w / 2,
-            y: y - textCanvas.height / 2 + state.h / 2
+    𝑐𝑜𝑛𝑠𝑡 𝑦 = ℎ𝑒𝑖𝑔ℎ𝑡 * 0.46;
+
+    𝑜𝑐𝑡𝑥.𝑓𝑖𝑙𝑙𝑇𝑒𝑥𝑡(𝑡𝑒𝑥𝑡, 𝑤𝑖𝑑𝑡ℎ / 2, 𝑦);
+
+    𝑐𝑜𝑛𝑠𝑡 𝑖𝑚𝑎𝑔𝑒 = 𝑜𝑐𝑡𝑥.𝑔𝑒𝑡𝐼𝑚𝑎𝑔𝑒𝐷𝑎𝑡𝑎(
+      0,
+      0,
+      𝑜𝑓𝑓𝑠𝑐𝑟𝑒𝑒𝑛.𝑤𝑖𝑑𝑡ℎ,
+      𝑜𝑓𝑓𝑠𝑐𝑟𝑒𝑒𝑛.ℎ𝑒𝑖𝑔ℎ𝑡
+    );
+
+    𝑐𝑜𝑛𝑠𝑡 𝑝𝑜𝑖𝑛𝑡𝑠 = [];
+
+    𝑐𝑜𝑛𝑠𝑡 𝑔𝑎𝑝 = 𝑟𝑒𝑑𝑢𝑐𝑒𝑑𝑀𝑜𝑡𝑖𝑜𝑛 ? 4 : 3;
+
+    𝑓𝑜𝑟 (𝑙𝑒𝑡 𝑦𝑃𝑜𝑠 = 0; 𝑦𝑃𝑜𝑠 < 𝑜𝑓𝑓𝑠𝑐𝑟𝑒𝑒𝑛.ℎ𝑒𝑖𝑔ℎ𝑡; 𝑦𝑃𝑜𝑠 += 𝑔𝑎𝑝) {
+      𝑓𝑜𝑟 (𝑙𝑒𝑡 𝑥𝑃𝑜𝑠 = 0; 𝑥𝑃𝑜𝑠 < 𝑜𝑓𝑓𝑠𝑐𝑟𝑒𝑒𝑛.𝑤𝑖𝑑𝑡ℎ; 𝑥𝑃𝑜𝑠 += 𝑔𝑎𝑝) {
+        𝑐𝑜𝑛𝑠𝑡 𝑖𝑛𝑑𝑒𝑥 =
+          (𝑦𝑃𝑜𝑠 * 𝑜𝑓𝑓𝑠𝑐𝑟𝑒𝑒𝑛.𝑤𝑖𝑑𝑡ℎ + 𝑥𝑃𝑜𝑠) * 4;
+
+        𝑖𝑓 (𝑖𝑚𝑎𝑔𝑒.𝑑𝑎𝑡𝑎[𝑖𝑛𝑑𝑒𝑥 + 3] > 100) {
+          𝑝𝑜𝑖𝑛𝑡𝑠.𝑝𝑢𝑠ℎ({
+            𝑥: 𝑥𝑃𝑜𝑠,
+            𝑦: 𝑦𝑃𝑜𝑠
           });
         }
       }
     }
 
-    return points;
+    𝑟𝑒𝑡𝑢𝑟𝑛 𝑝𝑜𝑖𝑛𝑡𝑠;
   }
 
-  function makeTargets() {
-    const size = getTextSize();
-    const first = targetPoints("Je t'aime", size);
-    const second = targetPoints("Sauveur Patricia", Math.max(34, size * (state.w < 600 ? 0.66 : 0.69)));
-    const gap = clamp(size * 0.55, 26, 52);
+  𝑓𝑢𝑛𝑐𝑡𝑖𝑜𝑛 𝑏𝑢𝑖𝑙𝑑𝑇𝑎𝑟𝑔𝑒𝑡𝑠() {
+    𝑡𝑎𝑟𝑔𝑒𝑡𝑠 = 𝑐𝑟𝑒𝑎𝑡𝑒𝑇𝑒𝑥𝑡𝑇𝑎𝑟𝑔𝑒𝑡𝑠(𝑐𝑢𝑟𝑟𝑒𝑛𝑡𝑇𝑎𝑟𝑔𝑒𝑡𝑇𝑒𝑥𝑡);
 
-    for (const p of first) p.y -= gap;
-    for (const p of second) p.y += gap;
-
-    return first.concat(second);
-  }
-
-  function randomBottomPoint() {
-    return {
-      x: state.w * (0.35 + Math.random() * 0.3),
-      y: state.h + 25 + Math.random() * 90
-    };
-  }
-
-  function seedParticles(points) {
-    const targetCount = Math.min(
-      reduced ? 340 : 1850,
-      Math.max(reduced ? 320 : 760, points.length)
+    𝑐𝑜𝑛𝑠𝑡 𝑑𝑒𝑠𝑖𝑟𝑒𝑑𝐶𝑜𝑢𝑛𝑡 = 𝑀𝑎𝑡ℎ.𝑚𝑖𝑛(
+      𝑟𝑒𝑑𝑢𝑐𝑒𝑑𝑀𝑜𝑡𝑖𝑜𝑛 ? 900 : 1900,
+      𝑀𝑎𝑡ℎ.𝑚𝑎𝑥(500, 𝑡𝑎𝑟𝑔𝑒𝑡𝑠.𝑙𝑒𝑛𝑔𝑡ℎ)
     );
 
-    state.particles = Array.from({ length: targetCount }, (_, i) => {
-      const target = points[i % points.length];
-      const start = randomBottomPoint();
-      return {
-        x: start.x,
-        y: start.y,
-        tx: target.x + (Math.random() - 0.5) * 1.4,
-        ty: target.y + (Math.random() - 0.5) * 1.4,
-        vx: (Math.random() - 0.5) * 1.65,
-        vy: -1.1 - Math.random() * 2.65,
-        a: 0,
-        size: 0.7 + Math.random() * 1.75,
-        glow: 5 + Math.random() * 8,
-        phase: Math.random() * Math.PI * 2,
-        hue: Math.random() < 0.5 ? "239,220,255" : "206,229,255"
-      };
-    });
+    𝑖𝑓 (𝑝𝑎𝑟𝑡𝑖𝑐𝑙𝑒𝑠.𝑙𝑒𝑛𝑔𝑡ℎ !== 𝑑𝑒𝑠𝑖𝑟𝑒𝑑𝐶𝑜𝑢𝑛𝑡) {
+      𝑝𝑎𝑟𝑡𝑖𝑐𝑙𝑒𝑠 = [];
 
-    state.ambient = Array.from({ length: reduced ? 18 : 55 }, () => ({
-      x: Math.random() * state.w,
-      y: Math.random() * state.h,
-      r: 0.35 + Math.random() * 1.1,
-      a: 0.06 + Math.random() * 0.17,
-      vx: (Math.random() - 0.5) * 0.12,
-      vy: -0.12 - Math.random() * 0.24,
-      phase: Math.random() * Math.PI * 2
-    }));
-  }
+      𝑓𝑜𝑟 (𝑙𝑒𝑡 𝑖 = 0; 𝑖 < 𝑑𝑒𝑠𝑖𝑟𝑒𝑑𝐶𝑜𝑢𝑛𝑡; 𝑖++) {
+        𝑐𝑜𝑛𝑠𝑡 𝑡𝑎𝑟𝑔𝑒𝑡 =
+          𝑡𝑎𝑟𝑔𝑒𝑡𝑠[𝑖 % 𝑀𝑎𝑡ℎ.𝑚𝑎𝑥(1, 𝑡𝑎𝑟𝑔𝑒𝑡𝑠.𝑙𝑒𝑛𝑔𝑡ℎ)];
 
-  function morphTo(points) {
-    for (let i = 0; i < state.particles.length; i++) {
-      const particle = state.particles[i];
-      const target = points[i % points.length];
-      particle.tx = target.x;
-      particle.ty = target.y;
-      particle.vx += (Math.random() - 0.5) * 0.15;
-      particle.vy += (Math.random() - 0.5) * 0.15;
-    }
-  }
+        𝑐𝑜𝑛𝑠𝑡 𝑓𝑟𝑜𝑚𝐵𝑜𝑡𝑡𝑜𝑚 =
+          𝑀𝑎𝑡ℎ.𝑟𝑎𝑛𝑑𝑜𝑚() < 0.75;
 
-  function drawAmbient(dt) {
-    for (const a of state.ambient) {
-      a.phase += dt * 0.0007;
-      a.x += a.vx;
-      a.y += a.vy;
+        𝑝𝑎𝑟𝑡𝑖𝑐𝑙𝑒𝑠.𝑝𝑢𝑠ℎ({
+          𝑥: 𝑀𝑎𝑡ℎ.𝑟𝑎𝑛𝑑𝑜𝑚() * 𝑤𝑖𝑑𝑡ℎ,
+          𝑦: 𝑓𝑟𝑜𝑚𝐵𝑜𝑡𝑡𝑜𝑚
+            ? ℎ𝑒𝑖𝑔ℎ𝑡 + 𝑀𝑎𝑡ℎ.𝑟𝑎𝑛𝑑𝑜𝑚() * ℎ𝑒𝑖𝑔ℎ𝑡 * 0.35
+            : 𝑀𝑎𝑡ℎ.𝑟𝑎𝑛𝑑𝑜𝑚() * ℎ𝑒𝑖𝑔ℎ𝑡,
 
-      if (a.y < -10) {
-        a.y = state.h + 10;
-        a.x = Math.random() * state.w;
+          𝑣𝑥: (𝑀𝑎𝑡ℎ.𝑟𝑎𝑛𝑑𝑜𝑚() - 0.5) * 0.5,
+          𝑣𝑦: -(0.4 + 𝑀𝑎𝑡ℎ.𝑟𝑎𝑛𝑑𝑜𝑚() * 1.4),
+
+          𝑡𝑥: 𝑡𝑎𝑟𝑔𝑒𝑡 ? 𝑡𝑎𝑟𝑔𝑒𝑡.𝑥 : 𝑤𝑖𝑑𝑡ℎ / 2,
+          𝑡𝑦: 𝑡𝑎𝑟𝑔𝑒𝑡 ? 𝑡𝑎𝑟𝑔𝑒𝑡.𝑦 : ℎ𝑒𝑖𝑔ℎ𝑡 / 2,
+
+          𝑠𝑖𝑧𝑒:
+            0.7 +
+            𝑀𝑎𝑡ℎ.𝑟𝑎𝑛𝑑𝑜𝑚() *
+              (𝑟𝑒𝑑𝑢𝑐𝑒𝑑𝑀𝑜𝑡𝑖𝑜𝑛 ? 1.1 : 1.8),
+
+          𝑎𝑙𝑝ℎ𝑎:
+            0.35 +
+            𝑀𝑎𝑡ℎ.𝑟𝑎𝑛𝑑𝑜𝑚() * 0.65,
+
+          𝑐𝑜𝑙𝑜𝑟:
+            𝑐𝑜𝑙𝑜𝑟𝑠[
+              𝑀𝑎𝑡ℎ.𝑓𝑙𝑜𝑜𝑟(𝑀𝑎𝑡ℎ.𝑟𝑎𝑛𝑑𝑜𝑚() * 𝑐𝑜𝑙𝑜𝑟𝑠.𝑙𝑒𝑛𝑔𝑡ℎ)
+            ],
+
+          𝑝ℎ𝑎𝑠𝑒:
+            𝑀𝑎𝑡ℎ.𝑟𝑎𝑛𝑑𝑜𝑚() * 𝑀𝑎𝑡ℎ.𝑃𝐼 * 2,
+
+          𝑠𝑒𝑒𝑑:
+            𝑀𝑎𝑡ℎ.𝑟𝑎𝑛𝑑𝑜𝑚() * 1000
+        });
       }
+    } 𝑒𝑙𝑠𝑒 {
+      𝑝𝑎𝑟𝑡𝑖𝑐𝑙𝑒𝑠.𝑓𝑜𝑟𝐸𝑎𝑐ℎ((𝑝𝑎𝑟𝑡𝑖𝑐𝑙𝑒, 𝑖) => {
+        𝑐𝑜𝑛𝑠𝑡 𝑡𝑎𝑟𝑔𝑒𝑡 =
+          𝑡𝑎𝑟𝑔𝑒𝑡𝑠[𝑖 % 𝑀𝑎𝑡ℎ.𝑚𝑎𝑥(1, 𝑡𝑎𝑟𝑔𝑒𝑡𝑠.𝑙𝑒𝑛𝑔𝑡ℎ)];
 
-      const alpha = a.a * (0.72 + Math.sin(a.phase) * 0.28);
-      ctx.beginPath();
-      ctx.fillStyle = `rgba(224,238,255,${alpha})`;
-      ctx.arc(a.x, a.y, a.r, 0, Math.PI * 2);
-      ctx.fill();
-    }
-  }
-
-  function drawParticle(p, t) {
-    const twinkle = 0.86 + Math.sin(t * 0.0015 + p.phase) * 0.14;
-    const alpha = Math.max(0, p.a * 0.84 * twinkle);
-
-    if (p.a > 0.26) {
-      ctx.shadowBlur = p.glow;
-      ctx.shadowColor = `rgba(${p.hue},${Math.min(.22, alpha * .25)})`;
-    } else {
-      ctx.shadowBlur = 0;
-    }
-
-    ctx.beginPath();
-    ctx.fillStyle = `rgba(${p.hue},${alpha})`;
-    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.shadowBlur = 0;
-  }
-
-  function draw(t) {
-    if (stopped) return;
-
-    const dt = Math.min(34, t - lastFrame || 16.7);
-    lastFrame = t;
-    ctx.clearRect(0, 0, state.w, state.h);
-    drawAmbient(dt);
-
-    const elapsed = t - state.startedAt;
-    const gatherEnd = reduced ? 720 : 1050;
-    const questionAt = reduced ? 1250 : 2850;
-
-    for (const p of state.particles) {
-      if (state.phase === "gather") {
-        p.a = Math.min(1, p.a + (reduced ? 0.045 : 0.022));
-
-        p.x += p.vx * (dt / 16.67);
-        p.y += p.vy * (dt / 16.67);
-        p.vx *= 0.988;
-        p.vy *= 0.988;
-
-        const dx = p.tx - p.x;
-        const dy = p.ty - p.y;
-        p.vx += dx * 0.0026 * (dt / 16.67);
-        p.vy += dy * 0.0026 * (dt / 16.67);
-
-      } else if (state.phase === "hold" || state.phase === "question" || state.phase === "postyes") {
-        p.a = Math.min(1, p.a + 0.014);
-
-        const dx = p.tx - p.x;
-        const dy = p.ty - p.y;
-        p.vx += dx * 0.012 * (dt / 16.67);
-        p.vy += dy * 0.012 * (dt / 16.67);
-        p.vx *= 0.87;
-        p.vy *= 0.87;
-        p.x += p.vx * (dt / 16.67);
-        p.y += p.vy * (dt / 16.67);
-
-      } else if (state.phase === "scatter") {
-        const dx = p.x - state.w / 2;
-        const dy = p.y - state.h / 2;
-        const distance = Math.max(80, Math.hypot(dx, dy));
-        const force = 0.0009 * (1 + 260 / distance);
-        p.vx += dx * force * (dt / 16.67);
-        p.vy += dy * force * (dt / 16.67);
-        p.vx *= 0.996;
-        p.vy *= 0.996;
-        p.x += p.vx * (dt / 16.67);
-        p.y += p.vy * (dt / 16.67);
-        p.a *= 0.986;
-      }
-
-      drawParticle(p, t);
-    }
-
-    if (elapsed > gatherEnd && state.phase === "gather") {
-      state.phase = "hold";
-      readableText?.classList.add("px-readable-visible");
-    }
-
-    if (elapsed > questionAt && state.phase === "hold") showQuestion();
-
-    if (state.phase === "scatter" && elapsed > (reduced ? 1650 : 2600)) finish();
-
-    if (!reduced && state.phase === "hold" && elapsed - ambientBurst > 480) {
-      ambientBurst = elapsed;
-      emitMicroBurst();
-    }
-
-    raf = requestAnimationFrame(draw);
-  }
-
-  function emitMicroBurst() {
-    const center = { x: state.w / 2, y: state.h / 2 };
-    const count = 8;
-    for (let i = 0; i < count; i++) {
-      const angle = Math.random() * Math.PI * 2;
-      const distance = 105 + Math.random() * 90;
-      state.ambient.push({
-        x: center.x + Math.cos(angle) * distance,
-        y: center.y + Math.sin(angle) * distance,
-        r: 0.35 + Math.random() * 0.9,
-        a: 0.13 + Math.random() * 0.11,
-        vx: Math.cos(angle) * 0.08,
-        vy: Math.sin(angle) * 0.08,
-        phase: Math.random() * Math.PI * 2
+        𝑖𝑓 (𝑡𝑎𝑟𝑔𝑒𝑡) {
+          𝑝𝑎𝑟𝑡𝑖𝑐𝑙𝑒.𝑡𝑥 = 𝑡𝑎𝑟𝑔𝑒𝑡.𝑥;
+          𝑝𝑎𝑟𝑡𝑖𝑐𝑙𝑒.𝑡𝑦 = 𝑡𝑎𝑟𝑔𝑒𝑡.𝑦;
+        }
       });
     }
-
-    if (state.ambient.length > 95) state.ambient.splice(0, state.ambient.length - 95);
   }
 
-  function showQuestion() {
-    if (state.phase !== "hold" || stopped) return;
-    state.phase = "question";
-    readableText?.classList.add("px-readable-hold");
-    question?.classList.add("px-question-show");
-    question?.setAttribute("aria-hidden", "false");
+  𝑓𝑢𝑛𝑐𝑡𝑖𝑜𝑛 𝑠𝑐𝑎𝑡𝑡𝑒𝑟𝑃𝑎𝑟𝑡𝑖𝑐𝑙𝑒𝑠(𝑛𝑜𝑤) {
+    𝑖𝑓 (!𝑠𝑡𝑎𝑡𝑒.𝑠𝑐𝑎𝑡𝑡𝑒𝑟𝑆𝑡𝑎𝑟𝑡𝑒𝑑) {
+      𝑠𝑡𝑎𝑡𝑒.𝑠𝑐𝑎𝑡𝑡𝑒𝑟𝑆𝑡𝑎𝑟𝑡𝑒𝑑 = 𝑛𝑜𝑤;
+    }
+
+    𝑐𝑜𝑛𝑠𝑡 𝑒𝑙𝑎𝑝𝑠𝑒𝑑 =
+      𝑛𝑜𝑤 - 𝑠𝑡𝑎𝑡𝑒.𝑠𝑐𝑎𝑡𝑡𝑒𝑟𝑆𝑡𝑎𝑟𝑡𝑒𝑑;
+
+    𝑝𝑎𝑟𝑡𝑖𝑐𝑙𝑒𝑠.𝑓𝑜𝑟𝐸𝑎𝑐ℎ((𝑝𝑎𝑟𝑡𝑖𝑐𝑙𝑒) => {
+      𝑝𝑎𝑟𝑡𝑖𝑐𝑙𝑒.𝑣𝑥 +=
+        (𝑀𝑎𝑡ℎ.𝑟𝑎𝑛𝑑𝑜𝑚() - 0.5) *
+        (𝑟𝑒𝑑𝑢𝑐𝑒𝑑𝑀𝑜𝑡𝑖𝑜𝑛 ? 0.02 : 0.09);
+
+      𝑝𝑎𝑟𝑡𝑖𝑐𝑙𝑒.𝑣𝑦 +=
+        (𝑀𝑎𝑡ℎ.𝑟𝑎𝑛𝑑𝑜𝑚() - 0.5) *
+        (𝑟𝑒𝑑𝑢𝑐𝑒𝑑𝑀𝑜𝑡𝑖𝑜𝑛 ? 0.02 : 0.09);
+
+      𝑝𝑎𝑟𝑡𝑖𝑐𝑙𝑒.𝑥 += 𝑝𝑎𝑟𝑡𝑖𝑐𝑙𝑒.𝑣𝑥;
+      𝑝𝑎𝑟𝑡𝑖𝑐𝑙𝑒.𝑦 += 𝑝𝑎𝑟𝑡𝑖𝑐𝑙𝑒.𝑣𝑦;
+
+      𝑝𝑎𝑟𝑡𝑖𝑐𝑙𝑒.𝑣𝑥 *= 0.985;
+      𝑝𝑎𝑟𝑡𝑖𝑐𝑙𝑒.𝑣𝑦 *= 0.985;
+    });
+
+    𝑖𝑓 (𝑒𝑙𝑎𝑝𝑠𝑒𝑑 > 900) {
+      𝑓𝑖𝑛𝑖𝑠ℎ();
+    }
   }
 
-  function playDing() {
-    try {
-      if (!dingSound) return;
-      dingSound.currentTime = 0;
-      dingSound.volume = 0.58;
-      const attempt = dingSound.play();
-      if (attempt?.catch) attempt.catch(() => {});
-    } catch {}
-  }
+  𝑓𝑢𝑛𝑐𝑡𝑖𝑜𝑛 𝑢𝑝𝑑𝑎𝑡𝑒𝑃𝑎𝑟𝑡𝑖𝑐𝑙𝑒𝑠(𝑛𝑜𝑤) {
+    𝑐𝑜𝑛𝑠𝑡 𝑒𝑙𝑎𝑝𝑠𝑒𝑑 =
+      𝑛𝑜𝑤 - 𝑠𝑡𝑎𝑡𝑒.𝑠𝑡𝑎𝑟𝑡𝑒𝑑;
 
-  function chooseYes() {
-    if (stopped || state.phase !== "question") return;
-    playDing();
+    𝑖𝑓 (𝑠𝑡𝑎𝑡𝑒.𝑝ℎ𝑎𝑠𝑒 === "𝑠𝑐𝑎𝑡𝑡𝑒𝑟") {
+      𝑠𝑐𝑎𝑡𝑡𝑒𝑟𝑃𝑎𝑟𝑡𝑖𝑐𝑙𝑒𝑠(𝑛𝑜𝑤);
+      𝑟𝑒𝑡𝑢𝑟𝑛;
+    }
 
-    question?.classList.remove("px-question-show");
-    question?.setAttribute("aria-hidden", "true");
-    readableText?.classList.remove("px-readable-hold");
-    state.phase = "postyes";
+    𝑝𝑎𝑟𝑡𝑖𝑐𝑙𝑒𝑠.𝑓𝑜𝑟𝐸𝑎𝑐ℎ((𝑝𝑎𝑟𝑡𝑖𝑐𝑙𝑒, 𝑖𝑛𝑑𝑒𝑥) => {
+      𝑐𝑜𝑛𝑠𝑡 𝑑𝑥 = 𝑝𝑎𝑟𝑡𝑖𝑐𝑙𝑒.𝑡𝑥 - 𝑝𝑎𝑟𝑡𝑖𝑐𝑙𝑒.𝑥;
+      𝑐𝑜𝑛𝑠𝑡 𝑑𝑦 = 𝑝𝑎𝑟𝑡𝑖𝑐𝑙𝑒.𝑡𝑦 - 𝑝𝑎𝑟𝑡𝑖𝑐𝑙𝑒.𝑦;
 
-    window.setTimeout(() => {
-      if (stopped) return;
-      afterYes?.classList.add("px-after-yes-show");
-      afterYes?.setAttribute("aria-hidden", "false");
-    }, reduced ? 160 : 620);
-  }
+      𝑐𝑜𝑛𝑠𝑡 𝑑𝑖𝑠𝑡𝑎𝑛𝑐𝑒 =
+        𝑀𝑎𝑡ℎ.𝑠𝑞𝑟𝑡(𝑑𝑥 * 𝑑𝑥 + 𝑑𝑦 * 𝑑𝑦) || 1;
 
-  function continueToLastSecret() {
-    if (stopped) return;
-    playDing();
-    afterYes?.classList.remove("px-after-yes-show");
-    afterYes?.setAttribute("aria-hidden", "true");
+      𝑙𝑒𝑡 𝑠𝑡𝑟𝑒𝑛𝑔𝑡ℎ = 0.012;
 
-    window.setTimeout(() => {
-      if (stopped) return;
-      lastSecret?.classList.add("px-last-secret-show");
-      lastSecret?.setAttribute("aria-hidden", "false");
-    }, reduced ? 120 : 430);
-  }
+      𝑖𝑓 (𝑒𝑙𝑎𝑝𝑠𝑒𝑑 > 700) {
+        𝑠𝑡𝑟𝑒𝑛𝑔𝑡ℎ = 0.018;
+      }
 
-  function openTheLetter() {
-    if (stopped) return;
-    playDing();
-    lastSecret?.classList.remove("px-last-secret-show");
-    lastSecret?.setAttribute("aria-hidden", "true");
-    state.phase = "scatter";
-    window.setTimeout(() => finish(), reduced ? 130 : 760);
-  }
+      𝑖𝑓 (𝑒𝑙𝑎𝑝𝑠𝑒𝑑 > 1600) {
+        𝑠𝑡𝑟𝑒𝑛𝑔𝑡ℎ = 0.026;
+      }
 
-  function chooseNo() {
-    if (stopped) return;
-    stopped = true;
-    experience.classList.add("px-closing");
-    experience.setAttribute("aria-hidden", "true");
-    window.setTimeout(() => {
-      window.location.replace("about:blank");
-    }, reduced ? 60 : 520);
-  }
+      𝑝𝑎𝑟𝑡𝑖𝑐𝑙𝑒.𝑣𝑥 +=
+        (𝑑𝑥 / 𝑑𝑖𝑠𝑡𝑎𝑛𝑐𝑒) *
+        𝑠𝑡𝑟𝑒𝑛𝑔𝑡ℎ;
 
-  function setTargetsAndStart() {
-    resize();
-    const targets = makeTargets();
-    seedParticles(targets);
-    state.startedAt = performance.now();
-    state.phase = "gather";
-    ambientBurst = 0;
-    lastFrame = performance.now();
-    cancelAnimationFrame(raf);
-    raf = requestAnimationFrame(draw);
-  }
+      𝑝𝑎𝑟𝑡𝑖𝑐𝑙𝑒.𝑣𝑦 +=
+        (𝑑𝑦 / 𝑑𝑖𝑠𝑡𝑎𝑛𝑐𝑒) *
+        𝑠𝑡𝑟𝑒𝑛𝑔𝑡ℎ;
 
-  function recalculateTargets() {
-    if (stopped) return;
-    resize();
-    morphTo(makeTargets());
-  }
+      𝑖𝑓 (!𝑟𝑒𝑑𝑢𝑐𝑒𝑑𝑀𝑜𝑡𝑖𝑜𝑛) {
+        𝑝𝑎𝑟𝑡𝑖𝑐𝑙𝑒.𝑣𝑥 +=
+          𝑀𝑎𝑡ℎ.𝑠𝑖𝑛(
+            𝑛𝑜𝑤 * 0.0007 +
+            𝑝𝑎𝑟𝑡𝑖𝑐𝑙𝑒.𝑝ℎ𝑎𝑠𝑒 +
+            𝑖𝑛𝑑𝑒𝑥 * 0.001
+          ) * 0.002;
 
-  function finish() {
-    if (stopped) return;
-    stopped = true;
-    cancelAnimationFrame(raf);
+        𝑝𝑎𝑟𝑡𝑖𝑐𝑙𝑒.𝑣𝑦 +=
+          𝑀𝑎𝑡ℎ.𝑐𝑜𝑠(
+            𝑛𝑜𝑤 * 0.0005 +
+            𝑝𝑎𝑟𝑡𝑖𝑐𝑙𝑒.𝑠𝑒𝑒𝑑
+          ) * 0.002;
+      }
 
-    experience.classList.add("px-done");
-    experience.setAttribute("aria-hidden", "true");
-    window.PatriciaExperienceActive = false;
+      𝑝𝑎𝑟𝑡𝑖𝑐𝑙𝑒.𝑣𝑥 *= 0.88;
+      𝑝𝑎𝑟𝑡𝑖𝑐𝑙𝑒.𝑣𝑦 *= 0.88;
 
-    document.getElementById("intro-screen")?.classList.add("hidden");
-    document.getElementById("welcome-popup")?.classList.add("hidden");
-    document.body.classList.add("px-experience-finished");
+      𝑝𝑎𝑟𝑡𝑖𝑐𝑙𝑒.𝑥 += 𝑝𝑎𝑟𝑡𝑖𝑐𝑙𝑒.𝑣𝑥;
+      𝑝𝑎𝑟𝑡𝑖𝑐𝑙𝑒.𝑦 += 𝑝𝑎𝑟𝑡𝑖𝑐𝑙𝑒.𝑣𝑦;
 
-    requestAnimationFrame(() => {
-      window.scrollTo({ top: 0, behavior: reduced ? "auto" : "smooth" });
+      𝑖𝑓 (𝑑𝑖𝑠𝑡𝑎𝑛𝑐𝑒 < 18) {
+        𝑝𝑎𝑟𝑡𝑖𝑐𝑙𝑒.𝑥 +=
+          (𝑀𝑎𝑡ℎ.𝑟𝑎𝑛𝑑𝑜𝑚() - 0.5) *
+          (𝑟𝑒𝑑𝑢𝑐𝑒𝑑𝑀𝑜𝑡𝑖𝑜𝑛 ? 0.2 : 0.8);
+
+        𝑝𝑎𝑟𝑡𝑖𝑐𝑙𝑒.𝑦 +=
+          (𝑀𝑎𝑡ℎ.𝑟𝑎𝑛𝑑𝑜𝑚() - 0.5) *
+          (𝑟𝑒𝑑𝑢𝑐𝑒𝑑𝑀𝑜𝑡𝑖𝑜𝑛 ? 0.2 : 0.8);
+      }
     });
   }
 
-  yes?.addEventListener("click", chooseYes);
-  no?.addEventListener("click", chooseNo);
-  continueBtn?.addEventListener("click", continueToLastSecret);
-  openLetter?.addEventListener("click", openTheLetter);
+  𝑓𝑢𝑛𝑐𝑡𝑖𝑜𝑛 𝑑𝑟𝑎𝑤𝐵𝑎𝑐𝑘𝑔𝑟𝑜𝑢𝑛𝑑(𝑛𝑜𝑤) {
+    𝑐𝑡𝑥.𝑐𝑙𝑒𝑎𝑟𝑅𝑒𝑐𝑡(0, 0, 𝑤𝑖𝑑𝑡ℎ, ℎ𝑒𝑖𝑔ℎ𝑡);
 
-  window.addEventListener("resize", () => {
-    window.clearTimeout(resizeTimer);
-    resizeTimer = window.setTimeout(recalculateTargets, 90);
-  });
+    𝑐𝑜𝑛𝑠𝑡 𝑔𝑟𝑎𝑑𝑖𝑒𝑛𝑡 =
+      𝑐𝑡𝑥.𝑐𝑟𝑒𝑎𝑡𝑒𝑅𝑎𝑑𝑖𝑎𝑙𝐺𝑟𝑎𝑑𝑖𝑒𝑛𝑡(
+        𝑤𝑖𝑑𝑡ℎ / 2,
+        ℎ𝑒𝑖𝑔ℎ𝑡 * 0.42,
+        0,
+        𝑤𝑖𝑑𝑡ℎ / 2,
+        ℎ𝑒𝑖𝑔ℎ𝑡 * 0.42,
+        𝑀𝑎𝑡ℎ.𝑚𝑎𝑥(𝑤𝑖𝑑𝑡ℎ, ℎ𝑒𝑖𝑔ℎ𝑡) * 0.8
+      );
 
-  setTargetsAndStart();
-})();
+    𝑔𝑟𝑎𝑑𝑖𝑒𝑛𝑡.𝑎𝑑𝑑𝐶𝑜𝑙𝑜𝑟𝑆𝑡𝑜𝑝(
+      0,
+      "𝑟𝑔𝑏𝑎(65,45,100,0.20)"
+    );
 
-/* =========================================================
-   SLOW DECORATIVE GLIDE — understated, always running
-   ========================================================= */
+    𝑔𝑟𝑎𝑑𝑖𝑒𝑛𝑡.𝑎𝑑𝑑𝐶𝑜𝑙𝑜𝑟𝑆𝑡𝑜𝑝(
+      0.45,
+      "𝑟𝑔𝑏𝑎(17,19,48,0.12)"
+    );
 
-(() => {
-  const wrap = document.getElementById("px-glide-decor");
-  if (!wrap) return;
+    𝑔𝑟𝑎𝑑𝑖𝑒𝑛𝑡.𝑎𝑑𝑑𝐶𝑜𝑙𝑜𝑟𝑆𝑡𝑜𝑝(
+      1,
+      "𝑟𝑔𝑏𝑎(0,0,0,0)"
+    );
 
-  const symbols = ["❤️","🤭","💜","💕","💗","🤭","💕","💜","💮","🌸","❀","🌸","🌷","🌷","💮","✿","🌸","🌷"];
-  const topPositions = [7, 12, 16, 21, 27, 31, 36, 41, 47, 54, 59, 64, 70, 76, 81, 86, 90, 17];
-  const frag = document.createDocumentFragment();
+    𝑐𝑡𝑥.𝑓𝑖𝑙𝑙𝑆𝑡𝑦𝑙𝑒 = 𝑔𝑟𝑎𝑑𝑖𝑒𝑛𝑡;
+    𝑐𝑡𝑥.𝑓𝑖𝑙𝑙𝑅𝑒𝑐𝑡(0, 0, 𝑤𝑖𝑑𝑡ℎ, ℎ𝑒𝑖𝑔ℎ𝑡);
 
-  symbols.forEach((symbol, i) => {
-    const el = document.createElement("span");
-    el.className = "px-glide-symbol";
-    el.textContent = symbol;
-    el.style.setProperty("--px-y", `${topPositions[i]}vh`);
-    el.style.setProperty("--px-size", `${15 + (i % 5) * 2}px`);
-    el.style.setProperty("--px-opacity", `${0.15 + (i % 4) * 0.032}`);
-    el.style.setProperty("--px-duration", `${24 + (i % 6) * 2.4}s`);
-    el.style.setProperty("--px-delay", `${-(i * 1.45)}s`);
-    el.style.setProperty("--px-rise", `${-2 - (i % 4)}vh`);
-    el.style.setProperty("--px-end", `${-4 - (i % 5)}vh`);
-    el.style.setProperty("--px-r0", `${-5 + (i % 5) * 2}deg`);
-    el.style.setProperty("--px-r1", `${2 - (i % 4) * 2}deg`);
-    el.style.setProperty("--px-r2", `${-4 + (i % 5) * 2}deg`);
-    frag.appendChild(el);
-  });
+    𝑖𝑓 (𝑟𝑒𝑑𝑢𝑐𝑒𝑑𝑀𝑜𝑡𝑖𝑜𝑛) 𝑟𝑒𝑡𝑢𝑟𝑛;
 
-  wrap.appendChild(frag);
+    𝑐𝑜𝑛𝑠𝑡 𝑔𝑙𝑜𝑤𝑋 =
+      𝑤𝑖𝑑𝑡ℎ / 2 +
+      𝑀𝑎𝑡ℎ.𝑠𝑖𝑛(𝑛𝑜𝑤 * 0.00025) *
+        𝑤𝑖𝑑𝑡ℎ *
+        0.12;
+
+    𝑐𝑜𝑛𝑠𝑡 𝑔𝑙𝑜𝑤𝑌 =
+      ℎ𝑒𝑖𝑔ℎ𝑡 * 0.42 +
+      𝑀𝑎𝑡ℎ.𝑐𝑜𝑠(𝑛𝑜𝑤 * 0.0002) *
+        ℎ𝑒𝑖𝑔ℎ𝑡 *
+        0.08;
+
+    𝑐𝑜𝑛𝑠𝑡 𝑔𝑙𝑜𝑤 =
+      𝑐𝑡𝑥.𝑐𝑟𝑒𝑎𝑡𝑒𝑅𝑎𝑑𝑖𝑎𝑙𝐺𝑟𝑎𝑑𝑖𝑒𝑛𝑡(
+        𝑔𝑙𝑜𝑤𝑋,
+        𝑔𝑙𝑜𝑤𝑌,
+        0,
+        𝑔𝑙𝑜𝑤𝑋,
+        𝑔𝑙𝑜𝑤𝑌,
+        𝑀𝑎𝑡ℎ.𝑚𝑎𝑥(𝑤𝑖𝑑𝑡ℎ, ℎ𝑒𝑖𝑔ℎ𝑡) * 0.3
+      );
+
+    𝑔𝑙𝑜𝑤.𝑎𝑑𝑑𝐶𝑜𝑙𝑜𝑟𝑆𝑡𝑜𝑝(
+      0,
+      "𝑟𝑔𝑏𝑎(116,193,255,0.06)"
+    );
+
+    𝑔𝑙𝑜𝑤.𝑎𝑑𝑑𝐶𝑜𝑙𝑜𝑟𝑆𝑡𝑜𝑝(
+      0.45,
+      "𝑟𝑔𝑏𝑎(158,102,255,0.035)"
+    );
+
+    𝑔𝑙𝑜𝑤.𝑎𝑑𝑑𝐶𝑜𝑙𝑜𝑟𝑆𝑡𝑜𝑝(
+      1,
+      "𝑟𝑔𝑏𝑎(0,0,0,0)"
+    );
+
+    𝑐𝑡𝑥.𝑓𝑖𝑙𝑙𝑆𝑡𝑦𝑙𝑒 = 𝑔𝑙𝑜𝑤;
+    𝑐𝑡𝑥.𝑓𝑖𝑙𝑙𝑅𝑒𝑐𝑡(0, 0, 𝑤𝑖𝑑𝑡ℎ, ℎ𝑒𝑖𝑔ℎ𝑡);
+  }
+
+  𝑓𝑢𝑛𝑐𝑡𝑖𝑜𝑛 𝑑𝑟𝑎𝑤𝑃𝑎𝑟𝑡𝑖𝑐𝑙𝑒𝑠(𝑛𝑜𝑤) {
+    𝑝𝑎𝑟𝑡𝑖𝑐𝑙𝑒𝑠.𝑓𝑜𝑟𝐸𝑎𝑐ℎ((𝑝𝑎𝑟𝑡𝑖𝑐𝑙𝑒) => {
+      𝑙𝑒𝑡 𝑎𝑙𝑝ℎ𝑎 = 𝑝𝑎𝑟𝑡𝑖𝑐𝑙𝑒.𝑎𝑙𝑝ℎ𝑎;
+
+      𝑖𝑓 (𝑠𝑡𝑎𝑡𝑒.𝑝ℎ𝑎𝑠𝑒 === "𝑠𝑐𝑎𝑡𝑡𝑒𝑟") {
+        𝑐𝑜𝑛𝑠𝑡 𝑠𝑐𝑎𝑡𝑡𝑒𝑟𝐴𝑔𝑒 =
+          𝑛𝑜𝑤 - 𝑠𝑡𝑎𝑡𝑒.𝑠𝑐𝑎𝑡𝑡𝑒𝑟𝑆𝑡𝑎𝑟𝑡𝑒𝑑;
+
+        𝑎𝑙𝑝ℎ𝑎 *= 𝑀𝑎𝑡ℎ.𝑚𝑎𝑥(
+          0,
+          1 - 𝑠𝑐𝑎𝑡𝑡𝑒𝑟𝐴𝑔𝑒 / 1000
+        );
+      }
+
+      𝑖𝑓 (𝑎𝑙𝑝ℎ𝑎 <= 0) 𝑟𝑒𝑡𝑢𝑟𝑛;
+
+      𝑐𝑡𝑥.𝑔𝑙𝑜𝑏𝑎𝑙𝐴𝑙𝑝ℎ𝑎 = 𝑎𝑙𝑝ℎ𝑎;
+      𝑐𝑡𝑥.𝑓𝑖𝑙𝑙𝑆𝑡𝑦𝑙𝑒 = 𝑝𝑎𝑟𝑡𝑖𝑐𝑙𝑒.𝑐𝑜𝑙𝑜𝑟;
+
+      𝑐𝑡𝑥.𝑏𝑒𝑔𝑖𝑛𝑃𝑎𝑡ℎ();
+
+      𝑐𝑡𝑥.𝑎𝑟𝑐(
+        𝑝𝑎𝑟𝑡𝑖𝑐𝑙𝑒.𝑥,
+        𝑝𝑎𝑟𝑡𝑖𝑐𝑙𝑒.𝑦,
+        𝑝𝑎𝑟𝑡𝑖𝑐𝑙𝑒.𝑠𝑖𝑧𝑒,
+        0,
+        𝑀𝑎𝑡ℎ.𝑃𝐼 * 2
+      );
+
+      𝑐𝑡𝑥.𝑓𝑖𝑙𝑙();
+
+      𝑖𝑓 (!𝑟𝑒𝑑𝑢𝑐𝑒𝑑𝑀𝑜𝑡𝑖𝑜𝑛 && 𝑝𝑎𝑟𝑡𝑖𝑐𝑙𝑒.𝑠𝑖𝑧𝑒 > 1.3) {
+        𝑐𝑡𝑥.𝑔𝑙𝑜𝑏𝑎𝑙𝐴𝑙𝑝ℎ𝑎 = 𝑎𝑙𝑝ℎ𝑎 * 0.12;
+
+        𝑐𝑡𝑥.𝑏𝑒𝑔𝑖𝑛𝑃𝑎𝑡ℎ();
+
+        𝑐𝑡𝑥.𝑎𝑟𝑐(
+          𝑝𝑎𝑟𝑡𝑖𝑐𝑙𝑒.𝑥,
+          𝑝𝑎𝑟𝑡𝑖𝑐𝑙𝑒.𝑦,
+          𝑝𝑎𝑟𝑡𝑖𝑐𝑙𝑒.𝑠𝑖𝑧𝑒 * 3.8,
+          0,
+          𝑀𝑎𝑡ℎ.𝑃𝐼 * 2
+        );
+
+        𝑐𝑡𝑥.𝑓𝑖𝑙𝑙();
+      }
+    });
+
+    𝑐𝑡𝑥.𝑔𝑙𝑜𝑏𝑎𝑙𝐴𝑙𝑝ℎ𝑎 = 1;
+  }
+
+  𝑓𝑢𝑛𝑐𝑡𝑖𝑜𝑛 𝑑𝑟𝑎𝑤(𝑛𝑜𝑤) {
+    𝑑𝑟𝑎𝑤𝐵𝑎𝑐𝑘𝑔𝑟𝑜𝑢𝑛𝑑(𝑛𝑜𝑤);
+    𝑢𝑝𝑑𝑎𝑡𝑒𝑃𝑎𝑟𝑡𝑖𝑐𝑙𝑒𝑠(𝑛𝑜𝑤);
+    𝑑𝑟𝑎𝑤𝑃𝑎𝑟𝑡𝑖𝑐𝑙𝑒𝑠(𝑛𝑜𝑤);
+
+    𝑟𝑒𝑞𝑢𝑒𝑠𝑡𝐴𝑛𝑖𝑚𝑎𝑡𝑖𝑜𝑛𝐹𝑟𝑎𝑚𝑒(𝑑𝑟𝑎𝑤);
+  }
+
+  𝑓𝑢𝑛𝑐𝑡𝑖𝑜𝑛 𝑠ℎ𝑜𝑤𝑄𝑢𝑒𝑠𝑡𝑖𝑜𝑛() {
+    𝑖𝑓 (
+      𝑠𝑡𝑎𝑡𝑒.𝑞𝑢𝑒𝑠𝑡𝑖𝑜𝑛𝑆ℎ𝑜𝑤𝑛 ||
+      𝑠𝑡𝑎𝑡𝑒.𝑐ℎ𝑜𝑖𝑐𝑒𝑀𝑎𝑑𝑒 ||
+      𝑠𝑡𝑎𝑡𝑒.𝑓𝑖𝑛𝑖𝑠ℎ𝑒𝑑
+    ) {
+      𝑟𝑒𝑡𝑢𝑟𝑛;
+    }
+
+    𝑠𝑡𝑎𝑡𝑒.𝑞𝑢𝑒𝑠𝑡𝑖𝑜𝑛𝑆ℎ𝑜𝑤𝑛 = 𝑡𝑟𝑢𝑒;
+
+    𝑖𝑓 (!𝑞𝑢𝑒𝑠𝑡𝑖𝑜𝑛) 𝑟𝑒𝑡𝑢𝑟𝑛;
+
+    𝑞𝑢𝑒𝑠𝑡𝑖𝑜𝑛.𝑐𝑙𝑎𝑠𝑠𝐿𝑖𝑠𝑡.𝑎𝑑𝑑("𝑖𝑠-𝑣𝑖𝑠𝑖𝑏𝑙𝑒");
+    𝑞𝑢𝑒𝑠𝑡𝑖𝑜𝑛.𝑠𝑒𝑡𝐴𝑡𝑡𝑟𝑖𝑏𝑢𝑡𝑒(
+      "𝑎𝑟𝑖𝑎-ℎ𝑖𝑑𝑑𝑒𝑛",
+      "𝑓𝑎𝑙𝑠𝑒"
+    );
+  }
+
+  𝑓𝑢𝑛𝑐𝑡𝑖𝑜𝑛 ℎ𝑖𝑑𝑒𝐸𝑙𝑒𝑚𝑒𝑛𝑡(𝑒𝑙𝑒𝑚𝑒𝑛𝑡) {
+    𝑖𝑓 (!𝑒𝑙𝑒𝑚𝑒𝑛𝑡) 𝑟𝑒𝑡𝑢𝑟𝑛;
+
+    𝑒𝑙𝑒𝑚𝑒𝑛𝑡.𝑐𝑙𝑎𝑠𝑠𝐿𝑖𝑠𝑡.𝑟𝑒𝑚𝑜𝑣𝑒("𝑖𝑠-𝑣𝑖𝑠𝑖𝑏𝑙𝑒");
+    𝑒𝑙𝑒𝑚𝑒𝑛𝑡.𝑠𝑒𝑡𝐴𝑡𝑡𝑟𝑖𝑏𝑢𝑡𝑒(
+      "𝑎𝑟𝑖𝑎-ℎ𝑖𝑑𝑑𝑒𝑛",
+      "𝑡𝑟𝑢𝑒"
+    );
+  }
+
+  𝑓𝑢𝑛𝑐𝑡𝑖𝑜𝑛 𝑠ℎ𝑜𝑤𝐸𝑙𝑒𝑚𝑒𝑛𝑡(𝑒𝑙𝑒𝑚𝑒𝑛𝑡) {
+    𝑖𝑓 (!𝑒𝑙𝑒𝑚𝑒𝑛𝑡) 𝑟𝑒𝑡𝑢𝑟𝑛;
+
+    𝑒𝑙𝑒𝑚𝑒𝑛𝑡.𝑐𝑙𝑎𝑠𝑠𝐿𝑖𝑠𝑡.𝑎𝑑𝑑("𝑖𝑠-𝑣𝑖𝑠𝑖𝑏𝑙𝑒");
+    𝑒𝑙𝑒𝑚𝑒𝑛𝑡.𝑠𝑒𝑡𝐴𝑡𝑡𝑟𝑖𝑏𝑢𝑡𝑒(
+      "𝑎𝑟𝑖𝑎-ℎ𝑖𝑑𝑑𝑒𝑛",
+      "𝑓𝑎𝑙𝑠𝑒"
+    );
+  }
+
+  𝑓𝑢𝑛𝑐𝑡𝑖𝑜𝑛 𝑝𝑙𝑎𝑦𝐷𝑖𝑛𝑔() {
+    𝑐𝑜𝑛𝑠𝑡 𝑑𝑖𝑛𝑔 =
+      𝑑𝑜𝑐𝑢𝑚𝑒𝑛𝑡.𝑔𝑒𝑡𝐸𝑙𝑒𝑚𝑒𝑛𝑡𝐵𝑦𝐼𝑑("𝑑𝑖𝑛𝑔𝑆𝑜𝑢𝑛𝑑");
+
+    𝑖𝑓 (!𝑑𝑖𝑛𝑔) 𝑟𝑒𝑡𝑢𝑟𝑛;
+
+    𝑡𝑟𝑦 {
+      𝑑𝑖𝑛𝑔.𝑐𝑢𝑟𝑟𝑒𝑛𝑡𝑇𝑖𝑚𝑒 = 0;
+
+      𝑐𝑜𝑛𝑠𝑡 𝑝𝑟𝑜𝑚𝑖𝑠𝑒 = 𝑑𝑖𝑛𝑔.𝑝𝑙𝑎𝑦();
+
+      𝑖𝑓 (
+        𝑝𝑟𝑜𝑚𝑖𝑠𝑒 &&
+        𝑡𝑦𝑝𝑒𝑜𝑓 𝑝𝑟𝑜𝑚𝑖𝑠𝑒.𝑐𝑎𝑡𝑐ℎ === "𝑓𝑢𝑛𝑐𝑡𝑖𝑜𝑛"
+      ) {
+        𝑝𝑟𝑜𝑚𝑖𝑠𝑒.𝑐𝑎𝑡𝑐ℎ(() => {});
+      }
+    } 𝑐𝑎𝑡𝑐ℎ (_) {}
+  }
+
+  𝑓𝑢𝑛𝑐𝑡𝑖𝑜𝑛 𝑠𝑡𝑎𝑟𝑡𝑀𝑢𝑠𝑖𝑐() {
+    𝑐𝑜𝑛𝑠𝑡 𝑚𝑢𝑠𝑖𝑐 =
+      𝑑𝑜𝑐𝑢𝑚𝑒𝑛𝑡.𝑔𝑒𝑡𝐸𝑙𝑒𝑚𝑒𝑛𝑡𝐵𝑦𝐼𝑑("𝑏𝑔𝑀𝑢𝑠𝑖𝑐");
+
+    𝑖𝑓 (!𝑚𝑢𝑠𝑖𝑐) 𝑟𝑒𝑡𝑢𝑟𝑛;
+
+    𝑡𝑟𝑦 {
+      𝑚𝑢𝑠𝑖𝑐.𝑣𝑜𝑙𝑢𝑚𝑒 = 0.45;
+
+      𝑐𝑜𝑛𝑠𝑡 𝑝𝑟𝑜𝑚𝑖𝑠𝑒 = 𝑚𝑢𝑠𝑖𝑐.𝑝𝑙𝑎𝑦();
+
+      𝑖𝑓 (
+        𝑝𝑟𝑜𝑚𝑖𝑠𝑒 &&
+        𝑡𝑦𝑝𝑒𝑜𝑓 𝑝𝑟𝑜𝑚𝑖𝑠𝑒.𝑐𝑎𝑡𝑐ℎ === "𝑓𝑢𝑛𝑐𝑡𝑖𝑜𝑛"
+      ) {
+        𝑝𝑟𝑜𝑚𝑖𝑠𝑒.𝑐𝑎𝑡𝑐ℎ(() => {});
+      }
+    } 𝑐𝑎𝑡𝑐ℎ (_) {}
+  }
+
+  𝑓𝑢𝑛𝑐𝑡𝑖𝑜𝑛 𝑐ℎ𝑜𝑜𝑠𝑒𝑌𝑒𝑠() {
+    𝑖𝑓 (𝑠𝑡𝑎𝑡𝑒.𝑐ℎ𝑜𝑖𝑐𝑒𝑀𝑎𝑑𝑒) 𝑟𝑒𝑡𝑢𝑟𝑛;
+
+    𝑠𝑡𝑎𝑡𝑒.𝑐ℎ𝑜𝑖𝑐𝑒𝑀𝑎𝑑𝑒 = 𝑡𝑟𝑢𝑒;
+
+    ℎ𝑖𝑑𝑒𝐸𝑙𝑒𝑚𝑒𝑛𝑡(𝑞𝑢𝑒𝑠𝑡𝑖𝑜𝑛);
+
+    𝑝𝑙𝑎𝑦𝐷𝑖𝑛𝑔();
+    𝑠𝑡𝑎𝑟𝑡𝑀𝑢𝑠𝑖𝑐();
+
+    𝑠𝑒𝑡𝑇𝑖𝑚𝑒𝑜𝑢𝑡(() => {
+      𝑠ℎ𝑜𝑤𝐸𝑙𝑒𝑚𝑒𝑛𝑡(𝑎𝑓𝑡𝑒𝑟𝑌𝑒𝑠);
+    }, 𝑟𝑒𝑑𝑢𝑐𝑒𝑑𝑀𝑜𝑡𝑖𝑜𝑛 ? 100 : 350);
+  }
+
+  𝑓𝑢𝑛𝑐𝑡𝑖𝑜𝑛 𝑐𝑜𝑛𝑡𝑖𝑛𝑢𝑒𝑇𝑜𝐿𝑎𝑠𝑡𝑆𝑒𝑐𝑟𝑒𝑡() {
+    ℎ𝑖𝑑𝑒𝐸𝑙𝑒𝑚𝑒𝑛𝑡(𝑎𝑓𝑡𝑒𝑟𝑌𝑒𝑠);
+
+    𝑠𝑒𝑡𝑇𝑖𝑚𝑒𝑜𝑢𝑡(() => {
+      𝑠ℎ𝑜𝑤𝐸𝑙𝑒𝑚𝑒𝑛𝑡(𝑙𝑎𝑠𝑡𝑆𝑒𝑐𝑟𝑒𝑡);
+    }, 𝑟𝑒𝑑𝑢𝑐𝑒𝑑𝑀𝑜𝑡𝑖𝑜𝑛 ? 80 : 280);
+  }
+
+  𝑓𝑢𝑛𝑐𝑡𝑖𝑜𝑛 𝑜𝑝𝑒𝑛𝑇ℎ𝑒𝐿𝑒𝑡𝑡𝑒𝑟() {
+    ℎ𝑖𝑑𝑒𝐸𝑙𝑒𝑚𝑒𝑛𝑡(𝑙𝑎𝑠𝑡𝑆𝑒𝑐𝑟𝑒𝑡);
+
+    𝑠𝑡𝑎𝑡𝑒.𝑝ℎ𝑎𝑠𝑒 = "𝑠𝑐𝑎𝑡𝑡𝑒𝑟";
+    𝑠𝑡𝑎𝑡𝑒.𝑠𝑐𝑎𝑡𝑡𝑒𝑟𝑆𝑡𝑎𝑟𝑡𝑒𝑑 = 𝑝𝑒𝑟𝑓𝑜𝑟𝑚𝑎𝑛𝑐𝑒.𝑛𝑜𝑤();
+
+    𝑐𝑜𝑛𝑠𝑡 𝑟𝑒𝑎𝑑𝑎𝑏𝑙𝑒𝑇𝑒𝑥𝑡 =
+      𝑑𝑜𝑐𝑢𝑚𝑒𝑛𝑡.𝑞𝑢𝑒𝑟𝑦𝑆𝑒𝑙𝑒𝑐𝑡𝑜𝑟(
+        ".𝑝𝑥-𝑟𝑒𝑎𝑑𝑎𝑏𝑙𝑒-𝑡𝑒𝑥𝑡"
+      );
+
+    𝑖𝑓 (𝑟𝑒𝑎𝑑𝑎𝑏𝑙𝑒𝑇𝑒𝑥𝑡) {
+      𝑟𝑒𝑎𝑑𝑎𝑏𝑙𝑒𝑇𝑒𝑥𝑡.𝑐𝑙𝑎𝑠𝑠𝐿𝑖𝑠𝑡.𝑎𝑑𝑑("𝑝𝑥-𝑓𝑎𝑑𝑒-𝑜𝑢𝑡");
+    }
+  }
+
+  𝑓𝑢𝑛𝑐𝑡𝑖𝑜𝑛 𝑐ℎ𝑜𝑜𝑠𝑒𝑁𝑜() {
+    𝑖𝑓 (𝑠𝑡𝑎𝑡𝑒.𝑐ℎ𝑜𝑖𝑐𝑒𝑀𝑎𝑑𝑒) 𝑟𝑒𝑡𝑢𝑟𝑛;
+
+    𝑠𝑡𝑎𝑡𝑒.𝑐ℎ𝑜𝑖𝑐𝑒𝑀𝑎𝑑𝑒 = 𝑡𝑟𝑢𝑒;
+
+    ℎ𝑖𝑑𝑒𝐸𝑙𝑒𝑚𝑒𝑛𝑡(𝑞𝑢𝑒𝑠𝑡𝑖𝑜𝑛);
+
+    𝑖𝑓 (𝑛𝑜𝑆𝑐𝑟𝑒𝑒𝑛) {
+      𝑠ℎ𝑜𝑤𝐸𝑙𝑒𝑚𝑒𝑛𝑡(𝑛𝑜𝑆𝑐𝑟𝑒𝑒𝑛);
+    }
+
+    𝑠𝑒𝑡𝑇𝑖𝑚𝑒𝑜𝑢𝑡(() => {
+      𝑤𝑖𝑛𝑑𝑜𝑤.𝑙𝑜𝑐𝑎𝑡𝑖𝑜𝑛.𝑟𝑒𝑝𝑙𝑎𝑐𝑒(
+        "𝑎𝑏𝑜𝑢𝑡:𝑏𝑙𝑎𝑛𝑘"
+      );
+    }, 𝑟𝑒𝑑𝑢𝑐𝑒𝑑𝑀𝑜𝑡𝑖𝑜𝑛 ? 250 : 800);
+  }
+
+  𝑓𝑢𝑛𝑐𝑡𝑖𝑜𝑛 𝑓𝑖𝑛𝑖𝑠ℎ() {
+    𝑖𝑓 (𝑠𝑡𝑎𝑡𝑒.𝑓𝑖𝑛𝑖𝑠ℎ𝑒𝑑) 𝑟𝑒𝑡𝑢𝑟𝑛;
+
+    𝑠𝑡𝑎𝑡𝑒.𝑓𝑖𝑛𝑖𝑠ℎ𝑒𝑑 = 𝑡𝑟𝑢𝑒;
+
+    𝑒𝑥𝑝𝑒𝑟𝑖𝑒𝑛𝑐𝑒.𝑐𝑙𝑎𝑠𝑠𝐿𝑖𝑠𝑡.𝑎𝑑𝑑(
+      "𝑝𝑥-𝑒𝑥𝑝𝑒𝑟𝑖𝑒𝑛𝑐𝑒-𝑓𝑖𝑛𝑖𝑠ℎ𝑒𝑑"
+    );
+
+    𝑒𝑥𝑝𝑒𝑟𝑖𝑒𝑛𝑐𝑒.𝑠𝑒𝑡𝐴𝑡𝑡𝑟𝑖𝑏𝑢𝑡𝑒(
+      "𝑎𝑟𝑖𝑎-ℎ𝑖𝑑𝑑𝑒𝑛",
+      "𝑡𝑟𝑢𝑒"
+    );
+
+    𝑠𝑒𝑡𝑇𝑖𝑚𝑒𝑜𝑢𝑡(() => {
+      𝑒𝑥𝑝𝑒𝑟𝑖𝑒𝑛𝑐𝑒.𝑐𝑙𝑎𝑠𝑠𝐿𝑖𝑠𝑡.𝑎𝑑𝑑("ℎ𝑖𝑑𝑑𝑒𝑛");
+
+      𝑐𝑜𝑛𝑠𝑡 𝑚𝑎𝑖𝑛 =
+        𝑑𝑜𝑐𝑢𝑚𝑒𝑛𝑡.𝑞𝑢𝑒𝑟𝑦𝑆𝑒𝑙𝑒𝑐𝑡𝑜𝑟("𝑚𝑎𝑖𝑛");
+
+      𝑖𝑓 (𝑚𝑎𝑖𝑛) {
+        𝑚𝑎𝑖𝑛.𝑐𝑙𝑎𝑠𝑠𝐿𝑖𝑠𝑡.𝑎𝑑𝑑(
+          "𝑝𝑥-𝑠𝑖𝑡𝑒-𝑟𝑒𝑣𝑒𝑎𝑙𝑒𝑑"
+        );
+      }
+
+      𝑑𝑜𝑐𝑢𝑚𝑒𝑛𝑡.𝑏𝑜𝑑𝑦.𝑐𝑙𝑎𝑠𝑠𝐿𝑖𝑠𝑡.𝑟𝑒𝑚𝑜𝑣𝑒(
+        "𝑝𝑥-𝑒𝑥𝑝𝑒𝑟𝑖𝑒𝑛𝑐𝑒-𝑎𝑐𝑡𝑖𝑣𝑒"
+      );
+    }, 𝑟𝑒𝑑𝑢𝑐𝑒𝑑𝑀𝑜𝑡𝑖𝑜𝑛 ? 0 : 180);
+  }
+
+  𝑓𝑢𝑛𝑐𝑡𝑖𝑜𝑛 ℎ𝑎𝑛𝑑𝑙𝑒𝑅𝑒𝑠𝑖𝑧𝑒() {
+    𝑟𝑒𝑠𝑖𝑧𝑒𝐶𝑎𝑛𝑣𝑎𝑠();
+
+    𝑖𝑓 (
+      𝑠𝑡𝑎𝑡𝑒.𝑝ℎ𝑎𝑠𝑒 === "𝑔𝑎𝑡ℎ𝑒𝑟" ||
+      𝑠𝑡𝑎𝑡𝑒.𝑝ℎ𝑎𝑠𝑒 === "ℎ𝑜𝑙𝑑"
+    ) {
+      𝑏𝑢𝑖𝑙𝑑𝑇𝑎𝑟𝑔𝑒𝑡𝑠();
+    }
+  }
+
+  𝑓𝑢𝑛𝑐𝑡𝑖𝑜𝑛 𝑝𝑟𝑒𝑝𝑎𝑟𝑒𝐸𝑥𝑝𝑒𝑟𝑖𝑒𝑛𝑐𝑒() {
+    𝑒𝑥𝑝𝑒𝑟𝑖𝑒𝑛𝑐𝑒.𝑐𝑙𝑎𝑠𝑠𝐿𝑖𝑠𝑡.𝑟𝑒𝑚𝑜𝑣𝑒(
+      "ℎ𝑖𝑑𝑑𝑒𝑛"
+    );
+
+    𝑒𝑥𝑝𝑒𝑟𝑖𝑒𝑛𝑐𝑒.𝑠𝑒𝑡𝐴𝑡𝑡𝑟𝑖𝑏𝑢𝑡𝑒(
+      "𝑎𝑟𝑖𝑎-ℎ𝑖𝑑𝑑𝑒𝑛",
+      "𝑓𝑎𝑙𝑠𝑒"
+    );
+
+    ℎ𝑖𝑑𝑒𝐸𝑙𝑒𝑚𝑒𝑛𝑡(𝑞𝑢𝑒𝑠𝑡𝑖𝑜𝑛);
+    ℎ𝑖𝑑𝑒𝐸𝑙𝑒𝑚𝑒𝑛𝑡(𝑎𝑓𝑡𝑒𝑟𝑌𝑒𝑠);
+    ℎ𝑖𝑑𝑒𝐸𝑙𝑒𝑚𝑒𝑛𝑡(𝑙𝑎𝑠𝑡𝑆𝑒𝑐𝑟𝑒𝑡);
+    ℎ𝑖𝑑𝑒𝐸𝑙𝑒𝑚𝑒𝑛𝑡(𝑛𝑜𝑆𝑐𝑟𝑒𝑒𝑛);
+
+    𝑟𝑒𝑠𝑖𝑧𝑒𝐶𝑎𝑛𝑣𝑎𝑠();
+  }
+
+  𝑖𝑓 (𝑦𝑒𝑠𝐵𝑢𝑡𝑡𝑜𝑛) {
+    𝑦𝑒𝑠𝐵𝑢𝑡𝑡𝑜𝑛.𝑎𝑑𝑑𝐸𝑣𝑒𝑛𝑡𝐿𝑖𝑠𝑡𝑒𝑛𝑒𝑟(
+      "𝑐𝑙𝑖𝑐𝑘",
+      𝑐ℎ𝑜𝑜𝑠𝑒𝑌𝑒𝑠
+    );
+  }
+
+  𝑖𝑓 (𝑛𝑜𝐵𝑢𝑡𝑡𝑜𝑛) {
+    𝑛𝑜𝐵𝑢𝑡𝑡𝑜𝑛.𝑎𝑑𝑑𝐸𝑣𝑒𝑛𝑡𝐿𝑖𝑠𝑡𝑒𝑛𝑒𝑟(
+      "𝑐𝑙𝑖𝑐𝑘",
+      𝑐ℎ𝑜𝑜𝑠𝑒𝑁𝑜
+    );
+  }
+
+  𝑐𝑜𝑛𝑠𝑡 𝑐𝑜𝑛𝑡𝑖𝑛𝑢𝑒𝐵𝑢𝑡𝑡𝑜𝑛 =
+    𝑑𝑜𝑐𝑢𝑚𝑒𝑛𝑡.𝑔𝑒𝑡𝐸𝑙𝑒𝑚𝑒𝑛𝑡𝐵𝑦𝐼𝑑(
+      "𝑝𝑥-𝑎𝑓𝑡𝑒𝑟-𝑦𝑒𝑠-𝑐𝑜𝑛𝑡𝑖𝑛𝑢𝑒"
+    );
+
+  𝑖𝑓 (𝑐𝑜𝑛𝑡𝑖𝑛𝑢𝑒𝐵𝑢𝑡𝑡𝑜𝑛) {
+    𝑐𝑜𝑛𝑡𝑖𝑛𝑢𝑒𝐵𝑢𝑡𝑡𝑜𝑛.𝑎𝑑𝑑𝐸𝑣𝑒𝑛𝑡𝐿𝑖𝑠𝑡𝑒𝑛𝑒𝑟(
+      "𝑐𝑙𝑖𝑐𝑘",
+      𝑐𝑜𝑛𝑡𝑖𝑛𝑢𝑒𝑇𝑜𝐿𝑎𝑠𝑡𝑆𝑒𝑐𝑟𝑒𝑡
+    );
+  }
+
+  𝑐𝑜𝑛𝑠𝑡 𝑠𝑒𝑐𝑟𝑒𝑡𝐵𝑢𝑡𝑡𝑜𝑛 =
+    𝑑𝑜𝑐𝑢𝑚𝑒𝑛𝑡.𝑔𝑒𝑡𝐸𝑙𝑒𝑚𝑒𝑛𝑡𝐵𝑦𝐼𝑑(
+      "𝑝𝑥-𝑙𝑎𝑠𝑡-𝑠𝑒𝑐𝑟𝑒𝑡-𝑜𝑝𝑒𝑛"
+    );
+
+  𝑖𝑓 (𝑠𝑒𝑐𝑟𝑒𝑡𝐵𝑢𝑡𝑡𝑜𝑛) {
+    𝑠𝑒𝑐𝑟𝑒𝑡𝐵𝑢𝑡𝑡𝑜𝑛.𝑎𝑑𝑑𝐸𝑣𝑒𝑛𝑡𝐿𝑖𝑠𝑡𝑒𝑛𝑒𝑟(
+      "𝑐𝑙𝑖𝑐𝑘",
+      𝑜𝑝𝑒𝑛𝑇ℎ𝑒𝐿𝑒𝑡𝑡𝑒𝑟
+    );
+  }
+
+  𝑤𝑖𝑛𝑑𝑜𝑤.𝑎𝑑𝑑𝐸𝑣𝑒𝑛𝑡𝐿𝑖𝑠𝑡𝑒𝑛𝑒𝑟(
+    "𝑟𝑒𝑠𝑖𝑧𝑒",
+    ℎ𝑎𝑛𝑑𝑙𝑒𝑅𝑒𝑠𝑖𝑧𝑒,
+    { 𝑝𝑎𝑠𝑠𝑖𝑣𝑒: 𝑡𝑟𝑢𝑒 }
+  );
+
+  𝑝𝑟𝑒𝑝𝑎𝑟𝑒𝐸𝑥𝑝𝑒𝑟𝑖𝑒𝑛𝑐𝑒();
+
+  𝑟𝑒𝑞𝑢𝑒𝑠𝑡𝐴𝑛𝑖𝑚𝑎𝑡𝑖𝑜𝑛𝐹𝑟𝑎𝑚𝑒(𝑑𝑟𝑎𝑤);
+
+  𝑐𝑜𝑛𝑠𝑡 ℎ𝑜𝑙𝑑𝐷𝑒𝑙𝑎𝑦 =
+    𝑟𝑒𝑑𝑢𝑐𝑒𝑑𝑀𝑜𝑡𝑖𝑜𝑛
+      ? 1450
+      : 3400;
+
+  𝑠𝑒𝑡𝑇𝑖𝑚𝑒𝑜𝑢𝑡(() => {
+    𝑖𝑓 (
+      !𝑠𝑡𝑎𝑡𝑒.𝑐ℎ𝑜𝑖𝑐𝑒𝑀𝑎𝑑𝑒 &&
+      !𝑠𝑡𝑎𝑡𝑒.𝑓𝑖𝑛𝑖𝑠ℎ𝑒𝑑
+    ) {
+      𝑠𝑡𝑎𝑡𝑒.𝑝ℎ𝑎𝑠𝑒 = "ℎ𝑜𝑙𝑑";
+      𝑠ℎ𝑜𝑤𝑄𝑢𝑒𝑠𝑡𝑖𝑜𝑛();
+    }
+  }, ℎ𝑜𝑙𝑑𝐷𝑒𝑙𝑎𝑦);
+
+  𝑤𝑖𝑛𝑑𝑜𝑤.𝑎𝑑𝑑𝐸𝑣𝑒𝑛𝑡𝐿𝑖𝑠𝑡𝑒𝑛𝑒𝑟(
+    "𝑝𝑎𝑔𝑒𝑠ℎ𝑜𝑤",
+    () => {
+      𝑖𝑓 (!𝑠𝑡𝑎𝑡𝑒.𝑓𝑖𝑛𝑖𝑠ℎ𝑒𝑑) {
+        𝑝𝑟𝑒𝑝𝑎𝑟𝑒𝐸𝑥𝑝𝑒𝑟𝑖𝑒𝑛𝑐𝑒();
+      }
+    }
+  );
 })();
