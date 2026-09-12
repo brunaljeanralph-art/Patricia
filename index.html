@@ -2,230 +2,727 @@
 <html lang="fr">
 
 <head>
-  <meta charset="UTF-8">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
+    <title>Pour Patricia ❤️</title>
 
-  <title>Pour toi Mi Amor ❤️</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;700&display=swap" rel="stylesheet">
 
-  <link
-    rel="stylesheet"
-    href="style.css"
-  >
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="experience.css">
 
-  <!-- PATRICIA EXPERIENCE -->
-  <link
-    rel="stylesheet"
-    href="experience.css"
-  >
+    <link rel="preload" as="image" href="assets/tulip.png">
+    <link rel="preload" as="image" href="assets/Tulipe.png">
+    <link rel="preload" as="audio" href="assets/music.mp3">
+
+    <style>
+        /* =========================================================
+           LETTER TYPOGRAPHY / SPACING
+           ========================================================= */
+
+        .secret-letter {
+            font-family: "Times New Roman", Times, serif;
+            font-size: 18px;
+            line-height: 1.95;
+            color: #3d3342;
+        }
+
+        .secret-letter > p {
+            margin: 0 0 26px;
+            text-align: left;
+            letter-spacing: 0.01em;
+        }
+
+        .secret-intro {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+
+        .secret-intro p {
+            margin: 0 0 12px;
+        }
+
+        .secret-intro p:first-child {
+            font-size: 21px;
+            font-style: italic;
+        }
+
+        .miamor-line {
+            font-family: "Dancing Script", cursive;
+            font-size: 29px !important;
+            font-weight: 700;
+            color: #7A3FA3;
+        }
+
+        .letter-divider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 14px;
+            width: 100%;
+            margin: 38px auto 38px;
+            color: #b45d77;
+        }
+
+        .letter-divider::before,
+        .letter-divider::after {
+            content: "";
+            height: 1px;
+            background: linear-gradient(
+                to right,
+                transparent,
+                rgba(122, 63, 163, 0.34),
+                transparent
+            );
+            flex: 1;
+        }
+
+        .letter-divider span {
+            font-size: 17px;
+            line-height: 1;
+        }
+
+        .letter-quote {
+            margin: 31px auto 32px !important;
+            padding: 12px 22px;
+            max-width: 720px;
+            text-align: center !important;
+            font-style: italic;
+            color: #6a3d7d;
+            border-left: 2px solid rgba(122, 63, 163, 0.35);
+            border-right: 2px solid rgba(122, 63, 163, 0.35);
+            background: rgba(122, 63, 163, 0.035);
+            border-radius: 8px;
+        }
+
+        .love-words {
+            font-weight: 700;
+            color: #7A3FA3;
+            white-space: nowrap;
+        }
+
+        .signature {
+            text-align: center;
+            margin: 48px auto 20px;
+            padding-top: 8px;
+        }
+
+        .signature p {
+            margin: 0 0 10px;
+        }
+
+        .signature p:nth-child(2) {
+            font-family: "Dancing Script", cursive;
+            font-size: 29px;
+            font-weight: 700;
+            color: #7A3FA3;
+        }
+
+        .signature p:last-child {
+            font-family: "Dancing Script", cursive;
+            font-size: 26px;
+            font-weight: 700;
+            color: #5E2B84;
+        }
+
+        .final-question {
+            margin-top: 52px;
+            padding: 8px 0 24px;
+            text-align: center;
+        }
+
+        .final-question h2 {
+            margin: 10px 0 28px;
+            font-family: "Dancing Script", cursive;
+            font-size: 32px;
+            font-weight: 700;
+            color: #7A3FA3;
+        }
+
+        .final-question p {
+            margin-bottom: 23px;
+        }
+
+        .final-question-text {
+            font-size: 21px;
+            font-weight: 700;
+            color: #5E2B84;
+        }
+
+        .relire-letter {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 12px;
+            padding: 13px 25px;
+            border-radius: 999px;
+            text-decoration: none;
+            background: #7A3FA3;
+            color: #fff;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 15px;
+            font-weight: 700;
+            box-shadow: 0 7px 20px rgba(122, 63, 163, 0.22);
+            transition: transform .2s ease, background .2s ease;
+        }
+
+        .relire-letter:hover {
+            background: #5E2B84;
+            transform: translateY(-2px);
+        }
+
+        /* More breathing room on larger screens */
+        @media (min-width: 768px) {
+            .secret-letter {
+                font-size: 18.5px;
+                line-height: 2;
+            }
+
+            .secret-letter > p {
+                margin-bottom: 29px;
+            }
+
+            .letter-divider {
+                margin-top: 43px;
+                margin-bottom: 43px;
+            }
+        }
+
+        /* Comfortable reading on phones */
+        @media (max-width: 600px) {
+            .secret-letter {
+                font-size: 17px;
+                line-height: 1.9;
+            }
+
+            .secret-letter > p {
+                margin-bottom: 24px;
+            }
+
+            .letter-divider {
+                margin-top: 32px;
+                margin-bottom: 32px;
+            }
+
+            .letter-quote {
+                padding: 10px 14px;
+                margin-top: 27px !important;
+                margin-bottom: 29px !important;
+            }
+
+            .final-question h2 {
+                font-size: 29px;
+            }
+        }
+    </style>
 </head>
 
-
 <body>
+    <span id="top" class="px-top-anchor" aria-hidden="true"></span>
 
-  <!-- =====================================================
-       EXISTING INTRO
-       ===================================================== -->
 
-  <div
-    id="intro-screen"
-    class="intro-screen"
-  >
+    <!-- ===============================
+         1. INTRO LOADER
+    =============================== -->
 
-    <div class="intro-overlay"></div>
+    <div id="intro-screen" class="hidden" aria-hidden="true">
+        <div class="intro-overlay"></div>
 
-    <div class="intro-content">
+        <div class="intro-content">
+            <div class="intro-heart">🤍</div>
 
-      <div class="intro-heart">
-        🤍
-      </div>
+            <h2>
+                Un dernier petit secret...
+                <br>
+                t'attend ❤️
+            </h2>
 
-      <h1>
-        Un dernier petit secret... t'attend ❤️
-      </h1>
-
-      <p>
-        J'ai laissé quelque chose ici pour toi...
-      </p>
-
-      <button
-        id="openSurpriseBtn"
-        type="button"
-      >
-        Ouvrir ma surprise
-      </button>
-
+            <p>
+                Ferme les yeux un instant...
+            </p>
+        </div>
     </div>
 
-  </div>
 
+    <!-- ===============================
+         2. POPUP BIENVENUE
+    =============================== -->
 
-  <!-- =====================================================
-       WELCOME POPUP
-       ===================================================== -->
+    <div id="welcome-popup" class="hidden" aria-hidden="true">
 
-  <div
-    id="welcome-popup"
-    class="welcome-popup"
-  >
+        <div class="popup-card">
 
-    <div class="popup-card">
+            <div class="popup-heart">🤍</div>
 
-      <div class="popup-heart">
-        ❤️
-      </div>
+            <h2>
+                Bienvenue, Mi Amor ❤️
+            </h2>
 
-      <h2>
-        Bienvenue, Mi Amor
-      </h2>
+            <p>
+                Cette petite surprise
+                a été créée avec tout mon cœur.
+            </p>
 
-      <p>
-        Avant de continuer...
-      </p>
+            <p>
+                J'espère qu'elle te fera sourire.
+            </p>
 
-      <p>
-        prends juste quelques secondes
-        pour découvrir ce que j'ai préparé pour toi.
-      </p>
+            <button id="continueBtn">
+                Continuer ❤️
+            </button>
 
-      <button
-        id="continueBtn"
-        type="button"
-      >
-        Continuer ❤️
-      </button>
-
-    </div>
-
-  </div>
-
-
-  <!-- =====================================================
-       MUSIC
-       ===================================================== -->
-
-  <button
-    id="music-btn"
-    type="button"
-    aria-label="Contrôler la musique"
-  >
-    ♫
-  </button>
-
-
-  <audio
-    id="bgMusic"
-    src="assets/music.mp3"
-    loop
-    preload="auto"
-  ></audio>
-
-
-  <audio
-    id="dingSound"
-    src="assets/ding.mp3"
-    preload="auto"
-  ></audio>
-
-
-  <!-- =====================================================
-       BACKGROUND
-       ===================================================== -->
-
-  <div class="background"></div>
-
-  <div id="stars"></div>
-
-  <div id="hearts-container"></div>
-
-  <div id="petals-container"></div>
-
-  <div id="confetti-container"></div>
-
-
-  <!-- =====================================================
-       EXISTING LETTER
-       ===================================================== -->
-
-  <main class="card">
-
-    <div class="header">
-
-      <img
-        src="assets/tulip.png"
-        class="header-tulip"
-        alt=""
-      >
-
-      <div class="title">
-
-        <h1>
-          Pour toi Mi Amor ❤️
-        </h1>
-
-        <h2>
-          Mon dernier petit secret🫣
-        </h2>
-
-      </div>
-
-      <img
-        src="assets/tulip.png"
-        class="header-tulip"
-        alt=""
-        style="transform: scaleX(-1)"
-      >
+        </div>
 
     </div>
 
 
-    <!-- =================================================
-         LETTRE
-         ================================================= -->
+    <!-- ===============================
+         3. MUSIQUE
+    =============================== -->
 
-    <div class="secret-letter">
+    <button id="music-btn" class="music-btn">
+        🎵 Activer la musique
+    </button>
 
-      <!--
-        METS ICI TON VRAI TEXTE DE LETTRE COMPLET.
-        PA CHANJE LI.
-      -->
+    <audio id="bgMusic" loop>
+        <source src="assets/music.mp3" type="audio/mpeg">
+        Votre navigateur ne supporte pas l'audio.
+    </audio>
 
-      <p>
-        Patricia...
-      </p>
-
-    </div>
-
-
-    <div class="relire-letter">
-
-      <a
-        href="lettre.pdf"
-        target="_blank"
-      >
-        Télécharger ma lettre ❤️
-      </a>
-
-    </div>
-
-  </main>
+    <audio id="dingSound">
+        <source src="assets/ding.mp3" type="audio/mpeg">
+    </audio>
 
 
-  <!-- =====================================================
-       EXISTING SCRIPT
-       ===================================================== -->
+    <!-- ===============================
+         4. BACKGROUND / ANIMATIONS
+    =============================== -->
 
-  <script src="script.js"></script>
+    <div class="background"></div>
+    <div id="stars"></div>
+    <div id="hearts-container"></div>
+    <div id="petals-container"></div>
+    <div id="confetti-container"></div>
+
+    <!-- Slow, translucent decorative drift -->
+
+    <!-- ===============================
+         5. CARTE
+    =============================== -->
+
+    <main class="card">
+
+        <header class="header">
+
+            <img
+                class="header-tulip"
+                src="assets/tulip.png"
+                alt="Tulipe">
+
+            <div class="title">
+
+                <h1>
+                    <span class="px-title-line">Pour toi</span>
+                    <span class="miamor">Mi Amor.</span> ❤️
+                </h1>
+
+                <h2>
+                    Mon dernier petit secret🫣
+                </h2>
+
+            </div>
+
+            <img
+                class="header-tulip right"
+                src="assets/tulip.png"
+                alt="Tulipe">
+
+        </header>
 
 
-  <!-- =====================================================
-       PATRICIA EXPERIENCE
-       ===================================================== -->
+        <!-- ===============================
+             6. DERNIER PETIT SECRET
+        =============================== -->
 
-  <script src="experience.js"></script>
+        <section class="secret-letter">
+
+            <div class="secret-intro">
+                <p>
+                    Tu es vraiment arrivée jusqu'ici...
+                </p>
+
+                <p class="miamor-line">
+                    😇Mi Amor ❤️
+                </p>
+            </div>
+
+
+            <div class="letter-divider">
+                <span>❤️</span>
+            </div>
+
+
+            <p>
+                Je savais que ta curiosité finirait par gagner.
+            </p>
+
+            <p>
+                Si tu lis ces mots, c'est que tu as découvert le tout dernier petit secret que je gardais pour toi.
+            </p>
+
+            <p>
+                Tu n'as pas seulement lu ma lettre. Tu as aussi choisi d'ouvrir cette dernière petite porte que j'avais laissée entrouverte, juste pour toi.
+            </p>
+
+            <p>
+                Il y a des choses que même les plus longues lettres n'arrivent pas à dire.
+            </p>
+
+            <p>
+                Alors laisse-moi te confier une dernière partie de mon cœur.
+            </p>
+
+            <p>
+                <strong>Le plus beau souvenir de cette surprise ne sera jamais cette page.</strong>
+                Ce sera simplement de savoir que, quelque part, en ce moment précis, c'est toi qui es en train de lire ces mots.
+            </p>
+
+            <p>
+                Je n'attends rien en retour. Je voulais seulement te laisser un endroit où une partie de notre histoire pourra toujours exister, parce que certaines choses méritent d'être gardées.
+            </p>
+
+            <p>
+                <strong>Il y a des souvenirs qui n'appartiennent qu'à nous.</strong>
+            </p>
+
+
+            <div class="letter-divider">
+                <span>❤️</span>
+            </div>
+
+
+            <p>
+                <strong>Je me souviens encore de notre premier baiser.</strong>
+                Il est arrivé si naturellement que ni toi ni moi ne nous sommes vraiment rendu compte de ce qui venait de se passer. Ce n'est qu'en rentrant chez moi que je me suis surpris à sourire tout seul, en me demandant :
+            </p>
+
+            <p class="letter-quote">
+                « Est-ce que c'était vraiment réel ? »
+            </p>
+
+            <p>
+                Je crois que c'est ce jour-là que j'ai compris que tu occupais déjà une place bien plus grande dans mon cœur que je ne l'avais imaginé.
+            </p>
+
+            <p>
+                Quelques jours plus tard, je suis venu te voir sans te prévenir. Nous parlions tranquillement, même si ta maman n'était pas loin. J'étais un peu stressé, mais je n'avais qu'une seule envie 🥰😇
+            </p>
+
+            <p class="letter-quote">
+                Envie de profiter encore de quelques minutes à tes Cotés.
+            </p>
+
+            <p>
+                Ce qui m'a toujours fait sourire, c'est qu'au lieu de nous gronder, elle nous a même proposé d'aller mettre un matelas à l'intérieur.
+            </p>
+
+            <p>
+                Je repense aussi à cette soirée où nous marchions ensemble, à l'époque où Wensley était là. C'était la première fois que nous marchions vraiment <strong>main dans la main, tous les deux.</strong> Tu as fini par retirer la tienne quelques instants plus tard, mais ce petit moment est resté gravé dans mon cœur.
+            </p>
+
+            <p>
+                À cette époque, je voulais simplement te voir sourire.
+            </p>
+
+            <p>
+                Même quand je n'avais pas grand-chose, j'avais toujours envie de te donner <strong>le meilleur de moi-même.</strong>
+            </p>
+
+            <p>
+                Ce n'était peut-être pas parfait, mais c'était sincère.
+            </p>
+
+            <p>
+                Je t'aimais déjà énormément, mais je t'avoue que j'avais aussi peur.
+            </p>
+
+            <p>
+                <strong>Peur de ne jamais vraiment savoir ce que tu pensais de moi.</strong>
+                Alors, sans jamais te le dire, je cherchais toujours une raison de te faire sourire.
+            </p>
+
+            <p>
+                Et le jour où tu m'as regardé pour me dire
+            </p>
+
+            <p class="letter-quote">
+                🥰« Je t'aime »🥰
+            </p>
+
+            <p>
+                je crois que je n'oublierai jamais ce que j'ai ressenti. J'avais l'impression que quelque chose que je pensais impossible venait enfin d'arriver.
+            </p>
+
+            <p>
+                Tu n'as jamais été quelqu'un de facile à comprendre. Tu as toujours eu tes principes, tes limites et tes valeurs. Beaucoup auraient abandonné, mais moi, c'est justement ce que j'admirais chez toi. <strong>Tu m'as appris qu'aimer quelqu'un, c'est aussi respecter la personne qu'il est vraiment.</strong>
+            </p>
+
+            <p>
+                Notre histoire n'a jamais été parfaite. Nous nous sommes disputés, nous nous sommes éloignés, nous avons parfois arrêté de nous parler avant de retrouver le chemin l'un vers l'autre.
+            </p>
+
+            <p>
+                Malgré tout cela, <strong>une chose n'a jamais disparu...</strong>
+            </p>
+
+            <p class="letter-quote">
+                l'affection profonde que j'ai toujours eue pour toi
+            </p>
+
+            <p>
+                Après ma mère, il y a très peu de personnes dont les paroles ont compté autant pour moi que les tiennes.
+            </p>
+
+            <p>
+                <strong>Tes conseils ont toujours eu une place particulière dans mon cœur.</strong>
+            </p>
+
+            <p>
+                Et puis, il y a cette habitude que je n'ai jamais vraiment perdue...
+            </p>
+
+            <p>
+                <strong>Chaque fois que je passe devant chez toi...</strong>
+            </p>
+
+            <p>
+                Je ralentis presque sans m'en rendre compte.
+            </p>
+
+            <p>
+                Je sais bien que tu n'es peut-être pas là.
+            </p>
+
+            <p>
+                Pourtant, pendant une seconde, j'imagine encore ton sourire. C'est étrange...
+            </p>
+
+            <p>
+                <strong>mais certains souvenirs ne disparaissent jamais.</strong>
+            </p>
+
+            <p>
+                Je ne cherche pas à revivre le passé. Je voulais simplement qu'une partie de ce que nous avons vécu continue d'exister, quelque part.
+            </p>
+
+
+            <div class="letter-divider">
+                <span>❤️</span>
+            </div>
+
+
+            <p>
+                Si un jour le temps passe un peu trop vite...
+            </p>
+
+            <p>
+                Si la vie nous met à l'épreuve...
+            </p>
+
+            <p>
+                Ou si certains souvenirs deviennent moins précis...
+            </p>
+
+            <p>
+                <strong>Reviens ici.</strong>
+            </p>
+
+            <p>
+                Pas seulement pour relire mes mots.
+            </p>
+
+            <p>
+                Mais pour te rappeler avec quelle sincérité ils ont été écrits.
+            </p>
+
+            <p>
+                <strong>Referme cette page avec le sourire.</strong>
+            </p>
+
+            <p>
+                Parce que c'est exactement comme ça que j'espérais te laisser.
+            </p>
+
+            <p>
+                Et si, dans plusieurs années, tu retombes par hasard sur cette page😅
+            </p>
+
+            <p>
+                J'espère qu'elle réussira encore à faire naître le même sourire que celui que tu portes en ce moment. ❤️
+            </p>
+
+
+            <div class="signature">
+                <p>
+                    Avec toute la sincérité de mon cœur,
+                </p>
+
+                <p>
+                    Ton Prince Charmant ❤️
+                </p>
+
+                <p>
+                    Ralph
+                </p>
+            </div>
+
+
+            <!-- ===============================
+                 7. QUESTION FINALE
+            =============================== -->
+
+            <div class="final-question">
+
+                <div class="letter-divider">
+                    <span>🥹</span>
+                </div>
+
+                <h2>
+                    Une toute dernière question🥹
+                </h2>
+
+                <p class="final-question-text">
+                    <em>As-tu souri en arrivant jusqu'ici ?</em>
+                </p>
+
+                <p>
+                    Si la réponse est oui...
+                </p>
+
+                <p>
+                    <strong>Alors mon petit secret a rempli sa mission.</strong>
+                </p>
+
+                <p>
+                    Je ne voulais pas seulement t'offrir une lettre.
+                </p>
+
+                <p>
+                    <strong>Je voulais te laisser un souvenir.</strong>
+                </p>
+
+                <p>
+                    Un endroit où tu pourras toujours revenir...
+                </p>
+
+                <p>
+                    Même quand le temps aura passé.
+                </p>
+
+                <p>
+                    Parce que certaines surprises se terminent...
+                </p>
+
+                <p>
+                    <strong>Mais les sentiments sincères, eux, laissent toujours une trace. ❤️</strong>
+                </p>
+
+                <a class="relire-letter" href="lettre.pdf">
+                    💌 Relire ma lettre
+                </a>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <section class="px-souvenir-gate" aria-label="Accéder aux souvenirs">
+        <a class="px-souvenir-gate-link" href="#souvenirs">
+            <span class="px-souvenir-gate-icon">📖</span>
+            <span>Découvrir nos souvenirs</span>
+            <span class="px-souvenir-gate-arrow">↓</span>
+        </a>
+    </section>
+
+    <!-- ===============================
+         9. SOUVENIRS
+         Separate section after the letter
+    =============================== -->
+    <section id="souvenirs" class="px-souvenirs" aria-labelledby="px-souvenirs-title">
+        <div class="px-souvenirs-inner">
+            <div class="px-souvenir-heading">
+                <span class="px-mini-heart">♡</span>
+                <h2 id="px-souvenirs-title">Nos souvenirs ❤️</h2>
+                <p>Et parce qu'une lettre ne peut pas tout garder...</p>
+            </div>
+
+            <div class="px-memory-grid">
+                <article class="px-memory-card">
+                    <div class="px-memory-icon">💋</div>
+                    <div>
+                        <span class="px-memory-label">Le premier</span>
+                        <h3>Notre premier baiser</h3>
+                        <p>Ce petit moment qui m'a fait rentrer chez moi avec un sourire un peu trop difficile à cacher.</p>
+                    </div>
+                </article>
+
+                <article class="px-memory-card">
+                    <div class="px-memory-icon">🤍</div>
+                    <div>
+                        <span class="px-memory-label">Un moment simple</span>
+                        <h3>Quelques minutes à tes côtés</h3>
+                        <p>Une visite, un peu de stress, ta présence… et cette envie de rester encore quelques minutes.</p>
+                    </div>
+                </article>
+
+                <article class="px-memory-card">
+                    <div class="px-memory-icon">🤝</div>
+                    <div>
+                        <span class="px-memory-label">Cette soirée</span>
+                        <h3>Main dans la main</h3>
+                        <p>Un geste tout simple, mais assez fort pour rester quelque part dans ma mémoire.</p>
+                    </div>
+                </article>
+
+                <article class="px-memory-card">
+                    <div class="px-memory-icon">🏡</div>
+                    <div>
+                        <span class="px-memory-label">Encore aujourd'hui</span>
+                        <h3>Cette habitude devant chez toi</h3>
+                        <p>Je ralentis presque sans m'en rendre compte… juste une seconde, comme si ton sourire pouvait encore apparaître.</p>
+                    </div>
+                </article>
+            </div>
+
+            <div class="px-photo-memory">
+                <div class="px-photo-heading">
+                    <span>Nos images, quand tu voudras les déposer ici.</span>
+                    <p>Le dossier prévu est <strong>assets/souvenirs/</strong> avec photo01.jpg à photo42.jpg. Les emplacements sans photo restent invisibles.</p>
+                </div>
+                <div id="px-photo-grid" class="px-photo-grid" aria-live="polite"></div>
+            </div>
+
+
+            <div class="px-souvenir-tail">
+                <span>Parce que certains souvenirs ne disparaissent jamais. ❤️</span>
+                <a href="#top" id="px-back-letter">↩ Retour à la lettre</a>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ===============================
+         8. JAVASCRIPT
+    =============================== -->
+
+    <script src="script.js"></script>
+    <script src="experience.js"></script>
+    <script src="souvenirs.js"></script>
 
 </body>
 
