@@ -24,6 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const pauseHint =
     document.getElementById("px-pause-hint");
 
+
   if (
     !stage ||
     !photo ||
@@ -60,8 +61,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let phaseStart = 0;
 
-  let pausedAt = 0;
-
   let pauseStarted = 0;
 
   let isPaused = false;
@@ -72,26 +71,34 @@ document.addEventListener("DOMContentLoaded", () => {
 
   let started = false;
 
+  let transitioning = false;
+
 
   /* =========================================================
      HELPERS
      ========================================================= */
 
   function photoNumber(number) {
-    return String(number).padStart(2, "0");
+
+    return String(number)
+      .padStart(2, "0");
+
   }
 
 
   function photoSrc(number) {
+
     return (
       PHOTO_PATH +
       photoNumber(number) +
       ".jpg"
     );
+
   }
 
 
   function updateCounter() {
+
     count.textContent =
       `${photoNumber(currentPhoto)} / ${TOTAL_PHOTOS}`;
 
@@ -100,12 +107,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
     photo.alt =
       `Souvenir ${currentPhoto} sur ${TOTAL_PHOTOS}`;
+
   }
 
 
   function setProgress(value) {
+
     progress.style.width =
-      `${Math.max(0, Math.min(100, value))}%`;
+      `${Math.max(
+        0,
+        Math.min(
+          100,
+          value
+        )
+      )}%`;
+
   }
 
 
@@ -119,8 +135,13 @@ document.addEventListener("DOMContentLoaded", () => {
       "is-visible",
       state
     );
+
   }
 
+
+  /* =========================================================
+     PRELOAD IMAGE
+     ========================================================= */
 
   function preloadImage(number) {
 
@@ -133,6 +154,7 @@ document.addEventListener("DOMContentLoaded", () => {
         img.decoding =
           "async";
 
+
         img.onload = async () => {
 
           try {
@@ -140,32 +162,47 @@ document.addEventListener("DOMContentLoaded", () => {
             if (
               typeof img.decode === "function"
             ) {
+
               await img.decode();
+
             }
 
           } catch (_) {
+
             /* Image already loaded.
                Continue normally. */
+
           }
+
 
           resolve(img);
 
         };
 
+
         img.onerror = () => {
+
           reject(
             new Error(
               `Impossible de charger ${photoSrc(number)}`
             )
           );
+
         };
+
 
         img.src =
           photoSrc(number);
+
       }
     );
+
   }
 
+
+  /* =========================================================
+     SHOW PHOTO
+     ========================================================= */
 
   async function showPhoto(number) {
 
@@ -174,55 +211,81 @@ document.addEventListener("DOMContentLoaded", () => {
 
     setLoading(true);
 
+
     try {
 
       const loaded =
         await preloadImage(number);
 
-      if (token !== imageToken) {
-        return;
+
+      if (
+        token !== imageToken
+      ) {
+        return false;
       }
+
 
       photo.src =
         loaded.src;
 
+
       currentPhoto =
         number;
+
 
       updateCounter();
 
       setLoading(false);
 
+
+      return true;
+
     } catch (error) {
 
-      if (token !== imageToken) {
-        return;
+      if (
+        token !== imageToken
+      ) {
+        return false;
       }
+
 
       console.warn(
         "Souvenir introuvable",
         error
       );
 
+
       setLoading(false);
 
-      moveToNextPhoto();
+
+      return false;
+
     }
+
   }
 
 
+  /* =========================================================
+     PHASE ANIMATION
+     ========================================================= */
+
   function applyPhaseStyles(progressValue) {
 
-    if (phase === "enter") {
+
+    if (
+      phase === "enter"
+    ) {
 
       const p =
         Math.min(
           1,
           Math.max(
             0,
-            progressValue / ENTER_TIME
+            progressValue /
+            ENTER_TIME
           )
         );
+
 
       const eased =
         1 -
@@ -231,71 +294,100 @@ document.addEventListener("DOMContentLoaded", () => {
           3
         );
 
+
       frame.style.transform =
-        `translate3d(0, ${110 - (110 * eased)}%, 0)`;
+        `translate3d(0, ${
+          110 -
+          (110 * eased)
+        }%, 0)`;
+
 
       frame.style.opacity =
         String(eased);
+
 
       setProgress(
         eased * 15
       );
 
+
       return;
     }
 
 
-    if (phase === "hold") {
+    if (
+      phase === "hold"
+    ) {
 
       const p =
         Math.min(
           1,
           Math.max(
             0,
-            progressValue / HOLD_TIME
+            progressValue /
+            HOLD_TIME
           )
         );
+
 
       frame.style.transform =
         "translate3d(0, 0, 0)";
 
+
       frame.style.opacity =
         "1";
 
+
       setProgress(
-        15 + (p * 70)
+        15 +
+        (p * 70)
       );
+
 
       return;
     }
 
 
-    if (phase === "leave") {
+    if (
+      phase === "leave"
+    ) {
 
       const p =
         Math.min(
           1,
           Math.max(
             0,
-            progressValue / LEAVE_TIME
+            progressValue /
+            LEAVE_TIME
           )
         );
+
 
       const eased =
         p * p;
 
+
       frame.style.transform =
-        `translate3d(0, ${-110 * eased}%, 0)`;
+        `translate3d(0, ${
+          -110 * eased
+        }%, 0)`;
+
 
       frame.style.opacity =
-        String(1 - eased);
+        String(
+          1 - eased
+        );
+
 
       setProgress(
-        85 + (eased * 15)
+        85 +
+        (eased * 15)
       );
+
 
       return;
     }
+
   }
 
 
@@ -307,7 +399,10 @@ document.addEventListener("DOMContentLoaded", () => {
     phaseStart =
       performance.now();
 
-    if (name === "enter") {
+
+    if (
+      name === "enter"
+    ) {
 
       frame.style.transition =
         "none";
@@ -317,9 +412,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
       frame.style.opacity =
         "0";
+
     }
 
-    if (name === "hold") {
+
+    if (
+      name === "hold"
+    ) {
 
       frame.style.transition =
         "none";
@@ -329,79 +428,197 @@ document.addEventListener("DOMContentLoaded", () => {
 
       frame.style.opacity =
         "1";
+
     }
 
-    if (name === "leave") {
+
+    if (
+      name === "leave"
+    ) {
 
       frame.style.transition =
         "none";
+
     }
+
   }
 
 
   /* =========================================================
-     PHOTO FLOW
+     NEXT PHOTO
      ========================================================= */
 
-  async function startPhotoFlow() {
+  async function moveToNextPhoto() {
 
-    if (started) {
+    if (
+      transitioning
+    ) {
       return;
     }
 
-    started =
+
+    transitioning =
       true;
 
-    currentPhoto =
-      1;
 
-    updateCounter();
-
-    await showPhoto(
-      currentPhoto
-    );
-
-    startPhase(
-      "enter"
-    );
-
-    cancelAnimationFrame(
-      animationFrame
-    );
-
-    animationFrame =
-      requestAnimationFrame(
-        tick
-      );
-  }
+    phase =
+      "loading";
 
 
-  function moveToNextPhoto() {
+    let nextPhoto =
+      currentPhoto + 1;
 
-    currentPhoto++;
 
     if (
-      currentPhoto >
+      nextPhoto >
       TOTAL_PHOTOS
     ) {
-      currentPhoto = 1;
+
+      nextPhoto =
+        1;
+
     }
 
-    showPhoto(
-      currentPhoto
-    ).then(() => {
+
+    const loaded =
+      await showPhoto(
+        nextPhoto
+      );
+
+
+    if (
+      loaded
+    ) {
 
       startPhase(
         "enter"
       );
 
-    });
+    } else {
+
+      /*
+        Si yon foto pa disponib,
+        nou pase sou pwochen an.
+      */
+
+      currentPhoto =
+        nextPhoto;
+
+
+      let fallbackPhoto =
+        currentPhoto + 1;
+
+
+      if (
+        fallbackPhoto >
+        TOTAL_PHOTOS
+      ) {
+
+        fallbackPhoto =
+          1;
+
+      }
+
+
+      const fallbackLoaded =
+        await showPhoto(
+          fallbackPhoto
+        );
+
+
+      if (
+        fallbackLoaded
+      ) {
+
+        startPhase(
+          "enter"
+        );
+
+      } else {
+
+        phase =
+          "idle";
+
+      }
+
+    }
+
+
+    transitioning =
+      false;
+
   }
 
 
+  /* =========================================================
+     START PHOTO FLOW
+     ========================================================= */
+
+  async function startPhotoFlow() {
+
+    if (
+      started
+    ) {
+      return;
+    }
+
+
+    started =
+      true;
+
+
+    currentPhoto =
+      1;
+
+
+    updateCounter();
+
+
+    const loaded =
+      await showPhoto(
+        currentPhoto
+      );
+
+
+    if (
+      !loaded
+    ) {
+
+      started =
+        false;
+
+      return;
+
+    }
+
+
+    startPhase(
+      "enter"
+    );
+
+
+    cancelAnimationFrame(
+      animationFrame
+    );
+
+
+    animationFrame =
+      requestAnimationFrame(
+        tick
+      );
+
+  }
+
+
+  /* =========================================================
+     ANIMATION LOOP
+     ========================================================= */
+
   function tick(now) {
 
-    if (isPaused) {
+    if (
+      isPaused
+    ) {
 
       animationFrame =
         requestAnimationFrame(
@@ -409,98 +626,147 @@ document.addEventListener("DOMContentLoaded", () => {
         );
 
       return;
+
     }
 
-    const elapsed =
-      now - phaseStart;
 
-    if (phase === "enter") {
+    if (
+      phase === "loading"
+    ) {
+
+      animationFrame =
+        requestAnimationFrame(
+          tick
+        );
+
+      return;
+
+    }
+
+
+    const elapsed =
+      now -
+      phaseStart;
+
+
+    if (
+      phase === "enter"
+    ) {
 
       applyPhaseStyles(
         elapsed
       );
 
+
       if (
-        elapsed >= ENTER_TIME
+        elapsed >=
+        ENTER_TIME
       ) {
 
         startPhase(
           "hold"
         );
+
       }
+
     }
 
-    else if (phase === "hold") {
+
+    else if (
+      phase === "hold"
+    ) {
 
       applyPhaseStyles(
         elapsed
       );
 
+
       if (
-        elapsed >= HOLD_TIME
+        elapsed >=
+        HOLD_TIME
       ) {
 
         startPhase(
           "leave"
         );
+
       }
+
     }
 
-    else if (phase === "leave") {
+
+    else if (
+      phase === "leave"
+    ) {
 
       applyPhaseStyles(
         elapsed
       );
 
+
       if (
-        elapsed >= LEAVE_TIME
+        elapsed >=
+        LEAVE_TIME
       ) {
 
         moveToNextPhoto();
+
       }
+
     }
+
 
     animationFrame =
       requestAnimationFrame(
         tick
       );
+
   }
 
 
   /* =========================================================
-     PAUSE / RESUME
+     PAUSE
      ========================================================= */
 
   function pauseFlow() {
 
     if (
       !started ||
-      isPaused
+      isPaused ||
+      phase === "idle"
     ) {
       return;
     }
 
+
     isPaused =
       true;
+
 
     pauseStarted =
       performance.now();
 
-    pausedAt =
-      performance.now();
 
     stage.classList.add(
       "is-paused"
     );
 
-    if (pauseHint) {
+
+    if (
+      pauseHint
+    ) {
 
       pauseHint.textContent =
         "Souvenir en pause ♡";
 
     }
+
   }
 
+
+  /* =========================================================
+     RESUME
+     ========================================================= */
 
   function resumeFlow() {
 
@@ -511,28 +777,38 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
+
     const now =
       performance.now();
 
+
     const pauseDuration =
-      now - pauseStarted;
+      now -
+      pauseStarted;
+
 
     phaseStart +=
       pauseDuration;
 
+
     isPaused =
       false;
+
 
     stage.classList.remove(
       "is-paused"
     );
 
-    if (pauseHint) {
+
+    if (
+      pauseHint
+    ) {
 
       pauseHint.textContent =
         "Maintiens ton doigt pour garder ce souvenir un peu plus longtemps ♡";
 
     }
+
   }
 
 
@@ -550,17 +826,18 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
+
       try {
 
         stage.setPointerCapture(
           event.pointerId
         );
 
-      } catch (_) {
-        /* Capture not available */
-      }
+      } catch (_) {}
+
 
       pauseFlow();
+
     }
   );
 
@@ -575,17 +852,18 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
+
       try {
 
         stage.releasePointerCapture(
           event.pointerId
         );
 
-      } catch (_) {
-        /* Capture not available */
-      }
+      } catch (_) {}
+
 
       resumeFlow();
+
     }
   );
 
@@ -595,25 +873,13 @@ document.addEventListener("DOMContentLoaded", () => {
     () => {
 
       resumeFlow();
-    }
-  );
 
-
-  stage.addEventListener(
-    "pointerleave",
-    (event) => {
-
-      if (
-        event.pointerType === "mouse"
-      ) {
-        resumeFlow();
-      }
     }
   );
 
 
   /* =========================================================
-     VISIBILITY
+     PAGE VISIBILITY
      ========================================================= */
 
   document.addEventListener(
@@ -623,12 +889,15 @@ document.addEventListener("DOMContentLoaded", () => {
       if (
         document.hidden
       ) {
+
         pauseFlow();
 
       } else {
 
         resumeFlow();
+
       }
+
     }
   );
 
@@ -642,13 +911,18 @@ document.addEventListener("DOMContentLoaded", () => {
       "px-back-letter"
     );
 
-  if (backToLetter) {
+
+  if (
+    backToLetter
+  ) {
 
     backToLetter.addEventListener(
       "click",
       () => {
 
-        if (animationFrame) {
+        if (
+          animationFrame
+        ) {
 
           cancelAnimationFrame(
             animationFrame
@@ -656,16 +930,30 @@ document.addEventListener("DOMContentLoaded", () => {
 
         }
 
+
+        imageToken++;
+
+
         started =
           false;
 
         isPaused =
           false;
 
+        transitioning =
+          false;
+
         phase =
           "idle";
+
+
+        setLoading(
+          false
+        );
+
       }
     );
+
   }
 
 
@@ -678,7 +966,10 @@ document.addEventListener("DOMContentLoaded", () => {
       "souvenirs"
     );
 
-  if (!souvenirSection) {
+
+  if (
+    !souvenirSection
+  ) {
     return;
   }
 
@@ -698,13 +989,18 @@ document.addEventListener("DOMContentLoaded", () => {
               startPhotoFlow();
 
               observer.disconnect();
+
             }
+
           }
         );
 
       },
       {
-        threshold: [0.2, 0.35]
+        threshold: [
+          0.2,
+          0.35
+        ]
       }
     );
 
@@ -720,11 +1016,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
   updateCounter();
 
+
   frame.style.transform =
     "translate3d(0, 110%, 0)";
 
+
   frame.style.opacity =
     "0";
+
 
   setProgress(
     0
