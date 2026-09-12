@@ -1,1349 +1,1561 @@
 /* =========================================================
-   PATRICIA — OPENING PARTICLE EXPERIENCE
-   Isolated namespace.
-   Flow:
-   Je t'aime → Sauveur Patricia → Question
-   OUI → After Yes → Last Secret → Letter
+   PATRICIA EXPERIENCE
+   PART 1
+   Particle Heart -> Patricia -> Je t'aime Sauveur Patricia
+   -> Existing website
    ========================================================= */
 
 (() => {
-  "use strict";
+  "use strict"
 
-  const experience =
-    document.getElementById("px-experience");
+  /* -------------------------------------------------------
+     Protection
+     Prevents this experience from being initialized twice
+     ------------------------------------------------------- */
 
-  const canvas =
-    document.getElementById("px-particle-canvas");
+  if (window.__patriciaExperienceStarted) {
+    return
+  }
 
-  const question =
-    document.getElementById("px-question");
-
-  const yesButton =
-    document.getElementById("px-yes");
-
-  const noButton =
-    document.getElementById("px-no");
-
-  const afterYes =
-    document.getElementById("px-after-yes");
-
-  const continueButton =
-    document.getElementById("px-continue");
-
-  const lastSecret =
-    document.getElementById("px-last-secret");
-
-  const openLetterButton =
-    document.getElementById("px-open-letter");
-
-  const noScreen =
-    document.getElementById("px-no-screen");
-
-  const readableText =
-    document.querySelector(".px-readable-text");
-
-  const readableLove =
-    document.querySelector(".px-readable-love");
-
-  const readableName =
-    document.querySelector(".px-readable-name");
-
-  if (!experience || !canvas) return;
-
-  window.PatriciaExperienceActive = true;
-
-  document.body.classList.add(
-    "px-experience-active"
-  );
-
-  const ctx = canvas.getContext("2d", {
-    alpha: true
-  });
-
-  const reducedMotion =
-    window.matchMedia &&
-    window.matchMedia(
-      "(prefers-reduced-motion: reduce)"
-    ).matches;
-
-  let width = 0;
-  let height = 0;
-
-  let dpr =
-    Math.min(
-      window.devicePixelRatio || 1,
-      2
-    );
-
-  let particles = [];
-  let targetPoints = [];
-
-  let animationFrame = 0;
-
-  let currentText = "Je t'aime";
-
-  let phase = "gather";
-
-  let phaseStarted =
-    performance.now();
-
-  let experienceFinished = false;
-  let choiceMade = false;
-
-  let textCanvas =
-    document.createElement("canvas");
-
-  let textCtx =
-    textCanvas.getContext(
-      "2d",
-      { willReadFrequently: true }
-    );
-
-  const colors = [
-    "rgba(255,255,255,0.98)",
-    "rgba(202,235,255,0.95)",
-    "rgba(122,218,255,0.92)",
-    "rgba(184,143,255,0.92)",
-    "rgba(244,204,255,0.92)"
-  ];
+  window.__patriciaExperienceStarted = true
 
 
-  /* =========================================================
-     BASIC UI
-     ========================================================= */
+  /* -------------------------------------------------------
+     Start only after the page is ready
+     ------------------------------------------------------- */
 
-  function hideElement(element) {
-    if (!element) return;
+  const boot = () => {
+    if (document.getElementById("px-experience")) {
+      return
+    }
 
-    element.classList.remove(
-      "is-visible"
-    );
-
-    element.setAttribute(
-      "aria-hidden",
-      "true"
-    );
+    createExperience()
   }
 
 
-  function showElement(element) {
-    if (!element) return;
-
-    element.classList.add(
-      "is-visible"
-    );
-
-    element.setAttribute(
-      "aria-hidden",
-      "false"
-    );
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", boot, {
+      once: true
+    })
+  } else {
+    boot()
   }
 
 
-  function setPhase(nextPhase) {
-    phase = nextPhase;
-    phaseStarted =
-      performance.now();
-  }
+  /* =======================================================
+     EXPERIENCE CREATION
+     ======================================================= */
+
+  function createExperience() {
+
+    /* -----------------------------------------------------
+       Main wrapper
+       ----------------------------------------------------- */
+
+    const experience = document.createElement("div")
+
+    experience.id = "px-experience"
+
+    experience.innerHTML = `
+      <div class="px-top-anchor"></div>
+
+      <div class="px-aurora px-aurora-a"></div>
+      <div class="px-aurora px-aurora-b"></div>
+      <div class="px-aurora px-aurora-c"></div>
+
+      <div class="px-grid"></div>
+      <div class="px-stars"></div>
+
+      <div class="px-glow-ring px-glow-ring-a"></div>
+      <div class="px-glow-ring px-glow-ring-b"></div>
+
+      <div class="px-particle-bloom"></div>
+
+      <div id="px-tulip-drift"></div>
+
+      <canvas id="px-particle-canvas"></canvas>
+
+      <div class="px-readable-text">
+        <span
+          class="px-readable-line px-readable-name"
+          id="px-readable-name"
+        ></span>
+
+        <span
+          class="px-readable-line px-readable-love"
+          id="px-readable-love"
+        ></span>
+      </div>
+
+      <div class="px-opening-copy">
+        <span class="px-opening-line"></span>
+
+        <p class="px-opening-small" id="px-opening-small">
+          une petite trace de moi pour toi
+        </p>
+
+        <span class="px-opening-line"></span>
+      </div>
+
+      <div
+        class="px-question"
+        id="px-question"
+      ></div>
+
+      <button
+        id="px-skip"
+        type="button"
+        aria-label="Passer l'introduction"
+      >
+        Passer
+      </button>
+    `
+
+    document.body.appendChild(experience)
 
 
-  /* =========================================================
-     CANVAS RESIZE
-     ========================================================= */
+    /* -----------------------------------------------------
+       References
+       ----------------------------------------------------- */
 
-  function resizeCanvas() {
-    width = window.innerWidth;
-    height = window.innerHeight;
+    const canvas =
+      document.getElementById("px-particle-canvas")
 
-    dpr =
-      Math.min(
+    const ctx =
+      canvas.getContext("2d", {
+        alpha: true
+      })
+
+    const readableName =
+      document.getElementById("px-readable-name")
+
+    const readableLove =
+      document.getElementById("px-readable-love")
+
+    const openingSmall =
+      document.getElementById("px-opening-small")
+
+    const skipButton =
+      document.getElementById("px-skip")
+
+    const tulipDrift =
+      document.getElementById("px-tulip-drift")
+
+
+    if (!canvas || !ctx) {
+      experience.remove()
+      return
+    }
+
+
+    /* =====================================================
+       SETTINGS
+       ===================================================== */
+
+    const settings = {
+      mobile:
+        window.matchMedia("(max-width: 600px)").matches,
+
+      particleCount: 0,
+
+      dpr: Math.min(
         window.devicePixelRatio || 1,
         2
-      );
+      ),
 
-    canvas.width =
-      Math.round(width * dpr);
+      particleSize:
+        window.matchMedia("(max-width: 600px)").matches
+          ? 1.35
+          : 1.55,
 
-    canvas.height =
-      Math.round(height * dpr);
-
-    canvas.style.width =
-      width + "px";
-
-    canvas.style.height =
-      height + "px";
-
-    ctx.setTransform(
-      dpr,
-      0,
-      0,
-      dpr,
-      0,
-      0
-    );
-
-    rebuildCurrentTargets();
-  }
+      backgroundFade: 0.18
+    }
 
 
-  /* =========================================================
-     TEXT → PARTICLE TARGETS
-     ========================================================= */
+    settings.particleCount =
+      settings.mobile
+        ? 720
+        : 1250
 
-  function getFontSize(text) {
-    if (text === "Je t'aime") {
+
+    /* =====================================================
+       STATE
+       ===================================================== */
+
+    const STATES = {
+      RISING: "rising",
+      HEART: "heart",
+      NAME: "name",
+      LOVE: "love",
+      EXIT: "exit",
+      FINISHED: "finished"
+    }
+
+    let state = STATES.RISING
+
+    let width = 0
+    let height = 0
+
+    let animationFrame = null
+
+    let lastTime = 0
+
+    let stateStartedAt =
+      performance.now()
+
+    let transitionLocked = false
+
+    let currentTarget = null
+
+    let pointerX = 0
+    let pointerY = 0
+
+    let pointerActive = false
+
+
+    /* =====================================================
+       PARTICLES
+       ===================================================== */
+
+    const particles = []
+
+
+    function random(min, max) {
+      return Math.random() * (max - min) + min
+    }
+
+
+    function clamp(value, min, max) {
       return Math.max(
-        52,
-        Math.min(
-          108,
-          width * 0.105
-        )
-      );
-    }
-
-    return Math.max(
-      35,
-      Math.min(
-        70,
-        width * 0.058
+        min,
+        Math.min(max, value)
       )
-    );
-  }
-
-
-  function createTextTargets(text) {
-    const fontSize =
-      getFontSize(text);
-
-    const maxWidth =
-      Math.min(
-        width * 0.88,
-        980
-      );
-
-    textCanvas.width =
-      Math.ceil(maxWidth);
-
-    textCanvas.height =
-      Math.ceil(fontSize * 2.8);
-
-    textCtx.clearRect(
-      0,
-      0,
-      textCanvas.width,
-      textCanvas.height
-    );
-
-    textCtx.textAlign =
-      "center";
-
-    textCtx.textBaseline =
-      "middle";
-
-    textCtx.font =
-      `700 ${fontSize}px Arial, Helvetica, sans-serif`;
-
-    textCtx.fillStyle =
-      "#ffffff";
-
-    textCtx.fillText(
-      text,
-      textCanvas.width / 2,
-      textCanvas.height / 2
-    );
-
-    const image =
-      textCtx.getImageData(
-        0,
-        0,
-        textCanvas.width,
-        textCanvas.height
-      );
-
-    const points = [];
-
-    const step =
-      Math.max(
-        3,
-        Math.round(fontSize / 9)
-      );
-
-    for (
-      let y = 0;
-      y < textCanvas.height;
-      y += step
-    ) {
-      for (
-        let x = 0;
-        x < textCanvas.width;
-        x += step
-      ) {
-        const index =
-          (
-            y *
-              textCanvas.width +
-            x
-          ) *
-          4;
-
-        const alpha =
-          image.data[index + 3];
-
-        if (alpha > 150) {
-          points.push({
-            x:
-              x -
-              textCanvas.width / 2 +
-              width / 2,
-
-            y:
-              y -
-              textCanvas.height / 2 +
-              height * 0.46
-          });
-        }
-      }
     }
 
-    return points;
-  }
+
+    function easeOutCubic(value) {
+      const x = clamp(value, 0, 1)
+
+      return 1 - Math.pow(1 - x, 3)
+    }
 
 
-  /* =========================================================
-     PARTICLE CREATION
-     ========================================================= */
+    function easeInOut(value) {
+      const x = clamp(value, 0, 1)
 
-  function createParticle(target) {
-    return {
-      x:
-        width / 2 +
-        (Math.random() - 0.5) *
-          Math.min(width * 0.35, 260),
+      return x < 0.5
+        ? 2 * x * x
+        : 1 - Math.pow(-2 * x + 2, 2) / 2
+    }
 
-      y:
-        height +
-        Math.random() *
-          height *
-          0.35,
 
-      vx:
-        (Math.random() - 0.5) *
-        1.5,
-
-      vy:
-        -(
-          0.7 +
-          Math.random() * 2
+    function createParticle() {
+      return {
+        x: random(
+          width * 0.25,
+          width * 0.75
         ),
 
-      tx: target.x,
-      ty: target.y,
+        y: random(
+          height * 0.92,
+          height * 1.08
+        ),
 
-      size:
-        0.7 +
-        Math.random() *
-          (reducedMotion
-            ? 1.1
-            : 1.8),
+        vx: random(-0.25, 0.25),
 
-      alpha:
-        0.25 +
-        Math.random() *
-          0.75,
+        vy: random(
+          -2.7,
+          -0.7
+        ),
 
-      color:
-        colors[
-          Math.floor(
-            Math.random() *
-              colors.length
-          )
-        ],
+        size: random(
+          settings.particleSize * 0.45,
+          settings.particleSize * 1.45
+        ),
 
-      phase:
-        Math.random() *
-        Math.PI *
-        2,
+        alpha: random(
+          0.25,
+          0.95
+        ),
 
-      seed:
-        Math.random() *
-        1000
-    };
-  }
+        life: random(
+          0,
+          1
+        ),
 
+        drift:
+          random(-0.45, 0.45),
 
-  function seedParticles(points) {
-    targetPoints =
-      points || [];
+        swirl:
+          random(0.002, 0.009),
 
-    if (!targetPoints.length) {
-      particles = [];
-      return;
+        phase:
+          random(0, Math.PI * 2),
+
+        seed:
+          Math.random(),
+
+        targetX: 0,
+        targetY: 0
+      }
     }
 
-    const wanted =
-      Math.min(
-        reducedMotion
-          ? 650
-          : 1500,
 
-        Math.max(
-          500,
-          targetPoints.length
+    function createParticles() {
+      particles.length = 0
+
+      for (
+        let i = 0;
+        i < settings.particleCount;
+        i++
+      ) {
+        particles.push(
+          createParticle()
         )
-      );
+      }
+    }
 
-    particles =
-      Array.from(
-        { length: wanted },
-        (_, index) => {
-          const target =
-            targetPoints[
-              index %
-                targetPoints.length
-            ];
 
-          return createParticle(
-            target
-          );
+    /* =====================================================
+       CANVAS SIZE
+       ===================================================== */
+
+    function resizeCanvas() {
+
+      width =
+        window.innerWidth
+
+      height =
+        window.innerHeight
+
+      canvas.width =
+        Math.floor(
+          width * settings.dpr
+        )
+
+      canvas.height =
+        Math.floor(
+          height * settings.dpr
+        )
+
+      canvas.style.width =
+        `${width}px`
+
+      canvas.style.height =
+        `${height}px`
+
+      ctx.setTransform(
+        settings.dpr,
+        0,
+        0,
+        settings.dpr,
+        0,
+        0
+      )
+
+      createParticles()
+
+      if (currentTarget) {
+        currentTarget =
+          buildTarget(currentTarget.type)
+      }
+    }
+
+
+    window.addEventListener(
+      "resize",
+      resizeCanvas,
+      {
+        passive: true
+      }
+    )
+
+
+    /* =====================================================
+       TARGET GENERATOR
+       ===================================================== */
+
+    function buildHeartTarget() {
+
+      const points = []
+
+      const scale =
+        Math.min(
+          width,
+          height
+        ) * (
+          settings.mobile
+            ? 0.0105
+            : 0.0095
+        )
+
+      const centerX =
+        width / 2
+
+      const centerY =
+        height * 0.45
+
+
+      const amount =
+        settings.particleCount
+
+
+      for (
+        let i = 0;
+        i < amount;
+        i++
+      ) {
+
+        const t =
+          (i / amount) *
+          Math.PI *
+          2
+
+        const x =
+          16 *
+          Math.pow(
+            Math.sin(t),
+            3
+          )
+
+        const y =
+          -(
+            13 *
+              Math.cos(t) -
+            5 *
+              Math.cos(2 * t) -
+            2 *
+              Math.cos(3 * t) -
+            Math.cos(4 * t)
+          )
+
+        const fill =
+          Math.sqrt(
+            Math.random()
+          )
+
+        points.push({
+          x:
+            centerX +
+            x *
+              scale *
+              fill,
+
+          y:
+            centerY +
+            y *
+              scale *
+              fill
+        })
+      }
+
+      return {
+        type: "heart",
+        points
+      }
+    }
+
+
+    /* -----------------------------------------------------
+       Text target
+       ----------------------------------------------------- */
+
+    function buildTextTarget(text) {
+
+      const offscreen =
+        document.createElement("canvas")
+
+      const offCtx =
+        offscreen.getContext("2d")
+
+      const maxWidth =
+        Math.min(
+          width * (
+            settings.mobile
+              ? 0.88
+              : 0.82
+          ),
+          1050
+        )
+
+
+      let fontSize =
+        settings.mobile
+          ? 58
+          : 92
+
+
+      if (text.length > 18) {
+        fontSize =
+          settings.mobile
+            ? 31
+            : 58
+      }
+
+
+      if (text.length > 25) {
+        fontSize =
+          settings.mobile
+            ? 25
+            : 48
+      }
+
+
+      offscreen.width =
+        Math.ceil(maxWidth)
+
+      offscreen.height =
+        Math.ceil(
+          fontSize * 1.7
+        )
+
+
+      offCtx.clearRect(
+        0,
+        0,
+        offscreen.width,
+        offscreen.height
+      )
+
+
+      offCtx.fillStyle =
+        "#ffffff"
+
+      offCtx.textAlign =
+        "center"
+
+      offCtx.textBaseline =
+        "middle"
+
+      offCtx.font =
+        `700 ${fontSize}px Arial, Helvetica, sans-serif`
+
+
+      offCtx.fillText(
+        text,
+        offscreen.width / 2,
+        offscreen.height / 2,
+        maxWidth
+      )
+
+
+      const imageData =
+        offCtx.getImageData(
+          0,
+          0,
+          offscreen.width,
+          offscreen.height
+        )
+
+
+      const points = []
+
+      const step =
+        settings.mobile
+          ? 4
+          : 4
+
+
+      for (
+        let y = 0;
+        y < offscreen.height;
+        y += step
+      ) {
+
+        for (
+          let x = 0;
+          x < offscreen.width;
+          x += step
+        ) {
+
+          const index =
+            (
+              y *
+                offscreen.width +
+              x
+            ) *
+            4
+
+          const alpha =
+            imageData.data[index + 3]
+
+
+          if (
+            alpha > 120 &&
+            Math.random() > 0.18
+          ) {
+            points.push({
+              x:
+                x -
+                offscreen.width / 2,
+
+              y:
+                y -
+                offscreen.height / 2
+            })
+          }
         }
-      );
-  }
+      }
 
 
-  function morphParticles(points) {
-    if (!points.length) return;
+      const centerX =
+        width / 2
 
-    targetPoints = points;
+      const centerY =
+        height * 0.45
 
-    for (
-      let i = 0;
-      i < particles.length;
-      i++
+
+      return {
+        type: "text",
+        text,
+        points:
+          points.length
+            ? points
+            : [
+                {
+                  x: 0,
+                  y: 0
+                }
+              ],
+        centerX,
+        centerY
+      }
+    }
+
+
+    function buildTarget(type) {
+
+      if (type === "heart") {
+        return buildHeartTarget()
+      }
+
+      if (type === "name") {
+        return buildTextTarget(
+          "Patricia"
+        )
+      }
+
+      if (type === "love") {
+        return buildTextTarget(
+          "Je t'aime Sauveur Patricia"
+        )
+      }
+
+      return null
+    }
+
+
+    /* =====================================================
+       ASSIGN TARGETS
+       ===================================================== */
+
+    function assignTarget(target) {
+
+      currentTarget =
+        target
+
+      if (!target || !target.points) {
+        return
+      }
+
+
+      const targetPoints =
+        target.points
+
+
+      for (
+        let i = 0;
+        i < particles.length;
+        i++
+      ) {
+
+        const particle =
+          particles[i]
+
+        const point =
+          targetPoints[
+            i % targetPoints.length
+          ]
+
+
+        if (target.type === "heart") {
+
+          particle.targetX =
+            point.x
+
+          particle.targetY =
+            point.y
+
+        } else {
+
+          particle.targetX =
+            target.centerX +
+            point.x
+
+          particle.targetY =
+            target.centerY +
+            point.y
+        }
+      }
+    }
+
+
+    /* =====================================================
+       PARTICLE COLORS
+       ===================================================== */
+
+    function particleColor(
+      particle
     ) {
-      const particle =
-        particles[i];
 
-      const target =
-        points[
-          i % points.length
-        ];
+      const glow =
+        0.48 +
+        particle.alpha *
+          0.52
 
-      particle.tx =
-        target.x;
+      return `rgba(255,255,255,${glow})`
+    }
 
-      particle.ty =
-        target.y;
 
-      particle.vx +=
-        (Math.random() - 0.5) *
-        0.5;
+    /* =====================================================
+       RISING PARTICLES
+       ===================================================== */
+
+    function updateRisingParticle(
+      particle,
+      delta
+    ) {
+
+      particle.life +=
+        delta * 0.00045
+
+
+      particle.phase +=
+        particle.swirl *
+        delta
+
+
+      particle.x +=
+        (
+          particle.vx +
+          Math.sin(
+            particle.phase
+          ) *
+            0.18 +
+          particle.drift *
+            0.08
+        ) *
+        delta *
+        0.06
+
+
+      particle.y +=
+        particle.vy *
+        delta *
+        0.06
+
 
       particle.vy +=
-        (Math.random() - 0.5) *
-        0.5;
-    }
-  }
-
-
-  /* =========================================================
-     TARGET BUILDING
-     ========================================================= */
-
-  function rebuildCurrentTargets() {
-    if (!width || !height) return;
-
-    const points =
-      createTextTargets(
-        currentText
-      );
-
-    morphParticles(points);
-  }
-
-
-  function setText(text) {
-    currentText = text;
-
-    const points =
-      createTextTargets(text);
-
-    morphParticles(points);
-  }
-
-
-  /* =========================================================
-     PARTICLE UPDATE
-     ========================================================= */
-
-  function updateParticles(now) {
-    for (
-      let i = 0;
-      i < particles.length;
-      i++
-    ) {
-      const particle =
-        particles[i];
-
-      if (phase === "gather") {
-        particle.alpha =
-          Math.min(
-            1,
-            particle.alpha +
-              0.018
-          );
-
-        particle.x +=
-          particle.vx;
-
-        particle.y +=
-          particle.vy;
-
-        particle.vx *=
-          0.985;
-
-        particle.vy *=
-          0.985;
-
-        const dx =
-          particle.tx -
-          particle.x;
-
-        const dy =
-          particle.ty -
-          particle.y;
-
-        particle.vx +=
-          dx *
-          0.0022;
-
-        particle.vy +=
-          dy *
-          0.0022;
-      }
-
-
-      else if (
-        phase === "morph"
-      ) {
-        particle.alpha =
-          Math.min(
-            1,
-            particle.alpha +
-              0.015
-          );
-
-        const dx =
-          particle.tx -
-          particle.x;
-
-        const dy =
-          particle.ty -
-          particle.y;
-
-        particle.vx +=
-          dx *
-          0.008;
-
-        particle.vy +=
-          dy *
-          0.008;
-
-        particle.vx *=
-          0.90;
-
-        particle.vy *=
-          0.90;
-
-        particle.x +=
-          particle.vx;
-
-        particle.y +=
-          particle.vy;
-      }
-
-
-      else if (
-        phase === "hold"
-      ) {
-        const dx =
-          particle.tx -
-          particle.x;
-
-        const dy =
-          particle.ty -
-          particle.y;
-
-        particle.vx +=
-          dx *
-          0.010;
-
-        particle.vy +=
-          dy *
-          0.010;
-
-        particle.vx *=
-          0.87;
-
-        particle.vy *=
-          0.87;
-
-        particle.x +=
-          particle.vx;
-
-        particle.y +=
-          particle.vy;
-
-        if (!reducedMotion) {
-          particle.x +=
-            Math.sin(
-              now * 0.0008 +
-                particle.phase
-            ) *
-            0.08;
-
-          particle.y +=
-            Math.cos(
-              now * 0.0006 +
-                particle.seed
-            ) *
-            0.08;
-        }
-      }
-
-
-      else if (
-        phase === "scatter"
-      ) {
-        const centerX =
-          width / 2;
-
-        const centerY =
-          height * 0.46;
-
-        const dx =
-          particle.x -
-          centerX;
-
-        const dy =
-          particle.y -
-          centerY;
-
-        particle.vx +=
-          dx *
-          0.0009;
-
-        particle.vy +=
-          dy *
-          0.0009;
-
-        particle.vx *=
-          0.994;
-
-        particle.vy *=
-          0.994;
-
-        particle.x +=
-          particle.vx;
-
-        particle.y +=
-          particle.vy;
-
-        particle.alpha *=
-          0.988;
-      }
-    }
-  }
-
-
-  /* =========================================================
-     DRAW
-     ========================================================= */
-
-  function drawBackground(now) {
-    ctx.clearRect(
-      0,
-      0,
-      width,
-      height
-    );
-
-    const gradient =
-      ctx.createRadialGradient(
-        width / 2,
-        height * 0.43,
-        0,
-        width / 2,
-        height * 0.43,
-        Math.max(
-          width,
-          height
+        Math.sin(
+          particle.phase * 0.7
         ) *
-          0.82
-      );
-
-    gradient.addColorStop(
-      0,
-      "rgba(80,52,115,0.20)"
-    );
-
-    gradient.addColorStop(
-      0.48,
-      "rgba(17,19,48,0.12)"
-    );
-
-    gradient.addColorStop(
-      1,
-      "rgba(0,0,0,0)"
-    );
-
-    ctx.fillStyle =
-      gradient;
-
-    ctx.fillRect(
-      0,
-      0,
-      width,
-      height
-    );
-
-    if (reducedMotion) return;
-
-    const glowX =
-      width / 2 +
-      Math.sin(
-        now * 0.00025
-      ) *
-        width *
-        0.12;
-
-    const glowY =
-      height * 0.42 +
-      Math.cos(
-        now * 0.0002
-      ) *
-        height *
-        0.08;
-
-    const glow =
-      ctx.createRadialGradient(
-        glowX,
-        glowY,
-        0,
-        glowX,
-        glowY,
-        Math.max(
-          width,
-          height
-        ) *
-          0.3
-      );
-
-    glow.addColorStop(
-      0,
-      "rgba(116,193,255,0.055)"
-    );
-
-    glow.addColorStop(
-      0.45,
-      "rgba(158,102,255,0.035)"
-    );
-
-    glow.addColorStop(
-      1,
-      "rgba(0,0,0,0)"
-    );
-
-    ctx.fillStyle =
-      glow;
-
-    ctx.fillRect(
-      0,
-      0,
-      width,
-      height
-    );
-  }
+        0.0012 *
+        delta
 
 
-  function drawParticles() {
-    for (
-      const particle of particles
-    ) {
       if (
-        particle.alpha <=
-        0.01
+        particle.y <
+        height * 0.15
       ) {
-        continue;
+
+        particle.y =
+          height *
+          random(
+            0.94,
+            1.08
+          )
+
+        particle.x =
+          random(
+            width * 0.20,
+            width * 0.80
+          )
+
+        particle.vy =
+          random(
+            -2.7,
+            -0.7
+          )
+
+        particle.life = 0
       }
 
-      ctx.globalAlpha =
-        particle.alpha;
 
-      ctx.fillStyle =
-        particle.color;
+      if (
+        particle.x <
+        -30
+      ) {
+        particle.x =
+          width + 30
+      }
 
-      ctx.beginPath();
+      if (
+        particle.x >
+        width + 30
+      ) {
+        particle.x =
+          -30
+      }
+    }
+
+
+    /* =====================================================
+       TARGET MOVEMENT
+       ===================================================== */
+
+    function updateTargetParticle(
+      particle,
+      delta
+    ) {
+
+      const dx =
+        particle.targetX -
+        particle.x
+
+      const dy =
+        particle.targetY -
+        particle.y
+
+
+      const distance =
+        Math.sqrt(
+          dx * dx +
+          dy * dy
+        )
+
+
+      const force =
+        clamp(
+          distance / 240,
+          0.035,
+          0.22
+        )
+
+
+      particle.x +=
+        dx *
+        force *
+        delta *
+        0.06
+
+
+      particle.y +=
+        dy *
+        force *
+        delta *
+        0.06
+
+
+      particle.phase +=
+        0.0025 *
+        delta
+
+
+      particle.x +=
+        Math.sin(
+          particle.phase +
+          particle.seed * 10
+        ) *
+        0.07
+
+      particle.y +=
+        Math.cos(
+          particle.phase +
+          particle.seed * 7
+        ) *
+        0.07
+    }
+
+
+    /* =====================================================
+       DRAW PARTICLE
+       ===================================================== */
+
+    function drawParticle(
+      particle
+    ) {
+
+      const radius =
+        particle.size
+
+
+      ctx.beginPath()
 
       ctx.arc(
         particle.x,
         particle.y,
-        particle.size,
+        radius,
         0,
         Math.PI * 2
-      );
+      )
 
-      ctx.fill();
+      ctx.fillStyle =
+        particleColor(
+          particle
+        )
 
-      if (
-        !reducedMotion &&
-        particle.size > 1.3
+      ctx.fill()
+    }
+
+
+    /* =====================================================
+       PARTICLE BURST
+       ===================================================== */
+
+    function scatterParticles(
+      strength = 1
+    ) {
+
+      const centerX =
+        width / 2
+
+      const centerY =
+        height * 0.45
+
+
+      for (
+        const particle
+        of particles
       ) {
-        ctx.globalAlpha =
-          particle.alpha *
-          0.10;
 
-        ctx.beginPath();
+        const dx =
+          particle.x -
+          centerX
 
-        ctx.arc(
-          particle.x,
-          particle.y,
-          particle.size * 3.5,
-          0,
-          Math.PI * 2
-        );
+        const dy =
+          particle.y -
+          centerY
 
-        ctx.fill();
+
+        const distance =
+          Math.sqrt(
+            dx * dx +
+            dy * dy
+          ) || 1
+
+
+        const nx =
+          dx / distance
+
+        const ny =
+          dy / distance
+
+
+        particle.vx =
+          nx *
+          random(
+            2.2,
+            6.8
+          ) *
+          strength
+
+        particle.vy =
+          ny *
+          random(
+            2.2,
+            6.8
+          ) *
+          strength
+
+        particle.x +=
+          nx *
+          random(
+            4,
+            18
+          )
+
+        particle.y +=
+          ny *
+          random(
+            4,
+            18
+          )
       }
     }
 
-    ctx.globalAlpha = 1;
-  }
+
+    /* =====================================================
+       TRANSITION TO TARGET
+       ===================================================== */
+
+    function beginTarget(
+      type
+    ) {
+
+      const target =
+        buildTarget(type)
+
+      if (!target) {
+        return
+      }
 
 
-  /* =========================================================
-     READABLE TEXT
-     ========================================================= */
-
-  function hideReadableText() {
-    if (!readableText) return;
-
-    readableText.classList.add(
-      "px-fade-out"
-    );
-  }
+      assignTarget(
+        target
+      )
 
 
-  function showLoveText() {
-    if (!readableText) return;
+      stateStartedAt =
+        performance.now()
 
-    readableText.classList.remove(
-      "px-fade-out"
-    );
-
-    if (readableLove) {
-      readableLove.classList.add(
-        "is-active"
-      );
+      transitionLocked =
+        false
     }
 
-    if (readableName) {
+
+    /* =====================================================
+       STATE CHANGES
+       ===================================================== */
+
+    function setState(
+      nextState
+    ) {
+
+      if (
+        state === nextState
+      ) {
+        return
+      }
+
+
+      state =
+        nextState
+
+      stateStartedAt =
+        performance.now()
+
+
+      if (
+        state === STATES.HEART
+      ) {
+
+        openingSmall.textContent =
+          "si tu vois quelque chose dans le silence..."
+
+        readableName.classList.remove(
+          "is-active"
+        )
+
+        readableLove.classList.remove(
+          "is-active"
+        )
+
+        beginTarget(
+          "heart"
+        )
+
+        return
+      }
+
+
+      if (
+        state === STATES.NAME
+      ) {
+
+        openingSmall.textContent =
+          "ce n'était que le début"
+
+        readableName.classList.add(
+          "is-active"
+        )
+
+        readableLove.classList.remove(
+          "is-active"
+        )
+
+        beginTarget(
+          "name"
+        )
+
+        return
+      }
+
+
+      if (
+        state === STATES.LOVE
+      ) {
+
+        openingSmall.textContent =
+          "et maintenant... lis bien"
+
+        readableName.classList.remove(
+          "is-active"
+        )
+
+        readableLove.classList.add(
+          "is-active"
+        )
+
+        beginTarget(
+          "love"
+        )
+
+        return
+      }
+
+
+      if (
+        state === STATES.EXIT
+      ) {
+
+        openingSmall.textContent =
+          ""
+
+        readableName.classList.remove(
+          "is-active"
+        )
+
+        readableLove.classList.remove(
+          "is-active"
+        )
+
+        scatterParticles(
+          1.25
+        )
+
+        setTimeout(
+          revealExistingWebsite,
+          1150
+        )
+
+        return
+      }
+    }
+
+
+    /* =====================================================
+       CLICK / TOUCH LOGIC
+       ===================================================== */
+
+    function handlePointerDown(
+      event
+    ) {
+
+      pointerActive =
+        true
+
+      pointerX =
+        event.clientX
+
+      pointerY =
+        event.clientY
+
+
+      if (
+        state === STATES.RISING
+      ) {
+
+        setState(
+          STATES.HEART
+        )
+
+        return
+      }
+
+
+      if (
+        state === STATES.HEART
+      ) {
+
+        setState(
+          STATES.NAME
+        )
+
+        return
+      }
+
+
+      if (
+        state === STATES.NAME
+      ) {
+
+        setState(
+          STATES.LOVE
+        )
+
+        return
+      }
+
+
+      if (
+        state === STATES.LOVE
+      ) {
+
+        setState(
+          STATES.EXIT
+        )
+
+        return
+      }
+    }
+
+
+    function handlePointerUp() {
+
+      pointerActive =
+        false
+    }
+
+
+    canvas.addEventListener(
+      "pointerdown",
+      handlePointerDown,
+      {
+        passive: true
+      }
+    )
+
+    canvas.addEventListener(
+      "pointerup",
+      handlePointerUp,
+      {
+        passive: true
+      }
+    )
+
+    canvas.addEventListener(
+      "pointercancel",
+      handlePointerUp,
+      {
+        passive: true
+      }
+    )
+
+
+    canvas.addEventListener(
+      "pointermove",
+      event => {
+
+        pointerX =
+          event.clientX
+
+        pointerY =
+          event.clientY
+      },
+      {
+        passive: true
+      }
+    )
+
+
+    /* =====================================================
+       SKIP
+       ===================================================== */
+
+    skipButton.addEventListener(
+      "click",
+      () => {
+
+        if (
+          state === STATES.EXIT ||
+          state === STATES.FINISHED
+        ) {
+          return
+        }
+
+        setState(
+          STATES.EXIT
+        )
+      }
+    )
+
+
+    /* =====================================================
+       REVEAL EXISTING WEBSITE
+       ===================================================== */
+
+    function revealExistingWebsite() {
+
+      state =
+        STATES.FINISHED
+
+
+      experience.classList.add(
+        "px-done"
+      )
+
+
+      /*
+       * IMPORTANT
+       *
+       * We do not touch the existing letter.
+       * We do not touch bgMusic.
+       * We do not create another audio element.
+       */
+
+
+      setTimeout(
+        () => {
+
+          experience.remove()
+
+        },
+        1300
+      )
+    }
+
+
+    /* =====================================================
+       INITIAL RISING MODE
+       ===================================================== */
+
+    function initializeRisingMode() {
+
+      readableName.textContent =
+        "Patricia"
+
+      readableLove.textContent =
+        "Je t'aime Sauveur Patricia"
+
+
       readableName.classList.remove(
         "is-active"
-      );
-    }
-  }
+      )
 
-
-  function showNameText() {
-    if (!readableText) return;
-
-    readableText.classList.remove(
-      "px-fade-out"
-    );
-
-    if (readableLove) {
       readableLove.classList.remove(
         "is-active"
-      );
+      )
+
+
+      openingSmall.textContent =
+        "une petite trace de moi pour toi"
+
+
+      createParticles()
     }
 
-    if (readableName) {
-      readableName.classList.add(
-        "is-active"
-      );
-    }
-  }
 
+    /* =====================================================
+       MAIN ANIMATION LOOP
+       ===================================================== */
 
-  /* =========================================================
-     QUESTION
-     ========================================================= */
-
-  function showQuestion() {
-    if (
-      choiceMade ||
-      experienceFinished
+    function animate(
+      timestamp
     ) {
-      return;
-    }
 
-    showElement(question);
-  }
+      if (!lastTime) {
+        lastTime =
+          timestamp
+      }
 
 
-  /* =========================================================
-     SOUND
-     ========================================================= */
+      const delta =
+        Math.min(
+          timestamp -
+            lastTime,
+          34
+        )
 
-  function playDing() {
-    const ding =
-      document.getElementById(
-        "dingSound"
-      );
 
-    if (!ding) return;
+      lastTime =
+        timestamp
 
-    try {
-      ding.currentTime = 0;
 
-      const promise =
-        ding.play();
+      ctx.clearRect(
+        0,
+        0,
+        width,
+        height
+      )
+
+
+      /* ---------------------------------------------------
+         Update particles
+         --------------------------------------------------- */
+
+      for (
+        const particle
+        of particles
+      ) {
+
+        if (
+          state === STATES.RISING
+        ) {
+
+          updateRisingParticle(
+            particle,
+            delta
+          )
+
+        } else {
+
+          updateTargetParticle(
+            particle,
+            delta
+          )
+        }
+
+
+        drawParticle(
+          particle
+        )
+      }
+
+
+      /* ---------------------------------------------------
+         Automatic first heart formation
+         --------------------------------------------------- */
 
       if (
-        promise &&
-        typeof promise.catch ===
-          "function"
+        state === STATES.RISING
       ) {
-        promise.catch(
-          () => {}
-        );
+
+        const elapsed =
+          timestamp -
+          stateStartedAt
+
+
+        /*
+         * The heart does not appear immediately.
+         * Particles first rise naturally.
+         */
+
+        if (
+          elapsed >
+          4700
+        ) {
+
+          setState(
+            STATES.HEART
+          )
+        }
       }
-    } catch (_) {}
-  }
 
 
-  function startMusic() {
-    const music =
-      document.getElementById(
-        "bgMusic"
-      );
-
-    if (!music) return;
-
-    try {
-      music.volume = 0.45;
-
-      const promise =
-        music.play();
+      /* ---------------------------------------------------
+         Heart -> Patricia
+         --------------------------------------------------- */
 
       if (
-        promise &&
-        typeof promise.catch ===
-          "function"
+        state === STATES.HEART
       ) {
-        promise.catch(
-          () => {}
-        );
+
+        const elapsed =
+          timestamp -
+          stateStartedAt
+
+
+        if (
+          elapsed >
+          5200 &&
+          !transitionLocked
+        ) {
+
+          transitionLocked =
+            true
+
+          setTimeout(
+            () => {
+
+              if (
+                state === STATES.HEART
+              ) {
+                setState(
+                  STATES.NAME
+                )
+              }
+
+            },
+            300
+          )
+        }
       }
-    } catch (_) {}
-  }
 
 
-  /* =========================================================
-     YES FLOW
-     ========================================================= */
+      /* ---------------------------------------------------
+         Patricia -> Love phrase
+         --------------------------------------------------- */
 
-  function chooseYes() {
-    if (
-      choiceMade ||
-      experienceFinished
-    ) {
-      return;
-    }
-
-    choiceMade = true;
-
-    hideElement(question);
-
-    playDing();
-    startMusic();
-
-    setTimeout(
-      () => {
-        showElement(
-          afterYes
-        );
-      },
-      reducedMotion
-        ? 80
-        : 350
-    );
-  }
-
-
-  function continueToLastSecret() {
-    hideElement(afterYes);
-
-    setTimeout(
-      () => {
-        showElement(
-          lastSecret
-        );
-      },
-      reducedMotion
-        ? 60
-        : 300
-    );
-  }
-
-
-  function openLetter() {
-    hideElement(
-      lastSecret
-    );
-
-    hideReadableText();
-
-    setPhase(
-      "scatter"
-    );
-
-    setTimeout(
-      () => {
-        finish();
-      },
-      reducedMotion
-        ? 120
-        : 850
-    );
-  }
-
-
-  /* =========================================================
-     NO FLOW
-     ========================================================= */
-
-  function chooseNo() {
-    if (
-      choiceMade ||
-      experienceFinished
-    ) {
-      return;
-    }
-
-    choiceMade = true;
-
-    hideElement(
-      question
-    );
-
-    showElement(
-      noScreen
-    );
-
-    setTimeout(
-      () => {
-        hideElement(
-          noScreen
-        );
-
-        finish();
-      },
-      reducedMotion
-        ? 900
-        : 1800
-    );
-  }
-
-
-  /* =========================================================
-     FINISH
-     ========================================================= */
-
-  function finish() {
-    if (experienceFinished)
-      return;
-
-    experienceFinished = true;
-
-    hideElement(
-      question
-    );
-
-    hideElement(
-      afterYes
-    );
-
-    hideElement(
-      lastSecret
-    );
-
-    hideElement(
-      noScreen
-    );
-
-    experience.classList.add(
-      "px-done"
-    );
-
-    experience.setAttribute(
-      "aria-hidden",
-      "true"
-    );
-
-    window.PatriciaExperienceActive =
-      false;
-
-    const intro =
-      document.getElementById(
-        "intro-screen"
-      );
-
-    const popup =
-      document.getElementById(
-        "welcome-popup"
-      );
-
-    intro?.classList.add(
-      "hidden"
-    );
-
-    popup?.classList.add(
-      "hidden"
-    );
-
-    document.body.classList.remove(
-      "px-experience-active"
-    );
-
-    document.body.classList.add(
-      "px-experience-finished"
-    );
-  }
-
-
-  /* =========================================================
-     MAIN ANIMATION LOOP
-     ========================================================= */
-
-  function animate(now) {
-    if (experienceFinished)
-      return;
-
-    drawBackground(now);
-
-    updateParticles(now);
-
-    drawParticles();
-
-    const elapsed =
-      now - phaseStarted;
-
-
-    /*
-     * PHASE 1
-     * Je t'aime
-     */
-
-    if (
-      phase === "gather" &&
-      elapsed >
-        (reducedMotion
-          ? 1000
-          : 2200)
-    ) {
-      showLoveText();
-
-      setPhase(
-        "hold"
-      );
-    }
-
-
-    /*
-     * PHASE 2
-     * Morph toward Sauveur Patricia
-     */
-
-    if (
-      phase === "hold" &&
-      elapsed >
-        (reducedMotion
-          ? 900
-          : 1800)
-    ) {
-      setText(
-        "Sauveur Patricia"
-      );
-
-      showNameText();
-
-      setPhase(
-        "morph"
-      );
-    }
-
-
-    /*
-     * PHASE 3
-     * Hold the name
-     */
-
-    if (
-      phase === "morph" &&
-      elapsed >
-        (reducedMotion
-          ? 900
-          : 1900)
-    ) {
-      setPhase(
-        "hold-name"
-      );
-    }
-
-
-    /*
-     * PHASE 4
-     * Keep the name visible,
-     * then reveal the question.
-     */
-
-    if (
-      phase === "hold-name" &&
-      elapsed >
-        (reducedMotion
-          ? 700
-          : 1500)
-    ) {
-      showQuestion();
-
-      setPhase(
-        "question"
-      );
-    }
-
-
-    /*
-     * Once the question is visible,
-     * NOTHING automatically ends the experience.
-     *
-     * Patricia must choose.
-     */
-
-    if (
-      phase === "scatter"
-    ) {
       if (
-        elapsed >
-          (reducedMotion
-            ? 700
-            : 1000)
+        state === STATES.NAME
       ) {
-        finish();
-        return;
+
+        const elapsed =
+          timestamp -
+          stateStartedAt
+
+
+        if (
+          elapsed >
+          4700 &&
+          !transitionLocked
+        ) {
+
+          transitionLocked =
+            true
+
+          setTimeout(
+            () => {
+
+              if (
+                state === STATES.NAME
+              ) {
+                setState(
+                  STATES.LOVE
+                )
+              }
+
+            },
+            300
+          )
+        }
       }
+
+
+      /* ---------------------------------------------------
+         Love phrase stays until click
+         --------------------------------------------------- */
+
+      requestAnimationFrame(
+        animate
+      )
     }
+
+
+    /* =====================================================
+       INITIALIZATION
+       ===================================================== */
+
+    resizeCanvas()
+
+    initializeRisingMode()
 
     animationFrame =
       requestAnimationFrame(
         animate
-      );
+      )
+
+
+    /* =====================================================
+       CLEANUP
+       ===================================================== */
+
+    window.addEventListener(
+      "pagehide",
+      () => {
+
+        if (
+          animationFrame
+        ) {
+          cancelAnimationFrame(
+            animationFrame
+          )
+        }
+      },
+      {
+        once: true
+      }
+    )
   }
 
-
-  /* =========================================================
-     RESIZE
-     ========================================================= */
-
-  function handleResize() {
-    resizeCanvas();
-  }
-
-
-  /* =========================================================
-     EVENT LISTENERS
-     ========================================================= */
-
-  if (yesButton) {
-    yesButton.addEventListener(
-      "click",
-      chooseYes
-    );
-  }
-
-  if (noButton) {
-    noButton.addEventListener(
-      "click",
-      chooseNo
-    );
-  }
-
-  if (continueButton) {
-    continueButton.addEventListener(
-      "click",
-      continueToLastSecret
-    );
-  }
-
-  if (openLetterButton) {
-    openLetterButton.addEventListener(
-      "click",
-      openLetter
-    );
-  }
-
-  window.addEventListener(
-    "resize",
-    handleResize,
-    { passive: true }
-  );
-
-
-  /* =========================================================
-     INITIALIZATION
-     ========================================================= */
-
-  hideElement(
-    question
-  );
-
-  hideElement(
-    afterYes
-  );
-
-  hideElement(
-    lastSecret
-  );
-
-  hideElement(
-    noScreen
-  );
-
-  resizeCanvas();
-
-  const firstTargets =
-    createTextTargets(
-      "Je t'aime"
-    );
-
-  seedParticles(
-    firstTargets
-  );
-
-  showLoveText();
-
-  phase = "gather";
-
-  phaseStarted =
-    performance.now();
-
-  cancelAnimationFrame(
-    animationFrame
-  );
-
-  animationFrame =
-    requestAnimationFrame(
-      animate
-    );
-
-})();
+})()
