@@ -1,38 +1,54 @@
-/* =========================================================
-   PATRICIA â€” BASE INTERACTIONS
-   This file does not control the opening experience flow.
-   ========================================================= */
 document.addEventListener("DOMContentLoaded", () => {
-  const musicBtn = document.getElementById("music-btn");
-  const bgMusic = document.getElementById("bgMusic");
-  const images = document.querySelectorAll("img");
+  const musicButton =
+    document.getElementById("music-btn");
 
-  async function safePlay(audio) {
-    if (!audio) return false;
-    try {
-      await audio.play();
-      return true;
-    } catch {
-      return false;
-    }
+  const music =
+    document.getElementById("bgMusic");
+
+
+  /* =========================================================
+     MUSIC
+     ========================================================= */
+
+  if (musicButton && music) {
+    musicButton.addEventListener(
+      "click",
+      async () => {
+        try {
+          if (music.paused) {
+            await music.play();
+
+            musicButton.textContent =
+              "🔊 Musique activée";
+          } else {
+            music.pause();
+
+            musicButton.textContent =
+              "🔇 Musique en pause";
+          }
+        } catch (error) {
+          musicButton.textContent =
+            "🎵 Activer la musique";
+        }
+      }
+    );
   }
 
-  musicBtn?.addEventListener("click", async () => {
-    if (!bgMusic) return;
-    if (bgMusic.paused) {
-      const ok = await safePlay(bgMusic);
-      musicBtn.textContent = ok ? "ðŸ”Š Musique activÃ©e" : "ðŸŽµ Activer la musique";
-      musicBtn.setAttribute("aria-label", musicBtn.textContent);
-    } else {
-      bgMusic.pause();
-      musicBtn.textContent = "ðŸŽµ Activer la musique";
-      musicBtn.setAttribute("aria-label", musicBtn.textContent);
-    }
-  });
 
-  images.forEach(img => {
-    img.addEventListener("error", () => img.classList.add("px-asset-missing"), { once: true });
-  });
+  /* =========================================================
+     IMAGE FALLBACK
+     ========================================================= */
 
-  window.PatriciaBaseReady = true;
+  document
+    .querySelectorAll("img")
+    .forEach((img) => {
+      img.addEventListener(
+        "error",
+        () => {
+          img.style.visibility =
+            "hidden";
+        },
+        { once: true }
+      );
+    });
 });
