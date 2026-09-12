@@ -1,330 +1,1427 @@
-/* ================================
+/* =========================================================
    PARTICLE INTRO
-================================ */
+   ========================================================= */
 
 #particle-intro {
+
     position: fixed;
+
     inset: 0;
-    z-index: 9999;
+
+    z-index: 10000;
+
     overflow: hidden;
-    background: #050308;
+
+    background:
+        radial-gradient(
+            circle at 50% 62%,
+            rgba(112, 64, 120, .20),
+            transparent 38%
+        ),
+        #050308;
+
     opacity: 1;
+
     visibility: visible;
-    transition: opacity 1.2s ease, visibility 1.2s ease;
+
+    pointer-events: auto;
+
+    transition:
+        opacity 1.2s ease,
+        visibility 1.2s ease;
+
     touch-action: manipulation;
 }
 
+
 #particle-intro.hidden {
+
     opacity: 0;
+
     visibility: hidden;
+
     pointer-events: none;
 }
 
+
 #particleCanvas {
+
     position: absolute;
+
     inset: 0;
+
     width: 100%;
+
     height: 100%;
+
     display: block;
 }
 
+
 #particleHint {
+
     position: absolute;
+
     left: 50%;
+
     bottom: 8%;
+
     transform: translateX(-50%);
+
     width: 90%;
+
     text-align: center;
-    color: rgba(255,255,255,.7);
-    font-family: Georgia, serif;
-    font-size: clamp(14px, 3.5vw, 20px);
+
+    color:
+        rgba(255,255,255,.68);
+
+    font-family:
+        Georgia,
+        serif;
+
+    font-size:
+        clamp(
+            13px,
+            3.5vw,
+            19px
+        );
+
     letter-spacing: 1px;
+
     opacity: 0;
-    transition: opacity .8s ease;
+
     pointer-events: none;
+
+    transition:
+        opacity .8s ease;
 }
+
 
 #particleHint.show {
     opacity: 1;
 }
 
 
-/* ================================
+/* =========================================================
+   EXPERIENCE MENU
+   ========================================================= */
+
+#experience-menu {
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 9990;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding:
+        max(24px, env(safe-area-inset-top))
+        24px
+        max(24px, env(safe-area-inset-bottom));
+
+    background:
+
+        radial-gradient(
+            circle at 50% 35%,
+            rgba(222,185,220,.24),
+            transparent 45%
+        ),
+
+        rgba(20,10,24,.96);
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    pointer-events: none;
+
+    transition:
+        opacity .9s ease,
+        visibility .9s ease;
+}
+
+
+#experience-menu.show {
+
+    opacity: 1;
+
+    visibility: visible;
+
+    pointer-events: auto;
+}
+
+
+body.experience-choice-open {
+
+    overflow: hidden;
+}
+
+
+.experience-menu-inner {
+
+    width:
+        min(
+            760px,
+            94vw
+        );
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    gap:
+        clamp(
+            35px,
+            8vw,
+            90px
+        );
+
+    transform:
+        translateY(18px);
+
+    transition:
+        transform .9s ease;
+}
+
+
+#experience-menu.show
+.experience-menu-inner {
+
+    transform:
+        translateY(0);
+}
+
+
+/* =========================================================
+   MENU CHOICES
+   ========================================================= */
+
+.experience-choice {
+
+    border: 0;
+
+    background: transparent;
+
+    padding: 0;
+
+    width:
+        min(
+            230px,
+            38vw
+        );
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    gap: 18px;
+
+    color: white;
+
+    cursor: pointer;
+
+    -webkit-tap-highlight-color:
+        transparent;
+
+    transition:
+        transform .35s ease,
+        opacity .35s ease;
+}
+
+
+.experience-choice:hover {
+
+    transform:
+        translateY(-7px);
+}
+
+
+.experience-choice:active {
+
+    transform:
+        scale(.96);
+}
+
+
+.choice-name {
+
+    font-family:
+        Georgia,
+        serif;
+
+    font-size:
+        clamp(
+            19px,
+            4vw,
+            26px
+        );
+
+    letter-spacing:
+        .7px;
+
+    color:
+        rgba(255,255,255,.92);
+}
+
+
+/* =========================================================
+   ENVELOPPE
+   ========================================================= */
+
+.choice-art {
+
+    position: relative;
+
+    width:
+        min(
+            190px,
+            33vw
+        );
+
+    aspect-ratio:
+        1.25 / 1;
+
+    filter:
+        drop-shadow(
+            0 18px 35px
+            rgba(0,0,0,.35)
+        );
+
+    transition:
+        transform .45s ease,
+        filter .45s ease;
+}
+
+
+.experience-choice:hover
+.choice-art {
+
+    transform:
+        translateY(-3px)
+        scale(1.025);
+
+    filter:
+        drop-shadow(
+            0 22px 38px
+            rgba(197,120,183,.24)
+        );
+}
+
+
+.choice-envelope {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+}
+
+
+/* envelope body */
+
+.envelope-body {
+
+    position: absolute;
+
+    left: 5%;
+
+    right: 5%;
+
+    bottom: 4%;
+
+    height: 68%;
+
+    border-radius: 8px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #fffdfd,
+            #f1e8f0
+        );
+
+    box-shadow:
+
+        0 18px 35px
+        rgba(0,0,0,.30),
+
+        inset
+        0 0 0 1px
+        rgba(123,76,120,.12);
+}
+
+
+.envelope-body::before,
+.envelope-body::after {
+
+    content: "";
+
+    position: absolute;
+
+    bottom: 0;
+
+    width: 52%;
+
+    height: 100%;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(196,158,190,.20),
+            transparent
+        );
+}
+
+
+.envelope-body::before {
+
+    left: 0;
+
+    clip-path:
+        polygon(
+            0 0,
+            100% 100%,
+            0 100%
+        );
+}
+
+
+.envelope-body::after {
+
+    right: 0;
+
+    clip-path:
+        polygon(
+            100% 0,
+            0 100%,
+            100% 100%
+        );
+}
+
+
+/* envelope flap */
+
+.envelope-flap {
+
+    position: absolute;
+
+    top: 8%;
+
+    left: 5%;
+
+    right: 5%;
+
+    height: 62%;
+
+    background:
+        linear-gradient(
+            135deg,
+            #fffefe,
+            #eadce8
+        );
+
+    clip-path:
+        polygon(
+            0 0,
+            100% 0,
+            50% 100%
+        );
+
+    filter:
+        drop-shadow(
+            0 5px 6px
+            rgba(80,42,77,.14)
+        );
+
+    transform-origin:
+        top center;
+
+    transition:
+        transform .45s ease;
+}
+
+
+.experience-choice:hover
+.envelope-flap {
+
+    transform:
+        rotateX(7deg);
+}
+
+
+/* heart seal */
+
+.envelope-heart {
+
+    position: absolute;
+
+    top: 46%;
+
+    left: 50%;
+
+    transform:
+        translate(-50%,-50%);
+
+    width: 36px;
+
+    height: 36px;
+
+    border-radius: 50%;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    color: #fff;
+
+    font-size: 16px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #c77cb0,
+            #89538e
+        );
+
+    box-shadow:
+        0 7px 15px
+        rgba(84,42,80,.30);
+}
+
+
+/* =========================================================
+   SOUVENI VISUAL
+   ========================================================= */
+
+.choice-memories {
+
+    position: relative;
+
+    width:
+        min(
+            190px,
+            33vw
+        );
+
+    aspect-ratio:
+        1.20 / 1;
+}
+
+
+.memory-frame {
+
+    position: absolute;
+
+    width: 45%;
+
+    aspect-ratio:
+        1 / 1.18;
+
+    padding: 7px;
+
+    background: #fff;
+
+    box-shadow:
+        0 16px 30px
+        rgba(0,0,0,.33);
+
+    border-radius: 3px;
+
+    transition:
+        transform .45s ease;
+}
+
+
+.memory-frame::after {
+
+    content: "♥";
+
+    position: absolute;
+
+    left: 50%;
+
+    top: 50%;
+
+    transform:
+        translate(-50%,-50%);
+
+    color:
+        rgba(152,85,143,.50);
+
+    font-size: 23px;
+}
+
+
+.frame-one {
+
+    left: 4%;
+
+    top: 18%;
+
+    transform:
+        rotate(-10deg);
+}
+
+
+.frame-two {
+
+    left: 28%;
+
+    top: 5%;
+
+    transform:
+        rotate(2deg);
+
+    z-index: 2;
+}
+
+
+.frame-three {
+
+    right: 2%;
+
+    top: 20%;
+
+    transform:
+        rotate(9deg);
+
+    z-index: 1;
+}
+
+
+.experience-choice:hover
+.frame-one {
+
+    transform:
+        rotate(-14deg)
+        translate(-4px,-4px);
+}
+
+
+.experience-choice:hover
+.frame-two {
+
+    transform:
+        rotate(0deg)
+        translateY(-7px);
+}
+
+
+.experience-choice:hover
+.frame-three {
+
+    transform:
+        rotate(13deg)
+        translate(4px,-4px);
+}
+
+
+.memory-mini-heart {
+
+    position: absolute;
+
+    left: 50%;
+
+    bottom: 4%;
+
+    transform:
+        translateX(-50%);
+
+    z-index: 4;
+
+    width: 38px;
+
+    height: 38px;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    border-radius: 50%;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(218,149,201,.98),
+            rgba(126,72,127,.98)
+        );
+
+    color: white;
+
+    font-size: 17px;
+
+    box-shadow:
+        0 8px 20px
+        rgba(72,34,70,.35);
+}
+
+
+/* =========================================================
+   RETOUR
+   ========================================================= */
+
+.return-experience {
+
+    position: fixed;
+
+    top:
+        max(
+            18px,
+            env(safe-area-inset-top)
+        );
+
+    left:
+        max(
+            18px,
+            env(safe-area-inset-left)
+        );
+
+    z-index: 9988;
+
+    width: 42px;
+
+    height: 42px;
+
+    border:
+        1px solid
+        rgba(125,78,121,.14);
+
+    border-radius: 50%;
+
+    background:
+        rgba(255,255,255,.88);
+
+    color: #70456f;
+
+    font-size: 24px;
+
+    line-height: 1;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    box-shadow:
+        0 8px 22px
+        rgba(70,30,65,.13);
+
+    cursor: pointer;
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    pointer-events: none;
+
+    transform:
+        translateY(-8px);
+
+    transition:
+        opacity .35s ease,
+        visibility .35s ease,
+        transform .35s ease,
+        background .25s ease;
+}
+
+
+.return-experience.show {
+
+    opacity: 1;
+
+    visibility: visible;
+
+    pointer-events: auto;
+
+    transform:
+        translateY(0);
+}
+
+
+.return-experience:hover {
+
+    background:
+        #ffffff;
+}
+
+
+.return-experience:active {
+
+    transform:
+        scale(.94);
+}
+
+
+/* =========================================================
    MEMORY BOOK
-================================ */
+   ========================================================= */
 
 #memory-book {
-    width: min(94%, 1050px);
-    margin: 70px auto 100px;
+
+    width:
+        min(
+            94%,
+            1050px
+        );
+
+    margin:
+        70px auto 100px;
+
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+
+    grid-template-columns:
+        minmax(0,1fr)
+        minmax(0,1fr);
+
     gap: 0;
-    perspective: 1600px;
+
+    perspective:
+        1600px;
+
     opacity: 0;
-    transform: translateY(35px);
-    transition: opacity 1s ease, transform 1s ease;
+
+    transform:
+        translateY(35px);
+
+    transition:
+        opacity 1s ease,
+        transform 1s ease;
+
     position: relative;
+
     z-index: 6;
+
+    scroll-margin-top: 25px;
 }
+
 
 #memory-book.show {
+
     opacity: 1;
-    transform: translateY(0);
+
+    transform:
+        translateY(0);
 }
+
 
 .book-page {
+
     min-height: 560px;
+
     position: relative;
+
     overflow: hidden;
-    background: rgba(255,255,255,.96);
-    box-shadow: 0 18px 45px rgba(0,0,0,.16);
+
+    background:
+        rgba(255,255,255,.96);
+
+    box-shadow:
+        0 18px 45px
+        rgba(0,0,0,.16);
 }
+
 
 .book-letter {
-    border-radius: 16px 0 0 16px;
-    border-right: 1px solid rgba(100,70,100,.15);
+
+    border-radius:
+        16px 0 0 16px;
+
+    border-right:
+        1px solid
+        rgba(100,70,100,.15);
 }
 
+
 .book-memories {
-    border-radius: 0 16px 16px 0;
-    background: rgba(30,18,35,.96);
+
+    border-radius:
+        0 16px 16px 0;
+
+    background:
+        rgba(30,18,35,.96);
+
     color: white;
 }
 
+
 .book-page-inner {
+
     height: 100%;
+
     min-height: 560px;
-    padding: 45px 30px;
+
+    padding:
+        45px 30px;
+
     display: flex;
+
     flex-direction: column;
+
     align-items: center;
+
     justify-content: center;
+
     text-align: center;
 }
 
+
 .book-small-title {
-    font-family: Georgia, serif;
-    font-size: clamp(20px, 4vw, 30px);
+
+    font-family:
+        Georgia,
+        serif;
+
+    font-size:
+        clamp(
+            20px,
+            4vw,
+            30px
+        );
+
     color: #7b4c78;
+
     margin-bottom: 25px;
 }
 
+
 .book-letter-line {
+
     width: 65%;
+
     height: 1px;
-    background: rgba(123,76,120,.3);
+
+    background:
+        rgba(123,76,120,.30);
+
     margin-bottom: 30px;
 }
 
+
 .book-page-inner p {
+
     max-width: 330px;
-    font-family: Georgia, serif;
-    font-size: clamp(15px, 2vw, 19px);
+
+    font-family:
+        Georgia,
+        serif;
+
+    font-size:
+        clamp(
+            15px,
+            2vw,
+            19px
+        );
+
     line-height: 1.8;
+
     color: #493a49;
 }
 
+
 .book-heart {
+
     margin-top: 30px;
+
     font-size: 55px;
+
     color: #b96b9f;
-    animation: bookHeartPulse 2.4s ease-in-out infinite;
+
+    animation:
+        bookHeartPulse
+        2.4s
+        ease-in-out
+        infinite;
 }
 
+
 @keyframes bookHeartPulse {
-    0%, 100% {
-        transform: scale(1);
+
+    0%,
+    100% {
+
+        transform:
+            scale(1);
+
         opacity: .75;
     }
 
     50% {
-        transform: scale(1.12);
+
+        transform:
+            scale(1.12);
+
         opacity: 1;
     }
 }
 
 
-/* ================================
+/* =========================================================
    SOUVENIRS
-================================ */
+   ========================================================= */
 
 .memory-label {
+
     position: absolute;
+
     top: 18px;
+
     left: 50%;
-    transform: translateX(-50%);
+
+    transform:
+        translateX(-50%);
+
     z-index: 5;
-    font-family: Georgia, serif;
-    font-size: clamp(16px, 3vw, 22px);
+
+    font-family:
+        Georgia,
+        serif;
+
+    font-size:
+        clamp(
+            16px,
+            3vw,
+            22px
+        );
+
     white-space: nowrap;
+
     opacity: .9;
 }
 
+
 #memoryStage {
+
     position: absolute;
-    inset: 55px 12px 70px;
+
+    inset:
+        55px 12px 70px;
+
     overflow: hidden;
+
     display: flex;
+
     align-items: center;
+
     justify-content: center;
 }
 
+
 #memoryPhoto {
+
     display: block;
+
     max-width: 88%;
+
     max-height: 88%;
+
     width: auto;
+
     height: auto;
+
     object-fit: contain;
+
     border-radius: 10px;
-    box-shadow: 0 15px 40px rgba(0,0,0,.45);
+
+    box-shadow:
+        0 15px 40px
+        rgba(0,0,0,.45);
+
     user-select: none;
+
     -webkit-user-drag: none;
+
     opacity: 0;
-    transform: translate3d(0, 110%, 0) scale(.96);
+
+    transform:
+        translate3d(
+            0,
+            110%,
+            0
+        )
+        scale(.96);
 }
+
 
 #memoryPhoto.memory-enter {
-    animation: memoryEnter 1.15s cubic-bezier(.22,.75,.25,1) forwards;
+
+    animation:
+        memoryEnter
+        1.15s
+        cubic-bezier(
+            .22,
+            .75,
+            .25,
+            1
+        )
+        forwards;
 }
+
 
 #memoryPhoto.memory-leave {
-    animation: memoryLeave 1.05s cubic-bezier(.65,.05,.85,.35) forwards;
+
+    animation:
+        memoryLeave
+        1.05s
+        cubic-bezier(
+            .65,
+            .05,
+            .85,
+            .35
+        )
+        forwards;
 }
+
 
 @keyframes memoryEnter {
+
     from {
+
         opacity: 0;
-        transform: translate3d(0, 110%, 0) scale(.94);
+
+        transform:
+            translate3d(
+                0,
+                110%,
+                0
+            )
+            scale(.94);
     }
 
     to {
+
         opacity: 1;
-        transform: translate3d(0, 0, 0) scale(1);
+
+        transform:
+            translate3d(
+                0,
+                0,
+                0
+            )
+            scale(1);
     }
 }
+
 
 @keyframes memoryLeave {
+
     from {
+
         opacity: 1;
-        transform: translate3d(0, 0, 0) scale(1);
+
+        transform:
+            translate3d(
+                0,
+                0,
+                0
+            )
+            scale(1);
     }
 
     to {
+
         opacity: 0;
-        transform: translate3d(0, -115%, 0) scale(.96);
+
+        transform:
+            translate3d(
+                0,
+                -115%,
+                0
+            )
+            scale(.96);
     }
 }
 
+
 .memory-progress {
+
     position: absolute;
+
     bottom: 36px;
+
     left: 50%;
-    transform: translateX(-50%);
-    font-family: Georgia, serif;
+
+    transform:
+        translateX(-50%);
+
+    font-family:
+        Georgia,
+        serif;
+
     font-size: 14px;
+
     opacity: .65;
 }
 
+
 .memory-touch-hint {
+
     position: absolute;
+
     bottom: 13px;
+
     left: 50%;
-    transform: translateX(-50%);
+
+    transform:
+        translateX(-50%);
+
     width: 90%;
+
     text-align: center;
+
     font-size: 11px;
+
     opacity: .4;
 }
 
 
-/* ================================
-   RESPONSIVE
-================================ */
+/* =========================================================
+   MOBILE
+   ========================================================= */
 
 @media (max-width: 700px) {
 
-    #memory-book {
-        width: 94%;
-        margin-top: 50px;
-        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    .experience-menu-inner {
+
+        gap: 25px;
     }
+
+
+    .experience-choice {
+
+        width:
+            min(
+                175px,
+                42vw
+            );
+
+        gap: 13px;
+    }
+
+
+    .choice-art {
+
+        width:
+            min(
+                155px,
+                35vw
+            );
+    }
+
+
+    .choice-name {
+
+        font-size: 17px;
+    }
+
+
+    #memory-book {
+
+        width: 94%;
+
+        margin-top: 50px;
+
+        grid-template-columns:
+            minmax(0,1fr)
+            minmax(0,1fr);
+    }
+
 
     .book-page {
+
         min-height: 430px;
     }
+
 
     .book-page-inner {
+
         min-height: 430px;
-        padding: 25px 14px;
+
+        padding:
+            25px 14px;
     }
 
+
     .book-small-title {
+
         font-size: 16px;
     }
 
+
     .book-page-inner p {
+
         font-size: 12px;
+
         line-height: 1.55;
     }
 
+
     .book-heart {
+
         font-size: 38px;
+
         margin-top: 18px;
     }
 
+
     #memoryStage {
-        inset: 45px 7px 58px;
+
+        inset:
+            45px 7px 58px;
     }
 
+
     #memoryPhoto {
+
         max-width: 88%;
+
         max-height: 82%;
     }
 
+
     .memory-label {
+
         top: 14px;
+
         font-size: 14px;
     }
+
 }
+
 
 @media (max-width: 420px) {
 
+    .experience-menu-inner {
+
+        gap: 12px;
+    }
+
+
+    .experience-choice {
+
+        width: 43vw;
+    }
+
+
+    .choice-art {
+
+        width: 34vw;
+    }
+
+
+    .choice-name {
+
+        font-size: 15px;
+    }
+
+
+    .return-experience {
+
+        width: 38px;
+
+        height: 38px;
+
+        font-size: 21px;
+    }
+
+
     #memory-book {
+
         width: 96%;
     }
 
+
     .book-page {
+
         min-height: 390px;
     }
+
 
     .book-page-inner {
+
         min-height: 390px;
-        padding: 20px 9px;
+
+        padding:
+            20px 9px;
     }
 
+
     .book-small-title {
+
         font-size: 14px;
     }
 
+
     .book-page-inner p {
+
         font-size: 10.5px;
+
         line-height: 1.45;
     }
 
+
     #memoryPhoto {
+
         max-width: 90%;
+
         max-height: 78%;
+
         border-radius: 7px;
     }
 
+
     .memory-progress {
+
         bottom: 27px;
+
         font-size: 12px;
     }
 
+
     .memory-touch-hint {
+
         bottom: 9px;
+
         font-size: 9px;
+    }
+}
+
+
+/* =========================================================
+   ACCESSIBILITY
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    #particle-intro,
+    #experience-menu,
+    .experience-menu-inner,
+    .experience-choice,
+    .choice-art,
+    .envelope-flap,
+    .memory-frame,
+    .return-experience,
+    #memory-book,
+    #memoryPhoto,
+    .book-heart {
+
+        animation: none !important;
+
+        transition: none !important;
     }
 }
