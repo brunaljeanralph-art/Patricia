@@ -1,34 +1,150 @@
-<!-- Message après OUI -->
-<div id="px-after-yes" class="px-after-yes" aria-hidden="true">
-    <div class="px-after-yes-box">
-        <p>🫣 Oh… donc ou rive jis la.</p>
-        <p>Mwen pa t twò sèten ki repons ou t ap bay…</p>
-        <p>men m pap kache w, sa fè m plezi anpil. ❤️</p>
-        <p>M renmen w tou.</p>
-        <p>E wè w chwazi sa a… sa fè kè m souri yon ti jan. 🥹</p>
+<!-- ===============================
+     0. PATRICIA OPENING EXPERIENCE
+     Isolated from the letter
+=============================== -->
 
-        <button id="px-continue" type="button">
-            Continuer ❤️
-        </button>
+<div id="px-experience" aria-hidden="false">
+
+    <canvas id="px-particle-canvas"></canvas>
+
+    <!-- Texte formé par les particules -->
+    <div class="px-readable-text" aria-hidden="true">
+        <span class="px-readable-line px-readable-love">
+            Je t'aime
+        </span>
+
+        <span class="px-readable-line px-readable-name">
+            Sauveur Patricia
+        </span>
     </div>
-</div>
 
-<!-- Dernière petite surprise -->
-<div id="px-last-secret" class="px-last-secret" aria-hidden="true">
-    <div class="px-last-secret-box">
-        <p>Men tann… 🫣</p>
-        <p>
-            Paske m pa t mete tout bagay la jis pou w rive la epi w fini.
-        </p>
-        <p>
-            Gen yon dènye ti bagay mwen te vle kite pou ou…
-        </p>
-        <p>
-            yon ti tras ankò, anvan ou antre kote m te vle mennen w lan. ❤️
-        </p>
+    <div class="px-vignette"></div>
 
-        <button id="px-open-letter" type="button">
-            Ouvrir ma lettre →
-        </button>
+    <div class="px-opening-copy" aria-live="polite">
+        <p class="px-opening-small">
+            un petit secret pour toi
+        </p>
     </div>
+
+
+    <!-- ===============================
+         QUESTION
+    =============================== -->
+
+    <div id="px-question"
+         class="px-question"
+         aria-hidden="true">
+
+        <h2>
+            Est-ce que tu m'aimes aussi&nbsp;?
+        </h2>
+
+        <div class="px-question-actions">
+
+            <button id="px-yes" type="button">
+                OUI🫣
+            </button>
+
+            <button id="px-no" type="button">
+                NON😔
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- ===============================
+         MESSAGE APRÈS OUI
+    =============================== -->
+
+    <div id="px-after-yes"
+         class="px-after-yes"
+         aria-hidden="true">
+
+        <div class="px-after-yes-box">
+
+            <p>
+                🫣 Oh… donc tu es vraiment arrivée jusque-là.
+            </p>
+
+            <p>
+                Je n’étais pas trop sûr de la réponse que tu allais choisir…
+            </p>
+
+            <p>
+                mais je ne vais pas te mentir, ça me fait vraiment plaisir. ❤️
+            </p>
+
+            <p>
+                Moi aussi, je t’aime.
+            </p>
+
+            <p>
+                Et te voir choisir ça… ça fait sourire mon cœur un peu. 🥹
+            </p>
+
+            <button id="px-continue" type="button">
+                Continuer ❤️
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- ===============================
+         DERNIÈRE PETITE SURPRISE
+    =============================== -->
+
+    <div id="px-last-secret"
+         class="px-last-secret"
+         aria-hidden="true">
+
+        <div class="px-last-secret-box">
+
+            <p>
+                Mais attends… 🫣
+            </p>
+
+            <p>
+                Parce que je n’avais pas préparé tout ça
+                juste pour que tu arrives jusque-là
+                et que ça s’arrête.
+            </p>
+
+            <p>
+                Il me restait une dernière petite chose
+                que je voulais te laisser…
+            </p>
+
+            <p>
+                une petite trace encore,
+                avant de t’emmener là où je voulais. ❤️
+            </p>
+
+            <button id="px-open-letter" type="button">
+                Ouvrir ma lettre →
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- Écran utilisé si NON est choisi -->
+    <div id="px-no-screen"
+         class="px-no-screen"
+         aria-hidden="true">
+
+        <p>
+            D'accord… ❤️
+        </p>
+
+        <span>
+            Merci quand même d'être arrivée jusqu'ici.
+        </span>
+
+    </div>
+
 </div>
