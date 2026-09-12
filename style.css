@@ -1,107 +1,143 @@
+/* =========================================================
+   PATRICIA — BASE STYLE
+   Letter / page styles
+   ========================================================= */
 
-/*
-  LETTER BASE STYLES
-  This file is intentionally conservative. The saved letter typography is
-  kept in index.html so its text and letter-specific rules remain unchanged.
-*/
-
-:root {
-  --purple: #7A3FA3;
-  --purple-dark: #5E2B84;
-  --paper: #fffdf9;
-  --ink: #3d3342;
+* {
+  box-sizing: border-box;
 }
 
-* { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
-html, body { margin: 0; padding: 0; min-height: 100%; }
+html {
+  scroll-behavior: smooth;
+}
+
 body {
-  background: #f5eff9;
-  color: var(--ink);
+  margin: 0;
+  min-height: 100vh;
+  background:
+    linear-gradient(
+      135deg,
+      #faf5ff 0%,
+      #fff 48%,
+      #f8efff 100%
+    );
+  color: #3e3043;
+  font-family: Arial, sans-serif;
+}
+
+body.px-experience-finished {
   overflow-x: hidden;
 }
 
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  background:
-    radial-gradient(circle at 15% 15%, rgba(255,255,255,.8), transparent 28%),
-    radial-gradient(circle at 85% 25%, rgba(226,203,240,.34), transparent 25%),
-    linear-gradient(180deg, rgba(255,255,255,.55), rgba(244,235,249,.75));
-  z-index: -2;
+img {
+  max-width: 100%;
 }
 
-body::after {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  opacity: .35;
-  background-image:
-    radial-gradient(rgba(122,63,163,.12) .6px, transparent .6px);
-  background-size: 14px 14px;
-  z-index: -1;
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
 }
 
-.background { position: fixed; inset: 0; pointer-events: none; z-index: -3; }
+.hidden {
+  display: none !important;
+}
 
-.card {
-  position: relative;
-  width: min(94%, 960px);
-  margin: 42px auto 28px;
-  padding: 34px clamp(20px, 5vw, 58px) 44px;
-  background: rgba(255,253,249,.96);
-  border: 1px solid rgba(122,63,163,.10);
+#intro-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  display: grid;
+  place-items: center;
+  background: #fff;
+}
+
+#intro-screen.hidden {
+  display: none !important;
+}
+
+#intro-screen .loader {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 3px solid rgba(122,63,163,.14);
+  border-top-color: #7a3fa3;
+  animation: pxLoader .9s linear infinite;
+}
+
+@keyframes pxLoader {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+#welcome-popup {
+  position: fixed;
+  inset: 0;
+  z-index: 150;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: rgba(38,20,45,.34);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+#welcome-popup.hidden {
+  display: none !important;
+}
+
+.welcome-box {
+  width: min(92vw, 470px);
+  padding: 30px 24px;
   border-radius: 24px;
-  box-shadow: 0 22px 65px rgba(74,40,94,.12), 0 2px 8px rgba(74,40,94,.05);
-  overflow: hidden;
-}
-
-.card > * { position: relative; z-index: 1; }
-
-.header {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: clamp(10px, 3vw, 28px);
+  background: rgba(255,255,255,.95);
   text-align: center;
-  padding: 14px 0 28px;
+  box-shadow:
+    0 24px 70px rgba(70,35,80,.18);
 }
 
-.header-tulip { width: clamp(58px, 9vw, 90px); height: auto; }
-.header-tulip.right { transform: scaleX(-1); }
-.title { flex: 1; }
-h1, h2 { margin: 0; }
-h1 { font-size: clamp(27px, 5vw, 42px); color: var(--purple-dark); }
-h2 { font-size: clamp(19px, 3vw, 28px); color: var(--purple); }
-.miamor { font-family: "Dancing Script", cursive; color: var(--purple); }
+.welcome-box h2 {
+  margin: 0 0 10px;
+  color: #6d378d;
+  font-family: "Dancing Script", cursive;
+  font-size: clamp(34px, 8vw, 48px);
+}
 
-.music-btn {
-  position: fixed;
-  right: 16px;
-  bottom: 16px;
-  z-index: 50;
+.welcome-box p {
+  margin: 0 0 20px;
+  color: #66596a;
+  line-height: 1.6;
+}
+
+#continueBtn {
   border: 0;
   border-radius: 999px;
-  padding: 11px 16px;
-  background: rgba(122,63,163,.96);
+  padding: 12px 22px;
+  background: #7a3fa3;
   color: #fff;
+  cursor: pointer;
   font-weight: 700;
-  box-shadow: 0 8px 25px rgba(70,36,87,.23);
+}
+
+#music-btn {
+  border: 1px solid rgba(122,63,163,.16);
+  border-radius: 999px;
+  padding: 9px 15px;
+  background: rgba(255,255,255,.78);
+  color: #633477;
   cursor: pointer;
 }
 
-.hidden { display: none !important; }
-
-#intro-screen,
-#welcome-popup {
-  z-index: 80;
+#hearts-container,
+#petals-container,
+#confetti-container {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 2;
 }
 
-@media (max-width: 600px) {
-  .card { width: min(100% - 14px, 960px); margin-top: 18px; padding: 22px 17px 34px; border-radius: 18px; }
-  .header { gap: 6px; padding-bottom: 20px; }
-  .header-tulip { width: 48px; }
+#confetti-container {
+  z-index: 3;
 }
