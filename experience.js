@@ -1,684 +1,684 @@
 (() => {
-  "𝑢𝑠𝑒 𝑠𝑡𝑟𝑖𝑐𝑡";
+  "use strict";
 
-  𝑐𝑜𝑛𝑠𝑡 𝑒𝑥𝑝𝑒𝑟𝑖𝑒𝑛𝑐𝑒 = 𝑑𝑜𝑐𝑢𝑚𝑒𝑛𝑡.𝑔𝑒𝑡𝐸𝑙𝑒𝑚𝑒𝑛𝑡𝐵𝑦𝐼𝑑("𝑝𝑥-𝑒𝑥𝑝𝑒𝑟𝑖𝑒𝑛𝑐𝑒");
-  𝑐𝑜𝑛𝑠𝑡 𝑐𝑎𝑛𝑣𝑎𝑠 = 𝑑𝑜𝑐𝑢𝑚𝑒𝑛𝑡.𝑔𝑒𝑡𝐸𝑙𝑒𝑚𝑒𝑛𝑡𝐵𝑦𝐼𝑑("𝑝𝑥-𝑝𝑎𝑟𝑡𝑖𝑐𝑙𝑒-𝑐𝑎𝑛𝑣𝑎𝑠");
-  𝑐𝑜𝑛𝑠𝑡 𝑞𝑢𝑒𝑠𝑡𝑖𝑜𝑛 = 𝑑𝑜𝑐𝑢𝑚𝑒𝑛𝑡.𝑔𝑒𝑡𝐸𝑙𝑒𝑚𝑒𝑛𝑡𝐵𝑦𝐼𝑑("𝑝𝑥-𝑞𝑢𝑒𝑠𝑡𝑖𝑜𝑛");
-  𝑐𝑜𝑛𝑠𝑡 𝑦𝑒𝑠𝐵𝑢𝑡𝑡𝑜𝑛 = 𝑑𝑜𝑐𝑢𝑚𝑒𝑛𝑡.𝑔𝑒𝑡𝐸𝑙𝑒𝑚𝑒𝑛𝑡𝐵𝑦𝐼𝑑("𝑝𝑥-𝑦𝑒𝑠");
-  𝑐𝑜𝑛𝑠𝑡 𝑛𝑜𝐵𝑢𝑡𝑡𝑜𝑛 = 𝑑𝑜𝑐𝑢𝑚𝑒𝑛𝑡.𝑔𝑒𝑡𝐸𝑙𝑒𝑚𝑒𝑛𝑡𝐵𝑦𝐼𝑑("𝑝𝑥-𝑛𝑜");
-  𝑐𝑜𝑛𝑠𝑡 𝑎𝑓𝑡𝑒𝑟𝑌𝑒𝑠 = 𝑑𝑜𝑐𝑢𝑚𝑒𝑛𝑡.𝑔𝑒𝑡𝐸𝑙𝑒𝑚𝑒𝑛𝑡𝐵𝑦𝐼𝑑("𝑝𝑥-𝑎𝑓𝑡𝑒𝑟-𝑦𝑒𝑠");
-  𝑐𝑜𝑛𝑠𝑡 𝑙𝑎𝑠𝑡𝑆𝑒𝑐𝑟𝑒𝑡 = 𝑑𝑜𝑐𝑢𝑚𝑒𝑛𝑡.𝑔𝑒𝑡𝐸𝑙𝑒𝑚𝑒𝑛𝑡𝐵𝑦𝐼𝑑("𝑝𝑥-𝑙𝑎𝑠𝑡-𝑠𝑒𝑐𝑟𝑒𝑡");
-  𝑐𝑜𝑛𝑠𝑡 𝑛𝑜𝑆𝑐𝑟𝑒𝑒𝑛 = 𝑑𝑜𝑐𝑢𝑚𝑒𝑛𝑡.𝑔𝑒𝑡𝐸𝑙𝑒𝑚𝑒𝑛𝑡𝐵𝑦𝐼𝑑("𝑝𝑥-𝑛𝑜-𝑠𝑐𝑟𝑒𝑒𝑛");
+  const experience = document.getElementById("px-experience");
+  const canvas = document.getElementById("px-particle-canvas");
+  const question = document.getElementById("px-question");
+  const yesButton = document.getElementById("px-yes");
+  const noButton = document.getElementById("px-no");
+  const afterYes = document.getElementById("px-after-yes");
+  const lastSecret = document.getElementById("px-last-secret");
+  const noScreen = document.getElementById("px-no-screen");
 
-  𝑖𝑓 (!𝑒𝑥𝑝𝑒𝑟𝑖𝑒𝑛𝑐𝑒 || !𝑐𝑎𝑛𝑣𝑎𝑠) 𝑟𝑒𝑡𝑢𝑟𝑛;
+  if (!experience || !canvas) return;
 
-  𝑤𝑖𝑛𝑑𝑜𝑤.𝑃𝑎𝑡𝑟𝑖𝑐𝑖𝑎𝐸𝑥𝑝𝑒𝑟𝑖𝑒𝑛𝑐𝑒𝐴𝑐𝑡𝑖𝑣𝑒 = 𝑡𝑟𝑢𝑒;
+  window.PatriciaExperienceActive = true;
 
-  𝑑𝑜𝑐𝑢𝑚𝑒𝑛𝑡.𝑏𝑜𝑑𝑦.𝑐𝑙𝑎𝑠𝑠𝐿𝑖𝑠𝑡.𝑎𝑑𝑑("𝑝𝑥-𝑒𝑥𝑝𝑒𝑟𝑖𝑒𝑛𝑐𝑒-𝑎𝑐𝑡𝑖𝑣𝑒");
+  document.body.classList.add("px-experience-active");
 
-  𝑐𝑜𝑛𝑠𝑡 𝑐𝑡𝑥 = 𝑐𝑎𝑛𝑣𝑎𝑠.𝑔𝑒𝑡𝐶𝑜𝑛𝑡𝑒𝑥𝑡("2𝑑", {
-    𝑎𝑙𝑝ℎ𝑎: 𝑡𝑟𝑢𝑒
+  const ctx = canvas.getContext("2d", {
+    alpha: true
   });
 
-  𝑐𝑜𝑛𝑠𝑡 𝑟𝑒𝑑𝑢𝑐𝑒𝑑𝑀𝑜𝑡𝑖𝑜𝑛 = 𝑤𝑖𝑛𝑑𝑜𝑤.𝑚𝑎𝑡𝑐ℎ𝑀𝑒𝑑𝑖𝑎(
-    "(𝑝𝑟𝑒𝑓𝑒𝑟𝑠-𝑟𝑒𝑑𝑢𝑐𝑒𝑑-𝑚𝑜𝑡𝑖𝑜𝑛: 𝑟𝑒𝑑𝑢𝑐𝑒)"
-  ).𝑚𝑎𝑡𝑐ℎ𝑒𝑠;
+  const reducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  ).matches;
 
-  𝑐𝑜𝑛𝑠𝑡 𝑠𝑡𝑎𝑡𝑒 = {
-    𝑝ℎ𝑎𝑠𝑒: "𝑔𝑎𝑡ℎ𝑒𝑟",
-    𝑠𝑡𝑎𝑟𝑡𝑒𝑑: 𝑝𝑒𝑟𝑓𝑜𝑟𝑚𝑎𝑛𝑐𝑒.𝑛𝑜𝑤(),
-    𝑞𝑢𝑒𝑠𝑡𝑖𝑜𝑛𝑆ℎ𝑜𝑤𝑛: 𝑓𝑎𝑙𝑠𝑒,
-    𝑐ℎ𝑜𝑖𝑐𝑒𝑀𝑎𝑑𝑒: 𝑓𝑎𝑙𝑠𝑒,
-    𝑓𝑖𝑛𝑖𝑠ℎ𝑒𝑑: 𝑓𝑎𝑙𝑠𝑒,
-    𝑠𝑐𝑎𝑡𝑡𝑒𝑟𝑆𝑡𝑎𝑟𝑡𝑒𝑑: 0
+  const state = {
+    phase: "gather",
+    started: performance.now(),
+    questionShown: false,
+    choiceMade: false,
+    finished: false,
+    scatterStarted: 0
   };
 
-  𝑙𝑒𝑡 𝑤𝑖𝑑𝑡ℎ = 0;
-  𝑙𝑒𝑡 ℎ𝑒𝑖𝑔ℎ𝑡 = 0;
-  𝑙𝑒𝑡 𝑑𝑝𝑟 = 𝑀𝑎𝑡ℎ.𝑚𝑖𝑛(𝑤𝑖𝑛𝑑𝑜𝑤.𝑑𝑒𝑣𝑖𝑐𝑒𝑃𝑖𝑥𝑒𝑙𝑅𝑎𝑡𝑖𝑜 || 1, 2);
+  let width = 0;
+  let height = 0;
+  let dpr = Math.min(window.devicePixelRatio || 1, 2);
 
-  𝑙𝑒𝑡 𝑝𝑎𝑟𝑡𝑖𝑐𝑙𝑒𝑠 = [];
-  𝑙𝑒𝑡 𝑡𝑎𝑟𝑔𝑒𝑡𝑠 = [];
-  𝑙𝑒𝑡 𝑐𝑢𝑟𝑟𝑒𝑛𝑡𝑇𝑎𝑟𝑔𝑒𝑡𝑇𝑒𝑥𝑡 = "𝐽𝑒 𝑡'𝑎𝑖𝑚𝑒";
+  let particles = [];
+  let targets = [];
+  let currentTargetText = "Je t'aime";
 
-  𝑐𝑜𝑛𝑠𝑡 𝑐𝑜𝑙𝑜𝑟𝑠 = [
-    "𝑟𝑔𝑏𝑎(255,255,255,0.98)",
-    "𝑟𝑔𝑏𝑎(202,235,255,0.95)",
-    "𝑟𝑔𝑏𝑎(122,218,255,0.92)",
-    "𝑟𝑔𝑏𝑎(184,143,255,0.9)",
-    "𝑟𝑔𝑏𝑎(244,204,255,0.9)"
+  const colors = [
+    "rgba(255,255,255,0.98)",
+    "rgba(202,235,255,0.95)",
+    "rgba(122,218,255,0.92)",
+    "rgba(184,143,255,0.9)",
+    "rgba(244,204,255,0.9)"
   ];
 
-  𝑓𝑢𝑛𝑐𝑡𝑖𝑜𝑛 𝑟𝑒𝑠𝑖𝑧𝑒𝐶𝑎𝑛𝑣𝑎𝑠() {
-    𝑤𝑖𝑑𝑡ℎ = 𝑤𝑖𝑛𝑑𝑜𝑤.𝑖𝑛𝑛𝑒𝑟𝑊𝑖𝑑𝑡ℎ;
-    ℎ𝑒𝑖𝑔ℎ𝑡 = 𝑤𝑖𝑛𝑑𝑜𝑤.𝑖𝑛𝑛𝑒𝑟𝐻𝑒𝑖𝑔ℎ𝑡;
+  function resizeCanvas() {
+    width = window.innerWidth;
+    height = window.innerHeight;
 
-    𝑑𝑝𝑟 = 𝑀𝑎𝑡ℎ.𝑚𝑖𝑛(𝑤𝑖𝑛𝑑𝑜𝑤.𝑑𝑒𝑣𝑖𝑐𝑒𝑃𝑖𝑥𝑒𝑙𝑅𝑎𝑡𝑖𝑜 || 1, 2);
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
 
-    𝑐𝑎𝑛𝑣𝑎𝑠.𝑤𝑖𝑑𝑡ℎ = 𝑀𝑎𝑡ℎ.𝑟𝑜𝑢𝑛𝑑(𝑤𝑖𝑑𝑡ℎ * 𝑑𝑝𝑟);
-    𝑐𝑎𝑛𝑣𝑎𝑠.ℎ𝑒𝑖𝑔ℎ𝑡 = 𝑀𝑎𝑡ℎ.𝑟𝑜𝑢𝑛𝑑(ℎ𝑒𝑖𝑔ℎ𝑡 * 𝑑𝑝𝑟);
+    canvas.width = Math.round(width * dpr);
+    canvas.height = Math.round(height * dpr);
 
-    𝑐𝑎𝑛𝑣𝑎𝑠.𝑠𝑡𝑦𝑙𝑒.𝑤𝑖𝑑𝑡ℎ = 𝑤𝑖𝑑𝑡ℎ + "𝑝𝑥";
-    𝑐𝑎𝑛𝑣𝑎𝑠.𝑠𝑡𝑦𝑙𝑒.ℎ𝑒𝑖𝑔ℎ𝑡 = ℎ𝑒𝑖𝑔ℎ𝑡 + "𝑝𝑥";
+    canvas.style.width = width + "px";
+    canvas.style.height = height + "px";
 
-    𝑐𝑡𝑥.𝑠𝑒𝑡𝑇𝑟𝑎𝑛𝑠𝑓𝑜𝑟𝑚(𝑑𝑝𝑟, 0, 0, 𝑑𝑝𝑟, 0, 0);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-    𝑏𝑢𝑖𝑙𝑑𝑇𝑎𝑟𝑔𝑒𝑡𝑠();
+    buildTargets();
   }
 
-  𝑓𝑢𝑛𝑐𝑡𝑖𝑜𝑛 𝑐𝑟𝑒𝑎𝑡𝑒𝑇𝑒𝑥𝑡𝑇𝑎𝑟𝑔𝑒𝑡𝑠(𝑡𝑒𝑥𝑡) {
-    𝑐𝑜𝑛𝑠𝑡 𝑜𝑓𝑓𝑠𝑐𝑟𝑒𝑒𝑛 = 𝑑𝑜𝑐𝑢𝑚𝑒𝑛𝑡.𝑐𝑟𝑒𝑎𝑡𝑒𝐸𝑙𝑒𝑚𝑒𝑛𝑡("𝑐𝑎𝑛𝑣𝑎𝑠");
-    𝑐𝑜𝑛𝑠𝑡 𝑜𝑐𝑡𝑥 = 𝑜𝑓𝑓𝑠𝑐𝑟𝑒𝑒𝑛.𝑔𝑒𝑡𝐶𝑜𝑛𝑡𝑒𝑥𝑡("2𝑑");
+  function createTextTargets(text) {
+    const offscreen = document.createElement("canvas");
+    const octx = offscreen.getContext("2d");
 
-    𝑐𝑜𝑛𝑠𝑡 𝑓𝑜𝑛𝑡𝑆𝑖𝑧𝑒 = 𝑀𝑎𝑡ℎ.𝑚𝑖𝑛(
-      𝑤𝑖𝑑𝑡ℎ * (𝑡𝑒𝑥𝑡 === "𝑆𝑎𝑢𝑣𝑒𝑢𝑟 𝑃𝑎𝑡𝑟𝑖𝑐𝑖𝑎" ? 0.13 : 0.16),
-      𝑡𝑒𝑥𝑡 === "𝑆𝑎𝑢𝑣𝑒𝑢𝑟 𝑃𝑎𝑡𝑟𝑖𝑐𝑖𝑎" ? 112 : 132
+    const fontSize = Math.min(
+      width * (text === "Sauveur Patricia" ? 0.13 : 0.16),
+      text === "Sauveur Patricia" ? 112 : 132
     );
 
-    𝑜𝑓𝑓𝑠𝑐𝑟𝑒𝑒𝑛.𝑤𝑖𝑑𝑡ℎ = 𝑀𝑎𝑡ℎ.𝑐𝑒𝑖𝑙(𝑤𝑖𝑑𝑡ℎ);
-    𝑜𝑓𝑓𝑠𝑐𝑟𝑒𝑒𝑛.ℎ𝑒𝑖𝑔ℎ𝑡 = 𝑀𝑎𝑡ℎ.𝑐𝑒𝑖𝑙(ℎ𝑒𝑖𝑔ℎ𝑡);
+    offscreen.width = Math.ceil(width);
+    offscreen.height = Math.ceil(height);
 
-    𝑜𝑐𝑡𝑥.𝑐𝑙𝑒𝑎𝑟𝑅𝑒𝑐𝑡(0, 0, 𝑜𝑓𝑓𝑠𝑐𝑟𝑒𝑒𝑛.𝑤𝑖𝑑𝑡ℎ, 𝑜𝑓𝑓𝑠𝑐𝑟𝑒𝑒𝑛.ℎ𝑒𝑖𝑔ℎ𝑡);
+    octx.clearRect(0, 0, offscreen.width, offscreen.height);
 
-    𝑜𝑐𝑡𝑥.𝑡𝑒𝑥𝑡𝐴𝑙𝑖𝑔𝑛 = "𝑐𝑒𝑛𝑡𝑒𝑟";
-    𝑜𝑐𝑡𝑥.𝑡𝑒𝑥𝑡𝐵𝑎𝑠𝑒𝑙𝑖𝑛𝑒 = "𝑚𝑖𝑑𝑑𝑙𝑒";
-    𝑜𝑐𝑡𝑥.𝑓𝑜𝑛𝑡 =
-      `600 ${𝑀𝑎𝑡ℎ.𝑚𝑎𝑥(44, 𝑓𝑜𝑛𝑡𝑆𝑖𝑧𝑒)}𝑝𝑥 ` +
-      `"𝑇𝑖𝑚𝑒𝑠 𝑁𝑒𝑤 𝑅𝑜𝑚𝑎𝑛", 𝐺𝑒𝑜𝑟𝑔𝑖𝑎, 𝑠𝑒𝑟𝑖𝑓`;
+    octx.textAlign = "center";
+    octx.textBaseline = "middle";
+    octx.font =
+      `600 ${Math.max(44, fontSize)}px ` +
+      `"Times New Roman", Georgia, serif`;
 
-    𝑜𝑐𝑡𝑥.𝑓𝑖𝑙𝑙𝑆𝑡𝑦𝑙𝑒 = "#𝑓𝑓𝑓𝑓𝑓𝑓";
+    octx.fillStyle = "#ffffff";
 
-    𝑐𝑜𝑛𝑠𝑡 𝑦 = ℎ𝑒𝑖𝑔ℎ𝑡 * 0.46;
+    const y = height * 0.46;
 
-    𝑜𝑐𝑡𝑥.𝑓𝑖𝑙𝑙𝑇𝑒𝑥𝑡(𝑡𝑒𝑥𝑡, 𝑤𝑖𝑑𝑡ℎ / 2, 𝑦);
+    octx.fillText(text, width / 2, y);
 
-    𝑐𝑜𝑛𝑠𝑡 𝑖𝑚𝑎𝑔𝑒 = 𝑜𝑐𝑡𝑥.𝑔𝑒𝑡𝐼𝑚𝑎𝑔𝑒𝐷𝑎𝑡𝑎(
+    const image = octx.getImageData(
       0,
       0,
-      𝑜𝑓𝑓𝑠𝑐𝑟𝑒𝑒𝑛.𝑤𝑖𝑑𝑡ℎ,
-      𝑜𝑓𝑓𝑠𝑐𝑟𝑒𝑒𝑛.ℎ𝑒𝑖𝑔ℎ𝑡
+      offscreen.width,
+      offscreen.height
     );
 
-    𝑐𝑜𝑛𝑠𝑡 𝑝𝑜𝑖𝑛𝑡𝑠 = [];
+    const points = [];
 
-    𝑐𝑜𝑛𝑠𝑡 𝑔𝑎𝑝 = 𝑟𝑒𝑑𝑢𝑐𝑒𝑑𝑀𝑜𝑡𝑖𝑜𝑛 ? 4 : 3;
+    const gap = reducedMotion ? 4 : 3;
 
-    𝑓𝑜𝑟 (𝑙𝑒𝑡 𝑦𝑃𝑜𝑠 = 0; 𝑦𝑃𝑜𝑠 < 𝑜𝑓𝑓𝑠𝑐𝑟𝑒𝑒𝑛.ℎ𝑒𝑖𝑔ℎ𝑡; 𝑦𝑃𝑜𝑠 += 𝑔𝑎𝑝) {
-      𝑓𝑜𝑟 (𝑙𝑒𝑡 𝑥𝑃𝑜𝑠 = 0; 𝑥𝑃𝑜𝑠 < 𝑜𝑓𝑓𝑠𝑐𝑟𝑒𝑒𝑛.𝑤𝑖𝑑𝑡ℎ; 𝑥𝑃𝑜𝑠 += 𝑔𝑎𝑝) {
-        𝑐𝑜𝑛𝑠𝑡 𝑖𝑛𝑑𝑒𝑥 =
-          (𝑦𝑃𝑜𝑠 * 𝑜𝑓𝑓𝑠𝑐𝑟𝑒𝑒𝑛.𝑤𝑖𝑑𝑡ℎ + 𝑥𝑃𝑜𝑠) * 4;
+    for (let yPos = 0; yPos < offscreen.height; yPos += gap) {
+      for (let xPos = 0; xPos < offscreen.width; xPos += gap) {
+        const index =
+          (yPos * offscreen.width + xPos) * 4;
 
-        𝑖𝑓 (𝑖𝑚𝑎𝑔𝑒.𝑑𝑎𝑡𝑎[𝑖𝑛𝑑𝑒𝑥 + 3] > 100) {
-          𝑝𝑜𝑖𝑛𝑡𝑠.𝑝𝑢𝑠ℎ({
-            𝑥: 𝑥𝑃𝑜𝑠,
-            𝑦: 𝑦𝑃𝑜𝑠
+        if (image.data[index + 3] > 100) {
+          points.push({
+            x: xPos,
+            y: yPos
           });
         }
       }
     }
 
-    𝑟𝑒𝑡𝑢𝑟𝑛 𝑝𝑜𝑖𝑛𝑡𝑠;
+    return points;
   }
 
-  𝑓𝑢𝑛𝑐𝑡𝑖𝑜𝑛 𝑏𝑢𝑖𝑙𝑑𝑇𝑎𝑟𝑔𝑒𝑡𝑠() {
-    𝑡𝑎𝑟𝑔𝑒𝑡𝑠 = 𝑐𝑟𝑒𝑎𝑡𝑒𝑇𝑒𝑥𝑡𝑇𝑎𝑟𝑔𝑒𝑡𝑠(𝑐𝑢𝑟𝑟𝑒𝑛𝑡𝑇𝑎𝑟𝑔𝑒𝑡𝑇𝑒𝑥𝑡);
+  function buildTargets() {
+    targets = createTextTargets(currentTargetText);
 
-    𝑐𝑜𝑛𝑠𝑡 𝑑𝑒𝑠𝑖𝑟𝑒𝑑𝐶𝑜𝑢𝑛𝑡 = 𝑀𝑎𝑡ℎ.𝑚𝑖𝑛(
-      𝑟𝑒𝑑𝑢𝑐𝑒𝑑𝑀𝑜𝑡𝑖𝑜𝑛 ? 900 : 1900,
-      𝑀𝑎𝑡ℎ.𝑚𝑎𝑥(500, 𝑡𝑎𝑟𝑔𝑒𝑡𝑠.𝑙𝑒𝑛𝑔𝑡ℎ)
+    const desiredCount = Math.min(
+      reducedMotion ? 900 : 1900,
+      Math.max(500, targets.length)
     );
 
-    𝑖𝑓 (𝑝𝑎𝑟𝑡𝑖𝑐𝑙𝑒𝑠.𝑙𝑒𝑛𝑔𝑡ℎ !== 𝑑𝑒𝑠𝑖𝑟𝑒𝑑𝐶𝑜𝑢𝑛𝑡) {
-      𝑝𝑎𝑟𝑡𝑖𝑐𝑙𝑒𝑠 = [];
+    if (particles.length !== desiredCount) {
+      particles = [];
 
-      𝑓𝑜𝑟 (𝑙𝑒𝑡 𝑖 = 0; 𝑖 < 𝑑𝑒𝑠𝑖𝑟𝑒𝑑𝐶𝑜𝑢𝑛𝑡; 𝑖++) {
-        𝑐𝑜𝑛𝑠𝑡 𝑡𝑎𝑟𝑔𝑒𝑡 =
-          𝑡𝑎𝑟𝑔𝑒𝑡𝑠[𝑖 % 𝑀𝑎𝑡ℎ.𝑚𝑎𝑥(1, 𝑡𝑎𝑟𝑔𝑒𝑡𝑠.𝑙𝑒𝑛𝑔𝑡ℎ)];
+      for (let i = 0; i < desiredCount; i++) {
+        const target =
+          targets[i % Math.max(1, targets.length)];
 
-        𝑐𝑜𝑛𝑠𝑡 𝑓𝑟𝑜𝑚𝐵𝑜𝑡𝑡𝑜𝑚 =
-          𝑀𝑎𝑡ℎ.𝑟𝑎𝑛𝑑𝑜𝑚() < 0.75;
+        const fromBottom =
+          Math.random() < 0.75;
 
-        𝑝𝑎𝑟𝑡𝑖𝑐𝑙𝑒𝑠.𝑝𝑢𝑠ℎ({
-          𝑥: 𝑀𝑎𝑡ℎ.𝑟𝑎𝑛𝑑𝑜𝑚() * 𝑤𝑖𝑑𝑡ℎ,
-          𝑦: 𝑓𝑟𝑜𝑚𝐵𝑜𝑡𝑡𝑜𝑚
-            ? ℎ𝑒𝑖𝑔ℎ𝑡 + 𝑀𝑎𝑡ℎ.𝑟𝑎𝑛𝑑𝑜𝑚() * ℎ𝑒𝑖𝑔ℎ𝑡 * 0.35
-            : 𝑀𝑎𝑡ℎ.𝑟𝑎𝑛𝑑𝑜𝑚() * ℎ𝑒𝑖𝑔ℎ𝑡,
+        particles.push({
+          x: Math.random() * width,
+          y: fromBottom
+            ? height + Math.random() * height * 0.35
+            : Math.random() * height,
 
-          𝑣𝑥: (𝑀𝑎𝑡ℎ.𝑟𝑎𝑛𝑑𝑜𝑚() - 0.5) * 0.5,
-          𝑣𝑦: -(0.4 + 𝑀𝑎𝑡ℎ.𝑟𝑎𝑛𝑑𝑜𝑚() * 1.4),
+          vx: (Math.random() - 0.5) * 0.5,
+          vy: -(0.4 + Math.random() * 1.4),
 
-          𝑡𝑥: 𝑡𝑎𝑟𝑔𝑒𝑡 ? 𝑡𝑎𝑟𝑔𝑒𝑡.𝑥 : 𝑤𝑖𝑑𝑡ℎ / 2,
-          𝑡𝑦: 𝑡𝑎𝑟𝑔𝑒𝑡 ? 𝑡𝑎𝑟𝑔𝑒𝑡.𝑦 : ℎ𝑒𝑖𝑔ℎ𝑡 / 2,
+          tx: target ? target.x : width / 2,
+          ty: target ? target.y : height / 2,
 
-          𝑠𝑖𝑧𝑒:
+          size:
             0.7 +
-            𝑀𝑎𝑡ℎ.𝑟𝑎𝑛𝑑𝑜𝑚() *
-              (𝑟𝑒𝑑𝑢𝑐𝑒𝑑𝑀𝑜𝑡𝑖𝑜𝑛 ? 1.1 : 1.8),
+            Math.random() *
+              (reducedMotion ? 1.1 : 1.8),
 
-          𝑎𝑙𝑝ℎ𝑎:
+          alpha:
             0.35 +
-            𝑀𝑎𝑡ℎ.𝑟𝑎𝑛𝑑𝑜𝑚() * 0.65,
+            Math.random() * 0.65,
 
-          𝑐𝑜𝑙𝑜𝑟:
-            𝑐𝑜𝑙𝑜𝑟𝑠[
-              𝑀𝑎𝑡ℎ.𝑓𝑙𝑜𝑜𝑟(𝑀𝑎𝑡ℎ.𝑟𝑎𝑛𝑑𝑜𝑚() * 𝑐𝑜𝑙𝑜𝑟𝑠.𝑙𝑒𝑛𝑔𝑡ℎ)
+          color:
+            colors[
+              Math.floor(Math.random() * colors.length)
             ],
 
-          𝑝ℎ𝑎𝑠𝑒:
-            𝑀𝑎𝑡ℎ.𝑟𝑎𝑛𝑑𝑜𝑚() * 𝑀𝑎𝑡ℎ.𝑃𝐼 * 2,
+          phase:
+            Math.random() * Math.PI * 2,
 
-          𝑠𝑒𝑒𝑑:
-            𝑀𝑎𝑡ℎ.𝑟𝑎𝑛𝑑𝑜𝑚() * 1000
+          seed:
+            Math.random() * 1000
         });
       }
-    } 𝑒𝑙𝑠𝑒 {
-      𝑝𝑎𝑟𝑡𝑖𝑐𝑙𝑒𝑠.𝑓𝑜𝑟𝐸𝑎𝑐ℎ((𝑝𝑎𝑟𝑡𝑖𝑐𝑙𝑒, 𝑖) => {
-        𝑐𝑜𝑛𝑠𝑡 𝑡𝑎𝑟𝑔𝑒𝑡 =
-          𝑡𝑎𝑟𝑔𝑒𝑡𝑠[𝑖 % 𝑀𝑎𝑡ℎ.𝑚𝑎𝑥(1, 𝑡𝑎𝑟𝑔𝑒𝑡𝑠.𝑙𝑒𝑛𝑔𝑡ℎ)];
+    } else {
+      particles.forEach((particle, i) => {
+        const target =
+          targets[i % Math.max(1, targets.length)];
 
-        𝑖𝑓 (𝑡𝑎𝑟𝑔𝑒𝑡) {
-          𝑝𝑎𝑟𝑡𝑖𝑐𝑙𝑒.𝑡𝑥 = 𝑡𝑎𝑟𝑔𝑒𝑡.𝑥;
-          𝑝𝑎𝑟𝑡𝑖𝑐𝑙𝑒.𝑡𝑦 = 𝑡𝑎𝑟𝑔𝑒𝑡.𝑦;
+        if (target) {
+          particle.tx = target.x;
+          particle.ty = target.y;
         }
       });
     }
   }
 
-  𝑓𝑢𝑛𝑐𝑡𝑖𝑜𝑛 𝑠𝑐𝑎𝑡𝑡𝑒𝑟𝑃𝑎𝑟𝑡𝑖𝑐𝑙𝑒𝑠(𝑛𝑜𝑤) {
-    𝑖𝑓 (!𝑠𝑡𝑎𝑡𝑒.𝑠𝑐𝑎𝑡𝑡𝑒𝑟𝑆𝑡𝑎𝑟𝑡𝑒𝑑) {
-      𝑠𝑡𝑎𝑡𝑒.𝑠𝑐𝑎𝑡𝑡𝑒𝑟𝑆𝑡𝑎𝑟𝑡𝑒𝑑 = 𝑛𝑜𝑤;
+  function scatterParticles(now) {
+    if (!state.scatterStarted) {
+      state.scatterStarted = now;
     }
 
-    𝑐𝑜𝑛𝑠𝑡 𝑒𝑙𝑎𝑝𝑠𝑒𝑑 =
-      𝑛𝑜𝑤 - 𝑠𝑡𝑎𝑡𝑒.𝑠𝑐𝑎𝑡𝑡𝑒𝑟𝑆𝑡𝑎𝑟𝑡𝑒𝑑;
+    const elapsed =
+      now - state.scatterStarted;
 
-    𝑝𝑎𝑟𝑡𝑖𝑐𝑙𝑒𝑠.𝑓𝑜𝑟𝐸𝑎𝑐ℎ((𝑝𝑎𝑟𝑡𝑖𝑐𝑙𝑒) => {
-      𝑝𝑎𝑟𝑡𝑖𝑐𝑙𝑒.𝑣𝑥 +=
-        (𝑀𝑎𝑡ℎ.𝑟𝑎𝑛𝑑𝑜𝑚() - 0.5) *
-        (𝑟𝑒𝑑𝑢𝑐𝑒𝑑𝑀𝑜𝑡𝑖𝑜𝑛 ? 0.02 : 0.09);
+    particles.forEach((particle) => {
+      particle.vx +=
+        (Math.random() - 0.5) *
+        (reducedMotion ? 0.02 : 0.09);
 
-      𝑝𝑎𝑟𝑡𝑖𝑐𝑙𝑒.𝑣𝑦 +=
-        (𝑀𝑎𝑡ℎ.𝑟𝑎𝑛𝑑𝑜𝑚() - 0.5) *
-        (𝑟𝑒𝑑𝑢𝑐𝑒𝑑𝑀𝑜𝑡𝑖𝑜𝑛 ? 0.02 : 0.09);
+      particle.vy +=
+        (Math.random() - 0.5) *
+        (reducedMotion ? 0.02 : 0.09);
 
-      𝑝𝑎𝑟𝑡𝑖𝑐𝑙𝑒.𝑥 += 𝑝𝑎𝑟𝑡𝑖𝑐𝑙𝑒.𝑣𝑥;
-      𝑝𝑎𝑟𝑡𝑖𝑐𝑙𝑒.𝑦 += 𝑝𝑎𝑟𝑡𝑖𝑐𝑙𝑒.𝑣𝑦;
+      particle.x += particle.vx;
+      particle.y += particle.vy;
 
-      𝑝𝑎𝑟𝑡𝑖𝑐𝑙𝑒.𝑣𝑥 *= 0.985;
-      𝑝𝑎𝑟𝑡𝑖𝑐𝑙𝑒.𝑣𝑦 *= 0.985;
+      particle.vx *= 0.985;
+      particle.vy *= 0.985;
     });
 
-    𝑖𝑓 (𝑒𝑙𝑎𝑝𝑠𝑒𝑑 > 900) {
-      𝑓𝑖𝑛𝑖𝑠ℎ();
+    if (elapsed > 900) {
+      finish();
     }
   }
 
-  𝑓𝑢𝑛𝑐𝑡𝑖𝑜𝑛 𝑢𝑝𝑑𝑎𝑡𝑒𝑃𝑎𝑟𝑡𝑖𝑐𝑙𝑒𝑠(𝑛𝑜𝑤) {
-    𝑐𝑜𝑛𝑠𝑡 𝑒𝑙𝑎𝑝𝑠𝑒𝑑 =
-      𝑛𝑜𝑤 - 𝑠𝑡𝑎𝑡𝑒.𝑠𝑡𝑎𝑟𝑡𝑒𝑑;
+  function updateParticles(now) {
+    const elapsed =
+      now - state.started;
 
-    𝑖𝑓 (𝑠𝑡𝑎𝑡𝑒.𝑝ℎ𝑎𝑠𝑒 === "𝑠𝑐𝑎𝑡𝑡𝑒𝑟") {
-      𝑠𝑐𝑎𝑡𝑡𝑒𝑟𝑃𝑎𝑟𝑡𝑖𝑐𝑙𝑒𝑠(𝑛𝑜𝑤);
-      𝑟𝑒𝑡𝑢𝑟𝑛;
+    if (state.phase === "scatter") {
+      scatterParticles(now);
+      return;
     }
 
-    𝑝𝑎𝑟𝑡𝑖𝑐𝑙𝑒𝑠.𝑓𝑜𝑟𝐸𝑎𝑐ℎ((𝑝𝑎𝑟𝑡𝑖𝑐𝑙𝑒, 𝑖𝑛𝑑𝑒𝑥) => {
-      𝑐𝑜𝑛𝑠𝑡 𝑑𝑥 = 𝑝𝑎𝑟𝑡𝑖𝑐𝑙𝑒.𝑡𝑥 - 𝑝𝑎𝑟𝑡𝑖𝑐𝑙𝑒.𝑥;
-      𝑐𝑜𝑛𝑠𝑡 𝑑𝑦 = 𝑝𝑎𝑟𝑡𝑖𝑐𝑙𝑒.𝑡𝑦 - 𝑝𝑎𝑟𝑡𝑖𝑐𝑙𝑒.𝑦;
+    particles.forEach((particle, index) => {
+      const dx = particle.tx - particle.x;
+      const dy = particle.ty - particle.y;
 
-      𝑐𝑜𝑛𝑠𝑡 𝑑𝑖𝑠𝑡𝑎𝑛𝑐𝑒 =
-        𝑀𝑎𝑡ℎ.𝑠𝑞𝑟𝑡(𝑑𝑥 * 𝑑𝑥 + 𝑑𝑦 * 𝑑𝑦) || 1;
+      const distance =
+        Math.sqrt(dx * dx + dy * dy) || 1;
 
-      𝑙𝑒𝑡 𝑠𝑡𝑟𝑒𝑛𝑔𝑡ℎ = 0.012;
+      let strength = 0.012;
 
-      𝑖𝑓 (𝑒𝑙𝑎𝑝𝑠𝑒𝑑 > 700) {
-        𝑠𝑡𝑟𝑒𝑛𝑔𝑡ℎ = 0.018;
+      if (elapsed > 700) {
+        strength = 0.018;
       }
 
-      𝑖𝑓 (𝑒𝑙𝑎𝑝𝑠𝑒𝑑 > 1600) {
-        𝑠𝑡𝑟𝑒𝑛𝑔𝑡ℎ = 0.026;
+      if (elapsed > 1600) {
+        strength = 0.026;
       }
 
-      𝑝𝑎𝑟𝑡𝑖𝑐𝑙𝑒.𝑣𝑥 +=
-        (𝑑𝑥 / 𝑑𝑖𝑠𝑡𝑎𝑛𝑐𝑒) *
-        𝑠𝑡𝑟𝑒𝑛𝑔𝑡ℎ;
+      particle.vx +=
+        (dx / distance) *
+        strength;
 
-      𝑝𝑎𝑟𝑡𝑖𝑐𝑙𝑒.𝑣𝑦 +=
-        (𝑑𝑦 / 𝑑𝑖𝑠𝑡𝑎𝑛𝑐𝑒) *
-        𝑠𝑡𝑟𝑒𝑛𝑔𝑡ℎ;
+      particle.vy +=
+        (dy / distance) *
+        strength;
 
-      𝑖𝑓 (!𝑟𝑒𝑑𝑢𝑐𝑒𝑑𝑀𝑜𝑡𝑖𝑜𝑛) {
-        𝑝𝑎𝑟𝑡𝑖𝑐𝑙𝑒.𝑣𝑥 +=
-          𝑀𝑎𝑡ℎ.𝑠𝑖𝑛(
-            𝑛𝑜𝑤 * 0.0007 +
-            𝑝𝑎𝑟𝑡𝑖𝑐𝑙𝑒.𝑝ℎ𝑎𝑠𝑒 +
-            𝑖𝑛𝑑𝑒𝑥 * 0.001
+      if (!reducedMotion) {
+        particle.vx +=
+          Math.sin(
+            now * 0.0007 +
+            particle.phase +
+            index * 0.001
           ) * 0.002;
 
-        𝑝𝑎𝑟𝑡𝑖𝑐𝑙𝑒.𝑣𝑦 +=
-          𝑀𝑎𝑡ℎ.𝑐𝑜𝑠(
-            𝑛𝑜𝑤 * 0.0005 +
-            𝑝𝑎𝑟𝑡𝑖𝑐𝑙𝑒.𝑠𝑒𝑒𝑑
+        particle.vy +=
+          Math.cos(
+            now * 0.0005 +
+            particle.seed
           ) * 0.002;
       }
 
-      𝑝𝑎𝑟𝑡𝑖𝑐𝑙𝑒.𝑣𝑥 *= 0.88;
-      𝑝𝑎𝑟𝑡𝑖𝑐𝑙𝑒.𝑣𝑦 *= 0.88;
+      particle.vx *= 0.88;
+      particle.vy *= 0.88;
 
-      𝑝𝑎𝑟𝑡𝑖𝑐𝑙𝑒.𝑥 += 𝑝𝑎𝑟𝑡𝑖𝑐𝑙𝑒.𝑣𝑥;
-      𝑝𝑎𝑟𝑡𝑖𝑐𝑙𝑒.𝑦 += 𝑝𝑎𝑟𝑡𝑖𝑐𝑙𝑒.𝑣𝑦;
+      particle.x += particle.vx;
+      particle.y += particle.vy;
 
-      𝑖𝑓 (𝑑𝑖𝑠𝑡𝑎𝑛𝑐𝑒 < 18) {
-        𝑝𝑎𝑟𝑡𝑖𝑐𝑙𝑒.𝑥 +=
-          (𝑀𝑎𝑡ℎ.𝑟𝑎𝑛𝑑𝑜𝑚() - 0.5) *
-          (𝑟𝑒𝑑𝑢𝑐𝑒𝑑𝑀𝑜𝑡𝑖𝑜𝑛 ? 0.2 : 0.8);
+      if (distance < 18) {
+        particle.x +=
+          (Math.random() - 0.5) *
+          (reducedMotion ? 0.2 : 0.8);
 
-        𝑝𝑎𝑟𝑡𝑖𝑐𝑙𝑒.𝑦 +=
-          (𝑀𝑎𝑡ℎ.𝑟𝑎𝑛𝑑𝑜𝑚() - 0.5) *
-          (𝑟𝑒𝑑𝑢𝑐𝑒𝑑𝑀𝑜𝑡𝑖𝑜𝑛 ? 0.2 : 0.8);
+        particle.y +=
+          (Math.random() - 0.5) *
+          (reducedMotion ? 0.2 : 0.8);
       }
     });
   }
 
-  𝑓𝑢𝑛𝑐𝑡𝑖𝑜𝑛 𝑑𝑟𝑎𝑤𝐵𝑎𝑐𝑘𝑔𝑟𝑜𝑢𝑛𝑑(𝑛𝑜𝑤) {
-    𝑐𝑡𝑥.𝑐𝑙𝑒𝑎𝑟𝑅𝑒𝑐𝑡(0, 0, 𝑤𝑖𝑑𝑡ℎ, ℎ𝑒𝑖𝑔ℎ𝑡);
+  function drawBackground(now) {
+    ctx.clearRect(0, 0, width, height);
 
-    𝑐𝑜𝑛𝑠𝑡 𝑔𝑟𝑎𝑑𝑖𝑒𝑛𝑡 =
-      𝑐𝑡𝑥.𝑐𝑟𝑒𝑎𝑡𝑒𝑅𝑎𝑑𝑖𝑎𝑙𝐺𝑟𝑎𝑑𝑖𝑒𝑛𝑡(
-        𝑤𝑖𝑑𝑡ℎ / 2,
-        ℎ𝑒𝑖𝑔ℎ𝑡 * 0.42,
+    const gradient =
+      ctx.createRadialGradient(
+        width / 2,
+        height * 0.42,
         0,
-        𝑤𝑖𝑑𝑡ℎ / 2,
-        ℎ𝑒𝑖𝑔ℎ𝑡 * 0.42,
-        𝑀𝑎𝑡ℎ.𝑚𝑎𝑥(𝑤𝑖𝑑𝑡ℎ, ℎ𝑒𝑖𝑔ℎ𝑡) * 0.8
+        width / 2,
+        height * 0.42,
+        Math.max(width, height) * 0.8
       );
 
-    𝑔𝑟𝑎𝑑𝑖𝑒𝑛𝑡.𝑎𝑑𝑑𝐶𝑜𝑙𝑜𝑟𝑆𝑡𝑜𝑝(
+    gradient.addColorStop(
       0,
-      "𝑟𝑔𝑏𝑎(65,45,100,0.20)"
+      "rgba(65,45,100,0.20)"
     );
 
-    𝑔𝑟𝑎𝑑𝑖𝑒𝑛𝑡.𝑎𝑑𝑑𝐶𝑜𝑙𝑜𝑟𝑆𝑡𝑜𝑝(
+    gradient.addColorStop(
       0.45,
-      "𝑟𝑔𝑏𝑎(17,19,48,0.12)"
+      "rgba(17,19,48,0.12)"
     );
 
-    𝑔𝑟𝑎𝑑𝑖𝑒𝑛𝑡.𝑎𝑑𝑑𝐶𝑜𝑙𝑜𝑟𝑆𝑡𝑜𝑝(
+    gradient.addColorStop(
       1,
-      "𝑟𝑔𝑏𝑎(0,0,0,0)"
+      "rgba(0,0,0,0)"
     );
 
-    𝑐𝑡𝑥.𝑓𝑖𝑙𝑙𝑆𝑡𝑦𝑙𝑒 = 𝑔𝑟𝑎𝑑𝑖𝑒𝑛𝑡;
-    𝑐𝑡𝑥.𝑓𝑖𝑙𝑙𝑅𝑒𝑐𝑡(0, 0, 𝑤𝑖𝑑𝑡ℎ, ℎ𝑒𝑖𝑔ℎ𝑡);
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0, 0, width, height);
 
-    𝑖𝑓 (𝑟𝑒𝑑𝑢𝑐𝑒𝑑𝑀𝑜𝑡𝑖𝑜𝑛) 𝑟𝑒𝑡𝑢𝑟𝑛;
+    if (reducedMotion) return;
 
-    𝑐𝑜𝑛𝑠𝑡 𝑔𝑙𝑜𝑤𝑋 =
-      𝑤𝑖𝑑𝑡ℎ / 2 +
-      𝑀𝑎𝑡ℎ.𝑠𝑖𝑛(𝑛𝑜𝑤 * 0.00025) *
-        𝑤𝑖𝑑𝑡ℎ *
+    const glowX =
+      width / 2 +
+      Math.sin(now * 0.00025) *
+        width *
         0.12;
 
-    𝑐𝑜𝑛𝑠𝑡 𝑔𝑙𝑜𝑤𝑌 =
-      ℎ𝑒𝑖𝑔ℎ𝑡 * 0.42 +
-      𝑀𝑎𝑡ℎ.𝑐𝑜𝑠(𝑛𝑜𝑤 * 0.0002) *
-        ℎ𝑒𝑖𝑔ℎ𝑡 *
+    const glowY =
+      height * 0.42 +
+      Math.cos(now * 0.0002) *
+        height *
         0.08;
 
-    𝑐𝑜𝑛𝑠𝑡 𝑔𝑙𝑜𝑤 =
-      𝑐𝑡𝑥.𝑐𝑟𝑒𝑎𝑡𝑒𝑅𝑎𝑑𝑖𝑎𝑙𝐺𝑟𝑎𝑑𝑖𝑒𝑛𝑡(
-        𝑔𝑙𝑜𝑤𝑋,
-        𝑔𝑙𝑜𝑤𝑌,
+    const glow =
+      ctx.createRadialGradient(
+        glowX,
+        glowY,
         0,
-        𝑔𝑙𝑜𝑤𝑋,
-        𝑔𝑙𝑜𝑤𝑌,
-        𝑀𝑎𝑡ℎ.𝑚𝑎𝑥(𝑤𝑖𝑑𝑡ℎ, ℎ𝑒𝑖𝑔ℎ𝑡) * 0.3
+        glowX,
+        glowY,
+        Math.max(width, height) * 0.3
       );
 
-    𝑔𝑙𝑜𝑤.𝑎𝑑𝑑𝐶𝑜𝑙𝑜𝑟𝑆𝑡𝑜𝑝(
+    glow.addColorStop(
       0,
-      "𝑟𝑔𝑏𝑎(116,193,255,0.06)"
+      "rgba(116,193,255,0.06)"
     );
 
-    𝑔𝑙𝑜𝑤.𝑎𝑑𝑑𝐶𝑜𝑙𝑜𝑟𝑆𝑡𝑜𝑝(
+    glow.addColorStop(
       0.45,
-      "𝑟𝑔𝑏𝑎(158,102,255,0.035)"
+      "rgba(158,102,255,0.035)"
     );
 
-    𝑔𝑙𝑜𝑤.𝑎𝑑𝑑𝐶𝑜𝑙𝑜𝑟𝑆𝑡𝑜𝑝(
+    glow.addColorStop(
       1,
-      "𝑟𝑔𝑏𝑎(0,0,0,0)"
+      "rgba(0,0,0,0)"
     );
 
-    𝑐𝑡𝑥.𝑓𝑖𝑙𝑙𝑆𝑡𝑦𝑙𝑒 = 𝑔𝑙𝑜𝑤;
-    𝑐𝑡𝑥.𝑓𝑖𝑙𝑙𝑅𝑒𝑐𝑡(0, 0, 𝑤𝑖𝑑𝑡ℎ, ℎ𝑒𝑖𝑔ℎ𝑡);
+    ctx.fillStyle = glow;
+    ctx.fillRect(0, 0, width, height);
   }
 
-  𝑓𝑢𝑛𝑐𝑡𝑖𝑜𝑛 𝑑𝑟𝑎𝑤𝑃𝑎𝑟𝑡𝑖𝑐𝑙𝑒𝑠(𝑛𝑜𝑤) {
-    𝑝𝑎𝑟𝑡𝑖𝑐𝑙𝑒𝑠.𝑓𝑜𝑟𝐸𝑎𝑐ℎ((𝑝𝑎𝑟𝑡𝑖𝑐𝑙𝑒) => {
-      𝑙𝑒𝑡 𝑎𝑙𝑝ℎ𝑎 = 𝑝𝑎𝑟𝑡𝑖𝑐𝑙𝑒.𝑎𝑙𝑝ℎ𝑎;
+  function drawParticles(now) {
+    particles.forEach((particle) => {
+      let alpha = particle.alpha;
 
-      𝑖𝑓 (𝑠𝑡𝑎𝑡𝑒.𝑝ℎ𝑎𝑠𝑒 === "𝑠𝑐𝑎𝑡𝑡𝑒𝑟") {
-        𝑐𝑜𝑛𝑠𝑡 𝑠𝑐𝑎𝑡𝑡𝑒𝑟𝐴𝑔𝑒 =
-          𝑛𝑜𝑤 - 𝑠𝑡𝑎𝑡𝑒.𝑠𝑐𝑎𝑡𝑡𝑒𝑟𝑆𝑡𝑎𝑟𝑡𝑒𝑑;
+      if (state.phase === "scatter") {
+        const scatterAge =
+          now - state.scatterStarted;
 
-        𝑎𝑙𝑝ℎ𝑎 *= 𝑀𝑎𝑡ℎ.𝑚𝑎𝑥(
+        alpha *= Math.max(
           0,
-          1 - 𝑠𝑐𝑎𝑡𝑡𝑒𝑟𝐴𝑔𝑒 / 1000
+          1 - scatterAge / 1000
         );
       }
 
-      𝑖𝑓 (𝑎𝑙𝑝ℎ𝑎 <= 0) 𝑟𝑒𝑡𝑢𝑟𝑛;
+      if (alpha <= 0) return;
 
-      𝑐𝑡𝑥.𝑔𝑙𝑜𝑏𝑎𝑙𝐴𝑙𝑝ℎ𝑎 = 𝑎𝑙𝑝ℎ𝑎;
-      𝑐𝑡𝑥.𝑓𝑖𝑙𝑙𝑆𝑡𝑦𝑙𝑒 = 𝑝𝑎𝑟𝑡𝑖𝑐𝑙𝑒.𝑐𝑜𝑙𝑜𝑟;
+      ctx.globalAlpha = alpha;
+      ctx.fillStyle = particle.color;
 
-      𝑐𝑡𝑥.𝑏𝑒𝑔𝑖𝑛𝑃𝑎𝑡ℎ();
+      ctx.beginPath();
 
-      𝑐𝑡𝑥.𝑎𝑟𝑐(
-        𝑝𝑎𝑟𝑡𝑖𝑐𝑙𝑒.𝑥,
-        𝑝𝑎𝑟𝑡𝑖𝑐𝑙𝑒.𝑦,
-        𝑝𝑎𝑟𝑡𝑖𝑐𝑙𝑒.𝑠𝑖𝑧𝑒,
+      ctx.arc(
+        particle.x,
+        particle.y,
+        particle.size,
         0,
-        𝑀𝑎𝑡ℎ.𝑃𝐼 * 2
+        Math.PI * 2
       );
 
-      𝑐𝑡𝑥.𝑓𝑖𝑙𝑙();
+      ctx.fill();
 
-      𝑖𝑓 (!𝑟𝑒𝑑𝑢𝑐𝑒𝑑𝑀𝑜𝑡𝑖𝑜𝑛 && 𝑝𝑎𝑟𝑡𝑖𝑐𝑙𝑒.𝑠𝑖𝑧𝑒 > 1.3) {
-        𝑐𝑡𝑥.𝑔𝑙𝑜𝑏𝑎𝑙𝐴𝑙𝑝ℎ𝑎 = 𝑎𝑙𝑝ℎ𝑎 * 0.12;
+      if (!reducedMotion && particle.size > 1.3) {
+        ctx.globalAlpha = alpha * 0.12;
 
-        𝑐𝑡𝑥.𝑏𝑒𝑔𝑖𝑛𝑃𝑎𝑡ℎ();
+        ctx.beginPath();
 
-        𝑐𝑡𝑥.𝑎𝑟𝑐(
-          𝑝𝑎𝑟𝑡𝑖𝑐𝑙𝑒.𝑥,
-          𝑝𝑎𝑟𝑡𝑖𝑐𝑙𝑒.𝑦,
-          𝑝𝑎𝑟𝑡𝑖𝑐𝑙𝑒.𝑠𝑖𝑧𝑒 * 3.8,
+        ctx.arc(
+          particle.x,
+          particle.y,
+          particle.size * 3.8,
           0,
-          𝑀𝑎𝑡ℎ.𝑃𝐼 * 2
+          Math.PI * 2
         );
 
-        𝑐𝑡𝑥.𝑓𝑖𝑙𝑙();
+        ctx.fill();
       }
     });
 
-    𝑐𝑡𝑥.𝑔𝑙𝑜𝑏𝑎𝑙𝐴𝑙𝑝ℎ𝑎 = 1;
+    ctx.globalAlpha = 1;
   }
 
-  𝑓𝑢𝑛𝑐𝑡𝑖𝑜𝑛 𝑑𝑟𝑎𝑤(𝑛𝑜𝑤) {
-    𝑑𝑟𝑎𝑤𝐵𝑎𝑐𝑘𝑔𝑟𝑜𝑢𝑛𝑑(𝑛𝑜𝑤);
-    𝑢𝑝𝑑𝑎𝑡𝑒𝑃𝑎𝑟𝑡𝑖𝑐𝑙𝑒𝑠(𝑛𝑜𝑤);
-    𝑑𝑟𝑎𝑤𝑃𝑎𝑟𝑡𝑖𝑐𝑙𝑒𝑠(𝑛𝑜𝑤);
+  function draw(now) {
+    drawBackground(now);
+    updateParticles(now);
+    drawParticles(now);
 
-    𝑟𝑒𝑞𝑢𝑒𝑠𝑡𝐴𝑛𝑖𝑚𝑎𝑡𝑖𝑜𝑛𝐹𝑟𝑎𝑚𝑒(𝑑𝑟𝑎𝑤);
+    requestAnimationFrame(draw);
   }
 
-  𝑓𝑢𝑛𝑐𝑡𝑖𝑜𝑛 𝑠ℎ𝑜𝑤𝑄𝑢𝑒𝑠𝑡𝑖𝑜𝑛() {
-    𝑖𝑓 (
-      𝑠𝑡𝑎𝑡𝑒.𝑞𝑢𝑒𝑠𝑡𝑖𝑜𝑛𝑆ℎ𝑜𝑤𝑛 ||
-      𝑠𝑡𝑎𝑡𝑒.𝑐ℎ𝑜𝑖𝑐𝑒𝑀𝑎𝑑𝑒 ||
-      𝑠𝑡𝑎𝑡𝑒.𝑓𝑖𝑛𝑖𝑠ℎ𝑒𝑑
+  function showQuestion() {
+    if (
+      state.questionShown ||
+      state.choiceMade ||
+      state.finished
     ) {
-      𝑟𝑒𝑡𝑢𝑟𝑛;
+      return;
     }
 
-    𝑠𝑡𝑎𝑡𝑒.𝑞𝑢𝑒𝑠𝑡𝑖𝑜𝑛𝑆ℎ𝑜𝑤𝑛 = 𝑡𝑟𝑢𝑒;
+    state.questionShown = true;
 
-    𝑖𝑓 (!𝑞𝑢𝑒𝑠𝑡𝑖𝑜𝑛) 𝑟𝑒𝑡𝑢𝑟𝑛;
+    if (!question) return;
 
-    𝑞𝑢𝑒𝑠𝑡𝑖𝑜𝑛.𝑐𝑙𝑎𝑠𝑠𝐿𝑖𝑠𝑡.𝑎𝑑𝑑("𝑖𝑠-𝑣𝑖𝑠𝑖𝑏𝑙𝑒");
-    𝑞𝑢𝑒𝑠𝑡𝑖𝑜𝑛.𝑠𝑒𝑡𝐴𝑡𝑡𝑟𝑖𝑏𝑢𝑡𝑒(
-      "𝑎𝑟𝑖𝑎-ℎ𝑖𝑑𝑑𝑒𝑛",
-      "𝑓𝑎𝑙𝑠𝑒"
+    question.classList.add("is-visible");
+    question.setAttribute(
+      "aria-hidden",
+      "false"
     );
   }
 
-  𝑓𝑢𝑛𝑐𝑡𝑖𝑜𝑛 ℎ𝑖𝑑𝑒𝐸𝑙𝑒𝑚𝑒𝑛𝑡(𝑒𝑙𝑒𝑚𝑒𝑛𝑡) {
-    𝑖𝑓 (!𝑒𝑙𝑒𝑚𝑒𝑛𝑡) 𝑟𝑒𝑡𝑢𝑟𝑛;
+  function hideElement(element) {
+    if (!element) return;
 
-    𝑒𝑙𝑒𝑚𝑒𝑛𝑡.𝑐𝑙𝑎𝑠𝑠𝐿𝑖𝑠𝑡.𝑟𝑒𝑚𝑜𝑣𝑒("𝑖𝑠-𝑣𝑖𝑠𝑖𝑏𝑙𝑒");
-    𝑒𝑙𝑒𝑚𝑒𝑛𝑡.𝑠𝑒𝑡𝐴𝑡𝑡𝑟𝑖𝑏𝑢𝑡𝑒(
-      "𝑎𝑟𝑖𝑎-ℎ𝑖𝑑𝑑𝑒𝑛",
-      "𝑡𝑟𝑢𝑒"
+    element.classList.remove("is-visible");
+    element.setAttribute(
+      "aria-hidden",
+      "true"
     );
   }
 
-  𝑓𝑢𝑛𝑐𝑡𝑖𝑜𝑛 𝑠ℎ𝑜𝑤𝐸𝑙𝑒𝑚𝑒𝑛𝑡(𝑒𝑙𝑒𝑚𝑒𝑛𝑡) {
-    𝑖𝑓 (!𝑒𝑙𝑒𝑚𝑒𝑛𝑡) 𝑟𝑒𝑡𝑢𝑟𝑛;
+  function showElement(element) {
+    if (!element) return;
 
-    𝑒𝑙𝑒𝑚𝑒𝑛𝑡.𝑐𝑙𝑎𝑠𝑠𝐿𝑖𝑠𝑡.𝑎𝑑𝑑("𝑖𝑠-𝑣𝑖𝑠𝑖𝑏𝑙𝑒");
-    𝑒𝑙𝑒𝑚𝑒𝑛𝑡.𝑠𝑒𝑡𝐴𝑡𝑡𝑟𝑖𝑏𝑢𝑡𝑒(
-      "𝑎𝑟𝑖𝑎-ℎ𝑖𝑑𝑑𝑒𝑛",
-      "𝑓𝑎𝑙𝑠𝑒"
+    element.classList.add("is-visible");
+    element.setAttribute(
+      "aria-hidden",
+      "false"
     );
   }
 
-  𝑓𝑢𝑛𝑐𝑡𝑖𝑜𝑛 𝑝𝑙𝑎𝑦𝐷𝑖𝑛𝑔() {
-    𝑐𝑜𝑛𝑠𝑡 𝑑𝑖𝑛𝑔 =
-      𝑑𝑜𝑐𝑢𝑚𝑒𝑛𝑡.𝑔𝑒𝑡𝐸𝑙𝑒𝑚𝑒𝑛𝑡𝐵𝑦𝐼𝑑("𝑑𝑖𝑛𝑔𝑆𝑜𝑢𝑛𝑑");
+  function playDing() {
+    const ding =
+      document.getElementById("dingSound");
 
-    𝑖𝑓 (!𝑑𝑖𝑛𝑔) 𝑟𝑒𝑡𝑢𝑟𝑛;
+    if (!ding) return;
 
-    𝑡𝑟𝑦 {
-      𝑑𝑖𝑛𝑔.𝑐𝑢𝑟𝑟𝑒𝑛𝑡𝑇𝑖𝑚𝑒 = 0;
+    try {
+      ding.currentTime = 0;
 
-      𝑐𝑜𝑛𝑠𝑡 𝑝𝑟𝑜𝑚𝑖𝑠𝑒 = 𝑑𝑖𝑛𝑔.𝑝𝑙𝑎𝑦();
+      const promise = ding.play();
 
-      𝑖𝑓 (
-        𝑝𝑟𝑜𝑚𝑖𝑠𝑒 &&
-        𝑡𝑦𝑝𝑒𝑜𝑓 𝑝𝑟𝑜𝑚𝑖𝑠𝑒.𝑐𝑎𝑡𝑐ℎ === "𝑓𝑢𝑛𝑐𝑡𝑖𝑜𝑛"
+      if (
+        promise &&
+        typeof promise.catch === "function"
       ) {
-        𝑝𝑟𝑜𝑚𝑖𝑠𝑒.𝑐𝑎𝑡𝑐ℎ(() => {});
+        promise.catch(() => {});
       }
-    } 𝑐𝑎𝑡𝑐ℎ (_) {}
+    } catch (_) {}
   }
 
-  𝑓𝑢𝑛𝑐𝑡𝑖𝑜𝑛 𝑠𝑡𝑎𝑟𝑡𝑀𝑢𝑠𝑖𝑐() {
-    𝑐𝑜𝑛𝑠𝑡 𝑚𝑢𝑠𝑖𝑐 =
-      𝑑𝑜𝑐𝑢𝑚𝑒𝑛𝑡.𝑔𝑒𝑡𝐸𝑙𝑒𝑚𝑒𝑛𝑡𝐵𝑦𝐼𝑑("𝑏𝑔𝑀𝑢𝑠𝑖𝑐");
+  function startMusic() {
+    const music =
+      document.getElementById("bgMusic");
 
-    𝑖𝑓 (!𝑚𝑢𝑠𝑖𝑐) 𝑟𝑒𝑡𝑢𝑟𝑛;
+    if (!music) return;
 
-    𝑡𝑟𝑦 {
-      𝑚𝑢𝑠𝑖𝑐.𝑣𝑜𝑙𝑢𝑚𝑒 = 0.45;
+    try {
+      music.volume = 0.45;
 
-      𝑐𝑜𝑛𝑠𝑡 𝑝𝑟𝑜𝑚𝑖𝑠𝑒 = 𝑚𝑢𝑠𝑖𝑐.𝑝𝑙𝑎𝑦();
+      const promise = music.play();
 
-      𝑖𝑓 (
-        𝑝𝑟𝑜𝑚𝑖𝑠𝑒 &&
-        𝑡𝑦𝑝𝑒𝑜𝑓 𝑝𝑟𝑜𝑚𝑖𝑠𝑒.𝑐𝑎𝑡𝑐ℎ === "𝑓𝑢𝑛𝑐𝑡𝑖𝑜𝑛"
+      if (
+        promise &&
+        typeof promise.catch === "function"
       ) {
-        𝑝𝑟𝑜𝑚𝑖𝑠𝑒.𝑐𝑎𝑡𝑐ℎ(() => {});
+        promise.catch(() => {});
       }
-    } 𝑐𝑎𝑡𝑐ℎ (_) {}
+    } catch (_) {}
   }
 
-  𝑓𝑢𝑛𝑐𝑡𝑖𝑜𝑛 𝑐ℎ𝑜𝑜𝑠𝑒𝑌𝑒𝑠() {
-    𝑖𝑓 (𝑠𝑡𝑎𝑡𝑒.𝑐ℎ𝑜𝑖𝑐𝑒𝑀𝑎𝑑𝑒) 𝑟𝑒𝑡𝑢𝑟𝑛;
+  function chooseYes() {
+    if (state.choiceMade) return;
 
-    𝑠𝑡𝑎𝑡𝑒.𝑐ℎ𝑜𝑖𝑐𝑒𝑀𝑎𝑑𝑒 = 𝑡𝑟𝑢𝑒;
+    state.choiceMade = true;
 
-    ℎ𝑖𝑑𝑒𝐸𝑙𝑒𝑚𝑒𝑛𝑡(𝑞𝑢𝑒𝑠𝑡𝑖𝑜𝑛);
+    hideElement(question);
 
-    𝑝𝑙𝑎𝑦𝐷𝑖𝑛𝑔();
-    𝑠𝑡𝑎𝑟𝑡𝑀𝑢𝑠𝑖𝑐();
+    playDing();
+    startMusic();
 
-    𝑠𝑒𝑡𝑇𝑖𝑚𝑒𝑜𝑢𝑡(() => {
-      𝑠ℎ𝑜𝑤𝐸𝑙𝑒𝑚𝑒𝑛𝑡(𝑎𝑓𝑡𝑒𝑟𝑌𝑒𝑠);
-    }, 𝑟𝑒𝑑𝑢𝑐𝑒𝑑𝑀𝑜𝑡𝑖𝑜𝑛 ? 100 : 350);
+    setTimeout(() => {
+      showElement(afterYes);
+    }, reducedMotion ? 100 : 350);
   }
 
-  𝑓𝑢𝑛𝑐𝑡𝑖𝑜𝑛 𝑐𝑜𝑛𝑡𝑖𝑛𝑢𝑒𝑇𝑜𝐿𝑎𝑠𝑡𝑆𝑒𝑐𝑟𝑒𝑡() {
-    ℎ𝑖𝑑𝑒𝐸𝑙𝑒𝑚𝑒𝑛𝑡(𝑎𝑓𝑡𝑒𝑟𝑌𝑒𝑠);
+  function continueToLastSecret() {
+    hideElement(afterYes);
 
-    𝑠𝑒𝑡𝑇𝑖𝑚𝑒𝑜𝑢𝑡(() => {
-      𝑠ℎ𝑜𝑤𝐸𝑙𝑒𝑚𝑒𝑛𝑡(𝑙𝑎𝑠𝑡𝑆𝑒𝑐𝑟𝑒𝑡);
-    }, 𝑟𝑒𝑑𝑢𝑐𝑒𝑑𝑀𝑜𝑡𝑖𝑜𝑛 ? 80 : 280);
+    setTimeout(() => {
+      showElement(lastSecret);
+    }, reducedMotion ? 80 : 280);
   }
 
-  𝑓𝑢𝑛𝑐𝑡𝑖𝑜𝑛 𝑜𝑝𝑒𝑛𝑇ℎ𝑒𝐿𝑒𝑡𝑡𝑒𝑟() {
-    ℎ𝑖𝑑𝑒𝐸𝑙𝑒𝑚𝑒𝑛𝑡(𝑙𝑎𝑠𝑡𝑆𝑒𝑐𝑟𝑒𝑡);
+  function openTheLetter() {
+    hideElement(lastSecret);
 
-    𝑠𝑡𝑎𝑡𝑒.𝑝ℎ𝑎𝑠𝑒 = "𝑠𝑐𝑎𝑡𝑡𝑒𝑟";
-    𝑠𝑡𝑎𝑡𝑒.𝑠𝑐𝑎𝑡𝑡𝑒𝑟𝑆𝑡𝑎𝑟𝑡𝑒𝑑 = 𝑝𝑒𝑟𝑓𝑜𝑟𝑚𝑎𝑛𝑐𝑒.𝑛𝑜𝑤();
+    state.phase = "scatter";
+    state.scatterStarted = performance.now();
 
-    𝑐𝑜𝑛𝑠𝑡 𝑟𝑒𝑎𝑑𝑎𝑏𝑙𝑒𝑇𝑒𝑥𝑡 =
-      𝑑𝑜𝑐𝑢𝑚𝑒𝑛𝑡.𝑞𝑢𝑒𝑟𝑦𝑆𝑒𝑙𝑒𝑐𝑡𝑜𝑟(
-        ".𝑝𝑥-𝑟𝑒𝑎𝑑𝑎𝑏𝑙𝑒-𝑡𝑒𝑥𝑡"
+    const readableText =
+      document.querySelector(
+        ".px-readable-text"
       );
 
-    𝑖𝑓 (𝑟𝑒𝑎𝑑𝑎𝑏𝑙𝑒𝑇𝑒𝑥𝑡) {
-      𝑟𝑒𝑎𝑑𝑎𝑏𝑙𝑒𝑇𝑒𝑥𝑡.𝑐𝑙𝑎𝑠𝑠𝐿𝑖𝑠𝑡.𝑎𝑑𝑑("𝑝𝑥-𝑓𝑎𝑑𝑒-𝑜𝑢𝑡");
+    if (readableText) {
+      readableText.classList.add("px-fade-out");
     }
   }
 
-  𝑓𝑢𝑛𝑐𝑡𝑖𝑜𝑛 𝑐ℎ𝑜𝑜𝑠𝑒𝑁𝑜() {
-    𝑖𝑓 (𝑠𝑡𝑎𝑡𝑒.𝑐ℎ𝑜𝑖𝑐𝑒𝑀𝑎𝑑𝑒) 𝑟𝑒𝑡𝑢𝑟𝑛;
+  function chooseNo() {
+    if (state.choiceMade) return;
 
-    𝑠𝑡𝑎𝑡𝑒.𝑐ℎ𝑜𝑖𝑐𝑒𝑀𝑎𝑑𝑒 = 𝑡𝑟𝑢𝑒;
+    state.choiceMade = true;
 
-    ℎ𝑖𝑑𝑒𝐸𝑙𝑒𝑚𝑒𝑛𝑡(𝑞𝑢𝑒𝑠𝑡𝑖𝑜𝑛);
+    hideElement(question);
 
-    𝑖𝑓 (𝑛𝑜𝑆𝑐𝑟𝑒𝑒𝑛) {
-      𝑠ℎ𝑜𝑤𝐸𝑙𝑒𝑚𝑒𝑛𝑡(𝑛𝑜𝑆𝑐𝑟𝑒𝑒𝑛);
+    if (noScreen) {
+      showElement(noScreen);
     }
 
-    𝑠𝑒𝑡𝑇𝑖𝑚𝑒𝑜𝑢𝑡(() => {
-      𝑤𝑖𝑛𝑑𝑜𝑤.𝑙𝑜𝑐𝑎𝑡𝑖𝑜𝑛.𝑟𝑒𝑝𝑙𝑎𝑐𝑒(
-        "𝑎𝑏𝑜𝑢𝑡:𝑏𝑙𝑎𝑛𝑘"
+    setTimeout(() => {
+      window.location.replace(
+        "about:blank"
       );
-    }, 𝑟𝑒𝑑𝑢𝑐𝑒𝑑𝑀𝑜𝑡𝑖𝑜𝑛 ? 250 : 800);
+    }, reducedMotion ? 250 : 800);
   }
 
-  𝑓𝑢𝑛𝑐𝑡𝑖𝑜𝑛 𝑓𝑖𝑛𝑖𝑠ℎ() {
-    𝑖𝑓 (𝑠𝑡𝑎𝑡𝑒.𝑓𝑖𝑛𝑖𝑠ℎ𝑒𝑑) 𝑟𝑒𝑡𝑢𝑟𝑛;
+  function finish() {
+    if (state.finished) return;
 
-    𝑠𝑡𝑎𝑡𝑒.𝑓𝑖𝑛𝑖𝑠ℎ𝑒𝑑 = 𝑡𝑟𝑢𝑒;
+    state.finished = true;
 
-    𝑒𝑥𝑝𝑒𝑟𝑖𝑒𝑛𝑐𝑒.𝑐𝑙𝑎𝑠𝑠𝐿𝑖𝑠𝑡.𝑎𝑑𝑑(
-      "𝑝𝑥-𝑒𝑥𝑝𝑒𝑟𝑖𝑒𝑛𝑐𝑒-𝑓𝑖𝑛𝑖𝑠ℎ𝑒𝑑"
+    experience.classList.add(
+      "px-experience-finished"
     );
 
-    𝑒𝑥𝑝𝑒𝑟𝑖𝑒𝑛𝑐𝑒.𝑠𝑒𝑡𝐴𝑡𝑡𝑟𝑖𝑏𝑢𝑡𝑒(
-      "𝑎𝑟𝑖𝑎-ℎ𝑖𝑑𝑑𝑒𝑛",
-      "𝑡𝑟𝑢𝑒"
+    experience.setAttribute(
+      "aria-hidden",
+      "true"
     );
 
-    𝑠𝑒𝑡𝑇𝑖𝑚𝑒𝑜𝑢𝑡(() => {
-      𝑒𝑥𝑝𝑒𝑟𝑖𝑒𝑛𝑐𝑒.𝑐𝑙𝑎𝑠𝑠𝐿𝑖𝑠𝑡.𝑎𝑑𝑑("ℎ𝑖𝑑𝑑𝑒𝑛");
+    setTimeout(() => {
+      experience.classList.add("hidden");
 
-      𝑐𝑜𝑛𝑠𝑡 𝑚𝑎𝑖𝑛 =
-        𝑑𝑜𝑐𝑢𝑚𝑒𝑛𝑡.𝑞𝑢𝑒𝑟𝑦𝑆𝑒𝑙𝑒𝑐𝑡𝑜𝑟("𝑚𝑎𝑖𝑛");
+      const main =
+        document.querySelector("main");
 
-      𝑖𝑓 (𝑚𝑎𝑖𝑛) {
-        𝑚𝑎𝑖𝑛.𝑐𝑙𝑎𝑠𝑠𝐿𝑖𝑠𝑡.𝑎𝑑𝑑(
-          "𝑝𝑥-𝑠𝑖𝑡𝑒-𝑟𝑒𝑣𝑒𝑎𝑙𝑒𝑑"
+      if (main) {
+        main.classList.add(
+          "px-site-revealed"
         );
       }
 
-      𝑑𝑜𝑐𝑢𝑚𝑒𝑛𝑡.𝑏𝑜𝑑𝑦.𝑐𝑙𝑎𝑠𝑠𝐿𝑖𝑠𝑡.𝑟𝑒𝑚𝑜𝑣𝑒(
-        "𝑝𝑥-𝑒𝑥𝑝𝑒𝑟𝑖𝑒𝑛𝑐𝑒-𝑎𝑐𝑡𝑖𝑣𝑒"
+      document.body.classList.remove(
+        "px-experience-active"
       );
-    }, 𝑟𝑒𝑑𝑢𝑐𝑒𝑑𝑀𝑜𝑡𝑖𝑜𝑛 ? 0 : 180);
+    }, reducedMotion ? 0 : 180);
   }
 
-  𝑓𝑢𝑛𝑐𝑡𝑖𝑜𝑛 ℎ𝑎𝑛𝑑𝑙𝑒𝑅𝑒𝑠𝑖𝑧𝑒() {
-    𝑟𝑒𝑠𝑖𝑧𝑒𝐶𝑎𝑛𝑣𝑎𝑠();
+  function handleResize() {
+    resizeCanvas();
 
-    𝑖𝑓 (
-      𝑠𝑡𝑎𝑡𝑒.𝑝ℎ𝑎𝑠𝑒 === "𝑔𝑎𝑡ℎ𝑒𝑟" ||
-      𝑠𝑡𝑎𝑡𝑒.𝑝ℎ𝑎𝑠𝑒 === "ℎ𝑜𝑙𝑑"
+    if (
+      state.phase === "gather" ||
+      state.phase === "hold"
     ) {
-      𝑏𝑢𝑖𝑙𝑑𝑇𝑎𝑟𝑔𝑒𝑡𝑠();
+      buildTargets();
     }
   }
 
-  𝑓𝑢𝑛𝑐𝑡𝑖𝑜𝑛 𝑝𝑟𝑒𝑝𝑎𝑟𝑒𝐸𝑥𝑝𝑒𝑟𝑖𝑒𝑛𝑐𝑒() {
-    𝑒𝑥𝑝𝑒𝑟𝑖𝑒𝑛𝑐𝑒.𝑐𝑙𝑎𝑠𝑠𝐿𝑖𝑠𝑡.𝑟𝑒𝑚𝑜𝑣𝑒(
-      "ℎ𝑖𝑑𝑑𝑒𝑛"
+  function prepareExperience() {
+    experience.classList.remove(
+      "hidden"
     );
 
-    𝑒𝑥𝑝𝑒𝑟𝑖𝑒𝑛𝑐𝑒.𝑠𝑒𝑡𝐴𝑡𝑡𝑟𝑖𝑏𝑢𝑡𝑒(
-      "𝑎𝑟𝑖𝑎-ℎ𝑖𝑑𝑑𝑒𝑛",
-      "𝑓𝑎𝑙𝑠𝑒"
+    experience.setAttribute(
+      "aria-hidden",
+      "false"
     );
 
-    ℎ𝑖𝑑𝑒𝐸𝑙𝑒𝑚𝑒𝑛𝑡(𝑞𝑢𝑒𝑠𝑡𝑖𝑜𝑛);
-    ℎ𝑖𝑑𝑒𝐸𝑙𝑒𝑚𝑒𝑛𝑡(𝑎𝑓𝑡𝑒𝑟𝑌𝑒𝑠);
-    ℎ𝑖𝑑𝑒𝐸𝑙𝑒𝑚𝑒𝑛𝑡(𝑙𝑎𝑠𝑡𝑆𝑒𝑐𝑟𝑒𝑡);
-    ℎ𝑖𝑑𝑒𝐸𝑙𝑒𝑚𝑒𝑛𝑡(𝑛𝑜𝑆𝑐𝑟𝑒𝑒𝑛);
+    hideElement(question);
+    hideElement(afterYes);
+    hideElement(lastSecret);
+    hideElement(noScreen);
 
-    𝑟𝑒𝑠𝑖𝑧𝑒𝐶𝑎𝑛𝑣𝑎𝑠();
+    resizeCanvas();
   }
 
-  𝑖𝑓 (𝑦𝑒𝑠𝐵𝑢𝑡𝑡𝑜𝑛) {
-    𝑦𝑒𝑠𝐵𝑢𝑡𝑡𝑜𝑛.𝑎𝑑𝑑𝐸𝑣𝑒𝑛𝑡𝐿𝑖𝑠𝑡𝑒𝑛𝑒𝑟(
-      "𝑐𝑙𝑖𝑐𝑘",
-      𝑐ℎ𝑜𝑜𝑠𝑒𝑌𝑒𝑠
-    );
-  }
-
-  𝑖𝑓 (𝑛𝑜𝐵𝑢𝑡𝑡𝑜𝑛) {
-    𝑛𝑜𝐵𝑢𝑡𝑡𝑜𝑛.𝑎𝑑𝑑𝐸𝑣𝑒𝑛𝑡𝐿𝑖𝑠𝑡𝑒𝑛𝑒𝑟(
-      "𝑐𝑙𝑖𝑐𝑘",
-      𝑐ℎ𝑜𝑜𝑠𝑒𝑁𝑜
+  if (yesButton) {
+    yesButton.addEventListener(
+      "click",
+      chooseYes
     );
   }
 
-  𝑐𝑜𝑛𝑠𝑡 𝑐𝑜𝑛𝑡𝑖𝑛𝑢𝑒𝐵𝑢𝑡𝑡𝑜𝑛 =
-    𝑑𝑜𝑐𝑢𝑚𝑒𝑛𝑡.𝑔𝑒𝑡𝐸𝑙𝑒𝑚𝑒𝑛𝑡𝐵𝑦𝐼𝑑(
-      "𝑝𝑥-𝑎𝑓𝑡𝑒𝑟-𝑦𝑒𝑠-𝑐𝑜𝑛𝑡𝑖𝑛𝑢𝑒"
-    );
-
-  𝑖𝑓 (𝑐𝑜𝑛𝑡𝑖𝑛𝑢𝑒𝐵𝑢𝑡𝑡𝑜𝑛) {
-    𝑐𝑜𝑛𝑡𝑖𝑛𝑢𝑒𝐵𝑢𝑡𝑡𝑜𝑛.𝑎𝑑𝑑𝐸𝑣𝑒𝑛𝑡𝐿𝑖𝑠𝑡𝑒𝑛𝑒𝑟(
-      "𝑐𝑙𝑖𝑐𝑘",
-      𝑐𝑜𝑛𝑡𝑖𝑛𝑢𝑒𝑇𝑜𝐿𝑎𝑠𝑡𝑆𝑒𝑐𝑟𝑒𝑡
+  if (noButton) {
+    noButton.addEventListener(
+      "click",
+      chooseNo
     );
   }
 
-  𝑐𝑜𝑛𝑠𝑡 𝑠𝑒𝑐𝑟𝑒𝑡𝐵𝑢𝑡𝑡𝑜𝑛 =
-    𝑑𝑜𝑐𝑢𝑚𝑒𝑛𝑡.𝑔𝑒𝑡𝐸𝑙𝑒𝑚𝑒𝑛𝑡𝐵𝑦𝐼𝑑(
-      "𝑝𝑥-𝑙𝑎𝑠𝑡-𝑠𝑒𝑐𝑟𝑒𝑡-𝑜𝑝𝑒𝑛"
+  const continueButton =
+    document.getElementById(
+      "px-after-yes-continue"
     );
 
-  𝑖𝑓 (𝑠𝑒𝑐𝑟𝑒𝑡𝐵𝑢𝑡𝑡𝑜𝑛) {
-    𝑠𝑒𝑐𝑟𝑒𝑡𝐵𝑢𝑡𝑡𝑜𝑛.𝑎𝑑𝑑𝐸𝑣𝑒𝑛𝑡𝐿𝑖𝑠𝑡𝑒𝑛𝑒𝑟(
-      "𝑐𝑙𝑖𝑐𝑘",
-      𝑜𝑝𝑒𝑛𝑇ℎ𝑒𝐿𝑒𝑡𝑡𝑒𝑟
+  if (continueButton) {
+    continueButton.addEventListener(
+      "click",
+      continueToLastSecret
     );
   }
 
-  𝑤𝑖𝑛𝑑𝑜𝑤.𝑎𝑑𝑑𝐸𝑣𝑒𝑛𝑡𝐿𝑖𝑠𝑡𝑒𝑛𝑒𝑟(
-    "𝑟𝑒𝑠𝑖𝑧𝑒",
-    ℎ𝑎𝑛𝑑𝑙𝑒𝑅𝑒𝑠𝑖𝑧𝑒,
-    { 𝑝𝑎𝑠𝑠𝑖𝑣𝑒: 𝑡𝑟𝑢𝑒 }
+  const secretButton =
+    document.getElementById(
+      "px-last-secret-open"
+    );
+
+  if (secretButton) {
+    secretButton.addEventListener(
+      "click",
+      openTheLetter
+    );
+  }
+
+  window.addEventListener(
+    "resize",
+    handleResize,
+    { passive: true }
   );
 
-  𝑝𝑟𝑒𝑝𝑎𝑟𝑒𝐸𝑥𝑝𝑒𝑟𝑖𝑒𝑛𝑐𝑒();
+  prepareExperience();
 
-  𝑟𝑒𝑞𝑢𝑒𝑠𝑡𝐴𝑛𝑖𝑚𝑎𝑡𝑖𝑜𝑛𝐹𝑟𝑎𝑚𝑒(𝑑𝑟𝑎𝑤);
+  requestAnimationFrame(draw);
 
-  𝑐𝑜𝑛𝑠𝑡 ℎ𝑜𝑙𝑑𝐷𝑒𝑙𝑎𝑦 =
-    𝑟𝑒𝑑𝑢𝑐𝑒𝑑𝑀𝑜𝑡𝑖𝑜𝑛
+  const holdDelay =
+    reducedMotion
       ? 1450
       : 3400;
 
-  𝑠𝑒𝑡𝑇𝑖𝑚𝑒𝑜𝑢𝑡(() => {
-    𝑖𝑓 (
-      !𝑠𝑡𝑎𝑡𝑒.𝑐ℎ𝑜𝑖𝑐𝑒𝑀𝑎𝑑𝑒 &&
-      !𝑠𝑡𝑎𝑡𝑒.𝑓𝑖𝑛𝑖𝑠ℎ𝑒𝑑
+  setTimeout(() => {
+    if (
+      !state.choiceMade &&
+      !state.finished
     ) {
-      𝑠𝑡𝑎𝑡𝑒.𝑝ℎ𝑎𝑠𝑒 = "ℎ𝑜𝑙𝑑";
-      𝑠ℎ𝑜𝑤𝑄𝑢𝑒𝑠𝑡𝑖𝑜𝑛();
+      state.phase = "hold";
+      showQuestion();
     }
-  }, ℎ𝑜𝑙𝑑𝐷𝑒𝑙𝑎𝑦);
+  }, holdDelay);
 
-  𝑤𝑖𝑛𝑑𝑜𝑤.𝑎𝑑𝑑𝐸𝑣𝑒𝑛𝑡𝐿𝑖𝑠𝑡𝑒𝑛𝑒𝑟(
-    "𝑝𝑎𝑔𝑒𝑠ℎ𝑜𝑤",
+  window.addEventListener(
+    "pageshow",
     () => {
-      𝑖𝑓 (!𝑠𝑡𝑎𝑡𝑒.𝑓𝑖𝑛𝑖𝑠ℎ𝑒𝑑) {
-        𝑝𝑟𝑒𝑝𝑎𝑟𝑒𝐸𝑥𝑝𝑒𝑟𝑖𝑒𝑛𝑐𝑒();
+      if (!state.finished) {
+        prepareExperience();
       }
     }
   );
