@@ -261,3 +261,186 @@
   .px-glide-symbol,
   #px-tulip-drift img { animation-play-state: paused; }
 }
+
+/* =========================================================
+   READABLE PARTICLE TEXT + LOVE QUESTION
+   Keeps the particle effect while making the message easier to read.
+   ========================================================= */
+.px-readable-text {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: min(92vw, 980px);
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(7px, 1.1vw, 14px);
+  pointer-events: none;
+  user-select: none;
+  opacity: 0;
+  z-index: 1;
+  transition: opacity .8s ease;
+}
+
+.px-readable-line {
+  display: block;
+  margin: 0;
+  text-align: center;
+  color: rgba(255,255,255,.90);
+  -webkit-text-stroke: 1px rgba(255,255,255,.18);
+  text-shadow:
+    0 0 8px rgba(229, 196, 255, .50),
+    0 0 22px rgba(179, 125, 230, .28);
+  letter-spacing: .01em;
+}
+
+.px-readable-love {
+  font: 700 clamp(48px, 9.8vw, 108px)/.98 Arial, Helvetica, sans-serif;
+}
+
+.px-readable-name {
+  font: 700 clamp(32px, 6vw, 68px)/1 Arial, Helvetica, sans-serif;
+  letter-spacing: .025em;
+}
+
+.px-question {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: min(88vw, 620px);
+  transform: translate(-50%, -46%);
+  text-align: center;
+  padding: 26px 22px 24px;
+  border-radius: 28px;
+  background: rgba(10, 6, 18, .56);
+  border: 1px solid rgba(255,255,255,.13);
+  box-shadow: 0 22px 65px rgba(0,0,0,.28), inset 0 0 34px rgba(179,125,230,.06);
+  backdrop-filter: blur(11px);
+  -webkit-backdrop-filter: blur(11px);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  z-index: 5;
+  transition: opacity .8s ease, transform .8s ease, visibility .8s ease;
+}
+
+.px-question.px-question-show {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translate(-50%, -50%);
+}
+
+.px-question-name {
+  margin: 0 0 4px;
+  color: rgba(255,255,255,.76);
+  font: 600 clamp(18px, 3.2vw, 26px)/1.2 Arial, Helvetica, sans-serif;
+  letter-spacing: .04em;
+}
+
+.px-question h2 {
+  margin: 0;
+  color: #fff;
+  font: 700 clamp(28px, 6vw, 50px)/1.13 Arial, Helvetica, sans-serif;
+  letter-spacing: -.015em;
+  text-shadow: 0 0 14px rgba(226,198,255,.38), 0 0 32px rgba(150,95,190,.18);
+}
+
+.px-question-actions {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  margin-top: 25px;
+  flex-wrap: wrap;
+}
+
+.px-question-actions button {
+  min-width: 122px;
+  min-height: 50px;
+  padding: 11px 20px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,.16);
+  font: 700 15px/1 Arial, Helvetica, sans-serif;
+  cursor: pointer;
+  transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+}
+
+#px-yes {
+  color: #fff;
+  background: linear-gradient(135deg, rgba(170,111,214,.98), rgba(123,63,168,.98));
+  box-shadow: 0 10px 28px rgba(126,70,162,.28), 0 0 18px rgba(215,179,246,.16);
+}
+
+#px-no {
+  color: rgba(255,255,255,.88);
+  background: rgba(255,255,255,.06);
+}
+
+.px-question-actions button:hover {
+  transform: translateY(-2px) scale(1.02);
+}
+
+.px-question-actions button:active {
+  transform: translateY(0) scale(.98);
+}
+
+.px-no-screen {
+  position: absolute;
+  inset: 0;
+  z-index: 8;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 8px;
+  text-align: center;
+  background: radial-gradient(circle at 50% 45%, rgba(131,86,156,.12), transparent 38%), #090611;
+  color: rgba(255,255,255,.88);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity .9s ease, visibility .9s ease;
+}
+
+.px-no-screen.px-no-show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.px-no-screen p {
+  margin: 0;
+  font: 700 clamp(31px, 6vw, 50px)/1.1 "Dancing Script", cursive;
+}
+
+.px-no-screen span {
+  width: min(80vw, 460px);
+  color: rgba(255,255,255,.58);
+  font: 14px/1.6 Arial, Helvetica, sans-serif;
+}
+
+@media (max-width: 600px) {
+  .px-readable-text {
+    gap: 8px;
+    width: 94vw;
+  }
+  .px-readable-love { font-size: clamp(42px, 12vw, 74px); }
+  .px-readable-name { font-size: clamp(27px, 8.2vw, 52px); }
+  .px-question { width: min(90vw, 560px); padding: 23px 17px 20px; }
+  .px-question-actions { gap: 10px; margin-top: 20px; }
+  .px-question-actions button { min-width: 112px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .px-readable-text,
+  .px-question,
+  .px-no-screen { transition: none; }
+}
+
+/* Keep the particle lettering easy to read without removing the effect. */
+.px-readable-text.px-readable-hold {
+  opacity: .12;
+}
+
+.px-readable-text.px-readable-visible {
+  opacity: .76;
+}
