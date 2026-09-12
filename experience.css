@@ -170,3 +170,94 @@
   .px-souvenir-gate { width: min(100% - 24px, 900px); margin-top: 10px; margin-bottom: 28px; }
   .px-souvenir-gate-link { width: 100%; padding-left: 14px; padding-right: 14px; }
 }
+
+
+/* =========================================================
+   SLOW TRANSLUCENT DRIFT — exact requested symbol order
+   ========================================================= */
+#px-glide-decor {
+  position: fixed;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.px-glide-symbol {
+  position: absolute;
+  display: block;
+  left: -12vw;
+  top: var(--px-y, 0vh);
+  font-size: var(--px-size, 24px);
+  line-height: 1;
+  opacity: var(--px-opacity, .24);
+  filter: saturate(.88);
+  will-change: transform;
+  animation: px-slow-glide var(--px-duration, 24s) linear var(--px-delay, 0s) infinite;
+}
+
+@keyframes px-slow-glide {
+  0% {
+    transform: translate3d(-14vw, 0, 0) rotate(var(--px-r0, -5deg));
+  }
+  50% {
+    transform: translate3d(57vw, var(--px-rise, -3vh), 0) rotate(var(--px-r1, 5deg));
+  }
+  100% {
+    transform: translate3d(116vw, var(--px-end, -6vh), 0) rotate(var(--px-r2, -4deg));
+  }
+}
+
+/* The seven tulips use both filenames, alternating upward like the drift. */
+#px-tulip-drift {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+#px-tulip-drift img {
+  position: absolute;
+  bottom: -92px;
+  width: var(--px-tulip-size, 46px);
+  height: auto;
+  opacity: .19;
+  filter: saturate(.82);
+  will-change: transform, opacity;
+  animation: px-tulip-rise var(--px-tulip-duration, 18s) ease-in-out var(--px-tulip-delay, 0s) infinite;
+}
+
+#px-tulip-drift img:nth-child(1) { left: 6%;  --px-tulip-size: 42px; --px-tulip-duration: 20s; --px-tulip-delay: -4s;  --px-sway: -22px; }
+#px-tulip-drift img:nth-child(2) { left: 20%; --px-tulip-size: 48px; --px-tulip-duration: 22s; --px-tulip-delay: -12s; --px-sway: 18px; }
+#px-tulip-drift img:nth-child(3) { left: 34%; --px-tulip-size: 39px; --px-tulip-duration: 19s; --px-tulip-delay: -8s;  --px-sway: -15px; }
+#px-tulip-drift img:nth-child(4) { left: 50%; --px-tulip-size: 50px; --px-tulip-duration: 23s; --px-tulip-delay: -17s; --px-sway: 23px; }
+#px-tulip-drift img:nth-child(5) { left: 65%; --px-tulip-size: 41px; --px-tulip-duration: 21s; --px-tulip-delay: -2s;  --px-sway: -19px; }
+#px-tulip-drift img:nth-child(6) { left: 79%; --px-tulip-size: 47px; --px-tulip-duration: 24s; --px-tulip-delay: -14s; --px-sway: 17px; }
+#px-tulip-drift img:nth-child(7) { left: 92%; --px-tulip-size: 40px; --px-tulip-duration: 20s; --px-tulip-delay: -6s;  --px-sway: -20px; }
+
+@keyframes px-tulip-rise {
+  0% { transform: translate3d(0, 5vh, 0) rotate(-3deg) scale(.94); opacity: 0; }
+  15% { opacity: .19; }
+  50% { transform: translate3d(var(--px-sway, 18px), -48vh, 0) rotate(3deg) scale(1); opacity: .18; }
+  82% { opacity: .13; }
+  100% { transform: translate3d(calc(var(--px-sway, 18px) * -1), -112vh, 0) rotate(-4deg) scale(.96); opacity: 0; }
+}
+
+/* Only the requested title layout changes — no letter copy is touched. */
+.px-title-line {
+  display: block;
+}
+.header .miamor {
+  display: inline-block;
+}
+
+@media (max-width: 600px) {
+  .px-glide-symbol { font-size: calc(var(--px-size, 24px) * .86); }
+  #px-tulip-drift img { width: calc(var(--px-tulip-size, 46px) * .82); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .px-glide-symbol,
+  #px-tulip-drift img { animation-play-state: paused; }
+}
