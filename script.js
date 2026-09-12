@@ -11,18 +11,6 @@ document.addEventListener("DOMContentLoaded", () => {
        ELEMENTS
        ===================================================== */
 
-    const introScreen =
-        document.getElementById("intro-screen");
-
-    const openSurpriseBtn =
-        document.getElementById("openSurpriseBtn");
-
-    const welcomePopup =
-        document.getElementById("welcome-popup");
-
-    const continueBtn =
-        document.getElementById("continueBtn");
-
     const musicBtn =
         document.getElementById("music-btn");
 
@@ -43,118 +31,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       INTRO → OPEN SURPRISE
-       ===================================================== */
-
-    function openSurprise(){
-
-        if(!introScreen){
-            return;
-        }
-
-        introScreen.classList.add(
-            "hide-intro"
-        );
-
-        window.setTimeout(() => {
-
-            if(welcomePopup){
-
-                welcomePopup.classList.remove(
-                    "hidden"
-                );
-
-            }
-
-        }, 650);
-    }
-
-
-    if(openSurpriseBtn){
-
-        openSurpriseBtn.addEventListener(
-            "click",
-            openSurprise
-        );
-
-    }
-
-
-    /* =====================================================
-       POPUP → CONTINUE
-       ===================================================== */
-
-    function closeWelcomePopup(){
-
-        if(!welcomePopup){
-            return;
-        }
-
-        welcomePopup.classList.add(
-            "hidden"
-        );
-    }
-
-
-    if(continueBtn){
-
-        continueBtn.addEventListener(
-            "click",
-            () => {
-
-                if(ding){
-
-                    try{
-
-                        ding.currentTime = 0;
-
-                        const dingPromise =
-                            ding.play();
-
-                        if(
-                            dingPromise &&
-                            typeof dingPromise.catch === "function"
-                        ){
-
-                            dingPromise.catch(
-                                () => {}
-                            );
-
-                        }
-
-                    }catch(error){
-
-                        /* Audio optionnel */
-
-                    }
-
-                }
-
-
-                closeWelcomePopup();
-
-                startMusic();
-
-            }
-        );
-
-    }
-
-
-    /* =====================================================
        MUSIC
        ===================================================== */
 
     let musicPlaying = false;
 
 
-    function updateMusicButton(){
+    function updateMusicButton() {
 
-        if(!musicBtn){
+        if (!musicBtn) {
             return;
         }
 
-        if(musicPlaying){
+
+        if (musicPlaying) {
 
             musicBtn.textContent =
                 "🔊 Musique";
@@ -164,7 +54,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 "true"
             );
 
-        }else{
+        } else {
 
             musicBtn.textContent =
                 "🔇 Musique";
@@ -173,85 +63,86 @@ document.addEventListener("DOMContentLoaded", () => {
                 "aria-pressed",
                 "false"
             );
-
         }
-
     }
 
 
-    function startMusic(){
+    function startMusic() {
 
-        if(!music){
+        if (!music) {
             return;
         }
 
-        try{
 
-            music.volume = 0.35;
+        try {
+
+            music.volume = .35;
 
             const playPromise =
                 music.play();
 
-            if(
+
+            if (
                 playPromise &&
-                typeof playPromise.then === "function"
-            ){
+                typeof playPromise.then ===
+                    "function"
+            ) {
 
                 playPromise
                     .then(() => {
 
-                        musicPlaying = true;
+                        musicPlaying =
+                            true;
 
                         updateMusicButton();
 
                     })
                     .catch(() => {
 
-                        musicPlaying = false;
+                        musicPlaying =
+                            false;
 
                         updateMusicButton();
 
                     });
-
             }
 
-        }catch(error){
+        } catch (error) {
 
             musicPlaying = false;
 
             updateMusicButton();
-
         }
-
     }
 
 
-    function stopMusic(){
+    function stopMusic() {
 
-        if(!music){
+        if (!music) {
             return;
         }
 
-        try{
+
+        try {
 
             music.pause();
 
-        }catch(error){
+        } catch (error) {
 
             /* Rien */
-
         }
+
 
         musicPlaying = false;
 
         updateMusicButton();
-
     }
 
 
-    if(music){
+    if (music) {
 
-        music.volume = 0.35;
+        music.volume = .35;
+
 
         music.addEventListener(
             "play",
@@ -264,6 +155,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         );
 
+
         music.addEventListener(
             "pause",
             () => {
@@ -275,69 +167,89 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         );
 
+
+        music.addEventListener(
+            "error",
+            () => {
+
+                musicPlaying = false;
+
+                updateMusicButton();
+
+            }
+        );
     }
 
 
-    if(musicBtn){
+    if (musicBtn) {
 
         updateMusicButton();
+
 
         musicBtn.addEventListener(
             "click",
             () => {
 
-                if(musicPlaying){
+                if (musicPlaying) {
 
                     stopMusic();
 
-                }else{
+                } else {
 
                     startMusic();
-
                 }
-
             }
         );
-
     }
 
 
     /* =====================================================
-       POPUP ESCAPE KEY
+       DING
        ===================================================== */
 
-    document.addEventListener(
-        "keydown",
-        (event) => {
+    window.playDing = function () {
 
-            if(event.key === "Escape"){
+        if (!ding) {
+            return;
+        }
 
-                if(
-                    welcomePopup &&
-                    !welcomePopup.classList.contains(
-                        "hidden"
-                    )
-                ){
 
-                    closeWelcomePopup();
+        try {
 
-                }
+            ding.currentTime = 0;
 
+            const dingPromise =
+                ding.play();
+
+
+            if (
+                dingPromise &&
+                typeof dingPromise.catch ===
+                    "function"
+            ) {
+
+                dingPromise.catch(
+                    () => {}
+                );
             }
 
+        } catch (error) {
+
+            /* Audio optionnel */
         }
-    );
+    };
 
 
     /* =====================================================
        FLOATING HEARTS ❤️
        ===================================================== */
 
-    function createHearts(){
+    function createHearts() {
 
-        if(!heartsContainer){
+        if (!heartsContainer) {
             return;
         }
+
 
         const heartSymbols = [
             "❤️",
@@ -348,18 +260,28 @@ document.addEventListener("DOMContentLoaded", () => {
             "🤭"
         ];
 
+
         const amount = 12;
 
         const fragment =
             document.createDocumentFragment();
 
-        for(let i = 0; i < amount; i++){
+
+        for (
+            let i = 0;
+            i < amount;
+            i++
+        ) {
 
             const heart =
-                document.createElement("div");
+                document.createElement(
+                    "div"
+                );
+
 
             heart.className =
                 "heart";
+
 
             heart.textContent =
                 heartSymbols[
@@ -369,31 +291,41 @@ document.addEventListener("DOMContentLoaded", () => {
                     )
                 ];
 
+
             heart.style.left =
-                Math.random() * 100 + "vw";
+                Math.random() *
+                100 +
+                "vw";
+
 
             heart.style.animationDuration =
                 (
                     10 +
                     Math.random() * 10
-                ) + "s";
+                ) +
+                "s";
+
 
             heart.style.animationDelay =
                 (
                     -Math.random() * 15
-                ) + "s";
+                ) +
+                "s";
+
 
             heart.style.fontSize =
                 (
                     14 +
                     Math.random() * 12
-                ) + "px";
+                ) +
+                "px";
+
 
             fragment.appendChild(
                 heart
             );
-
         }
+
 
         heartsContainer.appendChild(
             fragment
@@ -408,11 +340,12 @@ document.addEventListener("DOMContentLoaded", () => {
        FALLING FLOWERS / PETALS 🌸
        ===================================================== */
 
-    function createFallingFlowers(){
+    function createFallingFlowers() {
 
-        if(!petalsContainer){
+        if (!petalsContainer) {
             return;
         }
+
 
         const flowerSymbols = [
             "🌸",
@@ -422,18 +355,28 @@ document.addEventListener("DOMContentLoaded", () => {
             "💮"
         ];
 
+
         const amount = 14;
 
         const fragment =
             document.createDocumentFragment();
 
-        for(let i = 0; i < amount; i++){
+
+        for (
+            let i = 0;
+            i < amount;
+            i++
+        ) {
 
             const petal =
-                document.createElement("div");
+                document.createElement(
+                    "div"
+                );
+
 
             petal.className =
                 "petal";
+
 
             petal.textContent =
                 flowerSymbols[
@@ -443,37 +386,48 @@ document.addEventListener("DOMContentLoaded", () => {
                     )
                 ];
 
+
             petal.style.left =
-                Math.random() * 100 + "vw";
+                Math.random() *
+                100 +
+                "vw";
+
 
             petal.style.animationDuration =
                 (
                     10 +
                     Math.random() * 12
-                ) + "s";
+                ) +
+                "s";
+
 
             petal.style.animationDelay =
                 (
                     -Math.random() * 18
-                ) + "s";
+                ) +
+                "s";
+
 
             petal.style.fontSize =
                 (
                     13 +
                     Math.random() * 12
-                ) + "px";
+                ) +
+                "px";
+
 
             petal.style.opacity =
                 (
-                    0.35 +
-                    Math.random() * 0.30
+                    .35 +
+                    Math.random() * .30
                 ).toFixed(2);
+
 
             fragment.appendChild(
                 petal
             );
-
         }
+
 
         petalsContainer.appendChild(
             fragment
@@ -485,47 +439,64 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       GOLD CONFETTI ✨
+       CONFETTI ✨
        ===================================================== */
 
-    function createConfetti(){
+    function createConfetti() {
 
-        if(!confettiContainer){
+        if (!confettiContainer) {
             return;
         }
+
 
         const amount = 12;
 
         const fragment =
             document.createDocumentFragment();
 
-        for(let i = 0; i < amount; i++){
+
+        for (
+            let i = 0;
+            i < amount;
+            i++
+        ) {
 
             const confetti =
-                document.createElement("div");
+                document.createElement(
+                    "div"
+                );
+
 
             confetti.className =
                 "confetti";
 
+
             confetti.style.left =
-                Math.random() * 100 + "vw";
+                Math.random() *
+                100 +
+                "vw";
+
 
             confetti.style.animationDuration =
                 (
                     7 +
                     Math.random() * 8
-                ) + "s";
+                ) +
+                "s";
+
 
             confetti.style.animationDelay =
                 (
                     -Math.random() * 10
-                ) + "s";
+                ) +
+                "s";
+
 
             fragment.appendChild(
                 confetti
             );
-
         }
+
 
         confettiContainer.appendChild(
             fragment
@@ -537,40 +508,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     /* =====================================================
-       PREVENT AUDIO ERRORS
-       ===================================================== */
-
-    if(music){
-
-        music.addEventListener(
-            "error",
-            () => {
-
-                musicPlaying = false;
-
-                updateMusicButton();
-
-            }
-        );
-
-    }
-
-
-    if(ding){
-
-        ding.addEventListener(
-            "error",
-            () => {
-
-                /* Son optionnel */
-
-            }
-        );
-
-    }
-
-
-    /* =====================================================
        IMAGE ERROR PROTECTION
        ===================================================== */
 
@@ -579,8 +516,9 @@ document.addEventListener("DOMContentLoaded", () => {
             "img"
         );
 
+
     images.forEach(
-        (image) => {
+        image => {
 
             image.addEventListener(
                 "error",
@@ -595,12 +533,5 @@ document.addEventListener("DOMContentLoaded", () => {
 
         }
     );
-
-
-    /* =====================================================
-       INITIAL STATE
-       ===================================================== */
-
-    updateMusicButton();
 
 });
