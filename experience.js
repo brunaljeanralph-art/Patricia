@@ -8,6 +8,11 @@
   const experience = document.getElementById("px-experience");
   const canvas = document.getElementById("px-particle-canvas");
   const skip = document.getElementById("px-skip");
+  const question = document.getElementById("px-question");
+  const yes = document.getElementById("px-yes");
+  const no = document.getElementById("px-no");
+  const noScreen = document.getElementById("px-no-screen");
+  const readableText = document.querySelector(".px-readable-text");
   if (!experience || !canvas) return;
 
   window.PatriciaExperienceActive = true;
@@ -119,6 +124,16 @@
         p.vy *= .88;
         p.x += p.vx;
         p.y += p.vy;
+      } else if (state.phase === "question") {
+        const dx = p.tx - p.x;
+        const dy = p.ty - p.y;
+        p.vx += dx * .012;
+        p.vy += dy * .012;
+        p.vx *= .88;
+        p.vy *= .88;
+        p.x += p.vx;
+        p.y += p.vy;
+        p.a = Math.min(1, p.a + .012);
       } else if (state.phase === "scatter") {
         p.vx += (p.x - state.w / 2) * .0008;
         p.vy += (p.y - state.h / 2) * .0008;
@@ -135,18 +150,44 @@
       ctx.fill();
     }
 
-    if (elapsed > 900 && state.phase === "gather") state.phase = "hold";
-    if (elapsed > (reduced ? 1550 : 2950) && state.phase === "hold") state.phase = "scatter";
-    if (state.phase === "scatter" && elapsed > (reduced ? 2200 : 3700)) finish();
+    if (elapsed > 900 && state.phase === "gather") {
+      state.phase = "hold";
+      readableText?.classList.add("px-readable-visible");
+    }
+    if (elapsed > (reduced ? 1500 : 2900) && state.phase === "hold") showQuestion();
+    if (state.phase === "scatter" && elapsed > (reduced ? 2200 : 4200)) finish();
 
     raf = requestAnimationFrame(draw);
+  }
+
+  function showQuestion() {
+    if (state.phase === "question" || stopped) return;
+    state.phase = "question";
+    readableText?.classList.add("px-readable-hold");
+    question?.classList.add("px-question-show");
+    question?.setAttribute("aria-hidden", "false");
+  }
+
+  function chooseYes() {
+    if (stopped) return;
+    question?.classList.remove("px-question-show");
+    question?.setAttribute("aria-hidden", "true");
+    readableText?.classList.remove("px-readable-hold");
+    state.phase = "scatter";
+    const now = performance.now();
+    state.startedAt = now - (reduced ? 1800 : 3900);
+  }
+
+  function chooseNo() {
+    if (stopped) return;
+    window.location.replace("about:blank");
   }
 
   function start() {
     resize();
     const size = Math.max(52, Math.min(108, state.w * 0.105));
     const first = targetPoints("Je t'aime", size);
-    const second = targetPoints("Sauveur Patricia", Math.max(35, size * .58));
+    const second = targetPoints("Sauveur Patricia", Math.max(40, size * .68));
     // Two-line target with exact requested wording.
     const offsetY = Math.min(52, size * .55);
     for (const p of second) p.y += offsetY;
@@ -175,11 +216,13 @@
   }
 
   skip?.addEventListener("click", finish);
+  yes?.addEventListener("click", chooseYes);
+  no?.addEventListener("click", chooseNo);
   window.addEventListener("resize", () => {
     resize();
     const size = Math.max(52, Math.min(108, state.w * 0.105));
     const first = targetPoints("Je t'aime", size);
-    const second = targetPoints("Sauveur Patricia", Math.max(35, size * .58));
+    const second = targetPoints("Sauveur Patricia", Math.max(40, size * .68));
     const offsetY = Math.min(52, size * .55);
     for (const p of second) p.y += offsetY;
     for (const p of first) p.y -= offsetY;
