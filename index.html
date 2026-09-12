@@ -1,559 +1,727 @@
-/* =========================================================
-   PATRICIA — SOUVENIRS / LIVRE
-   Does not modify the existing letter styles.
-   ========================================================= */
-
-.px-souvenir-gate {
-    width: min(1100px, 94%);
-    margin: 10px auto 34px;
-    text-align: center;
-}
-
-.px-souvenir-gate-link {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
-    min-height: 46px;
-    padding: 10px 22px;
-    border: 1px solid rgba(122, 63, 163, .18);
-    border-radius: 999px;
-    background: rgba(255,255,255,.78);
-    color: #6b3a82;
-    text-decoration: none;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 14px;
-    font-weight: 700;
-    box-shadow: 0 8px 22px rgba(91, 52, 106, .08);
-    transition: transform .25s ease, box-shadow .25s ease, background .25s ease;
-}
-
-.px-souvenir-gate-link:hover {
-    transform: translateY(-2px);
-    background: rgba(255,255,255,.94);
-    box-shadow: 0 12px 28px rgba(91, 52, 106, .12);
-}
-
-.px-souvenir-gate-icon {
-    font-size: 20px;
-    line-height: 1;
-}
-
-.px-souvenir-gate-arrow {
-    font-size: 17px;
-    transform: translateY(1px);
-}
-
-.px-souvenirs-book {
-    width: min(1120px, 94%);
-    margin: 0 auto 80px;
-    scroll-margin-top: 24px;
-}
-
-.px-book {
-    position: relative;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    min-height: 650px;
-    overflow: hidden;
-    border-radius: 20px;
-    background: linear-gradient(90deg, rgba(248,240,247,.98), rgba(255,252,249,.98));
-    border: 1px solid rgba(104, 62, 103, .14);
-    box-shadow: 0 24px 55px rgba(64, 39, 63, .14);
-}
-
-.px-book::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 50%;
-    width: 1px;
-    background: linear-gradient(to bottom, transparent, rgba(100,70,95,.23), transparent);
-    z-index: 3;
-}
-
-.px-book-page {
-    position: relative;
-    min-width: 0;
-    padding: 46px 38px;
-    box-sizing: border-box;
-}
-
-.px-book-left {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    background:
-        radial-gradient(circle at 20% 15%, rgba(196,151,205,.14), transparent 34%),
-        linear-gradient(180deg, rgba(255,255,255,.54), rgba(249,240,248,.72));
-}
-
-.px-book-left::after {
-    content: "";
-    position: absolute;
-    inset: 22px;
-    border: 1px solid rgba(122,63,163,.09);
-    border-radius: 14px;
-    pointer-events: none;
-}
-
-.px-book-mark,
-.px-book-kicker,
-.px-book-left h2,
-.px-book-copy,
-.px-book-hint,
-.px-book-heart,
-.px-book-line {
-    position: relative;
-    z-index: 2;
-}
-
-.px-book-mark {
-    width: 50px;
-    height: 50px;
-    display: grid;
-    place-items: center;
-    margin-bottom: 26px;
-    border-radius: 50%;
-    background: rgba(255,255,255,.76);
-    color: #8a4c9a;
-    font-size: 27px;
-    box-shadow: 0 8px 18px rgba(122,63,163,.09);
-}
-
-.px-book-kicker {
-    margin: 0 0 7px;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: .15em;
-    text-transform: uppercase;
-    color: #9b708e;
-}
-
-.px-book-left h2 {
-    margin: 0;
-    font-family: "Dancing Script", cursive;
-    font-size: clamp(42px, 5vw, 61px);
-    line-height: .98;
-    color: #6f3d82;
-    font-weight: 700;
-}
-
-.px-book-line {
-    width: min(180px, 65%);
-    height: 1px;
-    margin: 23px 0 25px;
-    background: linear-gradient(to right, rgba(122,63,163,.55), transparent);
-}
-
-.px-book-copy {
-    max-width: 430px;
-    margin: 0;
-    color: #564a57;
-    font-family: Georgia, "Times New Roman", serif;
-    font-size: 18px;
-    line-height: 1.8;
-}
-
-.px-book-hint {
-    max-width: 340px;
-    margin: 30px 0 0;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 13px;
-    line-height: 1.55;
-    color: #8a7488;
-}
-
-.px-book-heart {
-    margin-top: 30px;
-    color: rgba(155, 91, 122, .62);
-    font-size: 20px;
-}
-
-.px-book-right {
-    display: flex;
-    flex-direction: column;
-    background: rgba(255,253,250,.97);
-}
-
-.px-souvenir-flow-head,
-.px-flow-footer {
-    position: relative;
-    z-index: 8;
-    display: flex;
-    align-items: center;
-}
-
-.px-souvenir-flow-head {
-    justify-content: space-between;
-    gap: 10px;
-    padding-bottom: 18px;
-    border-bottom: 1px solid rgba(92, 62, 90, .10);
-    color: #76556f;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: .08em;
-    text-transform: uppercase;
-}
-
-.px-flow-dot {
-    width: 7px;
-    height: 7px;
-    flex: 0 0 7px;
-    border-radius: 50%;
-    background: #a56a89;
-    box-shadow: 0 0 0 6px rgba(165,106,137,.09);
-    margin-right: auto;
-}
-
-.px-flow-count {
-    margin-left: auto;
-    font-variant-numeric: tabular-nums;
-    color: #a4839a;
-}
-
-.px-photo-stage {
-    position: relative;
-    flex: 1;
-    min-height: 500px;
-    margin-top: 18px;
-    overflow: hidden;
-    border-radius: 15px;
-    background:
-        radial-gradient(circle at 50% 45%, rgba(194,154,192,.15), transparent 42%),
-        linear-gradient(160deg, rgba(255,255,255,.92), rgba(248,240,247,.88));
-    border: 1px solid rgba(99, 66, 93, .10);
-    touch-action: none;
-    user-select: none;
-    -webkit-user-select: none;
-}
-
-.px-photo-stage.is-paused .px-photo-frame {
-    box-shadow: 0 22px 48px rgba(75, 46, 70, .20), 0 0 0 8px rgba(175,116,146,.08);
-}
-
-.px-photo-orbit {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    border: 1px solid rgba(130, 87, 121, .12);
-    border-radius: 50%;
-    transform: translate(-50%, -50%);
-    pointer-events: none;
-}
-
-.px-photo-orbit-one {
-    width: 76%;
-    height: 58%;
-}
-
-.px-photo-orbit-two {
-    width: 55%;
-    height: 45%;
-}
-
-.px-photo-frame {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    width: min(78%, 340px);
-    aspect-ratio: 3 / 4;
-    margin: 0;
-    padding: 9px 9px 38px;
-    box-sizing: border-box;
-    border-radius: 10px;
-    background: #fffdfb;
-    border: 1px solid rgba(78, 49, 71, .12);
-    box-shadow: 0 18px 42px rgba(66, 42, 61, .17);
-    transform: translate(-50%, 112%);
-    opacity: 0;
-    will-change: transform, opacity;
-    overflow: hidden;
-}
-
-.px-photo-frame.is-entering,
-.px-photo-frame.is-visible,
-.px-photo-frame.is-leaving {
-    opacity: 1;
-}
-
-.px-photo-frame img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    object-position: center;
-    border-radius: 6px;
-    background: #f5f1f3;
-    -webkit-user-drag: none;
-    user-select: none;
-    pointer-events: none;
-}
-
-.px-photo-frame figcaption {
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 11px;
-    text-align: center;
-    font-family: "Dancing Script", cursive;
-    font-size: 20px;
-    font-weight: 700;
-    color: #6c4b66;
-}
-
-.px-photo-shine {
-    position: absolute;
-    inset: 0;
-    z-index: 2;
-    pointer-events: none;
-    background: linear-gradient(115deg, transparent 30%, rgba(255,255,255,.20), transparent 62%);
-    transform: translateX(-130%);
-}
-
-.px-photo-frame.is-visible .px-photo-shine {
-    animation: pxPhotoShine 2.8s ease forwards .25s;
-}
-
-.px-photo-loader {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    display: flex;
-    gap: 5px;
-    transform: translate(-50%, -50%);
-    opacity: 0;
-    pointer-events: none;
-}
-
-.px-photo-loader.is-loading {
-    opacity: 1;
-}
-
-.px-photo-loader span {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: #8e6380;
-    animation: pxLoader 1s ease-in-out infinite;
-}
-
-.px-photo-loader span:nth-child(2) { animation-delay: .13s; }
-.px-photo-loader span:nth-child(3) { animation-delay: .26s; }
-
-.px-photo-progress {
-    position: absolute;
-    left: 16px;
-    right: 16px;
-    bottom: 48px;
-    height: 2px;
-    overflow: hidden;
-    border-radius: 999px;
-    background: rgba(120, 85, 112, .10);
-    z-index: 10;
-}
-
-#px-photo-progress-bar {
-    width: 0;
-    height: 100%;
-    border-radius: inherit;
-    background: linear-gradient(to right, rgba(132,82,126,.28), rgba(132,82,126,.82));
-    transform-origin: left center;
-}
-
-.px-pause-hint {
-    position: absolute;
-    left: 50%;
-    bottom: 13px;
-    width: calc(100% - 44px);
-    margin: 0;
-    transform: translateX(-50%);
-    text-align: center;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 11px;
-    line-height: 1.35;
-    color: rgba(92, 67, 87, .68);
-    transition: opacity .3s ease;
-    pointer-events: none;
-}
-
-.px-photo-stage.is-paused .px-pause-hint {
-    opacity: 1;
-    color: #76506d;
-}
-
-.px-flow-footer {
-    justify-content: space-between;
-    gap: 12px;
-    margin-top: 14px;
-    padding-top: 16px;
-    border-top: 1px solid rgba(92, 62, 90, .10);
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 11px;
-    color: #9a8495;
-}
-
-.px-flow-footer a {
-    color: #74536f;
-    text-decoration: none;
-    font-weight: 700;
-}
-
-.px-flow-footer a:hover {
-    text-decoration: underline;
-}
-
-.px-footer-heart {
-    color: #ad738b;
-    font-size: 15px;
-}
-
-@keyframes pxPhotoShine {
-    from { transform: translateX(-130%); }
-    to { transform: translateX(130%); }
-}
-
-@keyframes pxLoader {
-    0%, 80%, 100% { transform: scale(.65); opacity: .45; }
-    40% { transform: scale(1); opacity: 1; }
-}
-
-@media (max-width: 760px) {
-    .px-souvenirs-book {
-        width: min(94%, 520px);
-        margin-bottom: 55px;
-    }
-
-    .px-book {
-        grid-template-columns: 1fr;
-        min-height: 0;
-        border-radius: 16px;
-    }
-
-    .px-book::before {
-        top: 50%;
-        bottom: auto;
-        left: 7%;
-        right: 7%;
-        width: auto;
-        height: 1px;
-        background: linear-gradient(to right, transparent, rgba(100,70,95,.18), transparent);
-    }
-
-    .px-book-page {
-        padding: 32px 24px;
-    }
-
-    .px-book-left {
-        min-height: 340px;
-        justify-content: flex-start;
-        padding-top: 42px;
-    }
-
-    .px-book-left::after {
-        inset: 16px;
-    }
-
-    .px-book-left h2 {
-        font-size: 46px;
-    }
-
-    .px-book-copy {
-        font-size: 16px;
-        line-height: 1.7;
-    }
-
-    .px-book-hint {
-        margin-top: 21px;
-    }
-
-    .px-book-heart {
-        margin-top: 20px;
-    }
-
-    .px-book-right {
-        min-height: 620px;
-    }
-
-    .px-photo-stage {
-        min-height: 510px;
-    }
-
-    .px-photo-frame {
-        width: min(82%, 320px);
-    }
-}
-
-@media (max-width: 430px) {
-    .px-souvenir-gate {
-        width: 92%;
-        margin-bottom: 25px;
-    }
-
-    .px-souvenir-gate-link {
-        width: 100%;
-        box-sizing: border-box;
-        padding-left: 16px;
-        padding-right: 16px;
-        font-size: 13px;
-    }
-
-    .px-book-page {
-        padding-left: 17px;
-        padding-right: 17px;
-    }
-
-    .px-book-left {
-        min-height: 315px;
-        padding-top: 36px;
-    }
-
-    .px-book-mark {
-        width: 44px;
-        height: 44px;
-        margin-bottom: 21px;
-        font-size: 24px;
-    }
-
-    .px-book-left h2 {
-        font-size: 41px;
-    }
-
-    .px-photo-stage {
-        min-height: 490px;
-        margin-top: 14px;
-    }
-
-    .px-photo-frame {
-        width: min(84%, 300px);
-        padding: 8px 8px 35px;
-    }
-
-    .px-photo-frame figcaption {
-        bottom: 10px;
-        font-size: 18px;
-    }
-
-    .px-photo-progress {
-        bottom: 46px;
-        left: 12px;
-        right: 12px;
-    }
-
-    .px-pause-hint {
-        width: calc(100% - 28px);
-        font-size: 10px;
-    }
-}
-
-@media (prefers-reduced-motion: reduce) {
-    .px-photo-shine,
-    .px-photo-loader span,
-    .px-souvenir-gate-link {
-        animation: none !important;
-        transition: none !important;
-    }
-}
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Pour Patricia ❤️</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="experience.css">
+    <link rel="stylesheet" href="souvenirs.css">
+
+    <link rel="preload" as="image" href="assets/tulip.png">
+    <link rel="preload" as="image" href="assets/Tulipe.png">
+    <link rel="preload" as="audio" href="assets/music.mp3">
+
+    <style>
+        /* =========================================================
+           LETTER TYPOGRAPHY / SPACING
+           ========================================================= */
+
+        .secret-letter {
+            font-family: "Times New Roman", Times, serif;
+            font-size: 18px;
+            line-height: 1.95;
+            color: #3d3342;
+        }
+
+        .secret-letter > p {
+            margin: 0 0 26px;
+            text-align: left;
+            letter-spacing: 0.01em;
+        }
+
+        .secret-intro {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+
+        .secret-intro p {
+            margin: 0 0 12px;
+        }
+
+        .secret-intro p:first-child {
+            font-size: 21px;
+            font-style: italic;
+        }
+
+        .miamor-line {
+            font-family: "Dancing Script", cursive;
+            font-size: 29px !important;
+            font-weight: 700;
+            color: #7A3FA3;
+        }
+
+        .letter-divider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 14px;
+            width: 100%;
+            margin: 38px auto 38px;
+            color: #b45d77;
+        }
+
+        .letter-divider::before,
+        .letter-divider::after {
+            content: "";
+            height: 1px;
+            background: linear-gradient(
+                to right,
+                transparent,
+                rgba(122, 63, 163, 0.34),
+                transparent
+            );
+            flex: 1;
+        }
+
+        .letter-divider span {
+            font-size: 17px;
+            line-height: 1;
+        }
+
+        .letter-quote {
+            margin: 31px auto 32px !important;
+            padding: 12px 22px;
+            max-width: 720px;
+            text-align: center !important;
+            font-style: italic;
+            color: #6a3d7d;
+            border-left: 2px solid rgba(122, 63, 163, 0.35);
+            border-right: 2px solid rgba(122, 63, 163, 0.35);
+            background: rgba(122, 63, 163, 0.035);
+            border-radius: 8px;
+        }
+
+        .love-words {
+            font-weight: 700;
+            color: #7A3FA3;
+            white-space: nowrap;
+        }
+
+        .signature {
+            text-align: center;
+            margin: 48px auto 20px;
+            padding-top: 8px;
+        }
+
+        .signature p {
+            margin: 0 0 10px;
+        }
+
+        .signature p:nth-child(2) {
+            font-family: "Dancing Script", cursive;
+            font-size: 29px;
+            font-weight: 700;
+            color: #7A3FA3;
+        }
+
+        .signature p:last-child {
+            font-family: "Dancing Script", cursive;
+            font-size: 26px;
+            font-weight: 700;
+            color: #5E2B84;
+        }
+
+        .final-question {
+            margin-top: 52px;
+            padding: 8px 0 24px;
+            text-align: center;
+        }
+
+        .final-question h2 {
+            margin: 10px 0 28px;
+            font-family: "Dancing Script", cursive;
+            font-size: 32px;
+            font-weight: 700;
+            color: #7A3FA3;
+        }
+
+        .final-question p {
+            margin-bottom: 23px;
+        }
+
+        .final-question-text {
+            font-size: 21px;
+            font-weight: 700;
+            color: #5E2B84;
+        }
+
+        .relire-letter {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 12px;
+            padding: 13px 25px;
+            border-radius: 999px;
+            text-decoration: none;
+            background: #7A3FA3;
+            color: #fff;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 15px;
+            font-weight: 700;
+            box-shadow: 0 7px 20px rgba(122, 63, 163, 0.22);
+            transition: transform .2s ease, background .2s ease;
+        }
+
+        .relire-letter:hover {
+            background: #5E2B84;
+            transform: translateY(-2px);
+        }
+
+        /* More breathing room on larger screens */
+        @media (min-width: 768px) {
+            .secret-letter {
+                font-size: 18.5px;
+                line-height: 2;
+            }
+
+            .secret-letter > p {
+                margin-bottom: 29px;
+            }
+
+            .letter-divider {
+                margin-top: 43px;
+                margin-bottom: 43px;
+            }
+        }
+
+        /* Comfortable reading on phones */
+        @media (max-width: 600px) {
+            .secret-letter {
+                font-size: 17px;
+                line-height: 1.9;
+            }
+
+            .secret-letter > p {
+                margin-bottom: 24px;
+            }
+
+            .letter-divider {
+                margin-top: 32px;
+                margin-bottom: 32px;
+            }
+
+            .letter-quote {
+                padding: 10px 14px;
+                margin-top: 27px !important;
+                margin-bottom: 29px !important;
+            }
+
+            .final-question h2 {
+                font-size: 29px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <span id="top" class="px-top-anchor" aria-hidden="true"></span>
+
+
+    <!-- ===============================
+         1. INTRO LOADER
+    =============================== -->
+
+    <div id="intro-screen" class="hidden" aria-hidden="true">
+        <div class="intro-overlay"></div>
+
+        <div class="intro-content">
+            <div class="intro-heart">🤍</div>
+
+            <h2>
+                Un dernier petit secret...
+                <br>
+                t'attend ❤️
+            </h2>
+
+            <p>
+                Ferme les yeux un instant...
+            </p>
+        </div>
+    </div>
+
+
+    <!-- ===============================
+         2. POPUP BIENVENUE
+    =============================== -->
+
+    <div id="welcome-popup" class="hidden" aria-hidden="true">
+
+        <div class="popup-card">
+
+            <div class="popup-heart">🤍</div>
+
+            <h2>
+                Bienvenue, Mi Amor ❤️
+            </h2>
+
+            <p>
+                Cette petite surprise
+                a été créée avec tout mon cœur.
+            </p>
+
+            <p>
+                J'espère qu'elle te fera sourire.
+            </p>
+
+            <button id="continueBtn">
+                Continuer ❤️
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- ===============================
+         3. MUSIQUE
+    =============================== -->
+
+    <button id="music-btn" class="music-btn">
+        🎵 Activer la musique
+    </button>
+
+    <audio id="bgMusic" loop>
+        <source src="assets/music.mp3" type="audio/mpeg">
+        Votre navigateur ne supporte pas l'audio.
+    </audio>
+
+    <audio id="dingSound">
+        <source src="assets/ding.mp3" type="audio/mpeg">
+    </audio>
+
+
+    <!-- ===============================
+         4. BACKGROUND / ANIMATIONS
+    =============================== -->
+
+    <div class="background"></div>
+    <div id="stars"></div>
+    <div id="hearts-container"></div>
+    <div id="petals-container"></div>
+    <div id="confetti-container"></div>
+
+    <!-- Slow, translucent decorative drift -->
+
+    <!-- ===============================
+         5. CARTE
+    =============================== -->
+
+    <main class="card">
+
+        <header class="header">
+
+            <img
+                class="header-tulip"
+                src="assets/tulip.png"
+                alt="Tulipe">
+
+            <div class="title">
+
+                <h1>
+                    <span class="px-title-line">Pour toi</span>
+                    <span class="miamor">Mi Amor.</span> ❤️
+                </h1>
+
+                <h2>
+                    Mon dernier petit secret🫣
+                </h2>
+
+            </div>
+
+            <img
+                class="header-tulip right"
+                src="assets/tulip.png"
+                alt="Tulipe">
+
+        </header>
+
+
+        <!-- ===============================
+             6. DERNIER PETIT SECRET
+        =============================== -->
+
+        <section class="secret-letter">
+
+            <div class="secret-intro">
+                <p>
+                    Tu es vraiment arrivée jusqu'ici...
+                </p>
+
+                <p class="miamor-line">
+                    😇Mi Amor ❤️
+                </p>
+            </div>
+
+
+            <div class="letter-divider">
+                <span>❤️</span>
+            </div>
+
+
+            <p>
+                Je savais que ta curiosité finirait par gagner.
+            </p>
+
+            <p>
+                Si tu lis ces mots, c'est que tu as découvert le tout dernier petit secret que je gardais pour toi.
+            </p>
+
+            <p>
+                Tu n'as pas seulement lu ma lettre. Tu as aussi choisi d'ouvrir cette dernière petite porte que j'avais laissée entrouverte, juste pour toi.
+            </p>
+
+            <p>
+                Il y a des choses que même les plus longues lettres n'arrivent pas à dire.
+            </p>
+
+            <p>
+                Alors laisse-moi te confier une dernière partie de mon cœur.
+            </p>
+
+            <p>
+                <strong>Le plus beau souvenir de cette surprise ne sera jamais cette page.</strong>
+                Ce sera simplement de savoir que, quelque part, en ce moment précis, c'est toi qui es en train de lire ces mots.
+            </p>
+
+            <p>
+                Je n'attends rien en retour. Je voulais seulement te laisser un endroit où une partie de notre histoire pourra toujours exister, parce que certaines choses méritent d'être gardées.
+            </p>
+
+            <p>
+                <strong>Il y a des souvenirs qui n'appartiennent qu'à nous.</strong>
+            </p>
+
+
+            <div class="letter-divider">
+                <span>❤️</span>
+            </div>
+
+
+            <p>
+                <strong>Je me souviens encore de notre premier baiser.</strong>
+                Il est arrivé si naturellement que ni toi ni moi ne nous sommes vraiment rendu compte de ce qui venait de se passer. Ce n'est qu'en rentrant chez moi que je me suis surpris à sourire tout seul, en me demandant :
+            </p>
+
+            <p class="letter-quote">
+                « Est-ce que c'était vraiment réel ? »
+            </p>
+
+            <p>
+                Je crois que c'est ce jour-là que j'ai compris que tu occupais déjà une place bien plus grande dans mon cœur que je ne l'avais imaginé.
+            </p>
+
+            <p>
+                Quelques jours plus tard, je suis venu te voir sans te prévenir. Nous parlions tranquillement, même si ta maman n'était pas loin. J'étais un peu stressé, mais je n'avais qu'une seule envie 🥰😇
+            </p>
+
+            <p class="letter-quote">
+                Envie de profiter encore de quelques minutes à tes Cotés.
+            </p>
+
+            <p>
+                Ce qui m'a toujours fait sourire, c'est qu'au lieu de nous gronder, elle nous a même proposé d'aller mettre un matelas à l'intérieur.
+            </p>
+
+            <p>
+                Je repense aussi à cette soirée où nous marchions ensemble, à l'époque où Wensley était là. C'était la première fois que nous marchions vraiment <strong>main dans la main, tous les deux.</strong> Tu as fini par retirer la tienne quelques instants plus tard, mais ce petit moment est resté gravé dans mon cœur.
+            </p>
+
+            <p>
+                À cette époque, je voulais simplement te voir sourire.
+            </p>
+
+            <p>
+                Même quand je n'avais pas grand-chose, j'avais toujours envie de te donner <strong>le meilleur de moi-même.</strong>
+            </p>
+
+            <p>
+                Ce n'était peut-être pas parfait, mais c'était sincère.
+            </p>
+
+            <p>
+                Je t'aimais déjà énormément, mais je t'avoue que j'avais aussi peur.
+            </p>
+
+            <p>
+                <strong>Peur de ne jamais vraiment savoir ce que tu pensais de moi.</strong>
+                Alors, sans jamais te le dire, je cherchais toujours une raison de te faire sourire.
+            </p>
+
+            <p>
+                Et le jour où tu m'as regardé pour me dire
+            </p>
+
+            <p class="letter-quote">
+                🥰« Je t'aime »🥰
+            </p>
+
+            <p>
+                je crois que je n'oublierai jamais ce que j'ai ressenti. J'avais l'impression que quelque chose que je pensais impossible venait enfin d'arriver.
+            </p>
+
+            <p>
+                Tu n'as jamais été quelqu'un de facile à comprendre. Tu as toujours eu tes principes, tes limites et tes valeurs. Beaucoup auraient abandonné, mais moi, c'est justement ce que j'admirais chez toi. <strong>Tu m'as appris qu'aimer quelqu'un, c'est aussi respecter la personne qu'il est vraiment.</strong>
+            </p>
+
+            <p>
+                Notre histoire n'a jamais été parfaite. Nous nous sommes disputés, nous nous sommes éloignés, nous avons parfois arrêté de nous parler avant de retrouver le chemin l'un vers l'autre.
+            </p>
+
+            <p>
+                Malgré tout cela, <strong>une chose n'a jamais disparu...</strong>
+            </p>
+
+            <p class="letter-quote">
+                l'affection profonde que j'ai toujours eue pour toi
+            </p>
+
+            <p>
+                Après ma mère, il y a très peu de personnes dont les paroles ont compté autant pour moi que les tiennes.
+            </p>
+
+            <p>
+                <strong>Tes conseils ont toujours eu une place particulière dans mon cœur.</strong>
+            </p>
+
+            <p>
+                Et puis, il y a cette habitude que je n'ai jamais vraiment perdue...
+            </p>
+
+            <p>
+                <strong>Chaque fois que je passe devant chez toi...</strong>
+            </p>
+
+            <p>
+                Je ralentis presque sans m'en rendre compte.
+            </p>
+
+            <p>
+                Je sais bien que tu n'es peut-être pas là.
+            </p>
+
+            <p>
+                Pourtant, pendant une seconde, j'imagine encore ton sourire. C'est étrange...
+            </p>
+
+            <p>
+                <strong>mais certains souvenirs ne disparaissent jamais.</strong>
+            </p>
+
+            <p>
+                Je ne cherche pas à revivre le passé. Je voulais simplement qu'une partie de ce que nous avons vécu continue d'exister, quelque part.
+            </p>
+
+
+            <div class="letter-divider">
+                <span>❤️</span>
+            </div>
+
+
+            <p>
+                Si un jour le temps passe un peu trop vite...
+            </p>
+
+            <p>
+                Si la vie nous met à l'épreuve...
+            </p>
+
+            <p>
+                Ou si certains souvenirs deviennent moins précis...
+            </p>
+
+            <p>
+                <strong>Reviens ici.</strong>
+            </p>
+
+            <p>
+                Pas seulement pour relire mes mots.
+            </p>
+
+            <p>
+                Mais pour te rappeler avec quelle sincérité ils ont été écrits.
+            </p>
+
+            <p>
+                <strong>Referme cette page avec le sourire.</strong>
+            </p>
+
+            <p>
+                Parce que c'est exactement comme ça que j'espérais te laisser.
+            </p>
+
+            <p>
+                Et si, dans plusieurs années, tu retombes par hasard sur cette page😅
+            </p>
+
+            <p>
+                J'espère qu'elle réussira encore à faire naître le même sourire que celui que tu portes en ce moment. ❤️
+            </p>
+
+
+            <div class="signature">
+                <p>
+                    Avec toute la sincérité de mon cœur,
+                </p>
+
+                <p>
+                    Ton Prince Charmant ❤️
+                </p>
+
+                <p>
+                    Ralph
+                </p>
+            </div>
+
+
+            <!-- ===============================
+                 7. QUESTION FINALE
+            =============================== -->
+
+            <div class="final-question">
+
+                <div class="letter-divider">
+                    <span>🥹</span>
+                </div>
+
+                <h2>
+                    Une toute dernière question🥹
+                </h2>
+
+                <p class="final-question-text">
+                    <em>As-tu souri en arrivant jusqu'ici ?</em>
+                </p>
+
+                <p>
+                    Si la réponse est oui...
+                </p>
+
+                <p>
+                    <strong>Alors mon petit secret a rempli sa mission.</strong>
+                </p>
+
+                <p>
+                    Je ne voulais pas seulement t'offrir une lettre.
+                </p>
+
+                <p>
+                    <strong>Je voulais te laisser un souvenir.</strong>
+                </p>
+
+                <p>
+                    Un endroit où tu pourras toujours revenir...
+                </p>
+
+                <p>
+                    Même quand le temps aura passé.
+                </p>
+
+                <p>
+                    Parce que certaines surprises se terminent...
+                </p>
+
+                <p>
+                    <strong>Mais les sentiments sincères, eux, laissent toujours une trace. ❤️</strong>
+                </p>
+
+                <a class="relire-letter" href="lettre.pdf">
+                    💌 Relire ma lettre
+                </a>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <section class="px-souvenir-gate" aria-label="Accéder aux souvenirs">
+        <a class="px-souvenir-gate-link" href="#souvenirs">
+            <span class="px-souvenir-gate-icon">♡</span>
+            <span>Découvrir nos souvenirs</span>
+            <span class="px-souvenir-gate-arrow">↓</span>
+        </a>
+    </section>
+
+    <!-- ===============================
+         9. SOUVENIRS — LIVRE
+    =============================== -->
+    <section id="souvenirs" class="px-souvenirs-book" aria-labelledby="px-souvenirs-title">
+        <div class="px-book">
+            <div class="px-book-page px-book-left">
+                <div class="px-book-mark">♡</div>
+                <p class="px-book-kicker">Une petite partie de nous</p>
+                <h2>Nos souvenirs</h2>
+                <div class="px-book-line"></div>
+                <p class="px-book-copy">
+                    Une lettre peut garder beaucoup de choses...
+                    mais certaines images racontent ce que les mots ne savent pas toujours dire.
+                </p>
+                <p class="px-book-hint">
+                    Fais défiler doucement les souvenirs à droite.
+                </p>
+                <div class="px-book-heart">♥</div>
+            </div>
+
+            <div class="px-book-page px-book-right">
+                <div class="px-souvenir-flow-head">
+                    <span class="px-flow-dot"></span>
+                    <span>Notre petit album</span>
+                    <span class="px-flow-count" id="px-flow-count">01 / 42</span>
+                </div>
+
+                <div
+                    id="px-photo-stage"
+                    class="px-photo-stage"
+                    tabindex="0"
+                    aria-label="Album de 42 souvenirs. Maintiens le doigt sur l'écran pour mettre en pause."
+                >
+                    <div class="px-photo-orbit px-photo-orbit-one"></div>
+                    <div class="px-photo-orbit px-photo-orbit-two"></div>
+
+                    <figure id="px-photo-frame" class="px-photo-frame">
+                        <div class="px-photo-shine"></div>
+                        <img id="px-memory-photo" src="" alt="Souvenir 1" draggable="false">
+                        <figcaption id="px-memory-caption">Souvenir 01</figcaption>
+                    </figure>
+
+                    <div class="px-photo-loader" id="px-photo-loader" aria-hidden="true">
+                        <span></span><span></span><span></span>
+                    </div>
+
+                    <div class="px-photo-progress" aria-hidden="true">
+                        <div id="px-photo-progress-bar"></div>
+                    </div>
+
+                    <p class="px-pause-hint" id="px-pause-hint">
+                        Maintiens ton doigt pour garder ce souvenir un peu plus longtemps ♡
+                    </p>
+                </div>
+
+                <div class="px-flow-footer">
+                    <span>42 souvenirs</span>
+                    <span class="px-footer-heart">♡</span>
+                    <a href="#top" id="px-back-letter">Retour à la lettre</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===============================
+         8. JAVASCRIPT
+    =============================== -->
+
+    <script src="script.js"></script>
+    <script src="experience.js"></script>
+    <script src="souvenirs.js"></script>
+
+</body>
+
+</html>
