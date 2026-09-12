@@ -7,8 +7,7 @@
 (() => {
   const experience = document.getElementById("px-experience");
   const canvas = document.getElementById("px-particle-canvas");
-  const skip = document.getElementById("px-skip");
-  const question = document.getElementById("px-question");
+    const question = document.getElementById("px-question");
   const yes = document.getElementById("px-yes");
   const no = document.getElementById("px-no");
   const noScreen = document.getElementById("px-no-screen");
@@ -57,7 +56,7 @@
 
     const data = tctx.getImageData(0, 0, textCanvas.width, textCanvas.height).data;
     const points = [];
-    const step = Math.max(3, Math.round(fontSize / 9));
+    const step = Math.max(2, Math.round(fontSize / 13));
     for (let y = 0; y < textCanvas.height; y += step) {
       for (let x = 0; x < textCanvas.width; x += step) {
         const alpha = data[(y * textCanvas.width + x) * 4 + 3];
@@ -70,7 +69,7 @@
   }
 
   function seedParticles(points) {
-    const wanted = reduced ? 180 : Math.min(620, Math.max(260, points.length));
+    const wanted = reduced ? 300 : Math.min(1400, Math.max(520, points.length));
     state.particles = Array.from({ length: wanted }, (_, i) => {
       const p = points[i % points.length];
       return {
@@ -215,7 +214,6 @@
     document.body.classList.add("px-experience-finished");
   }
 
-  skip?.addEventListener("click", finish);
   yes?.addEventListener("click", chooseYes);
   no?.addEventListener("click", chooseNo);
   window.addEventListener("resize", () => {
