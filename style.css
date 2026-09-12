@@ -1,264 +1,41 @@
 /* =========================================================
-   BRUNAL STUDIO — CONTACT PAGE
-   Responsive: mobile first
+   PATRICIA — BASE PAGE STYLE
+   Letter / page styles only. Experience visuals live in experience.css.
    ========================================================= */
-
-* {
-  box-sizing: border-box;
-}
-
 :root {
-  --violet: #6f3b8f;
-  --violet-dark: #54256f;
-  --violet-soft: #efe5f5;
-  --ink: #2c2430;
-  --muted: #776b7d;
-  --line: #eadff0;
-  --page: #faf7fc;
-  --white: #ffffff;
-  --green: #25d366;
+  --purple: #7A3FA3;
+  --purple-dark: #5E2B84;
+  --paper: #fffdf9;
+  --ink: #3d3342;
 }
 
-html {
-  scroll-behavior: smooth;
-}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+html, body { margin: 0; padding: 0; min-height: 100%; }
+body { background: #f5eff9; color: var(--ink); overflow-x: hidden; }
+body::before { content:""; position:fixed; inset:0; pointer-events:none; background:radial-gradient(circle at 15% 15%,rgba(255,255,255,.8),transparent 28%),radial-gradient(circle at 85% 25%,rgba(226,203,240,.34),transparent 25%),linear-gradient(180deg,rgba(255,255,255,.55),rgba(244,235,249,.75)); z-index:-2; }
+body::after { content:""; position:fixed; inset:0; pointer-events:none; opacity:.35; background-image:radial-gradient(rgba(122,63,163,.12) .6px,transparent .6px); background-size:14px 14px; z-index:-1; }
+.background { position:fixed; inset:0; pointer-events:none; z-index:-3; }
 
-body {
-  margin: 0;
-  min-height: 100vh;
-  padding: 22px 14px;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  background:
-    radial-gradient(circle at 15% 10%, rgba(185,139,208,.18), transparent 32%),
-    radial-gradient(circle at 90% 85%, rgba(111,59,143,.10), transparent 34%),
-    var(--page);
-  color: var(--ink);
-  font-family: Georgia, "Times New Roman", serif;
-}
+.card { position:relative; width:min(94%,960px); margin:42px auto 28px; padding:34px clamp(20px,5vw,58px) 44px; background:rgba(255,253,249,.96); border:1px solid rgba(122,63,163,.10); border-radius:24px; box-shadow:0 22px 65px rgba(74,40,94,.12),0 2px 8px rgba(74,40,94,.05); overflow:hidden; }
+.card > * { position:relative; z-index:1; }
+.header { display:flex; align-items:center; justify-content:center; gap:clamp(10px,3vw,28px); text-align:center; padding:14px 0 28px; }
+.header-tulip { width:clamp(58px,9vw,90px); height:auto; }
+.header-tulip.right { transform:scaleX(-1); }
+.title { flex:1; }
+h1,h2 { margin:0; }
+h1 { font-size:clamp(27px,5vw,42px); color:var(--purple-dark); }
+h2 { font-size:clamp(19px,3vw,28px); color:var(--purple); }
+.miamor { font-family:"Dancing Script",cursive; color:var(--purple); }
 
-.contact-card {
-  width: min(100%, 470px);
-  margin: 0 auto;
-  padding: 28px 20px 22px;
-  background: rgba(255,255,255,.97);
-  border: 1px solid var(--line);
-  border-radius: 26px;
-  box-shadow: 0 18px 50px rgba(62,32,75,.14);
-}
+.music-btn { position:fixed; right:16px; bottom:16px; z-index:50; border:0; border-radius:999px; padding:11px 16px; background:rgba(122,63,163,.96); color:#fff; font-weight:700; box-shadow:0 8px 25px rgba(70,36,87,.23); cursor:pointer; }
+.hidden { display:none !important; }
+#intro-screen,#welcome-popup { z-index:80; }
+.px-asset-missing { visibility:hidden; }
 
-/* ---------- BRAND ---------- */
-
-.brand {
-  text-align: center;
-}
-
-.brand-logo {
-  display: block;
-  width: min(235px, 70%);
-  height: auto;
-  margin: 0 auto 10px;
-}
-
-.brand h1 {
-  margin: 0;
-  color: var(--violet);
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: clamp(21px, 6vw, 27px);
-  letter-spacing: .4px;
-}
-
-.tagline {
-  margin: 7px 0 0;
-  color: #4e4452;
-  font-size: 14px;
-  line-height: 1.45;
-}
-
-.motto {
-  margin: 12px auto 0;
-  max-width: 340px;
-  color: var(--violet);
-  font-style: italic;
-  font-size: 16px;
-  line-height: 1.5;
-}
-
-/* ---------- CONTACT ROWS ---------- */
-
-.contact-list {
-  margin-top: 25px;
-  padding: 7px 14px;
-  background: #fbf9fc;
-  border: 1px solid #eee6f2;
-  border-radius: 18px;
-}
-
-.contact-row {
-  min-width: 0;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 13px 2px;
-  text-decoration: none;
-  color: inherit;
-  border-bottom: 1px solid var(--line);
-}
-
-.contact-row:last-child {
-  border-bottom: 0;
-}
-
-.contact-row:hover .contact-text strong {
-  color: var(--violet);
-}
-
-.contact-icon {
-  width: 25px !important;
-  height: 25px !important;
-  min-width: 25px;
-  max-width: 25px;
-  object-fit: contain;
-  display: block;
-  flex: 0 0 25px;
-}
-
-.contact-text {
-  min-width: 0;
-  display: block;
-}
-
-.contact-text small {
-  display: block;
-  margin-bottom: 2px;
-  color: #8b7e90;
-  font: 11px/1.2 Arial, Helvetica, sans-serif;
-}
-
-.contact-text strong {
-  display: block;
-  overflow-wrap: anywhere;
-  color: var(--ink);
-  font-size: 15px;
-  line-height: 1.35;
-  font-weight: 600;
-  transition: color .2s ease;
-}
-
-.price-icon {
-  width: 25px;
-  min-width: 25px;
-  text-align: center;
-  color: var(--violet);
-  font: 700 22px Arial, sans-serif;
-}
-
-/* ---------- BUTTONS ---------- */
-
-.actions {
-  display: grid;
-  gap: 10px;
-  margin-top: 18px;
-}
-
-.action {
-  min-height: 48px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 9px;
-  padding: 12px 16px;
-  border-radius: 13px;
-  text-decoration: none;
-  font: 700 14px Arial, Helvetica, sans-serif;
-  transition: transform .18s ease, box-shadow .18s ease, opacity .18s ease;
-}
-
-.action:hover {
-  transform: translateY(-1px);
-}
-
-.action img {
-  width: 21px !important;
-  height: 21px !important;
-  min-width: 21px;
-  max-width: 21px;
-  object-fit: contain;
-}
-
-.whatsapp-action {
-  background: var(--green);
-  color: #fff;
-  box-shadow: 0 7px 18px rgba(37,211,102,.20);
-}
-
-.email-action {
-  background: var(--violet);
-  color: #fff;
-  box-shadow: 0 7px 18px rgba(111,59,143,.20);
-}
-
-.instagram-action {
-  background: linear-gradient(135deg, #833ab4, #e1306c 55%, #f77737);
-  color: #fff;
-  box-shadow: 0 7px 18px rgba(225,48,108,.18);
-}
-
-/* ---------- FOOTER ---------- */
-
-footer {
-  margin-top: 22px;
-  padding-top: 16px;
-  border-top: 1px solid var(--line);
-  text-align: center;
-  color: #756b78;
-  font: 11px/1.5 Arial, Helvetica, sans-serif;
-}
-
-footer p {
-  margin: 4px 0;
-}
-
-footer .made {
-  color: var(--violet);
-  font-weight: 700;
-}
-
-/* ---------- SMALL PHONES ---------- */
-
-@media (max-width: 360px) {
-  body {
-    padding: 12px 9px;
-  }
-
-  .contact-card {
-    padding: 23px 14px 18px;
-    border-radius: 22px;
-  }
-
-  .brand-logo {
-    width: 205px;
-  }
-
-  .tagline {
-    font-size: 12px;
-  }
-
-  .motto {
-    font-size: 14px;
-  }
-
-  .contact-list {
-    padding-left: 11px;
-    padding-right: 11px;
-  }
-
-  .contact-text strong {
-    font-size: 14px;
-  }
-
-  .action {
-    font-size: 13px;
-  }
+@media (max-width:600px){
+  .card { width:min(100% - 14px,960px); margin-top:18px; padding:22px 17px 34px; border-radius:18px; }
+  .header { gap:6px; padding-bottom:20px; }
+  .header-tulip { width:48px; }
+  .music-btn { right:10px; bottom:10px; padding:10px 13px; font-size:12px; }
 }
