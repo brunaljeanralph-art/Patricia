@@ -218,7 +218,6 @@
 </head>
 
 <body>
-
     <span id="top" class="px-top-anchor" aria-hidden="true"></span>
 
 
@@ -226,170 +225,13 @@
          0. PATRICIA OPENING EXPERIENCE
          Isolated from the letter
     =============================== -->
-
     <div id="px-experience" aria-hidden="false">
-
         <canvas id="px-particle-canvas"></canvas>
-
-        <!-- Readable layer kept over the particle formation
-             so the name remains clearly visible -->
-        <div class="px-readable-text" aria-hidden="true">
-            <span class="px-readable-line px-readable-love">
-                Je t'aime
-            </span>
-
-            <span class="px-readable-line px-readable-name">
-                Sauveur Patricia
-            </span>
-        </div>
-
         <div class="px-vignette"></div>
-
         <div class="px-opening-copy" aria-live="polite">
-            <p class="px-opening-small">
-                un petit secret pour toi
-            </p>
+            <p class="px-opening-small">un petit secret pour toi</p>
         </div>
-
-
-        <!-- ===============================
-             QUESTION
-             Appears after the particle text
-             has formed and stays until a choice
-             =============================== -->
-
-        <div
-            id="px-question"
-            class="px-question"
-            aria-hidden="true"
-        >
-
-            <h2>
-                Est-ce que tu m'aimes aussi&nbsp;?
-            </h2>
-
-            <div class="px-question-actions">
-
-                <button
-                    id="px-yes"
-                    type="button"
-                >
-                    OUI🫣
-                </button>
-
-                <button
-                    id="px-no"
-                    type="button"
-                >
-                    NON😔
-                </button>
-
-            </div>
-
-        </div>
-
-
-        <!-- ===============================
-             AFTER YES
-             =============================== -->
-
-        <div
-            id="px-after-yes"
-            class="px-after-yes"
-            aria-hidden="true"
-        >
-
-            <div class="px-after-yes-box">
-
-                <p>
-                    🫣 Oh… donc tu es vraiment arrivée jusque-là.
-                </p>
-
-                <p>
-                    Je n’étais pas trop sûr de la réponse que tu allais choisir…
-                </p>
-
-                <p>
-                    mais je ne vais pas te mentir, ça me fait vraiment plaisir. ❤️
-                </p>
-
-                <p>
-                    Moi aussi, je t’aime.
-                </p>
-
-                <p>
-                    Et te voir choisir ça… ça fait sourire mon cœur un peu. 🥹
-                </p>
-
-                <button
-                    id="px-continue"
-                    type="button"
-                >
-                    Continuer ❤️
-                </button>
-
-            </div>
-
-        </div>
-
-
-        <!-- ===============================
-             LAST SECRET
-             =============================== -->
-
-        <div
-            id="px-last-secret"
-            class="px-last-secret"
-            aria-hidden="true"
-        >
-
-            <div class="px-last-secret-box">
-
-                <p>
-                    Mais attends… 🫣
-                </p>
-
-                <p>
-                    Parce que je n’avais pas préparé tout ça juste pour que tu arrives jusque-là et que ça s’arrête.
-                </p>
-
-                <p>
-                    Il me restait une dernière petite chose que je voulais te laisser…
-                </p>
-
-                <p>
-                    une petite trace encore, avant de t’emmener là où je voulais. ❤️
-                </p>
-
-                <button
-                    id="px-open-letter"
-                    type="button"
-                >
-                    Ouvrir ma lettre →
-                </button>
-
-            </div>
-
-        </div>
-
-
-        <!-- Kept as a fallback element.
-             NON now exits directly through experience.js. -->
-
-        <div
-            id="px-no-screen"
-            class="px-no-screen"
-            aria-hidden="true"
-        >
-            <p>
-                D'accord… ❤️
-            </p>
-
-            <span>
-                Merci quand même d'être arrivée jusqu'ici.
-            </span>
-        </div>
-
+        <button id="px-skip" type="button">Passer ❤️</button>
     </div>
 
 
@@ -399,14 +241,10 @@
     =============================== -->
 
     <div id="intro-screen">
-
         <div class="intro-overlay"></div>
 
         <div class="intro-content">
-
-            <div class="intro-heart">
-                🤍
-            </div>
+            <div class="intro-heart">🤍</div>
 
             <h2>
                 Un dernier petit secret...
@@ -417,11 +255,8 @@
             <p>
                 Ferme les yeux un instant...
             </p>
-
         </div>
-
     </div>
-
 
 
     <!-- ===============================
@@ -432,9 +267,7 @@
 
         <div class="popup-card">
 
-            <div class="popup-heart">
-                🤍
-            </div>
+            <div class="popup-heart">🤍</div>
 
             <h2>
                 Bienvenue, Mi Amor ❤️
@@ -458,33 +291,22 @@
     </div>
 
 
-
     <!-- ===============================
          3. MUSIQUE
     =============================== -->
 
-    <button
-        id="music-btn"
-        class="music-btn"
-    >
+    <button id="music-btn" class="music-btn">
         🎵 Activer la musique
     </button>
 
     <audio id="bgMusic" loop>
-        <source
-            src="assets/music.mp3"
-            type="audio/mpeg"
-        >
+        <source src="assets/music.mp3" type="audio/mpeg">
         Votre navigateur ne supporte pas l'audio.
     </audio>
 
     <audio id="dingSound">
-        <source
-            src="assets/ding.mp3"
-            type="audio/mpeg"
-        >
+        <source src="assets/ding.mp3" type="audio/mpeg">
     </audio>
-
 
 
     <!-- ===============================
@@ -492,15 +314,10 @@
     =============================== -->
 
     <div class="background"></div>
-
     <div id="stars"></div>
-
     <div id="hearts-container"></div>
-
     <div id="petals-container"></div>
-
     <div id="confetti-container"></div>
-
 
 
     <!-- ===============================
@@ -514,17 +331,13 @@
             <img
                 class="header-tulip"
                 src="assets/tulip.png"
-                alt="Tulipe"
-            >
+                alt="Tulipe">
 
             <div class="title">
 
                 <h1>
                     Pour toi
-                    <span class="miamor">
-                        Mi Amor
-                    </span>
-                    ❤️
+                    <span class="miamor">Mi Amor</span> ❤️
                 </h1>
 
                 <h2>
@@ -536,11 +349,9 @@
             <img
                 class="header-tulip right"
                 src="assets/tulip.png"
-                alt="Tulipe"
-            >
+                alt="Tulipe">
 
         </header>
-
 
 
         <!-- ===============================
@@ -550,7 +361,6 @@
         <section class="secret-letter">
 
             <div class="secret-intro">
-
                 <p>
                     Tu es vraiment arrivée jusqu'ici...
                 </p>
@@ -558,15 +368,12 @@
                 <p class="miamor-line">
                     😇Mi Amor ❤️
                 </p>
-
             </div>
-
 
 
             <div class="letter-divider">
                 <span>❤️</span>
             </div>
-
 
 
             <p>
@@ -590,9 +397,7 @@
             </p>
 
             <p>
-                <strong>
-                    Le plus beau souvenir de cette surprise ne sera jamais cette page.
-                </strong>
+                <strong>Le plus beau souvenir de cette surprise ne sera jamais cette page.</strong>
                 Ce sera simplement de savoir que, quelque part, en ce moment précis, c'est toi qui es en train de lire ces mots.
             </p>
 
@@ -601,11 +406,8 @@
             </p>
 
             <p>
-                <strong>
-                    Il y a des souvenirs qui n'appartiennent qu'à nous.
-                </strong>
+                <strong>Il y a des souvenirs qui n'appartiennent qu'à nous.</strong>
             </p>
-
 
 
             <div class="letter-divider">
@@ -613,11 +415,8 @@
             </div>
 
 
-
             <p>
-                <strong>
-                    Je me souviens encore de notre premier baiser.
-                </strong>
+                <strong>Je me souviens encore de notre premier baiser.</strong>
                 Il est arrivé si naturellement que ni toi ni moi ne nous sommes vraiment rendu compte de ce qui venait de se passer. Ce n'est qu'en rentrant chez moi que je me suis surpris à sourire tout seul, en me demandant :
             </p>
 
@@ -662,9 +461,7 @@
             </p>
 
             <p>
-                <strong>
-                    Peur de ne jamais vraiment savoir ce que tu pensais de moi.
-                </strong>
+                <strong>Peur de ne jamais vraiment savoir ce que tu pensais de moi.</strong>
                 Alors, sans jamais te le dire, je cherchais toujours une raison de te faire sourire.
             </p>
 
@@ -697,9 +494,7 @@
             </p>
 
             <p>
-                <strong>
-                    Tes conseils ont toujours eu une place particulière dans mon cœur.
-                </strong>
+                <strong>Tes conseils ont toujours eu une place particulière dans mon cœur.</strong>
             </p>
 
             <p>
@@ -707,9 +502,7 @@
             </p>
 
             <p>
-                <strong>
-                    Chaque fois que je passe devant chez toi...
-                </strong>
+                <strong>Chaque fois que je passe devant chez toi...</strong>
             </p>
 
             <p>
@@ -725,9 +518,7 @@
             </p>
 
             <p>
-                <strong>
-                    mais certains souvenirs ne disparaissent jamais.
-                </strong>
+                <strong>mais certains souvenirs ne disparaissent jamais.</strong>
             </p>
 
             <p>
@@ -735,11 +526,9 @@
             </p>
 
 
-
             <div class="letter-divider">
                 <span>❤️</span>
             </div>
-
 
 
             <p>
@@ -755,9 +544,7 @@
             </p>
 
             <p>
-                <strong>
-                    Reviens ici.
-                </strong>
+                <strong>Reviens ici.</strong>
             </p>
 
             <p>
@@ -769,9 +556,7 @@
             </p>
 
             <p>
-                <strong>
-                    Referme cette page avec le sourire.
-                </strong>
+                <strong>Referme cette page avec le sourire.</strong>
             </p>
 
             <p>
@@ -787,9 +572,7 @@
             </p>
 
 
-
             <div class="signature">
-
                 <p>
                     Avec toute la sincérité de mon cœur,
                 </p>
@@ -801,9 +584,7 @@
                 <p>
                     Ralph
                 </p>
-
             </div>
-
 
 
             <!-- ===============================
@@ -821,9 +602,7 @@
                 </h2>
 
                 <p class="final-question-text">
-                    <em>
-                        As-tu souri en arrivant jusqu'ici ?
-                    </em>
+                    <em>As-tu souri en arrivant jusqu'ici ?</em>
                 </p>
 
                 <p>
@@ -831,9 +610,7 @@
                 </p>
 
                 <p>
-                    <strong>
-                        Alors mon petit secret a rempli sa mission.
-                    </strong>
+                    <strong>Alors mon petit secret a rempli sa mission.</strong>
                 </p>
 
                 <p>
@@ -841,9 +618,7 @@
                 </p>
 
                 <p>
-                    <strong>
-                        Je voulais te laisser un souvenir.
-                    </strong>
+                    <strong>Je voulais te laisser un souvenir.</strong>
                 </p>
 
                 <p>
@@ -859,15 +634,10 @@
                 </p>
 
                 <p>
-                    <strong>
-                        Mais les sentiments sincères, eux, laissent toujours une trace. ❤️
-                    </strong>
+                    <strong>Mais les sentiments sincères, eux, laissent toujours une trace. ❤️</strong>
                 </p>
 
-                <a
-                    class="relire-letter"
-                    href="lettre.pdf"
-                >
+                <a class="relire-letter" href="lettre.pdf">
                     💌 Relire ma lettre
                 </a>
 
@@ -877,202 +647,74 @@
 
     </main>
 
-
-
-    <!-- ===============================
-         8. SOUVENIR GATE
-    =============================== -->
-
-    <section
-        class="px-souvenir-gate"
-        aria-label="Accéder aux souvenirs"
-    >
-
-        <a
-            class="px-souvenir-gate-link"
-            href="#souvenirs"
-        >
-
-            <span class="px-souvenir-gate-icon">
-                📖
-            </span>
-
-            <span>
-                Découvrir nos souvenirs
-            </span>
-
-            <span class="px-souvenir-gate-arrow">
-                ↓
-            </span>
-
+    <section class="px-souvenir-gate" aria-label="Accéder aux souvenirs">
+        <a class="px-souvenir-gate-link" href="#souvenirs">
+            <span class="px-souvenir-gate-icon">📖</span>
+            <span>Découvrir nos souvenirs</span>
+            <span class="px-souvenir-gate-arrow">↓</span>
         </a>
-
     </section>
-
-
 
     <!-- ===============================
          9. SOUVENIRS
          Separate section after the letter
     =============================== -->
-
-    <section
-        id="souvenirs"
-        class="px-souvenirs"
-        aria-labelledby="px-souvenirs-title"
-    >
-
+    <section id="souvenirs" class="px-souvenirs" aria-labelledby="px-souvenirs-title">
         <div class="px-souvenirs-inner">
-
             <div class="px-souvenir-heading">
-
-                <span class="px-mini-heart">
-                    ♡
-                </span>
-
-                <h2 id="px-souvenirs-title">
-                    Nos souvenirs ❤️
-                </h2>
-
-                <p>
-                    Et parce qu'une lettre ne peut pas tout garder...
-                </p>
-
+                <span class="px-mini-heart">♡</span>
+                <h2 id="px-souvenirs-title">Nos souvenirs ❤️</h2>
+                <p>Et parce qu'une lettre ne peut pas tout garder...</p>
             </div>
-
-
 
             <div class="px-memory-grid">
-
                 <article class="px-memory-card">
-
-                    <div class="px-memory-icon">
-                        💋
-                    </div>
-
+                    <div class="px-memory-icon">💋</div>
                     <div>
-
-                        <span class="px-memory-label">
-                            Le premier
-                        </span>
-
-                        <h3>
-                            Notre premier baiser
-                        </h3>
-
-                        <p>
-                            Ce petit moment qui m'a fait rentrer chez moi avec un sourire un peu trop difficile à cacher.
-                        </p>
-
+                        <span class="px-memory-label">Le premier</span>
+                        <h3>Notre premier baiser</h3>
+                        <p>Ce petit moment qui m'a fait rentrer chez moi avec un sourire un peu trop difficile à cacher.</p>
                     </div>
-
                 </article>
 
-
-
                 <article class="px-memory-card">
-
-                    <div class="px-memory-icon">
-                        🤍
-                    </div>
-
+                    <div class="px-memory-icon">🤍</div>
                     <div>
-
-                        <span class="px-memory-label">
-                            Un moment simple
-                        </span>
-
-                        <h3>
-                            Quelques minutes à tes côtés
-                        </h3>
-
-                        <p>
-                            Une visite, un peu de stress, ta présence… et cette envie de rester encore quelques minutes.
-                        </p>
-
+                        <span class="px-memory-label">Un moment simple</span>
+                        <h3>Quelques minutes à tes côtés</h3>
+                        <p>Une visite, un peu de stress, ta présence… et cette envie de rester encore quelques minutes.</p>
                     </div>
-
                 </article>
 
-
-
                 <article class="px-memory-card">
-
-                    <div class="px-memory-icon">
-                        🤝
-                    </div>
-
+                    <div class="px-memory-icon">🤝</div>
                     <div>
-
-                        <span class="px-memory-label">
-                            Cette soirée
-                        </span>
-
-                        <h3>
-                            Main dans la main
-                        </h3>
-
-                        <p>
-                            Un geste tout simple, mais assez fort pour rester quelque part dans ma mémoire.
-                        </p>
-
+                        <span class="px-memory-label">Cette soirée</span>
+                        <h3>Main dans la main</h3>
+                        <p>Un geste tout simple, mais assez fort pour rester quelque part dans ma mémoire.</p>
                     </div>
-
                 </article>
 
-
-
                 <article class="px-memory-card">
-
-                    <div class="px-memory-icon">
-                        🏡
-                    </div>
-
+                    <div class="px-memory-icon">🏡</div>
                     <div>
-
-                        <span class="px-memory-label">
-                            Encore aujourd'hui
-                        </span>
-
-                        <h3>
-                            Cette habitude devant chez toi
-                        </h3>
-
-                        <p>
-                            Je ralentis presque sans m'en rendre compte… juste une seconde, comme si ton sourire pouvait encore apparaître.
-                        </p>
-
+                        <span class="px-memory-label">Encore aujourd'hui</span>
+                        <h3>Cette habitude devant chez toi</h3>
+                        <p>Je ralentis presque sans m'en rendre compte… juste une seconde, comme si ton sourire pouvait encore apparaître.</p>
                     </div>
-
                 </article>
-
             </div>
-
-
 
             <div class="px-souvenir-tail">
-
-                <span>
-                    Parce que certains souvenirs ne disparaissent jamais. ❤️
-                </span>
-
-                <a
-                    href="#top"
-                    id="px-back-letter"
-                >
-                    ↩ Retour à la lettre
-                </a>
-
+                <span>Parce que certains souvenirs ne disparaissent jamais. ❤️</span>
+                <a href="#top" id="px-back-letter">↩ Retour à la lettre</a>
             </div>
-
         </div>
-
     </section>
 
 
-
     <!-- ===============================
-         10. JAVASCRIPT
+         8. JAVASCRIPT
     =============================== -->
 
     <script src="script.js"></script>
