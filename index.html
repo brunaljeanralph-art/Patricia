@@ -214,10 +214,25 @@
                 font-size: 29px;
             }
         }
+
+        /* =========================================================
+           TITLE
+           Pour toi
+           Mi Amor.
+           ========================================================= */
+
+        .px-title-line {
+            display: block;
+        }
+
+        .miamor {
+            display: block;
+        }
     </style>
 </head>
 
 <body>
+
     <span id="top" class="px-top-anchor" aria-hidden="true"></span>
 
 
@@ -225,15 +240,24 @@
          0. PATRICIA OPENING EXPERIENCE
          Isolated from the letter
     =============================== -->
-    <div id="px-experience" aria-hidden="false">
-        <canvas id="px-particle-canvas"></canvas>
-        <div class="px-vignette"></div>
-        <div class="px-opening-copy" aria-live="polite">
-            <p class="px-opening-small">un petit secret pour toi</p>
-        </div>
-        <button id="px-skip" type="button">Passer ❤️</button>
-    </div>
 
+    <div id="px-experience" aria-hidden="false">
+
+        <canvas id="px-particle-canvas"></canvas>
+
+        <div class="px-vignette"></div>
+
+        <div class="px-opening-copy" aria-live="polite">
+            <p class="px-opening-small">
+                un petit secret pour toi
+            </p>
+        </div>
+
+        <button id="px-skip" type="button">
+            Passer ❤️
+        </button>
+
+    </div>
 
 
     <!-- ===============================
@@ -241,10 +265,14 @@
     =============================== -->
 
     <div id="intro-screen">
+
         <div class="intro-overlay"></div>
 
         <div class="intro-content">
-            <div class="intro-heart">🤍</div>
+
+            <div class="intro-heart">
+                🤍
+            </div>
 
             <h2>
                 Un dernier petit secret...
@@ -255,7 +283,9 @@
             <p>
                 Ferme les yeux un instant...
             </p>
+
         </div>
+
     </div>
 
 
@@ -267,7 +297,9 @@
 
         <div class="popup-card">
 
-            <div class="popup-heart">🤍</div>
+            <div class="popup-heart">
+                🤍
+            </div>
 
             <h2>
                 Bienvenue, Mi Amor ❤️
@@ -314,9 +346,13 @@
     =============================== -->
 
     <div class="background"></div>
+
     <div id="stars"></div>
+
     <div id="hearts-container"></div>
+
     <div id="petals-container"></div>
+
     <div id="confetti-container"></div>
 
 
@@ -336,8 +372,17 @@
             <div class="title">
 
                 <h1>
-                    Pour toi
-                    <span class="miamor">Mi Amor</span> ❤️
+
+                    <span class="px-title-line">
+                        Pour toi
+                    </span>
+
+                    <span class="miamor">
+                        Mi Amor.
+                    </span>
+
+                    ❤️
+
                 </h1>
 
                 <h2>
@@ -361,6 +406,7 @@
         <section class="secret-letter">
 
             <div class="secret-intro">
+
                 <p>
                     Tu es vraiment arrivée jusqu'ici...
                 </p>
@@ -368,6 +414,7 @@
                 <p class="miamor-line">
                     😇Mi Amor ❤️
                 </p>
+
             </div>
 
 
@@ -466,7 +513,11 @@
             </p>
 
             <p>
-                Et le jour où tu m'as regardé pour me dire <span class="love-words">🥰« Je t'aime »🥰</span>
+                Et le jour où tu m'as regardé pour me dire
+            </p>
+
+            <p class="letter-quote">
+                🥰« Je t'aime »🥰
             </p>
 
             <p>
@@ -573,6 +624,7 @@
 
 
             <div class="signature">
+
                 <p>
                     Avec toute la sincérité de mon cœur,
                 </p>
@@ -584,6 +636,7 @@
                 <p>
                     Ralph
                 </p>
+
             </div>
 
 
@@ -647,74 +700,191 @@
 
     </main>
 
-    <section class="px-souvenir-gate" aria-label="Accéder aux souvenirs">
-        <a class="px-souvenir-gate-link" href="#souvenirs">
-            <span class="px-souvenir-gate-icon">📖</span>
-            <span>Découvrir nos souvenirs</span>
-            <span class="px-souvenir-gate-arrow">↓</span>
+
+    <!-- ===============================
+         8. SOUVENIR GATE
+    =============================== -->
+
+    <section
+        class="px-souvenir-gate"
+        aria-label="Accéder aux souvenirs">
+
+        <a
+            class="px-souvenir-gate-link"
+            href="#souvenirs">
+
+            <span class="px-souvenir-gate-icon">
+                📖
+            </span>
+
+            <span>
+                Découvrir nos souvenirs
+            </span>
+
+            <span class="px-souvenir-gate-arrow">
+                ↓
+            </span>
+
         </a>
+
     </section>
+
 
     <!-- ===============================
          9. SOUVENIRS
-         Separate section after the letter
     =============================== -->
-    <section id="souvenirs" class="px-souvenirs" aria-labelledby="px-souvenirs-title">
+
+    <section
+        id="souvenirs"
+        class="px-souvenirs"
+        aria-labelledby="px-souvenirs-title">
+
         <div class="px-souvenirs-inner">
+
             <div class="px-souvenir-heading">
-                <span class="px-mini-heart">♡</span>
-                <h2 id="px-souvenirs-title">Nos souvenirs ❤️</h2>
-                <p>Et parce qu'une lettre ne peut pas tout garder...</p>
+
+                <span class="px-mini-heart">
+                    ♡
+                </span>
+
+                <h2 id="px-souvenirs-title">
+                    Nos souvenirs ❤️
+                </h2>
+
+                <p>
+                    Et parce qu'une lettre ne peut pas tout garder...
+                </p>
+
             </div>
+
 
             <div class="px-memory-grid">
-                <article class="px-memory-card">
-                    <div class="px-memory-icon">💋</div>
-                    <div>
-                        <span class="px-memory-label">Le premier</span>
-                        <h3>Notre premier baiser</h3>
-                        <p>Ce petit moment qui m'a fait rentrer chez moi avec un sourire un peu trop difficile à cacher.</p>
-                    </div>
-                </article>
 
                 <article class="px-memory-card">
-                    <div class="px-memory-icon">🤍</div>
-                    <div>
-                        <span class="px-memory-label">Un moment simple</span>
-                        <h3>Quelques minutes à tes côtés</h3>
-                        <p>Une visite, un peu de stress, ta présence… et cette envie de rester encore quelques minutes.</p>
+
+                    <div class="px-memory-icon">
+                        💋
                     </div>
+
+                    <div>
+
+                        <span class="px-memory-label">
+                            Le premier
+                        </span>
+
+                        <h3>
+                            Notre premier baiser
+                        </h3>
+
+                        <p>
+                            Ce petit moment qui m'a fait rentrer chez moi avec un sourire un peu trop difficile à cacher.
+                        </p>
+
+                    </div>
+
                 </article>
 
-                <article class="px-memory-card">
-                    <div class="px-memory-icon">🤝</div>
-                    <div>
-                        <span class="px-memory-label">Cette soirée</span>
-                        <h3>Main dans la main</h3>
-                        <p>Un geste tout simple, mais assez fort pour rester quelque part dans ma mémoire.</p>
-                    </div>
-                </article>
 
                 <article class="px-memory-card">
-                    <div class="px-memory-icon">🏡</div>
-                    <div>
-                        <span class="px-memory-label">Encore aujourd'hui</span>
-                        <h3>Cette habitude devant chez toi</h3>
-                        <p>Je ralentis presque sans m'en rendre compte… juste une seconde, comme si ton sourire pouvait encore apparaître.</p>
+
+                    <div class="px-memory-icon">
+                        🤍
                     </div>
+
+                    <div>
+
+                        <span class="px-memory-label">
+                            Un moment simple
+                        </span>
+
+                        <h3>
+                            Quelques minutes à tes côtés
+                        </h3>
+
+                        <p>
+                            Une visite, un peu de stress, ta présence… et cette envie de rester encore quelques minutes.
+                        </p>
+
+                    </div>
+
                 </article>
+
+
+                <article class="px-memory-card">
+
+                    <div class="px-memory-icon">
+                        🤝
+                    </div>
+
+                    <div>
+
+                        <span class="px-memory-label">
+                            Cette soirée
+                        </span>
+
+                        <h3>
+                            Main dans la main
+                        </h3>
+
+                        <p>
+                            Un geste tout simple, mais assez fort pour rester quelque part dans ma mémoire.
+                        </p>
+
+                    </div>
+
+                </article>
+
+
+                <article class="px-memory-card">
+
+                    <div class="px-memory-icon">
+                        🏡
+                    </div>
+
+                    <div>
+
+                        <span class="px-memory-label">
+                            Encore aujourd'hui
+                        </span>
+
+                        <h3>
+                            Cette habitude devant chez toi
+                        </h3>
+
+                        <p>
+                            Je ralentis presque sans m'en rendre compte… juste une seconde, comme si ton sourire pouvait encore apparaître.
+                        </p>
+
+                    </div>
+
+                </article>
+
             </div>
+
 
             <div class="px-souvenir-tail">
-                <span>Parce que certains souvenirs ne disparaissent jamais. ❤️</span>
-                <a href="#top" id="px-back-letter">↩ Retour à la lettre</a>
+
+                <span>
+                    Parce que certains souvenirs ne disparaissent jamais. ❤️
+                </span>
+
+                <a
+                    href="#top"
+                    id="px-back-letter">
+
+                    ↩ Retour à la lettre
+
+                </a>
+
             </div>
+
         </div>
+
     </section>
 
 
     <!-- ===============================
-         8. JAVASCRIPT
+         10. JAVASCRIPT
     =============================== -->
 
     <script src="script.js"></script>
