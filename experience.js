@@ -1,117 +1,305 @@
+/* =========================================================
+   PATRICIA — OPENING PARTICLE EXPERIENCE
+   Isolated namespace.
+   Flow:
+   Je t'aime → Sauveur Patricia → Question
+   OUI → After Yes → Last Secret → Letter
+   ========================================================= */
+
 (() => {
   "use strict";
 
-  const experience = document.getElementById("px-experience");
-  const canvas = document.getElementById("px-particle-canvas");
-  const question = document.getElementById("px-question");
-  const yesButton = document.getElementById("px-yes");
-  const noButton = document.getElementById("px-no");
-  const afterYes = document.getElementById("px-after-yes");
-  const lastSecret = document.getElementById("px-last-secret");
-  const noScreen = document.getElementById("px-no-screen");
+  const experience =
+    document.getElementById("px-experience");
+
+  const canvas =
+    document.getElementById("px-particle-canvas");
+
+  const question =
+    document.getElementById("px-question");
+
+  const yesButton =
+    document.getElementById("px-yes");
+
+  const noButton =
+    document.getElementById("px-no");
+
+  const afterYes =
+    document.getElementById("px-after-yes");
+
+  const continueButton =
+    document.getElementById("px-continue");
+
+  const lastSecret =
+    document.getElementById("px-last-secret");
+
+  const openLetterButton =
+    document.getElementById("px-open-letter");
+
+  const noScreen =
+    document.getElementById("px-no-screen");
+
+  const readableText =
+    document.querySelector(".px-readable-text");
+
+  const readableLove =
+    document.querySelector(".px-readable-love");
+
+  const readableName =
+    document.querySelector(".px-readable-name");
 
   if (!experience || !canvas) return;
 
   window.PatriciaExperienceActive = true;
 
-  document.body.classList.add("px-experience-active");
+  document.body.classList.add(
+    "px-experience-active"
+  );
 
   const ctx = canvas.getContext("2d", {
     alpha: true
   });
 
-  const reducedMotion = window.matchMedia(
-    "(prefers-reduced-motion: reduce)"
-  ).matches;
-
-  const state = {
-    phase: "gather",
-    started: performance.now(),
-    questionShown: false,
-    choiceMade: false,
-    finished: false,
-    scatterStarted: 0
-  };
+  const reducedMotion =
+    window.matchMedia &&
+    window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
 
   let width = 0;
   let height = 0;
-  let dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+  let dpr =
+    Math.min(
+      window.devicePixelRatio || 1,
+      2
+    );
 
   let particles = [];
-  let targets = [];
-  let currentTargetText = "Je t'aime";
+  let targetPoints = [];
+
+  let animationFrame = 0;
+
+  let currentText = "Je t'aime";
+
+  let phase = "gather";
+
+  let phaseStarted =
+    performance.now();
+
+  let experienceFinished = false;
+  let choiceMade = false;
+
+  let textCanvas =
+    document.createElement("canvas");
+
+  let textCtx =
+    textCanvas.getContext(
+      "2d",
+      { willReadFrequently: true }
+    );
 
   const colors = [
     "rgba(255,255,255,0.98)",
     "rgba(202,235,255,0.95)",
     "rgba(122,218,255,0.92)",
-    "rgba(184,143,255,0.9)",
-    "rgba(244,204,255,0.9)"
+    "rgba(184,143,255,0.92)",
+    "rgba(244,204,255,0.92)"
   ];
+
+
+  /* =========================================================
+     BASIC UI
+     ========================================================= */
+
+  function hideElement(element) {
+    if (!element) return;
+
+    element.classList.remove(
+      "is-visible"
+    );
+
+    element.setAttribute(
+      "aria-hidden",
+      "true"
+    );
+  }
+
+
+  function showElement(element) {
+    if (!element) return;
+
+    element.classList.add(
+      "is-visible"
+    );
+
+    element.setAttribute(
+      "aria-hidden",
+      "false"
+    );
+  }
+
+
+  function setPhase(nextPhase) {
+    phase = nextPhase;
+    phaseStarted =
+      performance.now();
+  }
+
+
+  /* =========================================================
+     CANVAS RESIZE
+     ========================================================= */
 
   function resizeCanvas() {
     width = window.innerWidth;
     height = window.innerHeight;
 
-    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    dpr =
+      Math.min(
+        window.devicePixelRatio || 1,
+        2
+      );
 
-    canvas.width = Math.round(width * dpr);
-    canvas.height = Math.round(height * dpr);
+    canvas.width =
+      Math.round(width * dpr);
 
-    canvas.style.width = width + "px";
-    canvas.style.height = height + "px";
+    canvas.height =
+      Math.round(height * dpr);
 
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    canvas.style.width =
+      width + "px";
 
-    buildTargets();
+    canvas.style.height =
+      height + "px";
+
+    ctx.setTransform(
+      dpr,
+      0,
+      0,
+      dpr,
+      0,
+      0
+    );
+
+    rebuildCurrentTargets();
   }
 
+
+  /* =========================================================
+     TEXT → PARTICLE TARGETS
+     ========================================================= */
+
+  function getFontSize(text) {
+    if (text === "Je t'aime") {
+      return Math.max(
+        52,
+        Math.min(
+          108,
+          width * 0.105
+        )
+      );
+    }
+
+    return Math.max(
+      35,
+      Math.min(
+        70,
+        width * 0.058
+      )
+    );
+  }
+
+
   function createTextTargets(text) {
-    const offscreen = document.createElement("canvas");
-    const octx = offscreen.getContext("2d");
+    const fontSize =
+      getFontSize(text);
 
-    const fontSize = Math.min(
-      width * (text === "Sauveur Patricia" ? 0.13 : 0.16),
-      text === "Sauveur Patricia" ? 112 : 132
-    );
+    const maxWidth =
+      Math.min(
+        width * 0.88,
+        980
+      );
 
-    offscreen.width = Math.ceil(width);
-    offscreen.height = Math.ceil(height);
+    textCanvas.width =
+      Math.ceil(maxWidth);
 
-    octx.clearRect(0, 0, offscreen.width, offscreen.height);
+    textCanvas.height =
+      Math.ceil(fontSize * 2.8);
 
-    octx.textAlign = "center";
-    octx.textBaseline = "middle";
-    octx.font =
-      `600 ${Math.max(44, fontSize)}px ` +
-      `"Times New Roman", Georgia, serif`;
-
-    octx.fillStyle = "#ffffff";
-
-    const y = height * 0.46;
-
-    octx.fillText(text, width / 2, y);
-
-    const image = octx.getImageData(
+    textCtx.clearRect(
       0,
       0,
-      offscreen.width,
-      offscreen.height
+      textCanvas.width,
+      textCanvas.height
     );
+
+    textCtx.textAlign =
+      "center";
+
+    textCtx.textBaseline =
+      "middle";
+
+    textCtx.font =
+      `700 ${fontSize}px Arial, Helvetica, sans-serif`;
+
+    textCtx.fillStyle =
+      "#ffffff";
+
+    textCtx.fillText(
+      text,
+      textCanvas.width / 2,
+      textCanvas.height / 2
+    );
+
+    const image =
+      textCtx.getImageData(
+        0,
+        0,
+        textCanvas.width,
+        textCanvas.height
+      );
 
     const points = [];
 
-    const gap = reducedMotion ? 4 : 3;
+    const step =
+      Math.max(
+        3,
+        Math.round(fontSize / 9)
+      );
 
-    for (let yPos = 0; yPos < offscreen.height; yPos += gap) {
-      for (let xPos = 0; xPos < offscreen.width; xPos += gap) {
+    for (
+      let y = 0;
+      y < textCanvas.height;
+      y += step
+    ) {
+      for (
+        let x = 0;
+        x < textCanvas.width;
+        x += step
+      ) {
         const index =
-          (yPos * offscreen.width + xPos) * 4;
+          (
+            y *
+              textCanvas.width +
+            x
+          ) *
+          4;
 
-        if (image.data[index + 3] > 100) {
+        const alpha =
+          image.data[index + 3];
+
+        if (alpha > 150) {
           points.push({
-            x: xPos,
-            y: yPos
+            x:
+              x -
+              textCanvas.width / 2 +
+              width / 2,
+
+            y:
+              y -
+              textCanvas.height / 2 +
+              height * 0.46
           });
         }
       }
@@ -120,186 +308,386 @@
     return points;
   }
 
-  function buildTargets() {
-    targets = createTextTargets(currentTargetText);
 
-    const desiredCount = Math.min(
-      reducedMotion ? 900 : 1900,
-      Math.max(500, targets.length)
-    );
+  /* =========================================================
+     PARTICLE CREATION
+     ========================================================= */
 
-    if (particles.length !== desiredCount) {
-      particles = [];
+  function createParticle(target) {
+    return {
+      x:
+        width / 2 +
+        (Math.random() - 0.5) *
+          Math.min(width * 0.35, 260),
 
-      for (let i = 0; i < desiredCount; i++) {
-        const target =
-          targets[i % Math.max(1, targets.length)];
+      y:
+        height +
+        Math.random() *
+          height *
+          0.35,
 
-        const fromBottom =
-          Math.random() < 0.75;
+      vx:
+        (Math.random() - 0.5) *
+        1.5,
 
-        particles.push({
-          x: Math.random() * width,
-          y: fromBottom
-            ? height + Math.random() * height * 0.35
-            : Math.random() * height,
+      vy:
+        -(
+          0.7 +
+          Math.random() * 2
+        ),
 
-          vx: (Math.random() - 0.5) * 0.5,
-          vy: -(0.4 + Math.random() * 1.4),
+      tx: target.x,
+      ty: target.y,
 
-          tx: target ? target.x : width / 2,
-          ty: target ? target.y : height / 2,
+      size:
+        0.7 +
+        Math.random() *
+          (reducedMotion
+            ? 1.1
+            : 1.8),
 
-          size:
-            0.7 +
+      alpha:
+        0.25 +
+        Math.random() *
+          0.75,
+
+      color:
+        colors[
+          Math.floor(
             Math.random() *
-              (reducedMotion ? 1.1 : 1.8),
+              colors.length
+          )
+        ],
 
-          alpha:
-            0.35 +
-            Math.random() * 0.65,
+      phase:
+        Math.random() *
+        Math.PI *
+        2,
 
-          color:
-            colors[
-              Math.floor(Math.random() * colors.length)
-            ],
-
-          phase:
-            Math.random() * Math.PI * 2,
-
-          seed:
-            Math.random() * 1000
-        });
-      }
-    } else {
-      particles.forEach((particle, i) => {
-        const target =
-          targets[i % Math.max(1, targets.length)];
-
-        if (target) {
-          particle.tx = target.x;
-          particle.ty = target.y;
-        }
-      });
-    }
+      seed:
+        Math.random() *
+        1000
+    };
   }
 
-  function scatterParticles(now) {
-    if (!state.scatterStarted) {
-      state.scatterStarted = now;
-    }
 
-    const elapsed =
-      now - state.scatterStarted;
+  function seedParticles(points) {
+    targetPoints =
+      points || [];
 
-    particles.forEach((particle) => {
-      particle.vx +=
-        (Math.random() - 0.5) *
-        (reducedMotion ? 0.02 : 0.09);
-
-      particle.vy +=
-        (Math.random() - 0.5) *
-        (reducedMotion ? 0.02 : 0.09);
-
-      particle.x += particle.vx;
-      particle.y += particle.vy;
-
-      particle.vx *= 0.985;
-      particle.vy *= 0.985;
-    });
-
-    if (elapsed > 900) {
-      finish();
-    }
-  }
-
-  function updateParticles(now) {
-    const elapsed =
-      now - state.started;
-
-    if (state.phase === "scatter") {
-      scatterParticles(now);
+    if (!targetPoints.length) {
+      particles = [];
       return;
     }
 
-    particles.forEach((particle, index) => {
-      const dx = particle.tx - particle.x;
-      const dy = particle.ty - particle.y;
+    const wanted =
+      Math.min(
+        reducedMotion
+          ? 650
+          : 1500,
 
-      const distance =
-        Math.sqrt(dx * dx + dy * dy) || 1;
+        Math.max(
+          500,
+          targetPoints.length
+        )
+      );
 
-      let strength = 0.012;
+    particles =
+      Array.from(
+        { length: wanted },
+        (_, index) => {
+          const target =
+            targetPoints[
+              index %
+                targetPoints.length
+            ];
 
-      if (elapsed > 700) {
-        strength = 0.018;
-      }
-
-      if (elapsed > 1600) {
-        strength = 0.026;
-      }
-
-      particle.vx +=
-        (dx / distance) *
-        strength;
-
-      particle.vy +=
-        (dy / distance) *
-        strength;
-
-      if (!reducedMotion) {
-        particle.vx +=
-          Math.sin(
-            now * 0.0007 +
-            particle.phase +
-            index * 0.001
-          ) * 0.002;
-
-        particle.vy +=
-          Math.cos(
-            now * 0.0005 +
-            particle.seed
-          ) * 0.002;
-      }
-
-      particle.vx *= 0.88;
-      particle.vy *= 0.88;
-
-      particle.x += particle.vx;
-      particle.y += particle.vy;
-
-      if (distance < 18) {
-        particle.x +=
-          (Math.random() - 0.5) *
-          (reducedMotion ? 0.2 : 0.8);
-
-        particle.y +=
-          (Math.random() - 0.5) *
-          (reducedMotion ? 0.2 : 0.8);
-      }
-    });
+          return createParticle(
+            target
+          );
+        }
+      );
   }
 
+
+  function morphParticles(points) {
+    if (!points.length) return;
+
+    targetPoints = points;
+
+    for (
+      let i = 0;
+      i < particles.length;
+      i++
+    ) {
+      const particle =
+        particles[i];
+
+      const target =
+        points[
+          i % points.length
+        ];
+
+      particle.tx =
+        target.x;
+
+      particle.ty =
+        target.y;
+
+      particle.vx +=
+        (Math.random() - 0.5) *
+        0.5;
+
+      particle.vy +=
+        (Math.random() - 0.5) *
+        0.5;
+    }
+  }
+
+
+  /* =========================================================
+     TARGET BUILDING
+     ========================================================= */
+
+  function rebuildCurrentTargets() {
+    if (!width || !height) return;
+
+    const points =
+      createTextTargets(
+        currentText
+      );
+
+    morphParticles(points);
+  }
+
+
+  function setText(text) {
+    currentText = text;
+
+    const points =
+      createTextTargets(text);
+
+    morphParticles(points);
+  }
+
+
+  /* =========================================================
+     PARTICLE UPDATE
+     ========================================================= */
+
+  function updateParticles(now) {
+    for (
+      let i = 0;
+      i < particles.length;
+      i++
+    ) {
+      const particle =
+        particles[i];
+
+      if (phase === "gather") {
+        particle.alpha =
+          Math.min(
+            1,
+            particle.alpha +
+              0.018
+          );
+
+        particle.x +=
+          particle.vx;
+
+        particle.y +=
+          particle.vy;
+
+        particle.vx *=
+          0.985;
+
+        particle.vy *=
+          0.985;
+
+        const dx =
+          particle.tx -
+          particle.x;
+
+        const dy =
+          particle.ty -
+          particle.y;
+
+        particle.vx +=
+          dx *
+          0.0022;
+
+        particle.vy +=
+          dy *
+          0.0022;
+      }
+
+
+      else if (
+        phase === "morph"
+      ) {
+        particle.alpha =
+          Math.min(
+            1,
+            particle.alpha +
+              0.015
+          );
+
+        const dx =
+          particle.tx -
+          particle.x;
+
+        const dy =
+          particle.ty -
+          particle.y;
+
+        particle.vx +=
+          dx *
+          0.008;
+
+        particle.vy +=
+          dy *
+          0.008;
+
+        particle.vx *=
+          0.90;
+
+        particle.vy *=
+          0.90;
+
+        particle.x +=
+          particle.vx;
+
+        particle.y +=
+          particle.vy;
+      }
+
+
+      else if (
+        phase === "hold"
+      ) {
+        const dx =
+          particle.tx -
+          particle.x;
+
+        const dy =
+          particle.ty -
+          particle.y;
+
+        particle.vx +=
+          dx *
+          0.010;
+
+        particle.vy +=
+          dy *
+          0.010;
+
+        particle.vx *=
+          0.87;
+
+        particle.vy *=
+          0.87;
+
+        particle.x +=
+          particle.vx;
+
+        particle.y +=
+          particle.vy;
+
+        if (!reducedMotion) {
+          particle.x +=
+            Math.sin(
+              now * 0.0008 +
+                particle.phase
+            ) *
+            0.08;
+
+          particle.y +=
+            Math.cos(
+              now * 0.0006 +
+                particle.seed
+            ) *
+            0.08;
+        }
+      }
+
+
+      else if (
+        phase === "scatter"
+      ) {
+        const centerX =
+          width / 2;
+
+        const centerY =
+          height * 0.46;
+
+        const dx =
+          particle.x -
+          centerX;
+
+        const dy =
+          particle.y -
+          centerY;
+
+        particle.vx +=
+          dx *
+          0.0009;
+
+        particle.vy +=
+          dy *
+          0.0009;
+
+        particle.vx *=
+          0.994;
+
+        particle.vy *=
+          0.994;
+
+        particle.x +=
+          particle.vx;
+
+        particle.y +=
+          particle.vy;
+
+        particle.alpha *=
+          0.988;
+      }
+    }
+  }
+
+
+  /* =========================================================
+     DRAW
+     ========================================================= */
+
   function drawBackground(now) {
-    ctx.clearRect(0, 0, width, height);
+    ctx.clearRect(
+      0,
+      0,
+      width,
+      height
+    );
 
     const gradient =
       ctx.createRadialGradient(
         width / 2,
-        height * 0.42,
+        height * 0.43,
         0,
         width / 2,
-        height * 0.42,
-        Math.max(width, height) * 0.8
+        height * 0.43,
+        Math.max(
+          width,
+          height
+        ) *
+          0.82
       );
 
     gradient.addColorStop(
       0,
-      "rgba(65,45,100,0.20)"
+      "rgba(80,52,115,0.20)"
     );
 
     gradient.addColorStop(
-      0.45,
+      0.48,
       "rgba(17,19,48,0.12)"
     );
 
@@ -308,20 +696,31 @@
       "rgba(0,0,0,0)"
     );
 
-    ctx.fillStyle = gradient;
-    ctx.fillRect(0, 0, width, height);
+    ctx.fillStyle =
+      gradient;
+
+    ctx.fillRect(
+      0,
+      0,
+      width,
+      height
+    );
 
     if (reducedMotion) return;
 
     const glowX =
       width / 2 +
-      Math.sin(now * 0.00025) *
+      Math.sin(
+        now * 0.00025
+      ) *
         width *
         0.12;
 
     const glowY =
       height * 0.42 +
-      Math.cos(now * 0.0002) *
+      Math.cos(
+        now * 0.0002
+      ) *
         height *
         0.08;
 
@@ -332,12 +731,16 @@
         0,
         glowX,
         glowY,
-        Math.max(width, height) * 0.3
+        Math.max(
+          width,
+          height
+        ) *
+          0.3
       );
 
     glow.addColorStop(
       0,
-      "rgba(116,193,255,0.06)"
+      "rgba(116,193,255,0.055)"
     );
 
     glow.addColorStop(
@@ -350,28 +753,34 @@
       "rgba(0,0,0,0)"
     );
 
-    ctx.fillStyle = glow;
-    ctx.fillRect(0, 0, width, height);
+    ctx.fillStyle =
+      glow;
+
+    ctx.fillRect(
+      0,
+      0,
+      width,
+      height
+    );
   }
 
-  function drawParticles(now) {
-    particles.forEach((particle) => {
-      let alpha = particle.alpha;
 
-      if (state.phase === "scatter") {
-        const scatterAge =
-          now - state.scatterStarted;
-
-        alpha *= Math.max(
-          0,
-          1 - scatterAge / 1000
-        );
+  function drawParticles() {
+    for (
+      const particle of particles
+    ) {
+      if (
+        particle.alpha <=
+        0.01
+      ) {
+        continue;
       }
 
-      if (alpha <= 0) return;
+      ctx.globalAlpha =
+        particle.alpha;
 
-      ctx.globalAlpha = alpha;
-      ctx.fillStyle = particle.color;
+      ctx.fillStyle =
+        particle.color;
 
       ctx.beginPath();
 
@@ -385,178 +794,296 @@
 
       ctx.fill();
 
-      if (!reducedMotion && particle.size > 1.3) {
-        ctx.globalAlpha = alpha * 0.12;
+      if (
+        !reducedMotion &&
+        particle.size > 1.3
+      ) {
+        ctx.globalAlpha =
+          particle.alpha *
+          0.10;
 
         ctx.beginPath();
 
         ctx.arc(
           particle.x,
           particle.y,
-          particle.size * 3.8,
+          particle.size * 3.5,
           0,
           Math.PI * 2
         );
 
         ctx.fill();
       }
-    });
+    }
 
     ctx.globalAlpha = 1;
   }
 
-  function draw(now) {
-    drawBackground(now);
-    updateParticles(now);
-    drawParticles(now);
 
-    requestAnimationFrame(draw);
+  /* =========================================================
+     READABLE TEXT
+     ========================================================= */
+
+  function hideReadableText() {
+    if (!readableText) return;
+
+    readableText.classList.add(
+      "px-fade-out"
+    );
   }
+
+
+  function showLoveText() {
+    if (!readableText) return;
+
+    readableText.classList.remove(
+      "px-fade-out"
+    );
+
+    if (readableLove) {
+      readableLove.classList.add(
+        "is-active"
+      );
+    }
+
+    if (readableName) {
+      readableName.classList.remove(
+        "is-active"
+      );
+    }
+  }
+
+
+  function showNameText() {
+    if (!readableText) return;
+
+    readableText.classList.remove(
+      "px-fade-out"
+    );
+
+    if (readableLove) {
+      readableLove.classList.remove(
+        "is-active"
+      );
+    }
+
+    if (readableName) {
+      readableName.classList.add(
+        "is-active"
+      );
+    }
+  }
+
+
+  /* =========================================================
+     QUESTION
+     ========================================================= */
 
   function showQuestion() {
     if (
-      state.questionShown ||
-      state.choiceMade ||
-      state.finished
+      choiceMade ||
+      experienceFinished
     ) {
       return;
     }
 
-    state.questionShown = true;
-
-    if (!question) return;
-
-    question.classList.add("is-visible");
-    question.setAttribute(
-      "aria-hidden",
-      "false"
-    );
+    showElement(question);
   }
 
-  function hideElement(element) {
-    if (!element) return;
 
-    element.classList.remove("is-visible");
-    element.setAttribute(
-      "aria-hidden",
-      "true"
-    );
-  }
-
-  function showElement(element) {
-    if (!element) return;
-
-    element.classList.add("is-visible");
-    element.setAttribute(
-      "aria-hidden",
-      "false"
-    );
-  }
+  /* =========================================================
+     SOUND
+     ========================================================= */
 
   function playDing() {
     const ding =
-      document.getElementById("dingSound");
+      document.getElementById(
+        "dingSound"
+      );
 
     if (!ding) return;
 
     try {
       ding.currentTime = 0;
 
-      const promise = ding.play();
+      const promise =
+        ding.play();
 
       if (
         promise &&
-        typeof promise.catch === "function"
+        typeof promise.catch ===
+          "function"
       ) {
-        promise.catch(() => {});
+        promise.catch(
+          () => {}
+        );
       }
     } catch (_) {}
   }
 
+
   function startMusic() {
     const music =
-      document.getElementById("bgMusic");
+      document.getElementById(
+        "bgMusic"
+      );
 
     if (!music) return;
 
     try {
       music.volume = 0.45;
 
-      const promise = music.play();
+      const promise =
+        music.play();
 
       if (
         promise &&
-        typeof promise.catch === "function"
+        typeof promise.catch ===
+          "function"
       ) {
-        promise.catch(() => {});
+        promise.catch(
+          () => {}
+        );
       }
     } catch (_) {}
   }
 
-  function chooseYes() {
-    if (state.choiceMade) return;
 
-    state.choiceMade = true;
+  /* =========================================================
+     YES FLOW
+     ========================================================= */
+
+  function chooseYes() {
+    if (
+      choiceMade ||
+      experienceFinished
+    ) {
+      return;
+    }
+
+    choiceMade = true;
 
     hideElement(question);
 
     playDing();
     startMusic();
 
-    setTimeout(() => {
-      showElement(afterYes);
-    }, reducedMotion ? 100 : 350);
+    setTimeout(
+      () => {
+        showElement(
+          afterYes
+        );
+      },
+      reducedMotion
+        ? 80
+        : 350
+    );
   }
+
 
   function continueToLastSecret() {
     hideElement(afterYes);
 
-    setTimeout(() => {
-      showElement(lastSecret);
-    }, reducedMotion ? 80 : 280);
+    setTimeout(
+      () => {
+        showElement(
+          lastSecret
+        );
+      },
+      reducedMotion
+        ? 60
+        : 300
+    );
   }
 
-  function openTheLetter() {
-    hideElement(lastSecret);
 
-    state.phase = "scatter";
-    state.scatterStarted = performance.now();
+  function openLetter() {
+    hideElement(
+      lastSecret
+    );
 
-    const readableText =
-      document.querySelector(
-        ".px-readable-text"
-      );
+    hideReadableText();
 
-    if (readableText) {
-      readableText.classList.add("px-fade-out");
-    }
+    setPhase(
+      "scatter"
+    );
+
+    setTimeout(
+      () => {
+        finish();
+      },
+      reducedMotion
+        ? 120
+        : 850
+    );
   }
+
+
+  /* =========================================================
+     NO FLOW
+     ========================================================= */
 
   function chooseNo() {
-    if (state.choiceMade) return;
-
-    state.choiceMade = true;
-
-    hideElement(question);
-
-    if (noScreen) {
-      showElement(noScreen);
+    if (
+      choiceMade ||
+      experienceFinished
+    ) {
+      return;
     }
 
-    setTimeout(() => {
-      window.location.replace(
-        "about:blank"
-      );
-    }, reducedMotion ? 250 : 800);
+    choiceMade = true;
+
+    hideElement(
+      question
+    );
+
+    showElement(
+      noScreen
+    );
+
+    setTimeout(
+      () => {
+        hideElement(
+          noScreen
+        );
+
+        finish();
+      },
+      reducedMotion
+        ? 900
+        : 1800
+    );
   }
 
-  function finish() {
-    if (state.finished) return;
 
-    state.finished = true;
+  /* =========================================================
+     FINISH
+     ========================================================= */
+
+  function finish() {
+    if (experienceFinished)
+      return;
+
+    experienceFinished = true;
+
+    hideElement(
+      question
+    );
+
+    hideElement(
+      afterYes
+    );
+
+    hideElement(
+      lastSecret
+    );
+
+    hideElement(
+      noScreen
+    );
 
     experience.classList.add(
-      "px-experience-finished"
+      "px-done"
     );
 
     experience.setAttribute(
@@ -564,52 +1091,178 @@
       "true"
     );
 
-    setTimeout(() => {
-      experience.classList.add("hidden");
+    window.PatriciaExperienceActive =
+      false;
 
-      const main =
-        document.querySelector("main");
-
-      if (main) {
-        main.classList.add(
-          "px-site-revealed"
-        );
-      }
-
-      document.body.classList.remove(
-        "px-experience-active"
+    const intro =
+      document.getElementById(
+        "intro-screen"
       );
-    }, reducedMotion ? 0 : 180);
-  }
 
-  function handleResize() {
-    resizeCanvas();
+    const popup =
+      document.getElementById(
+        "welcome-popup"
+      );
 
-    if (
-      state.phase === "gather" ||
-      state.phase === "hold"
-    ) {
-      buildTargets();
-    }
-  }
-
-  function prepareExperience() {
-    experience.classList.remove(
+    intro?.classList.add(
       "hidden"
     );
 
-    experience.setAttribute(
-      "aria-hidden",
-      "false"
+    popup?.classList.add(
+      "hidden"
     );
 
-    hideElement(question);
-    hideElement(afterYes);
-    hideElement(lastSecret);
-    hideElement(noScreen);
+    document.body.classList.remove(
+      "px-experience-active"
+    );
 
+    document.body.classList.add(
+      "px-experience-finished"
+    );
+  }
+
+
+  /* =========================================================
+     MAIN ANIMATION LOOP
+     ========================================================= */
+
+  function animate(now) {
+    if (experienceFinished)
+      return;
+
+    drawBackground(now);
+
+    updateParticles(now);
+
+    drawParticles();
+
+    const elapsed =
+      now - phaseStarted;
+
+
+    /*
+     * PHASE 1
+     * Je t'aime
+     */
+
+    if (
+      phase === "gather" &&
+      elapsed >
+        (reducedMotion
+          ? 1000
+          : 2200)
+    ) {
+      showLoveText();
+
+      setPhase(
+        "hold"
+      );
+    }
+
+
+    /*
+     * PHASE 2
+     * Morph toward Sauveur Patricia
+     */
+
+    if (
+      phase === "hold" &&
+      elapsed >
+        (reducedMotion
+          ? 900
+          : 1800)
+    ) {
+      setText(
+        "Sauveur Patricia"
+      );
+
+      showNameText();
+
+      setPhase(
+        "morph"
+      );
+    }
+
+
+    /*
+     * PHASE 3
+     * Hold the name
+     */
+
+    if (
+      phase === "morph" &&
+      elapsed >
+        (reducedMotion
+          ? 900
+          : 1900)
+    ) {
+      setPhase(
+        "hold-name"
+      );
+    }
+
+
+    /*
+     * PHASE 4
+     * Keep the name visible,
+     * then reveal the question.
+     */
+
+    if (
+      phase === "hold-name" &&
+      elapsed >
+        (reducedMotion
+          ? 700
+          : 1500)
+    ) {
+      showQuestion();
+
+      setPhase(
+        "question"
+      );
+    }
+
+
+    /*
+     * Once the question is visible,
+     * NOTHING automatically ends the experience.
+     *
+     * Patricia must choose.
+     */
+
+    if (
+      phase === "scatter"
+    ) {
+      if (
+        elapsed >
+          (reducedMotion
+            ? 700
+            : 1000)
+      ) {
+        finish();
+        return;
+      }
+    }
+
+    animationFrame =
+      requestAnimationFrame(
+        animate
+      );
+  }
+
+
+  /* =========================================================
+     RESIZE
+     ========================================================= */
+
+  function handleResize() {
     resizeCanvas();
   }
+
+
+  /* =========================================================
+     EVENT LISTENERS
+     ========================================================= */
 
   if (yesButton) {
     yesButton.addEventListener(
@@ -625,11 +1278,6 @@
     );
   }
 
-  const continueButton =
-    document.getElementById(
-      "px-after-yes-continue"
-    );
-
   if (continueButton) {
     continueButton.addEventListener(
       "click",
@@ -637,15 +1285,10 @@
     );
   }
 
-  const secretButton =
-    document.getElementById(
-      "px-last-secret-open"
-    );
-
-  if (secretButton) {
-    secretButton.addEventListener(
+  if (openLetterButton) {
+    openLetterButton.addEventListener(
       "click",
-      openTheLetter
+      openLetter
     );
   }
 
@@ -655,31 +1298,52 @@
     { passive: true }
   );
 
-  prepareExperience();
 
-  requestAnimationFrame(draw);
+  /* =========================================================
+     INITIALIZATION
+     ========================================================= */
 
-  const holdDelay =
-    reducedMotion
-      ? 1450
-      : 3400;
-
-  setTimeout(() => {
-    if (
-      !state.choiceMade &&
-      !state.finished
-    ) {
-      state.phase = "hold";
-      showQuestion();
-    }
-  }, holdDelay);
-
-  window.addEventListener(
-    "pageshow",
-    () => {
-      if (!state.finished) {
-        prepareExperience();
-      }
-    }
+  hideElement(
+    question
   );
+
+  hideElement(
+    afterYes
+  );
+
+  hideElement(
+    lastSecret
+  );
+
+  hideElement(
+    noScreen
+  );
+
+  resizeCanvas();
+
+  const firstTargets =
+    createTextTargets(
+      "Je t'aime"
+    );
+
+  seedParticles(
+    firstTargets
+  );
+
+  showLoveText();
+
+  phase = "gather";
+
+  phaseStarted =
+    performance.now();
+
+  cancelAnimationFrame(
+    animationFrame
+  );
+
+  animationFrame =
+    requestAnimationFrame(
+      animate
+    );
+
 })();
