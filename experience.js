@@ -188,3 +188,64 @@
 
   start();
 })();
+
+/* =========================================================
+   EXACT DECORATIVE GLIDE — fixed order, slow and translucent
+   ========================================================= */
+(() => {
+  const wrap = document.getElementById("px-glide-decor");
+  if (!wrap) return;
+
+  const symbols = [
+    "❤️",
+    "🤭",
+    "🤭",
+    "💜",
+    "💕",
+    "💗",
+    "🤭",
+    "💕",
+    "💜",
+    "💜",
+    "💜",
+    "💕",
+    "💮",
+    "🌸",
+    "❀",
+    "🌸",
+    "🌷",
+    "🌷",
+    "💮",
+    "💮",
+    "✿",
+    "💮",
+    "🌸",
+    "🌷",
+    "🌸",
+    "💮"
+  ];
+
+  const topPositions = [
+    6, 11, 15, 19, 24, 29, 33, 38, 42, 46, 50, 54, 58,
+    62, 66, 70, 74, 77, 80, 83, 86, 89, 91, 14, 55, 68
+  ];
+
+  const frag = document.createDocumentFragment();
+  symbols.forEach((symbol, i) => {
+    const el = document.createElement("span");
+    el.className = "px-glide-symbol";
+    el.textContent = symbol;
+    el.style.setProperty("--px-y", `${topPositions[i]}vh`);
+    el.style.setProperty("--px-size", `${18 + (i % 5) * 2}px`);
+    el.style.setProperty("--px-opacity", `${0.17 + (i % 4) * 0.035}`);
+    el.style.setProperty("--px-duration", `${22 + (i % 6) * 2.3}s`);
+    el.style.setProperty("--px-delay", `${-(i * 1.35)}s`);
+    el.style.setProperty("--px-rise", `${-2 - (i % 4)}vh`);
+    el.style.setProperty("--px-end", `${-4 - (i % 5)}vh`);
+    el.style.setProperty("--px-r0", `${-5 + (i % 5) * 2}deg`);
+    el.style.setProperty("--px-r1", `${2 - (i % 4) * 2}deg`);
+    el.style.setProperty("--px-r2", `${-4 + (i % 5) * 2}deg`);
+    frag.appendChild(el);
+  });
+  wrap.appendChild(frag);
+})();
