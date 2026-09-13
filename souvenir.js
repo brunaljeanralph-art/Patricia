@@ -47,8 +47,16 @@ document.addEventListener("DOMContentLoaded", () => {
   const HOLD_TIME = 7000;
   const LEAVE_TIME = 900;
 
+  /*
+     Tout foto yo chita dirèkteman nan assets/
+     
+     assets/photo01.jpg
+     assets/photo02.jpg
+     ...
+     assets/photo42.jpg
+  */
   const PHOTO_PATH =
-    "assets/souvenirs/photo";
+    "assets/photo";
 
 
   /* =========================================================
