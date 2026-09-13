@@ -10,15 +10,29 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;700&display=swap"
+        rel="stylesheet">
 
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="experience.css">
     <link rel="stylesheet" href="souvenirs.css">
 
-    <link rel="preload" as="image" href="assets/tulip.png">
-    <link rel="preload" as="image" href="assets/Tulipe.png">
-    <link rel="preload" as="audio" href="assets/music.mp3">
+    <link
+        rel="preload"
+        as="image"
+        href="assets/tulip.png">
+
+    <link
+        rel="preload"
+        as="audio"
+        href="assets/music.mp3">
+
+    <link
+        rel="preload"
+        as="audio"
+        href="assets/experience-music.mp3">
 
     <style>
         /* =========================================================
@@ -65,7 +79,7 @@
             justify-content: center;
             gap: 14px;
             width: 100%;
-            margin: 38px auto 38px;
+            margin: 38px auto;
             color: #b45d77;
         }
 
@@ -73,12 +87,13 @@
         .letter-divider::after {
             content: "";
             height: 1px;
-            background: linear-gradient(
-                to right,
-                transparent,
-                rgba(122, 63, 163, 0.34),
-                transparent
-            );
+            background:
+                linear-gradient(
+                    to right,
+                    transparent,
+                    rgba(122, 63, 163, 0.34),
+                    transparent
+                );
             flex: 1;
         }
 
@@ -167,8 +182,11 @@
             font-family: Arial, Helvetica, sans-serif;
             font-size: 15px;
             font-weight: 700;
-            box-shadow: 0 7px 20px rgba(122, 63, 163, 0.22);
-            transition: transform .2s ease, background .2s ease;
+            box-shadow:
+                0 7px 20px rgba(122, 63, 163, 0.22);
+            transition:
+                transform .2s ease,
+                background .2s ease;
         }
 
         .relire-letter:hover {
@@ -176,8 +194,25 @@
             transform: translateY(-2px);
         }
 
-        /* More breathing room on larger screens */
+        /* =========================================================
+           EXPERIENCE SAFETY
+           ========================================================= */
+
+        #px-experience {
+            min-height: 100dvh;
+        }
+
+        #px-experience canvas {
+            width: 100%;
+            height: 100%;
+        }
+
+        /* =========================================================
+           LARGER SCREENS
+           ========================================================= */
+
         @media (min-width: 768px) {
+
             .secret-letter {
                 font-size: 18.5px;
                 line-height: 2;
@@ -193,8 +228,12 @@
             }
         }
 
-        /* Comfortable reading on phones */
+        /* =========================================================
+           PHONES
+           ========================================================= */
+
         @media (max-width: 600px) {
+
             .secret-letter {
                 font-size: 17px;
                 line-height: 1.9;
@@ -222,19 +261,32 @@
     </style>
 </head>
 
+
 <body>
-    <span id="top" class="px-top-anchor" aria-hidden="true"></span>
+
+    <span
+        id="top"
+        class="px-top-anchor"
+        aria-hidden="true">
+    </span>
 
 
     <!-- ===============================
          1. INTRO LOADER
     =============================== -->
 
-    <div id="intro-screen" class="hidden" aria-hidden="true">
+    <div
+        id="intro-screen"
+        class="hidden"
+        aria-hidden="true">
+
         <div class="intro-overlay"></div>
 
         <div class="intro-content">
-            <div class="intro-heart">🤍</div>
+
+            <div class="intro-heart">
+                🤍
+            </div>
 
             <h2>
                 Un dernier petit secret...
@@ -245,7 +297,9 @@
             <p>
                 Ferme les yeux un instant...
             </p>
+
         </div>
+
     </div>
 
 
@@ -253,11 +307,16 @@
          2. POPUP BIENVENUE
     =============================== -->
 
-    <div id="welcome-popup" class="hidden" aria-hidden="true">
+    <div
+        id="welcome-popup"
+        class="hidden"
+        aria-hidden="true">
 
         <div class="popup-card">
 
-            <div class="popup-heart">🤍</div>
+            <div class="popup-heart">
+                🤍
+            </div>
 
             <h2>
                 Bienvenue, Mi Amor ❤️
@@ -282,20 +341,57 @@
 
 
     <!-- ===============================
-         3. MUSIQUE
+         3. MUSIQUES
     =============================== -->
 
-    <button id="music-btn" class="music-btn">
+    <button
+        id="music-btn"
+        class="music-btn">
+
         🎵 Activer la musique
+
     </button>
 
-    <audio id="bgMusic" loop>
-        <source src="assets/music.mp3" type="audio/mpeg">
+
+    <audio
+        id="bgMusic"
+        preload="auto"
+        loop>
+
+        <source
+            src="assets/music.mp3"
+            type="audio/mpeg">
+
         Votre navigateur ne supporte pas l'audio.
+
     </audio>
 
-    <audio id="dingSound">
-        <source src="assets/ding.mp3" type="audio/mpeg">
+
+    <audio
+        id="dingSound"
+        preload="auto">
+
+        <source
+            src="assets/ding.mp3"
+            type="audio/mpeg">
+
+    </audio>
+
+
+    <!--
+        Musique dédiée à l'expérience cinematic.
+        Elle est contrôlée par experience.js.
+    -->
+
+    <audio
+        id="experienceMusic"
+        preload="auto"
+        loop>
+
+        <source
+            src="assets/experience-music.mp3"
+            type="audio/mpeg">
+
     </audio>
 
 
@@ -304,12 +400,15 @@
     =============================== -->
 
     <div class="background"></div>
+
     <div id="stars"></div>
+
     <div id="hearts-container"></div>
+
     <div id="petals-container"></div>
+
     <div id="confetti-container"></div>
 
-    <!-- Slow, translucent decorative drift -->
 
     <!-- ===============================
          5. CARTE
@@ -327,10 +426,17 @@
             <div class="title">
 
                 <h1>
-                    <span class="px-title-line">Pour toi</span>
-                    <span 
 
-class="miamor">Mi Amor.</span> ❤️
+                    <span class="px-title-line">
+                        Pour toi
+                    </span>
+
+                    <span class="miamor">
+                        Mi Amor.
+                    </span>
+
+                    ❤️
+
                 </h1>
 
                 <h2>
@@ -354,6 +460,7 @@ class="miamor">Mi Amor.</span> ❤️
         <section class="secret-letter">
 
             <div class="secret-intro">
+
                 <p>
                     Tu es vraiment arrivée jusqu'ici...
                 </p>
@@ -361,6 +468,7 @@ class="miamor">Mi Amor.</span> ❤️
                 <p class="miamor-line">
                     ❤Mi Amor ❤️
                 </p>
+
             </div>
 
 
@@ -390,7 +498,10 @@ class="miamor">Mi Amor.</span> ❤️
             </p>
 
             <p>
-                <strong>Le plus beau souvenir de cette surprise ne sera jamais cette page.</strong>
+                <strong>
+                    Le plus beau souvenir de cette surprise ne sera jamais cette page.
+                </strong>
+
                 Ce sera simplement de savoir que, quelque part, en ce moment précis, c'est toi qui es en train de lire ces mots.
             </p>
 
@@ -399,7 +510,9 @@ class="miamor">Mi Amor.</span> ❤️
             </p>
 
             <p>
-                <strong>Il y a des souvenirs qui n'appartiennent qu'à nous.</strong>
+                <strong>
+                    Il y a des souvenirs qui n'appartiennent qu'à nous.
+                </strong>
             </p>
 
 
@@ -409,7 +522,10 @@ class="miamor">Mi Amor.</span> ❤️
 
 
             <p>
-                <strong>Je me souviens encore de notre premier baiser.</strong>
+                <strong>
+                    Je me souviens encore de notre premier baiser.
+                </strong>
+
                 Il est arrivé si naturellement que ni toi ni moi ne nous sommes vraiment rendu compte de ce qui venait de se passer. Ce n'est qu'en rentrant chez moi que je me suis surpris à sourire tout seul, en me demandant :
             </p>
 
@@ -454,7 +570,10 @@ class="miamor">Mi Amor.</span> ❤️
             </p>
 
             <p>
-                <strong>Peur de ne jamais vraiment savoir ce que tu pensais de moi.</strong>
+                <strong>
+                    Peur de ne jamais vraiment savoir ce que tu pensais de moi.
+                </strong>
+
                 Alors, sans jamais te le dire, je cherchais toujours une raison de te faire sourire.
             </p>
 
@@ -491,7 +610,9 @@ class="miamor">Mi Amor.</span> ❤️
             </p>
 
             <p>
-                <strong>Tes conseils ont toujours eu une place particulière dans mon cœur.</strong>
+                <strong>
+                    Tes conseils ont toujours eu une place particulière dans mon cœur.
+                </strong>
             </p>
 
             <p>
@@ -499,7 +620,9 @@ class="miamor">Mi Amor.</span> ❤️
             </p>
 
             <p>
-                <strong>Chaque fois que je passe devant chez toi...</strong>
+                <strong>
+                    Chaque fois que je passe devant chez toi...
+                </strong>
             </p>
 
             <p>
@@ -515,7 +638,9 @@ class="miamor">Mi Amor.</span> ❤️
             </p>
 
             <p>
-                <strong>mais certains souvenirs ne disparaissent jamais.</strong>
+                <strong>
+                    mais certains souvenirs ne disparaissent jamais.
+                </strong>
             </p>
 
             <p>
@@ -541,7 +666,9 @@ class="miamor">Mi Amor.</span> ❤️
             </p>
 
             <p>
-                <strong>Reviens ici.</strong>
+                <strong>
+                    Reviens ici.
+                </strong>
             </p>
 
             <p>
@@ -553,7 +680,9 @@ class="miamor">Mi Amor.</span> ❤️
             </p>
 
             <p>
-                <strong>Referme cette page avec le sourire.</strong>
+                <strong>
+                    Referme cette page avec le sourire.
+                </strong>
             </p>
 
             <p>
@@ -570,6 +699,7 @@ class="miamor">Mi Amor.</span> ❤️
 
 
             <div class="signature">
+
                 <p>
                     Avec toute la sincérité de mon cœur,
                 </p>
@@ -581,6 +711,7 @@ class="miamor">Mi Amor.</span> ❤️
                 <p>
                     Mr.Ralph
                 </p>
+
             </div>
 
 
@@ -599,7 +730,9 @@ class="miamor">Mi Amor.</span> ❤️
                 </h2>
 
                 <p class="final-question-text">
-                    <em>As-tu souri en arrivant jusqu'ici ?</em>
+                    <em>
+                        As-tu souri en arrivant jusqu'ici ?
+                    </em>
                 </p>
 
                 <p>
@@ -607,7 +740,9 @@ class="miamor">Mi Amor.</span> ❤️
                 </p>
 
                 <p>
-                    <strong>Alors mon petit secret a rempli sa mission.</strong>
+                    <strong>
+                        Alors mon petit secret a rempli sa mission.
+                    </strong>
                 </p>
 
                 <p>
@@ -615,7 +750,9 @@ class="miamor">Mi Amor.</span> ❤️
                 </p>
 
                 <p>
-                    <strong>Je voulais te laisser un souvenir.</strong>
+                    <strong>
+                        Je voulais te laisser un souvenir.
+                    </strong>
                 </p>
 
                 <p>
@@ -631,11 +768,17 @@ class="miamor">Mi Amor.</span> ❤️
                 </p>
 
                 <p>
-                    <strong>Mais les sentiments sincères, eux, laissent toujours une trace. ❤️</strong>
+                    <strong>
+                        Mais les sentiments sincères, eux, laissent toujours une trace. ❤️
+                    </strong>
                 </p>
 
-                <a class="relire-letter" href="lettre.pdf">
+                <a
+                    class="relire-letter"
+                    href="lettre.pdf">
+
                     💌 Relire ma lettre
+
                 </a>
 
             </div>
@@ -644,80 +787,195 @@ class="miamor">Mi Amor.</span> ❤️
 
     </main>
 
-    <section class="px-souvenir-gate" aria-label="Accéder aux souvenirs">
-        <a class="px-souvenir-gate-link" href="#souvenirs">
-            <span class="px-souvenir-gate-icon">♡</span>
-            <span>Découvrir nos souvenirs</span>
-            <span class="px-souvenir-gate-arrow">↓</span>
+
+    <!-- ===============================
+         8. ACCÈS AUX SOUVENIRS
+    =============================== -->
+
+    <section
+        class="px-souvenir-gate"
+        aria-label="Accéder aux souvenirs">
+
+        <a
+            class="px-souvenir-gate-link"
+            href="#souvenirs">
+
+            <span class="px-souvenir-gate-icon">
+                ♡
+            </span>
+
+            <span>
+                Découvrir nos souvenirs
+            </span>
+
+            <span class="px-souvenir-gate-arrow">
+                ↓
+            </span>
+
         </a>
+
     </section>
+
 
     <!-- ===============================
          9. SOUVENIRS — LIVRE
     =============================== -->
-    <section id="souvenirs" class="px-souvenirs-book" aria-labelledby="px-souvenirs-title">
+
+    <section
+        id="souvenirs"
+        class="px-souvenirs-book"
+        aria-labelledby="px-souvenirs-title">
+
         <div class="px-book">
+
             <div class="px-book-page px-book-left">
-                <div class="px-book-mark">♡</div>
-                <p class="px-book-kicker">Une petite partie de nous</p>
-                <h2>Nos souvenirs</h2>
+
+                <div class="px-book-mark">
+                    ♡
+                </div>
+
+                <p class="px-book-kicker">
+                    Une petite partie de nous
+                </p>
+
+                <h2 id="px-souvenirs-title">
+                    Nos souvenirs
+                </h2>
+
                 <div class="px-book-line"></div>
+
                 <p class="px-book-copy">
                     Une lettre peut garder beaucoup de choses...
-                    mais certaines images racontent ce que les mots ne savent pas toujours dire.
+                    mais certaines images racontent ce que les mots
+                    ne savent pas toujours dire.
                 </p>
+
                 <p class="px-book-hint">
                     Fais défiler doucement les souvenirs à droite.
                 </p>
-                <div class="px-book-heart">♥</div>
+
+                <div class="px-book-heart">
+                    ♥
+                </div>
+
             </div>
 
+
             <div class="px-book-page px-book-right">
+
                 <div class="px-souvenir-flow-head">
+
                     <span class="px-flow-dot"></span>
-                    <span>Notre petit album</span>
-                    <span class="px-flow-count" id="px-flow-count">01 / 42</span>
+
+                    <span>
+                        Notre petit album
+                    </span>
+
+                    <span
+                        class="px-flow-count"
+                        id="px-flow-count">
+
+                        01 / 42
+
+                    </span>
+
                 </div>
+
 
                 <div
                     id="px-photo-stage"
                     class="px-photo-stage"
                     tabindex="0"
-                    aria-label="Album de 42 souvenirs. Maintiens le doigt sur l'écran pour mettre en pause."
-                >
+                    aria-label="Album de 42 souvenirs. Maintiens le doigt sur l'écran pour mettre en pause.">
+
                     <div class="px-photo-orbit px-photo-orbit-one"></div>
+
                     <div class="px-photo-orbit px-photo-orbit-two"></div>
 
-                    <figure id="px-photo-frame" class="px-photo-frame">
+
+                    <figure
+                        id="px-photo-frame"
+                        class="px-photo-frame">
+
                         <div class="px-photo-shine"></div>
-                        <img id="px-memory-photo" src="" alt="Souvenir 1" draggable="false">
-                        <figcaption id="px-memory-caption">Souvenir 01</figcaption>
+
+                        <img
+                            id="px-memory-photo"
+                            src=""
+                            alt="Souvenir 1"
+                            draggable="false">
+
+                        <figcaption id="px-memory-caption">
+                            Souvenir 01
+                        </figcaption>
+
                     </figure>
 
-                    <div class="px-photo-loader" id="px-photo-loader" aria-hidden="true">
-                        <span></span><span></span><span></span>
+
+                    <div
+                        class="px-photo-loader"
+                        id="px-photo-loader"
+                        aria-hidden="true">
+
+                        <span></span>
+                        <span></span>
+                        <span></span>
+
                     </div>
 
-                    <div class="px-photo-progress" aria-hidden="true">
-                        <div id="px-photo-progress-bar"></div>
+
+                    <div
+                        class="px-photo-progress"
+                        aria-hidden="true">
+
+                        <div
+                            id="px-photo-progress-bar">
+                        </div>
+
                     </div>
 
-                    <p class="px-pause-hint" id="px-pause-hint">
-                        Maintiens ton doigt pour garder ce souvenir un peu plus longtemps ♡
+
+                    <p
+                        class="px-pause-hint"
+                        id="px-pause-hint">
+
+                        Maintiens ton doigt pour garder ce souvenir
+                        un peu plus longtemps ♡
+
                     </p>
+
                 </div>
+
 
                 <div class="px-flow-footer">
-                    <span>42 souvenirs</span>
-                    <span class="px-footer-heart">♡</span>
-                    <a href="#top" id="px-back-letter">Retour à la lettre</a>
+
+                    <span>
+                        42 souvenirs
+                    </span>
+
+                    <span class="px-footer-heart">
+                        ♡
+                    </span>
+
+                    <a
+                        href="#top"
+                        id="px-back-letter">
+
+                        Retour à la lettre
+
+                    </a>
+
                 </div>
+
             </div>
+
         </div>
+
     </section>
 
+
     <!-- ===============================
-         8. JAVASCRIPT
+         10. JAVASCRIPT
     =============================== -->
 
     <script src="script.js"></script>
