@@ -48,13 +48,16 @@ document.addEventListener("DOMContentLoaded", () => {
   const LEAVE_TIME = 900;
 
   /*
-     Tout foto yo chita dirèkteman nan assets/
-     
+     IMPORTANT
+
+     Foto yo chita dirèkteman nan assets/
+
      assets/photo01.jpg
      assets/photo02.jpg
      ...
      assets/photo42.jpg
   */
+
   const PHOTO_PATH =
     "assets/photo";
 
@@ -139,8 +142,12 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
+    /*
+      CSS utilise .is-loading
+    */
+
     loader.classList.toggle(
-      "is-visible",
+      "is-loading",
       state
     );
 
@@ -177,8 +184,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
           } catch (_) {
 
-            /* Image already loaded.
-               Continue normally. */
+            /*
+              L'image est déjà chargée.
+              On continue normalement.
+            */
 
           }
 
@@ -209,6 +218,40 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   /* =========================================================
+     PRELOAD NEXT PHOTO
+     ========================================================= */
+
+  function preloadNextPhoto() {
+
+    let nextPhoto =
+      currentPhoto + 1;
+
+
+    if (
+      nextPhoto >
+      TOTAL_PHOTOS
+    ) {
+
+      nextPhoto = 1;
+
+    }
+
+
+    /*
+      Prépare silencieusement
+      la prochaine image.
+    */
+
+    const img =
+      new Image();
+
+    img.src =
+      photoSrc(nextPhoto);
+
+  }
+
+
+  /* =========================================================
      SHOW PHOTO
      ========================================================= */
 
@@ -229,7 +272,9 @@ document.addEventListener("DOMContentLoaded", () => {
       if (
         token !== imageToken
       ) {
+
         return false;
+
       }
 
 
@@ -245,6 +290,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
       setLoading(false);
 
+      preloadNextPhoto();
+
 
       return true;
 
@@ -253,7 +300,9 @@ document.addEventListener("DOMContentLoaded", () => {
       if (
         token !== imageToken
       ) {
+
         return false;
+
       }
 
 
@@ -274,11 +323,59 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   /* =========================================================
+     FIND NEXT AVAILABLE PHOTO
+     ========================================================= */
+
+  async function findNextAvailablePhoto() {
+
+    for (
+      let attempt = 1;
+      attempt <= TOTAL_PHOTOS;
+      attempt++
+    ) {
+
+      let candidate =
+        currentPhoto + attempt;
+
+
+      if (
+        candidate >
+        TOTAL_PHOTOS
+      ) {
+
+        candidate -=
+          TOTAL_PHOTOS;
+
+      }
+
+
+      const loaded =
+        await showPhoto(
+          candidate
+        );
+
+
+      if (
+        loaded
+      ) {
+
+        return candidate;
+
+      }
+
+    }
+
+
+    return null;
+
+  }
+
+
+  /* =========================================================
      PHASE ANIMATION
      ========================================================= */
 
   function applyPhaseStyles(progressValue) {
-
 
     if (
       phase === "enter"
@@ -307,7 +404,10 @@ document.addEventListener("DOMContentLoaded", () => {
         `translate3d(0, ${
           110 -
           (110 * eased)
-        }%, 0)`;
+        }%, 0) scale(${
+          0.965 +
+          eased * 0.035
+        })`;
 
 
       frame.style.opacity =
@@ -320,6 +420,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
       return;
+
     }
 
 
@@ -339,7 +440,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
       frame.style.transform =
-        "translate3d(0, 0, 0)";
+        `translate3d(0, 0, 0) scale(${
+          1 +
+          Math.sin(
+            p * Math.PI
+          ) * 0.006
+        })`;
 
 
       frame.style.opacity =
@@ -353,6 +459,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
       return;
+
     }
 
 
@@ -378,7 +485,10 @@ document.addEventListener("DOMContentLoaded", () => {
       frame.style.transform =
         `translate3d(0, ${
           -110 * eased
-        }%, 0)`;
+        }%, 0) scale(${
+          1 -
+          eased * 0.035
+        })`;
 
 
       frame.style.opacity =
@@ -394,6 +504,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
       return;
+
     }
 
   }
@@ -416,7 +527,7 @@ document.addEventListener("DOMContentLoaded", () => {
         "none";
 
       frame.style.transform =
-        "translate3d(0, 110%, 0)";
+        "translate3d(0, 110%, 0) scale(.965)";
 
       frame.style.opacity =
         "0";
@@ -432,7 +543,7 @@ document.addEventListener("DOMContentLoaded", () => {
         "none";
 
       frame.style.transform =
-        "translate3d(0, 0, 0)";
+        "translate3d(0, 0, 0) scale(1)";
 
       frame.style.opacity =
         "1";
@@ -461,7 +572,9 @@ document.addEventListener("DOMContentLoaded", () => {
     if (
       transitioning
     ) {
+
       return;
+
     }
 
 
@@ -488,10 +601,39 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
-    const loaded =
+    let loaded =
       await showPhoto(
         nextPhoto
       );
+
+
+    /*
+      Si la prochaine photo n'existe pas,
+      cherche automatiquement une autre
+      photo disponible.
+    */
+
+    if (
+      !loaded
+    ) {
+
+      const fallback =
+        await findNextAvailablePhoto();
+
+
+      if (
+        fallback !== null
+      ) {
+
+        nextPhoto =
+          fallback;
+
+        loaded =
+          true;
+
+      }
+
+    }
 
 
     if (
@@ -504,50 +646,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     } else {
 
-      /*
-        Si yon foto pa disponib,
-        nou pase sou pwochen an.
-      */
-
-      currentPhoto =
-        nextPhoto;
-
-
-      let fallbackPhoto =
-        currentPhoto + 1;
-
-
-      if (
-        fallbackPhoto >
-        TOTAL_PHOTOS
-      ) {
-
-        fallbackPhoto =
-          1;
-
-      }
-
-
-      const fallbackLoaded =
-        await showPhoto(
-          fallbackPhoto
-        );
-
-
-      if (
-        fallbackLoaded
-      ) {
-
-        startPhase(
-          "enter"
-        );
-
-      } else {
-
-        phase =
-          "idle";
-
-      }
+      phase =
+        "idle";
 
     }
 
@@ -567,7 +667,9 @@ document.addEventListener("DOMContentLoaded", () => {
     if (
       started
     ) {
+
       return;
+
     }
 
 
@@ -598,6 +700,16 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
 
     }
+
+
+    /*
+      Active la galerie dès que la section
+      Souvenirs entre réellement dans l'écran.
+    */
+
+    stage.classList.add(
+      "is-gallery-active"
+    );
 
 
     startPhase(
@@ -743,7 +855,9 @@ document.addEventListener("DOMContentLoaded", () => {
       isPaused ||
       phase === "idle"
     ) {
+
       return;
+
     }
 
 
@@ -782,7 +896,9 @@ document.addEventListener("DOMContentLoaded", () => {
       !started ||
       !isPaused
     ) {
+
       return;
+
     }
 
 
@@ -831,7 +947,9 @@ document.addEventListener("DOMContentLoaded", () => {
       if (
         event.isPrimary === false
       ) {
+
         return;
+
       }
 
 
@@ -857,7 +975,9 @@ document.addEventListener("DOMContentLoaded", () => {
       if (
         event.isPrimary === false
       ) {
+
         return;
+
       }
 
 
@@ -955,6 +1075,11 @@ document.addEventListener("DOMContentLoaded", () => {
           "idle";
 
 
+        stage.classList.remove(
+          "is-gallery-active"
+        );
+
+
         setLoading(
           false
         );
@@ -978,7 +1103,9 @@ document.addEventListener("DOMContentLoaded", () => {
   if (
     !souvenirSection
   ) {
+
     return;
+
   }
 
 
@@ -1026,7 +1153,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
   frame.style.transform =
-    "translate3d(0, 110%, 0)";
+    "translate3d(0, 110%, 0) scale(.965)";
 
 
   frame.style.opacity =
