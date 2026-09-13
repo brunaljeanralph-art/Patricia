@@ -1,1032 +1,543 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-  const stage =
-    document.getElementById("px-photo-stage");
-
-  const photo =
-    document.getElementById("px-memory-photo");
-
-  const frame =
-    document.getElementById("px-photo-frame");
-
-  const caption =
-    document.getElementById("px-memory-caption");
-
-  const count =
-    document.getElementById("px-flow-count");
-
-  const progress =
-    document.getElementById("px-photo-progress-bar");
-
-  const loader =
-    document.getElementById("px-photo-loader");
-
-  const pauseHint =
-    document.getElementById("px-pause-hint");
+    "use strict";
 
 
-  if (
-    !stage ||
-    !photo ||
-    !frame ||
-    !caption ||
-    !count ||
-    !progress
-  ) {
-    return;
-  }
+    const intro =
+        document.getElementById(
+            "intro-screen"
+        );
+
+    const welcome =
+        document.getElementById(
+            "welcome-popup"
+        );
+
+    const continueBtn =
+        document.getElementById(
+            "continueBtn"
+        );
+
+    const musicBtn =
+        document.getElementById(
+            "music-btn"
+        );
+
+    const bgMusic =
+        document.getElementById(
+            "bgMusic"
+        );
+
+    const ding =
+        document.getElementById(
+            "dingSound"
+        );
 
 
-  /* =========================================================
-     SETTINGS
-     ========================================================= */
+    /* =========================================================
+       HELPERS
+       ========================================================= */
 
-  const TOTAL_PHOTOS = 42;
+    function show(element) {
 
-  const ENTER_TIME = 1100;
-  const HOLD_TIME = 7000;
-  const LEAVE_TIME = 900;
+        if (!element) {
+            return;
+        }
 
-  const PHOTO_PATH =
-    "assets/souvenirs/photo";
+        element.classList.remove(
+            "hidden"
+        );
 
-
-  /* =========================================================
-     STATE
-     ========================================================= */
-
-  let currentPhoto = 1;
-
-  let phase = "idle";
-
-  let phaseStart = 0;
-
-  let pauseStarted = 0;
-
-  let isPaused = false;
-
-  let animationFrame = null;
-
-  let imageToken = 0;
-
-  let started = false;
-
-  let transitioning = false;
-
-
-  /* =========================================================
-     HELPERS
-     ========================================================= */
-
-  function photoNumber(number) {
-
-    return String(number)
-      .padStart(2, "0");
-
-  }
-
-
-  function photoSrc(number) {
-
-    return (
-      PHOTO_PATH +
-      photoNumber(number) +
-      ".jpg"
-    );
-
-  }
-
-
-  function updateCounter() {
-
-    count.textContent =
-      `${photoNumber(currentPhoto)} / ${TOTAL_PHOTOS}`;
-
-    caption.textContent =
-      `Souvenir ${photoNumber(currentPhoto)}`;
-
-    photo.alt =
-      `Souvenir ${currentPhoto} sur ${TOTAL_PHOTOS}`;
-
-  }
-
-
-  function setProgress(value) {
-
-    progress.style.width =
-      `${Math.max(
-        0,
-        Math.min(
-          100,
-          value
-        )
-      )}%`;
-
-  }
-
-
-  function setLoading(state) {
-
-    if (!loader) {
-      return;
+        element.setAttribute(
+            "aria-hidden",
+            "false"
+        );
     }
 
-    loader.classList.toggle(
-      "is-visible",
-      state
-    );
 
-  }
+    function hide(element) {
 
+        if (!element) {
+            return;
+        }
 
-  /* =========================================================
-     PRELOAD IMAGE
-     ========================================================= */
+        element.classList.add(
+            "hidden"
+        );
 
-  function preloadImage(number) {
-
-    return new Promise(
-      (resolve, reject) => {
-
-        const img =
-          new Image();
-
-        img.decoding =
-          "async";
+        element.setAttribute(
+            "aria-hidden",
+            "true"
+        );
+    }
 
 
-        img.onload = async () => {
+    function playSound(audio, volume = .5) {
 
-          try {
+        if (!audio) {
+            return;
+        }
+
+        try {
+
+            audio.currentTime =
+                0;
+
+            audio.volume =
+                volume;
+
+            const promise =
+                audio.play();
 
             if (
-              typeof img.decode === "function"
+                promise &&
+                typeof promise.catch ===
+                "function"
             ) {
 
-              await img.decode();
-
+                promise.catch(
+                    () => {}
+                );
             }
 
-          } catch (_) {
-
-            /* Image already loaded.
-               Continue normally. */
-
-          }
-
-
-          resolve(img);
-
-        };
-
-
-        img.onerror = () => {
-
-          reject(
-            new Error(
-              `Impossible de charger ${photoSrc(number)}`
-            )
-          );
-
-        };
-
-
-        img.src =
-          photoSrc(number);
-
-      }
-    );
-
-  }
-
-
-  /* =========================================================
-     SHOW PHOTO
-     ========================================================= */
-
-  async function showPhoto(number) {
-
-    const token =
-      ++imageToken;
-
-    setLoading(true);
-
-
-    try {
-
-      const loaded =
-        await preloadImage(number);
-
-
-      if (
-        token !== imageToken
-      ) {
-        return false;
-      }
-
-
-      photo.src =
-        loaded.src;
-
-
-      currentPhoto =
-        number;
-
-
-      updateCounter();
-
-      setLoading(false);
-
-
-      return true;
-
-    } catch (error) {
-
-      if (
-        token !== imageToken
-      ) {
-        return false;
-      }
-
-
-      console.warn(
-        "Souvenir introuvable",
-        error
-      );
-
-
-      setLoading(false);
-
-
-      return false;
-
-    }
-
-  }
-
-
-  /* =========================================================
-     PHASE ANIMATION
-     ========================================================= */
-
-  function applyPhaseStyles(progressValue) {
-
-
-    if (
-      phase === "enter"
-    ) {
-
-      const p =
-        Math.min(
-          1,
-          Math.max(
-            0,
-            progressValue /
-            ENTER_TIME
-          )
-        );
-
-
-      const eased =
-        1 -
-        Math.pow(
-          1 - p,
-          3
-        );
-
-
-      frame.style.transform =
-        `translate3d(0, ${
-          110 -
-          (110 * eased)
-        }%, 0)`;
-
-
-      frame.style.opacity =
-        String(eased);
-
-
-      setProgress(
-        eased * 15
-      );
-
-
-      return;
+        } catch (_) {}
     }
 
 
-    if (
-      phase === "hold"
-    ) {
-
-      const p =
-        Math.min(
-          1,
-          Math.max(
-            0,
-            progressValue /
-            HOLD_TIME
-          )
-        );
-
-
-      frame.style.transform =
-        "translate3d(0, 0, 0)";
-
-
-      frame.style.opacity =
-        "1";
-
-
-      setProgress(
-        15 +
-        (p * 70)
-      );
-
-
-      return;
-    }
-
-
-    if (
-      phase === "leave"
-    ) {
-
-      const p =
-        Math.min(
-          1,
-          Math.max(
-            0,
-            progressValue /
-            LEAVE_TIME
-          )
-        );
-
-
-      const eased =
-        p * p;
-
-
-      frame.style.transform =
-        `translate3d(0, ${
-          -110 * eased
-        }%, 0)`;
-
-
-      frame.style.opacity =
-        String(
-          1 - eased
-        );
-
-
-      setProgress(
-        85 +
-        (eased * 15)
-      );
-
-
-      return;
-    }
-
-  }
-
-
-  function startPhase(name) {
-
-    phase =
-      name;
-
-    phaseStart =
-      performance.now();
-
-
-    if (
-      name === "enter"
-    ) {
-
-      frame.style.transition =
-        "none";
-
-      frame.style.transform =
-        "translate3d(0, 110%, 0)";
-
-      frame.style.opacity =
-        "0";
-
-    }
-
-
-    if (
-      name === "hold"
-    ) {
-
-      frame.style.transition =
-        "none";
-
-      frame.style.transform =
-        "translate3d(0, 0, 0)";
-
-      frame.style.opacity =
-        "1";
-
-    }
-
-
-    if (
-      name === "leave"
-    ) {
-
-      frame.style.transition =
-        "none";
-
-    }
-
-  }
-
-
-  /* =========================================================
-     NEXT PHOTO
-     ========================================================= */
-
-  async function moveToNextPhoto() {
-
-    if (
-      transitioning
-    ) {
-      return;
-    }
-
-
-    transitioning =
-      true;
-
-
-    phase =
-      "loading";
-
-
-    let nextPhoto =
-      currentPhoto + 1;
-
-
-    if (
-      nextPhoto >
-      TOTAL_PHOTOS
-    ) {
-
-      nextPhoto =
-        1;
-
-    }
-
-
-    const loaded =
-      await showPhoto(
-        nextPhoto
-      );
-
-
-    if (
-      loaded
-    ) {
-
-      startPhase(
-        "enter"
-      );
-
-    } else {
-
-      /*
-        Si yon foto pa disponib,
-        nou pase sou pwochen an.
-      */
-
-      currentPhoto =
-        nextPhoto;
-
-
-      let fallbackPhoto =
-        currentPhoto + 1;
-
-
-      if (
-        fallbackPhoto >
-        TOTAL_PHOTOS
-      ) {
-
-        fallbackPhoto =
-          1;
-
-      }
-
-
-      const fallbackLoaded =
-        await showPhoto(
-          fallbackPhoto
-        );
-
-
-      if (
-        fallbackLoaded
-      ) {
-
-        startPhase(
-          "enter"
-        );
-
-      } else {
-
-        phase =
-          "idle";
-
-      }
-
-    }
-
-
-    transitioning =
-      false;
-
-  }
-
-
-  /* =========================================================
-     START PHOTO FLOW
-     ========================================================= */
-
-  async function startPhotoFlow() {
-
-    if (
-      started
-    ) {
-      return;
-    }
-
-
-    started =
-      true;
-
-
-    currentPhoto =
-      1;
-
-
-    updateCounter();
-
-
-    const loaded =
-      await showPhoto(
-        currentPhoto
-      );
-
-
-    if (
-      !loaded
-    ) {
-
-      started =
+    /* =========================================================
+       MAIN MUSIC
+       ========================================================= */
+
+    let musicEnabled =
         false;
 
-      return;
 
+    function updateMusicButton() {
+
+        if (!musicBtn) {
+            return;
+        }
+
+        musicBtn.textContent =
+            musicEnabled
+                ? "🔊 Musique activée"
+                : "🎵 Activer la musique";
     }
 
 
-    startPhase(
-      "enter"
-    );
+    async function enableMainMusic() {
+
+        if (!bgMusic) {
+            return;
+        }
+
+        try {
+
+            bgMusic.volume =
+                .58;
+
+            await bgMusic.play();
+
+            musicEnabled =
+                true;
+
+            updateMusicButton();
+
+        } catch (_) {
+
+            musicEnabled =
+                false;
+
+            updateMusicButton();
+        }
+    }
 
 
-    cancelAnimationFrame(
-      animationFrame
-    );
+    function disableMainMusic() {
+
+        if (!bgMusic) {
+            return;
+        }
+
+        try {
+
+            bgMusic.pause();
+
+        } catch (_) {}
 
 
-    animationFrame =
-      requestAnimationFrame(
-        tick
-      );
+        musicEnabled =
+            false;
 
-  }
+        updateMusicButton();
+    }
 
 
-  /* =========================================================
-     ANIMATION LOOP
-     ========================================================= */
+    if (musicBtn) {
 
-  function tick(now) {
+        musicBtn.addEventListener(
+            "click",
+            () => {
 
-    if (
-      isPaused
-    ) {
+                if (
+                    musicEnabled
+                ) {
 
-      animationFrame =
-        requestAnimationFrame(
-          tick
+                    disableMainMusic();
+
+                } else {
+
+                    enableMainMusic();
+                }
+            }
         );
-
-      return;
-
     }
 
 
-    if (
-      phase === "loading"
-    ) {
+    updateMusicButton();
 
-      animationFrame =
-        requestAnimationFrame(
-          tick
-        );
 
-      return;
+    /* =========================================================
+       INTRO
+       ========================================================= */
 
-    }
+    function startIntro() {
 
-
-    const elapsed =
-      now -
-      phaseStart;
-
-
-    if (
-      phase === "enter"
-    ) {
-
-      applyPhaseStyles(
-        elapsed
-      );
-
-
-      if (
-        elapsed >=
-        ENTER_TIME
-      ) {
-
-        startPhase(
-          "hold"
-        );
-
-      }
-
-    }
-
-
-    else if (
-      phase === "hold"
-    ) {
-
-      applyPhaseStyles(
-        elapsed
-      );
-
-
-      if (
-        elapsed >=
-        HOLD_TIME
-      ) {
-
-        startPhase(
-          "leave"
-        );
-
-      }
-
-    }
-
-
-    else if (
-      phase === "leave"
-    ) {
-
-      applyPhaseStyles(
-        elapsed
-      );
-
-
-      if (
-        elapsed >=
-        LEAVE_TIME
-      ) {
-
-        moveToNextPhoto();
-
-      }
-
-    }
-
-
-    animationFrame =
-      requestAnimationFrame(
-        tick
-      );
-
-  }
-
-
-  /* =========================================================
-     PAUSE
-     ========================================================= */
-
-  function pauseFlow() {
-
-    if (
-      !started ||
-      isPaused ||
-      phase === "idle"
-    ) {
-      return;
-    }
-
-
-    isPaused =
-      true;
-
-
-    pauseStarted =
-      performance.now();
-
-
-    stage.classList.add(
-      "is-paused"
-    );
-
-
-    if (
-      pauseHint
-    ) {
-
-      pauseHint.textContent =
-        "Souvenir en pause ♡";
-
-    }
-
-  }
-
-
-  /* =========================================================
-     RESUME
-     ========================================================= */
-
-  function resumeFlow() {
-
-    if (
-      !started ||
-      !isPaused
-    ) {
-      return;
-    }
-
-
-    const now =
-      performance.now();
-
-
-    const pauseDuration =
-      now -
-      pauseStarted;
-
-
-    phaseStart +=
-      pauseDuration;
-
-
-    isPaused =
-      false;
-
-
-    stage.classList.remove(
-      "is-paused"
-    );
-
-
-    if (
-      pauseHint
-    ) {
-
-      pauseHint.textContent =
-        "Maintiens ton doigt pour garder ce souvenir un peu plus longtemps ♡";
-
-    }
-
-  }
-
-
-  /* =========================================================
-     TOUCH / MOUSE
-     ========================================================= */
-
-  stage.addEventListener(
-    "pointerdown",
-    (event) => {
-
-      if (
-        event.isPrimary === false
-      ) {
-        return;
-      }
-
-
-      try {
-
-        stage.setPointerCapture(
-          event.pointerId
-        );
-
-      } catch (_) {}
-
-
-      pauseFlow();
-
-    }
-  );
-
-
-  stage.addEventListener(
-    "pointerup",
-    (event) => {
-
-      if (
-        event.isPrimary === false
-      ) {
-        return;
-      }
-
-
-      try {
-
-        stage.releasePointerCapture(
-          event.pointerId
-        );
-
-      } catch (_) {}
-
-
-      resumeFlow();
-
-    }
-  );
-
-
-  stage.addEventListener(
-    "pointercancel",
-    () => {
-
-      resumeFlow();
-
-    }
-  );
-
-
-  /* =========================================================
-     PAGE VISIBILITY
-     ========================================================= */
-
-  document.addEventListener(
-    "visibilitychange",
-    () => {
-
-      if (
-        document.hidden
-      ) {
-
-        pauseFlow();
-
-      } else {
-
-        resumeFlow();
-
-      }
-
-    }
-  );
-
-
-  /* =========================================================
-     RETURN TO LETTER
-     ========================================================= */
-
-  const backToLetter =
-    document.getElementById(
-      "px-back-letter"
-    );
-
-
-  if (
-    backToLetter
-  ) {
-
-    backToLetter.addEventListener(
-      "click",
-      () => {
-
-        if (
-          animationFrame
-        ) {
-
-          cancelAnimationFrame(
-            animationFrame
-          );
-
+        if (!intro) {
+            show(welcome);
+            return;
         }
 
 
-        imageToken++;
+        show(intro);
 
 
-        started =
-          false;
+        window.setTimeout(
+            () => {
 
-        isPaused =
-          false;
+                hide(intro);
 
-        transitioning =
-          false;
+                window.setTimeout(
+                    () => {
 
-        phase =
-          "idle";
+                        show(welcome);
+
+                    },
+                    350
+                );
+
+            },
+            1700
+        );
+    }
 
 
-        setLoading(
-          false
+    /* =========================================================
+       CONTINUE
+       ========================================================= */
+
+    if (continueBtn) {
+
+        continueBtn.addEventListener(
+            "click",
+            async () => {
+
+                playSound(
+                    ding,
+                    .38
+                );
+
+
+                hide(welcome);
+
+
+                /*
+                    Le clic utilisateur autorise le navigateur
+                    à lancer la musique principale.
+                */
+
+                await enableMainMusic();
+
+
+                /*
+                    Experience.js écoute seulement son propre système.
+                    On lui laisse créer son cinematic layer.
+                */
+
+                window.setTimeout(
+                    () => {
+
+                        if (
+                            !document.getElementById(
+                                "px-experience"
+                            )
+                        ) {
+
+                            /*
+                                Aucun double système.
+                                experience.js s'occupe lui-même
+                                de construire l'expérience.
+                            */
+
+                            document.body.dispatchEvent(
+                                new Event(
+                                    "patricia-experience-start"
+                                )
+                            );
+                        }
+
+                    },
+                    250
+                );
+            }
+        );
+    }
+
+
+    /* =========================================================
+       SMALL BACKGROUND EFFECTS
+       ========================================================= */
+
+    const hearts =
+        document.getElementById(
+            "hearts-container"
         );
 
-      }
-    );
+    const petals =
+        document.getElementById(
+            "petals-container"
+        );
 
-  }
-
-
-  /* =========================================================
-     START WHEN SOUVENIR SECTION IS REACHED
-     ========================================================= */
-
-  const souvenirSection =
-    document.getElementById(
-      "souvenirs"
-    );
+    const stars =
+        document.getElementById(
+            "stars"
+        );
 
 
-  if (
-    !souvenirSection
-  ) {
-    return;
-  }
+    function makeFloatingHeart() {
+
+        if (!hearts) {
+            return;
+        }
 
 
-  const observer =
-    new IntersectionObserver(
-      (entries) => {
+        const el =
+            document.createElement(
+                "span"
+            );
 
-        entries.forEach(
-          (entry) => {
 
-            if (
-              entry.isIntersecting &&
-              entry.intersectionRatio >= 0.2
-            ) {
+        el.textContent =
+            Math.random() > .5
+                ? "♡"
+                : "♥";
 
-              startPhotoFlow();
 
-              observer.disconnect();
+        el.style.position =
+            "absolute";
 
+        el.style.left =
+            `${Math.random() * 100}%`;
+
+        el.style.bottom =
+            "-30px";
+
+        el.style.opacity =
+            `${.15 + Math.random() * .35}`;
+
+        el.style.fontSize =
+            `${10 + Math.random() * 14}px`;
+
+        el.style.animation =
+            `heartFloat ${
+                8 + Math.random() * 7
+            }s linear forwards`;
+
+
+        hearts.appendChild(el);
+
+
+        window.setTimeout(
+            () => el.remove(),
+            16000
+        );
+    }
+
+
+    function makePetal() {
+
+        if (!petals) {
+            return;
+        }
+
+
+        const el =
+            document.createElement(
+                "span"
+            );
+
+
+        el.textContent =
+            "✦";
+
+
+        el.style.position =
+            "absolute";
+
+        el.style.left =
+            `${Math.random() * 100}%`;
+
+        el.style.top =
+            "-25px";
+
+        el.style.opacity =
+            `${.10 + Math.random() * .24}`;
+
+        el.style.fontSize =
+            `${7 + Math.random() * 9}px`;
+
+        el.style.animation =
+            `petalFall ${
+                8 + Math.random() * 6
+            }s linear forwards`;
+
+
+        petals.appendChild(el);
+
+
+        window.setTimeout(
+            () => el.remove(),
+            15000
+        );
+    }
+
+
+    function injectBackgroundAnimations() {
+
+        if (
+            document.getElementById(
+                "px-general-animations"
+            )
+        ) {
+            return;
+        }
+
+
+        const style =
+            document.createElement(
+                "style"
+            );
+
+
+        style.id =
+            "px-general-animations";
+
+
+        style.textContent = `
+            @keyframes heartFloat {
+                0% {
+                    transform: translate3d(0, 0, 0) scale(.8);
+                }
+
+                50% {
+                    transform: translate3d(14px, -45vh, 0) scale(1);
+                }
+
+                100% {
+                    transform: translate3d(-10px, -105vh, 0) scale(.9);
+                }
             }
 
-          }
-        );
+            @keyframes petalFall {
+                0% {
+                    transform: translate3d(0, 0, 0) rotate(0deg);
+                }
 
-      },
-      {
-        threshold: [
-          0.2,
-          0.35
-        ]
-      }
+                100% {
+                    transform: translate3d(80px, 110vh, 0) rotate(280deg);
+                }
+            }
+        `;
+
+
+        document.head.appendChild(
+            style
+        );
+    }
+
+
+    injectBackgroundAnimations();
+
+
+    /*
+        Ti kantite sèlman.
+        Nou pa vle chaje telefòn nan.
+    */
+
+    if (
+        hearts &&
+        petals &&
+        !window.matchMedia(
+            "(prefers-reduced-motion: reduce)"
+        ).matches
+    ) {
+
+        let heartTimer =
+            window.setInterval(
+                makeFloatingHeart,
+                2300
+            );
+
+
+        let petalTimer =
+            window.setInterval(
+                makePetal,
+                3100
+            );
+
+
+        window.addEventListener(
+            "beforeunload",
+            () => {
+
+                clearInterval(
+                    heartTimer
+                );
+
+                clearInterval(
+                    petalTimer
+                );
+            }
+        );
+    }
+
+
+    /* =========================================================
+       EXPERIENCE START SIGNAL
+       ========================================================= */
+
+    document.body.addEventListener(
+        "patricia-experience-start",
+        () => {
+
+            /*
+                experience.js est déjà chargé par index.html.
+                Son DOMContentLoaded a initialisé son système.
+                Cette fonction sert surtout de point de synchronisation
+                sans créer une deuxième expérience.
+            */
+
+            document.body.classList.add(
+                "px-ready-for-experience"
+            );
+        }
     );
 
 
-  observer.observe(
-    souvenirSection
-  );
+    /* =========================================================
+       START
+       ========================================================= */
 
-
-  /* =========================================================
-     INITIAL STATE
-     ========================================================= */
-
-  updateCounter();
-
-
-  frame.style.transform =
-    "translate3d(0, 110%, 0)";
-
-
-  frame.style.opacity =
-    "0";
-
-
-  setProgress(
-    0
-  );
+    startIntro();
 
 });
